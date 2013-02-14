@@ -1,39 +1,169 @@
+<?php
+require_once('./cnf/config.php');
+?>
 <!DOCTYPE HTML>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link href="./css/install.css" rel="stylesheet" type="text/css">
+    <link href="./css/bootstrap.min.css" rel="stylesheet"  type="text/css" media="screen">
+    <link href="./css/install.css" rel="stylesheet"  type="text/css" media="screen">
+    <script language="javascript" type="text/javascript" src="./js/lib/jquery-1.9.0.min.js"></script>
     <script language="javascript" type="text/javascript" src="./js/installation_procedure.js"></script>
-    <script language="javascript" type="text/javascript" src="./js/jquery-1.9.0.min.js"></script>
     <title>Procedura di installazione</title>
+    <style>
+    #fieldset_0, #fieldset_1, #jom_rowback, #jom_rowgoon { display: none; opacity: 0; }
+    h1 img, h2 { display: none; opacity: 0; }
+    </style>
 </head>
 <body>
-    <h1><img src="./imgs/JoM_logo.png" alt="JoM logo image: JoM - the Job Manager" title="JoM logo"></h1>
-    <h2>Installazione</h2>
+    <div class="container">
+        <h1 class="text-center">
+            <img src="./img/JoM_logo.png" alt="JoM logo image: JoM - the Job Manager" title="JoM logo"0>
+        </h1>
+        <div class="row">
+            <h2>Software installation procedure</h2>
+        </div>
 
-    <label for="inst_db_type">Tipo database</label>
-    <input id="inst_db_type" list="database_supportati">
-    <datalist id="database_supportati">
-        <option value="MySQL">
-        <option value="SQLite">
-    </datalist>
-    <br>
-    <label for="inst_db_name">Nome database</label>
-    <input id="inst_db_name">
-    <br>
-    <label for="inst_db_hostname">Database server host (no SQLITE)</label>
-    <input id="inst_db_hostname">
-    <br>
-    <label for="inst_db_username">Database user name (no SQLITE)</label>
-    <input id="inst_db_username">
-    <br>
-    <label for="inst_db_password">Database password (no SQLITE)</label>
-    <input id="inst_db_password">
-    <br>
-    <br>
-    <button onclick='javascript: run_install_step(0);'>Avvia</button>
+<!-- BACK -->
+        <div class="row" id="jom_rowback">
+            <div class="span12 text-center">
+                <div class="controls">
+                    <a class="btn btn-primary" href="#" onclick="javascript: go_to_step(-1);"><i class=" icon-chevron-left"></i> Go back</a>
+                </div>
+            </div>
+        </div>
 
-    <h3>Fase di installazione</h3>
-    <h4 id="inst_fase">attesa input utente</h4>
+<!-- FIELDSET 0 - database configuration -->
+        <div class="row" id="fieldset_0">
+            <div class="span6 offset3">
+                <form class="form-horizontal">
+                    <fieldset>
+                        <legend>1. Database configuration</legend>
+                        <div class="control-group">
+                            <label class="control-label" for="inst_db_type">Database type</label>
+                            <div class="controls">
+                                <select id="inst_db_type" placeholder="Select database type">
+                                    <option value="MySQL">MySQL</option>
+                                    <option value="SQLite">SQLite</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="inst_db_name">Database name</label>
+                            <div class="controls">
+                                <input class="input-medium" type="text" id="inst_db_name">
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+
+<!-- FIELDSET 1 - DBMS deeper parameters -->
+        <div class="row" id="fieldset_1">
+            <div class="span6">
+                <form class="form-horizontal">
+                    <fieldset id="fieldset_1_a">
+                        <legend>2a. Database server parameters</legend>
+                        <div class="control-group">
+                            <label class="control-label" for="inst_db_hostname">Host</label>
+                            <div class="controls">
+                                <input class="input-medium" id="inst_db_hostname" type="text" value="localhost">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="inst_db_createdb">Create new database</label>
+                            <div class="controls">
+                                <input id="inst_db_createdb" type="checkbox" title="if checked, existing database with the same name will be deleted" onclick="javascript: create_new_database_toggled($(this).is(':checked'));">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="inst_db_removeifany">Clear table if database exists</label>
+                            <div class="controls">
+                                <input id="inst_db_removeifany" type="checkbox">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="inst_db_username">Username</label>
+                            <div class="controls">
+                                <input id="inst_db_username" type="text">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="inst_db_password">Password</label>
+                            <div class="controls">
+                                <input id="inst_db_password" type="text">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="inst_db_password">Tables prepend</label>
+                            <div class="controls">
+                                <input class="input-small" id="inst_db_tableprepend" type="text" title="Useful if using one single database for more than one application">
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+
+            <div class="span6">
+                <form class="form-horizontal">
+                    <fieldset id="fieldset_1_b">
+                        <legend>2b. Database admin parameters</legend>
+                        <div class="control-group">
+                            <p><span class="label label-info">Info</span> - following data will not be saved</p>
+                        </div>
+                        <div class="control-group jom_create_db">
+                            <label class="control-label" for="inst_db_superuser">Username</label>
+                            <div class="controls">
+                                <input id="inst_db_superuser" type="text">
+                            </div>
+                        </div>
+                        <div class="control-group jom_create_db">
+                            <label class="control-label" for="inst_db_superpass">Password</label>
+                            <div class="controls">
+                                <input id="inst_db_superpass" type="text">
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+
+<!-- GO ON -->
+        <div class="row" id="jom_rowgoon">
+            <div class="span12 text-center" style="border-top: 1px solid #B9B9B9;">
+                <label class="control-label"></label>
+                <div class="controls">
+                    <a class="btn btn-primary" href="#" onclick="javascript: go_to_step(1);">Proceed <i class=" icon-chevron-right"></i></a>
+                </div>
+            </div>
+        </div>
+
+    <script src="./js/lib/bootstrap.min.js"></script>
+    <script>
+    $(document).ready(function() {
+
+        // install tooltips
+        $("#inst_db_createdb").tooltip();
+        $("#inst_db_tableprepend").tooltip();
+
+        // set default form statuses
+        create_new_database_toggled(0);
+        $("#inst_db_createdb").removeAttr("checked");
+
+        // set install step data
+        $("body").data('step', 0);
+
+        // smooth intro animation... just to add something unuseful...
+        animate_opacity($("h1 > img"), 1, function(){
+            animate_opacity($("h2"), 1, function(){
+                go_to_step(0);
+            });
+        });
+
+    });
+    </script>
+
+    <div id="jom_version_ribbon"><div class="jom_label">ver.</div><div class="jom_version"><?php print(JOM_VERSION);?></div></div>
 </body>
 </html>
