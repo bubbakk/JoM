@@ -1,0 +1,38 @@
+body { background:url('../img/sitebg.jpg') }
+
+/* rewrite default bootstrap rules */
+.form-horizontal .control-group { margin-bottom: 10px; }
+.form-horizontal .control-label { width: 200px; }
+.form-horizontal .controls { margin-left: 220px; }
+legend { margin-bottom: 10px; border-bottom: 1px solid #B9B9B9; text-shadow: 1px 1px 0 white; }
+
+
+.job_btn_fieldset_2 { display: none; }
+.inactive { opacity: 0.2; }
+#jom_version_ribbon {
+  position: fixed;
+  top: 0;
+  left: 10px;
+  background: url('../img/red_empty_ribbon.png');
+  background-repeat: no-repeat;
+  width: 70px;
+  height: 108px;
+}
+#jom_version_ribbon .jom_label {
+  position: relative;
+  text-align: center;
+  width: 66px;
+  color: white;
+  font-size: 14px;
+  margin-top: 20px;
+  text-shadow: 2px 2px 3px #4F4F4F;
+}
+#jom_version_ribbon .jom_version {
+  position: relative;
+  text-align: center;
+  width: 66px;
+  color: white;
+  font-size: 22px;
+  margin-top: 5px;
+  text-shadow: 2px 2px 3px #4F4F4F;
+}
