@@ -6,6 +6,7 @@ Version 0.1
 - SQLite specific parameters (form fields) and interactivity (GUI dynamics)
 - splitted install.css stylesheet file and created a new generic default style for entire application
 - fixed "for" label's attribute
+- added description (title) hover the version ribbon element
 
 14.02.2013
 ----------

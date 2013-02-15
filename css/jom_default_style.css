@@ -29,4 +29,5 @@ body { background:url('../img/sitebg.jpg') }
   font-size: 22px;
   margin-top: 5px;
   text-shadow: 2px 2px 3px #4F4F4F;
+  cursor: help;
 }

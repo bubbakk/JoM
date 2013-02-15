@@ -193,6 +193,6 @@ require_once('./cnf/config.php');
         </div>
 
     <script src="./js/lib/bootstrap.min.js"></script>
-    <div id="jom_version_ribbon"><div class="jom_label">ver.</div><div class="jom_version"><?php print(JOM_VERSION);?></div></div>
+    <div id="jom_version_ribbon"><div class="jom_label">ver.</div><div class="jom_version" title="<?php print(JOM_DESC_VER);?>"><?php print(JOM_VERSION);?></div></div>
 </body>
 </html>

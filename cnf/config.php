@@ -5,6 +5,7 @@ define('JOM_LOG',       'true');
 define('JOM_MILESTONE', '0.1');                         // installer version (refer to MILESTONES.md for versioning progression)
 define('JOM_RELEASE',   '2');
 define('JOM_VERSION',   JOM_MILESTONE.'.'.JOM_RELEASE); // milestone.release
+define('JOM_DESC_VER',  'v. '.JOM_MILESTONE.'.x: installation procedure / database main tables');   // milestone version description
 
 
 // directories definition

@@ -47,6 +47,8 @@ function go_to_step(step) {
                 }
             });
             break;
+        case 2:
+            alert("TODO...");
         default:
             // if this state does not exist, set the step back
             $("body").data('step', --actual_step);
