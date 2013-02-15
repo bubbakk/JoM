@@ -17,6 +17,14 @@ function go_to_step(step) {
                 // show fieldset 1
                 animate_opacity( $("#fieldset_0"), 1);
             });
+            animate_opacity( $("#fieldset_2"), 0, function(){
+                // buttons back/proceed
+                animate_opacity( $("#jom_rowgoon"), 1);
+                $("#jom_rowgoon").children('div').eq(0).attr("class", "span6 offset3 text-center");
+
+                // show fieldset 1
+                animate_opacity( $("#fieldset_0"), 1);
+            });
 
             break;
         case 1:
@@ -26,10 +34,17 @@ function go_to_step(step) {
                 // buttons back/proceed
                 animate_opacity( $("#jom_rowback"), 1);
                 animate_opacity( $("#jom_rowgoon"), 1);
-                $("#jom_rowgoon").children('div').eq(0).attr("class", "span12 text-center");
 
-                // show fieldset 1
-                animate_opacity( $("#fieldset_1"), 1);
+                if ( $("#inst_db_type").val() === "MySQL" ) {
+                    // show fieldset 1
+                    animate_opacity( $("#fieldset_1"), 1);
+                    $("#jom_rowgoon").children('div').eq(0).attr("class", "span12 text-center");
+                }
+                else
+                if ( $("#inst_db_type").val() === "SQLite" ) {
+                    // show fieldset 2
+                    animate_opacity( $("#fieldset_2"), 1);
+                }
             });
             break;
         default:
@@ -61,6 +76,17 @@ function create_new_database_toggled(check) {
     }
 }
 
+function delete_existing_file_toggled(check) {
+    if (check) {
+        $("#inst_db_removeifanyfile").attr('readonly', true);
+        animate_opacity($("#inst_db_removeifanyfile").parent().parent(), 0.1);
+    }
+    else {
+        $("#inst_db_removeifanyfile").removeAttr('readonly');
+        animate_opacity($("#inst_db_removeifanyfile").parent().parent(), 1);
+    }
+}
+
 function animate_opacity(target, opacity_val, callback)
 {
     if ( opacity_val > 0 ) target.show();
@@ -82,6 +108,8 @@ function animate_opacity(target, opacity_val, callback)
         });
     }
 }
+
+
 
 function run_install_step(step) {
 

@@ -18,3 +18,5 @@ Main development steps
 0.6 Chat block
 0.7 Admin config
 0.8 Admin tables editing
+
+1.0 First release

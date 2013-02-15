@@ -6,14 +6,38 @@ require_once('./cnf/config.php');
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link href="./css/bootstrap.min.css" rel="stylesheet"  type="text/css" media="screen">
+    <link href="./css/jom_default_style.css" rel="stylesheet"  type="text/css" media="screen">
     <link href="./css/install.css" rel="stylesheet"  type="text/css" media="screen">
     <script language="javascript" type="text/javascript" src="./js/lib/jquery-1.9.0.min.js"></script>
     <script language="javascript" type="text/javascript" src="./js/installation_procedure.js"></script>
     <title>Procedura di installazione</title>
-    <style>
-    #fieldset_0, #fieldset_1, #jom_rowback, #jom_rowgoon { display: none; opacity: 0; }
-    h1 img, h2 { display: none; opacity: 0; }
-    </style>
+    <script>
+    $(document).ready(function() {
+
+        // install tooltips
+        $("#inst_db_createdb").tooltip();
+        $("#inst_db_tableprepend").tooltip();
+
+        // set default form statuses
+        create_new_database_toggled(0);
+        delete_existing_file_toggled(0)
+        $("#inst_db_createdb").removeAttr("checked");
+        $("#inst_db_removeifany").removeAttr("checked");
+        $("#inst_db_delprevfile").removeAttr("checked");
+        $("#inst_db_removeifanyfile").removeAttr("checked");
+
+        // set install step data
+        $("body").data('step', 0);
+
+        // smooth intro animation... just to add something unuseful...
+        animate_opacity($("h1 > img"), 1, function(){
+            animate_opacity($("h2"), 1, function(){
+                go_to_step(0);
+            });
+        });
+
+    });
+    </script>
 </head>
 <body>
     <div class="container">
@@ -59,7 +83,7 @@ require_once('./cnf/config.php');
             </div>
         </div>
 
-<!-- FIELDSET 1 - DBMS deeper parameters -->
+<!-- FIELDSET 1a - DBMS deeper parameters -->
         <div class="row" id="fieldset_1">
             <div class="span6">
                 <form class="form-horizontal">
@@ -78,7 +102,7 @@ require_once('./cnf/config.php');
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label" for="inst_db_removeifany">Clear table if database exists</label>
+                            <label class="control-label" for="inst_db_removeifany">Clear tables if database exists</label>
                             <div class="controls">
                                 <input id="inst_db_removeifany" type="checkbox">
                             </div>
@@ -96,7 +120,7 @@ require_once('./cnf/config.php');
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label" for="inst_db_password">Tables prepend</label>
+                            <label class="control-label" for="inst_db_tableprepend">Tables prepend</label>
                             <div class="controls">
                                 <input class="input-small" id="inst_db_tableprepend" type="text" title="Useful if using one single database for more than one application">
                             </div>
@@ -129,6 +153,35 @@ require_once('./cnf/config.php');
             </div>
         </div>
 
+<!-- FIELDSET 1c - SQLITE parameters -->
+        <div class="row" id="fieldset_2">
+            <div class="span6 offset3">
+                <form class="form-horizontal">
+                    <fieldset>
+                        <legend>2. Database parameters</legend>
+                        <div class="control-group">
+                            <label class="control-label" for="inst_db_delprevfile">Delete existing file</label>
+                            <div class="controls">
+                                <input id="inst_db_delprevfile" type="checkbox" title="if checked, existing database file with the same name will be deleted" onclick="javascript: delete_existing_file_toggled($(this).is(':checked'))">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="inst_db_removeifanyfile">Clear tables if database exists</label>
+                            <div class="controls">
+                                <input id="inst_db_removeifanyfile" type="checkbox">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="inst_db_tableprependfile">Tables name prepend</label>
+                            <div class="controls">
+                                <input class="input-small" id="inst_db_tableprependfile" type="text" title="Useful if using one single database for more than one application">
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+
 <!-- GO ON -->
         <div class="row" id="jom_rowgoon">
             <div class="span12 text-center" style="border-top: 1px solid #B9B9B9;">
@@ -140,30 +193,6 @@ require_once('./cnf/config.php');
         </div>
 
     <script src="./js/lib/bootstrap.min.js"></script>
-    <script>
-    $(document).ready(function() {
-
-        // install tooltips
-        $("#inst_db_createdb").tooltip();
-        $("#inst_db_tableprepend").tooltip();
-
-        // set default form statuses
-        create_new_database_toggled(0);
-        $("#inst_db_createdb").removeAttr("checked");
-
-        // set install step data
-        $("body").data('step', 0);
-
-        // smooth intro animation... just to add something unuseful...
-        animate_opacity($("h1 > img"), 1, function(){
-            animate_opacity($("h2"), 1, function(){
-                go_to_step(0);
-            });
-        });
-
-    });
-    </script>
-
     <div id="jom_version_ribbon"><div class="jom_label">ver.</div><div class="jom_version"><?php print(JOM_VERSION);?></div></div>
 </body>
 </html>
