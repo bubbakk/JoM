@@ -9,5 +9,7 @@ legend { margin-bottom: 10px; border-bottom: 1px solid #B9B9B9; text-shadow: 1px
 .inactive { opacity: 0.2; }
 
 /* startup opacity/visibility conditions */
-#fieldset_0, #fieldset_1, #fieldset_2, #jom_rowback, #jom_rowgoon { display: none; opacity: 0; }
+#fieldset_0, #fieldset_1, #fieldset_2,
+#jom_rowback, #jom_rowgoon, #jom_install_feedback_bar,
+#jom_install_feedback_messages { display: none; opacity: 0; }
 h1 img, h2 { display: none; opacity: 0; }

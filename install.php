@@ -52,7 +52,7 @@ require_once('./cnf/config.php');
         <div class="row" id="jom_rowback">
             <div class="span12 text-center">
                 <div class="controls">
-                    <a class="btn btn-primary" href="#" onclick="javascript: go_to_step(-1);"><i class=" icon-chevron-left"></i> Go back</a>
+                    <a class="btn btn-primary" href="#" onclick="javascript: go_to_step(-1);"><i class="icon-chevron-left"></i> Go back</a>
                 </div>
             </div>
         </div>
@@ -182,12 +182,36 @@ require_once('./cnf/config.php');
             </div>
         </div>
 
+        <div class="row" id="jom_install_feedback_bar">
+            <br>
+            <br>
+            <div class="span8 offset2">
+                <div class="progress progress-striped active">
+                  <div class="bar" style="width: 10%;"></div>
+                </div>
+            </div>
+        </div>
+        <div id="jom_msgs_container">
+            <div class="row" id="jom_install_feedback_messages"  style="opacity: 0">
+                <div class="span6 offset2">
+                    <div class="alert alert-info">
+                        <strong>Creazione</strong> file di configurazione
+                    </div>
+                </div>
+                <div class="span2 text-center" style="opacity: 0">
+                    <div class="alert alert-success">
+                        <strong>OK</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 <!-- GO ON -->
         <div class="row" id="jom_rowgoon">
             <div class="span12 text-center" style="border-top: 1px solid #B9B9B9;">
                 <label class="control-label"></label>
                 <div class="controls">
-                    <a class="btn btn-primary" href="#" onclick="javascript: go_to_step(1);">Proceed <i class=" icon-chevron-right"></i></a>
+                    <a class="btn btn-primary" href="#" onclick="javascript: go_to_step(1);">Proceed <i class="icon-chevron-right"></i></a>
                 </div>
             </div>
         </div>

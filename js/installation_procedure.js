@@ -13,6 +13,9 @@ function go_to_step(step) {
                 // buttons back/proceed
                 animate_opacity( $("#jom_rowgoon"), 1);
                 $("#jom_rowgoon").children('div').eq(0).attr("class", "span6 offset3 text-center");
+                $("#jom_rowgoon").find('a').contents().first()[0].textContent = 'Proceed';
+                $("#jom_rowgoon").find('a').removeClass("btn-success").addClass("btn-primary");
+                $("#jom_rowgoon").find('i').attr('class','icon-chevron-right');
 
                 // show fieldset 1
                 animate_opacity( $("#fieldset_0"), 1);
@@ -34,6 +37,9 @@ function go_to_step(step) {
                 // buttons back/proceed
                 animate_opacity( $("#jom_rowback"), 1);
                 animate_opacity( $("#jom_rowgoon"), 1);
+                $("#jom_rowgoon").find('a').contents().first()[0].textContent = 'Install ';
+                $("#jom_rowgoon").find('a').removeClass("btn-primary").addClass("btn-success");
+                $("#jom_rowgoon").find('i').attr('class','icon-ok-circle');
 
                 if ( $("#inst_db_type").val() === "MySQL" ) {
                     // show fieldset 1
@@ -48,7 +54,13 @@ function go_to_step(step) {
             });
             break;
         case 2:
-            alert("TODO...");
+            animate_opacity( $("#jom_rowback"), 0);
+            animate_opacity( $("#jom_rowgoon"), 0);
+            animate_opacity( $("#fieldset_1"), 0, function(){
+                animate_opacity( $("#jom_install_feedback_bar"), 1, function(){ run_install_step(0); } );
+            });
+            animate_opacity( $("#fieldset_2"), 0);
+
         default:
             // if this state does not exist, set the step back
             $("body").data('step', --actual_step);
@@ -113,29 +125,47 @@ function animate_opacity(target, opacity_val, callback)
 
 
 
+var $new_blk = undefined;
+var $msg_blk = undefined;
+var $res_blk = undefined;
+
 function run_install_step(step) {
 
     var url, data, text_ok, text_err;
+
+    var $prog_bar = $('#jom_install_feedback_bar').find('[class="bar"]');
+
+//animate_opacity( $("#jom_install_feedback_messages"), 1 );
+
+    $new_blk = $("#jom_install_feedback_messages").clone();
+    $new_blk.attr('id', '#jom_install_feedback_messages_step' + step );
+    $msg_blk  = $new_blk.children().eq(0).children().eq(0);
+    $res_blk  = $new_blk.children().eq(1).children().eq(0);
 
     switch (step)
     {
         // STEP 0: save config.inc.php from template config.inc.template.php
         case 0:
 
-            $('#inst_fase').text('salvataggio configurazione');
+            $msg_blk.html('<strong>Setting</strong> configuration file');
+            $("#jom_msgs_container").append($new_blk);
+            animate_opacity($new_blk, 1);
+            animate_opacity($msg_blk, 1);
 
-            var inst_db_type     = $('#inst_db_type').val();
-            var inst_db_name     = $('#inst_db_name').val();
-            var inst_db_hostname = $('#inst_db_hostname').val();
-            var inst_db_username = $('#inst_db_username').val();
-            var inst_db_password = $('#inst_db_password').val();
+            var inst_db_type     = $('#inst_db_type').val();            // MySQL / SQLite
+            var inst_db_name     = $('#inst_db_name').val();            // MySQL / SQLite
+            var inst_db_hostname = $('#inst_db_hostname').val();        // MySQL
+            var inst_db_username = $('#inst_db_username').val();        // MySQL
+            var inst_db_password = $('#inst_db_password').val();        // MySQL
+            var inst_db_tblprpnd = $('#inst_db_tableprepend').val();    // MySQL / SQLite
 
             url  = './install/save_config.php';
             data = 'dbtype='  + inst_db_type     + '&dbname=' + inst_db_name     +
                    '&dbhost=' + inst_db_hostname + '&dbuser=' + inst_db_username +
                    '&dbpass=' + inst_db_password;
-            text_ok  = 'salvataggio configurazione ok';
-            text_err = 'errore salvataggio configurazione';
+
+            text_ok  = '<strong>saved</strong>';
+            text_err = '<strong>not saved</strong>';
 
             call_ajax(url, data, text_ok, text_err, step);
 
@@ -168,14 +198,18 @@ function call_ajax(ajx_url, ajx_data, ajx_text_ok, ajx_text_err, step) {
             }
             else
             if ( r.success ) {
-                $('#inst_fase').text(ajx_text_ok);
+                $res_blk.html(ajx_text_ok);
+                animate_opacity($res_blk.parent(), 1);
+
                 run_install_step(++step);
                 return true;                // this is the final return TRUE if everything goes right!
             }
         },
         error : function(jqxhr, text, error) {
-            $('#inst_fase').text(ajx_text_err);
-            alert('please check error');
+            $res_blk.html(ajx_text_err);
+            $res_blk.removeClass("alert-success", "alert-error");
+            animate_opacity($res_blk.parent(), 1);
+
             return false;
         }
     });

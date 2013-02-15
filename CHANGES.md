@@ -1,6 +1,10 @@
 Version 0.1
 ===========
 
+16.02.2013
+----------
+- rebuilt in bootstrap-style the install steps; added also a progress bar
+
 15.02.2013
 ----------
 - SQLite specific parameters (form fields) and interactivity (GUI dynamics)
