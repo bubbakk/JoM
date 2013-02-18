@@ -1,5 +1,6 @@
 <?php
-require_once('./cnf/config.php');
+define('DIR_BASE', './');
+require_once(DIR_BASE.'cfg/config.php');
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -10,6 +11,7 @@ require_once('./cnf/config.php');
     <link href="./css/install.css" rel="stylesheet"  type="text/css" media="screen">
     <script language="javascript" type="text/javascript" src="./js/lib/jquery-1.9.0.min.js"></script>
     <script language="javascript" type="text/javascript" src="./js/installation_procedure.js"></script>
+    <script language="javascript" type="text/javascript" src="./js/generic_lib.js"></script>
     <title>Procedura di installazione</title>
     <script>
     $(document).ready(function() {
@@ -102,9 +104,9 @@ require_once('./cnf/config.php');
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label" for="inst_db_removeifany">Clear tables if database exists</label>
+                            <label class="control-label" for="inst_db_removeiftableexist">Clear tables if database exists</label>
                             <div class="controls">
-                                <input id="inst_db_removeifany" type="checkbox">
+                                <input id="inst_db_removeiftableexist" type="checkbox">
                             </div>
                         </div>
                         <div class="control-group">
@@ -148,6 +150,12 @@ require_once('./cnf/config.php');
                                 <input id="inst_db_superpass" type="text">
                             </div>
                         </div>
+                        <div class="control-group">
+                            <label class="control-label" for="inst_db_removeifany">Remove database if exists</label>
+                            <div class="controls">
+                                <input id="inst_db_removeifdbexists" type="checkbox">
+                            </div>
+                        </div>
                     </fieldset>
                 </form>
             </div>
@@ -166,9 +174,9 @@ require_once('./cnf/config.php');
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label" for="inst_db_removeifanyfile">Clear tables if database exists</label>
+                            <label class="control-label" for="inst_db_removetables">Clear tables if database exists</label>
                             <div class="controls">
-                                <input id="inst_db_removeifanyfile" type="checkbox">
+                                <input id="inst_db_removetables" type="checkbox">
                             </div>
                         </div>
                         <div class="control-group">
@@ -186,7 +194,7 @@ require_once('./cnf/config.php');
             <br>
             <br>
             <div class="span8 offset2">
-                <div class="progress progress-striped active">
+                <div class="progress">
                   <div class="bar" style="width: 10%;"></div>
                 </div>
             </div>
@@ -217,6 +225,10 @@ require_once('./cnf/config.php');
         </div>
 
     <script src="./js/lib/bootstrap.min.js"></script>
-    <div id="jom_version_ribbon"><div class="jom_label">ver.</div><div class="jom_version" title="<?php print(JOM_DESC_VER);?>"><?php print(JOM_VERSION);?></div></div>
+    <div id="jom_version_ribbon">
+        <div class="jom_label">ver.</div>
+        <div class="jom_version" title="<?php print(JOM_DESC_VER);?>" onclick="javascript: $(this).next().text(get__e_commerce_bullshit()); animate_opacity($(this).next(), 1);"><?php print(JOM_VERSION);?></div>
+        <div class="jom_useful_sentence"></div>
+    </div>
 </body>
 </html>

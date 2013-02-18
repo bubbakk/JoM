@@ -57,7 +57,9 @@ function go_to_step(step) {
             animate_opacity( $("#jom_rowback"), 0);
             animate_opacity( $("#jom_rowgoon"), 0);
             animate_opacity( $("#fieldset_1"), 0, function(){
-                animate_opacity( $("#jom_install_feedback_bar"), 1, function(){ run_install_step(0); } );
+                animate_opacity( $("#jom_install_feedback_bar"), 1, function(){
+                    run_install_step();
+                });
             });
             animate_opacity( $("#fieldset_2"), 0);
 
@@ -104,7 +106,6 @@ function delete_existing_file_toggled(check) {
 function animate_opacity(target, opacity_val, callback)
 {
     if ( opacity_val > 0 ) target.show();
-    //else                   target.hide();
 
     if ( callback===undefined ) {
         target.animate({
@@ -131,7 +132,58 @@ var $res_blk = undefined;
 
 function run_install_step(step) {
 
+    if ( step === undefined ) step = SAVE_CONFIG;
+
     var url, data, text_ok, text_err;
+
+    // SQLite Procedure:
+    //   1. SAVE_CONFIG
+    //      true                               -> 2 (CHECK_DB_EXISTS)
+    //      false                              -> **END**
+    //   2. CHECK_DB_EXISTS (the file)
+    //      true
+    //          if <inst_db_delprevfile>       -> 3 (DELETE_PREV_DB)
+    //          else if <inst_db_removetables> -> 4 (CLEAR_TABLES)
+    //               else                      -> 5 (CREATE_TABLES)
+    //      false -> 4
+    //   3. DELETE_PREV_DB
+    //      true -> 5
+    //      false -> **END**
+    //   4. CLEAR_TABLES
+    //      true ->5
+    //      false -> **END**
+    //   4. CREATE_DB
+    //      true  -> 5
+    //      false -> **END**
+    //   5. CREATE_TABLES
+    //      true
+    //          if <create_example> -> 6
+    //      false -> **END**
+    //   6. CREATE_EXAMPLE_DATA
+    //      true -> SUCCESS
+    //      false -> **END**
+    // MySQL Procedure:
+
+    // operating statuses
+    var SAVE_CONFIG               = 0;
+    // MySQL
+    var CHECK_DBMS_SUPER          = 1;  // if Create new database is selected
+    var CHECK_DB_EXISTS           = 2;
+
+    var CHECK_DB_CONNECTION       = 1;
+    var CHECK_DB_CONTAINS_TABLES  = 2;
+    var CHECK_DELETE_TABLES       = 3;
+    var CHECK_CREATE_TABLES       = 4;
+    var CREATE_TABLES             = 5;
+    var CREATE_EXAMPLE_DATA       = 6;
+
+    // error statuses
+    var ERROR_SAVE_CONFIG         = 100;
+    var ERROR_DB_CONNECTION       = 101;
+    var ERROR_ON_DELETE_TABLES    = 102;
+    var ERROR_ON_CREATE_TABLES    = 103;
+    var ERROR_EXAMPLE_DATA_INSERT = 104;
+
 
     var $prog_bar = $('#jom_install_feedback_bar').find('[class="bar"]');
 
@@ -144,13 +196,17 @@ function run_install_step(step) {
 
     switch (step)
     {
-        // STEP 0: save config.inc.php from template config.inc.template.php
-        case 0:
+        // STEP SAVE_CONFIG: save config.inc.php from template config.inc.template.php
+        case SAVE_CONFIG:
 
+            // setting message feedback
             $msg_blk.html('<strong>Setting</strong> configuration file');
             $("#jom_msgs_container").append($new_blk);
             animate_opacity($new_blk, 1);
             animate_opacity($msg_blk, 1);
+
+            text_ok  = '<strong>saved</strong>';
+            text_err = '<strong>not saved</strong>';
 
             var inst_db_type     = $('#inst_db_type').val();            // MySQL / SQLite
             var inst_db_name     = $('#inst_db_name').val();            // MySQL / SQLite
@@ -159,15 +215,20 @@ function run_install_step(step) {
             var inst_db_password = $('#inst_db_password').val();        // MySQL
             var inst_db_tblprpnd = $('#inst_db_tableprepend').val();    // MySQL / SQLite
 
-            url  = './install/save_config.php';
-            data = 'dbtype='  + inst_db_type     + '&dbname=' + inst_db_name     +
-                   '&dbhost=' + inst_db_hostname + '&dbuser=' + inst_db_username +
-                   '&dbpass=' + inst_db_password;
+            // Ajax data
+            url  = './inst/save_config.php';
+            data = 'dbt='  + inst_db_type     + '&dbn=' + inst_db_name     +
+                   '&dbh=' + inst_db_hostname + '&dbu=' + inst_db_username +
+                   '&dbp=' + inst_db_password;
 
-            text_ok  = '<strong>saved</strong>';
-            text_err = '<strong>not saved</strong>';
-
-            call_ajax(url, data, text_ok, text_err, step);
+            call_ajax(url, data, text_ok, text_err, function(){
+                if ( inst_db_type === "MySQL") {
+                    run_install_step(CHECK_DB_CONNECTION);
+                }
+                else
+                if ( inst_db_type === "SQLite") {
+                }
+            });
 
             break;
         // STEP 1: check if database exists; if not, try to create it
@@ -183,7 +244,7 @@ function run_install_step(step) {
     return false;
 }
 
-function call_ajax(ajx_url, ajx_data, ajx_text_ok, ajx_text_err, step) {
+function call_ajax(ajx_url, ajx_data, ajx_text_ok, ajx_text_err, callback) {
     var ajx_type = 'GET';
 
     $.ajax({
@@ -198,10 +259,11 @@ function call_ajax(ajx_url, ajx_data, ajx_text_ok, ajx_text_err, step) {
             }
             else
             if ( r.success ) {
+                // print result
                 $res_blk.html(ajx_text_ok);
                 animate_opacity($res_blk.parent(), 1);
 
-                run_install_step(++step);
+                callback();
                 return true;                // this is the final return TRUE if everything goes right!
             }
         },

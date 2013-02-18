@@ -9,17 +9,19 @@ define('JOM_DESC_VER',  'v. '.JOM_MILESTONE.'.x: installation procedure / databa
 
 
 // directories definition
+if ( !defined('DIR_BASE') ) define('DIR_BASE', './');
 //define('DIR_BLK',   'blk/');
 //define('DIR_CACHE', 'cache/');
-define('DIR_CSS',    'css/');
-define('DIR_I18N',   'i18n/');
-define('DIR_IMG',    'img/');
-define('DIR_JS',     'js/');
-define('DIR_JSLIB',  'js/lib/');
-define('DIR_LOG',    'log/');
-define('DIR_LIB',    'lib/');
-define('DIR_OOL',    'oolib/');
-define('DIR_DBSQLT', 'sqlite/');
+define('DIR_CFG',    DIR_BASE.'cfg/');
+define('DIR_CSS',    DIR_BASE.'css/');
+define('DIR_I18N',   DIR_BASE.'i18n/');
+define('DIR_IMG',    DIR_BASE.'img/');
+define('DIR_JS',     DIR_BASE.'js/');
+define('DIR_JSLIB',  DIR_BASE.'js/lib/');
+define('DIR_LOG',    DIR_BASE.'log/');
+define('DIR_LIB',    DIR_BASE.'lib/');
+define('DIR_OOL',    DIR_BASE.'oolib/');
+define('DIR_DBSQLT', DIR_BASE.'sqlite/');
 
 
 // tables definition

@@ -1,6 +1,16 @@
 Version 0.1
 ===========
 
+
+18.02.2013
+----------
+- ribbon improvement
+
+17.02.2013
+----------
+- updated directory and consts for config.php and installer procedure
+- import libraries in install procedure
+
 16.02.2013
 ----------
 - rebuilt in bootstrap-style the install steps; added also a progress bar
