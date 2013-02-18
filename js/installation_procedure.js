@@ -132,50 +132,24 @@ var $res_blk = undefined;
 
 function run_install_step(step) {
 
-    if ( step === undefined ) step = SAVE_CONFIG;
-
     var url, data, text_ok, text_err;
 
     // SQLite Procedure:
     //   1. SAVE_CONFIG
     //      true                               -> 2 (CHECK_DB_EXISTS)
     //      false                              -> **END**
-    //   2. CHECK_DB_EXISTS (the file)
-    //      true
-    //          if <inst_db_delprevfile>       -> 3 (DELETE_PREV_DB)
-    //          else if <inst_db_removetables> -> 4 (CLEAR_TABLES)
-    //               else                      -> 5 (CREATE_TABLES)
-    //      false -> 4
-    //   3. DELETE_PREV_DB
-    //      true -> 5
-    //      false -> **END**
-    //   4. CLEAR_TABLES
-    //      true ->5
-    //      false -> **END**
-    //   4. CREATE_DB
-    //      true  -> 5
-    //      false -> **END**
-    //   5. CREATE_TABLES
-    //      true
-    //          if <create_example> -> 6
-    //      false -> **END**
-    //   6. CREATE_EXAMPLE_DATA
-    //      true -> SUCCESS
-    //      false -> **END**
+    //   2. SQLITE_DB
     // MySQL Procedure:
 
     // operating statuses
     var SAVE_CONFIG               = 0;
-    // MySQL
-    var CHECK_DBMS_SUPER          = 1;  // if Create new database is selected
-    var CHECK_DB_EXISTS           = 2;
+    // Database operations
+    var SQLITE_DB                 = 1;
+    var MYSQL_DB                  = 2;
+    // tables operations
+    var DB_TABLES_CREATE          = 3;
+    var DB_TABLES_SOME_DATA       = 4;
 
-    var CHECK_DB_CONNECTION       = 1;
-    var CHECK_DB_CONTAINS_TABLES  = 2;
-    var CHECK_DELETE_TABLES       = 3;
-    var CHECK_CREATE_TABLES       = 4;
-    var CREATE_TABLES             = 5;
-    var CREATE_EXAMPLE_DATA       = 6;
 
     // error statuses
     var ERROR_SAVE_CONFIG         = 100;
@@ -183,6 +157,9 @@ function run_install_step(step) {
     var ERROR_ON_DELETE_TABLES    = 102;
     var ERROR_ON_CREATE_TABLES    = 103;
     var ERROR_EXAMPLE_DATA_INSERT = 104;
+
+    // step
+    if ( step === undefined ) step = SAVE_CONFIG;
 
 
     var $prog_bar = $('#jom_install_feedback_bar').find('[class="bar"]');
@@ -193,6 +170,19 @@ function run_install_step(step) {
     $new_blk.attr('id', '#jom_install_feedback_messages_step' + step );
     $msg_blk  = $new_blk.children().eq(0).children().eq(0);
     $res_blk  = $new_blk.children().eq(1).children().eq(0);
+
+    var inst_db_type          = $('#inst_db_type').val();                                   // MySQL / SQLite
+    var inst_db_name          = $('#inst_db_name').val();                                   // MySQL / SQLite
+
+    var flag_db_createdb      = ( $('#inst_db_createdb').is(':checked') ? 1 : 0 );          // MySQL
+    var flag_db_deltbl_mysql  = ( $('#inst_db_deliftbl_mysql').is(':checked') ? 1 : 0 );    // MySQL
+    var flag_db_delfile       = ( $('#inst_db_delprevfile').is(':checked') ? 1 : 0 );       // SQLite
+    var flag_db_deltbl_sqlite = ( $('#inst_db_deliftbl_sqlite').is(':checked') ? 1 : 0 );   // SQLite
+
+    var inst_db_hostname      = $('#inst_db_hostname').val();                               // MySQL
+    var inst_db_username      = $('#inst_db_username').val();                               // MySQL
+    var inst_db_password      = $('#inst_db_password').val();                               // MySQL
+    var inst_db_tblprefix     = $('#inst_db_tableprepend').val();                           // MySQL / SQLite
 
     switch (step)
     {
@@ -208,27 +198,23 @@ function run_install_step(step) {
             text_ok  = '<strong>saved</strong>';
             text_err = '<strong>not saved</strong>';
 
-            var inst_db_type     = $('#inst_db_type').val();            // MySQL / SQLite
-            var inst_db_name     = $('#inst_db_name').val();            // MySQL / SQLite
-            var inst_db_hostname = $('#inst_db_hostname').val();        // MySQL
-            var inst_db_username = $('#inst_db_username').val();        // MySQL
-            var inst_db_password = $('#inst_db_password').val();        // MySQL
-            var inst_db_tblprpnd = $('#inst_db_tableprepend').val();    // MySQL / SQLite
-
-            // Ajax data
+            // Ajax call
             url  = './inst/save_config.php';
-            data = 'dbt='  + inst_db_type     + '&dbn=' + inst_db_name     +
-                   '&dbh=' + inst_db_hostname + '&dbu=' + inst_db_username +
-                   '&dbp=' + inst_db_password;
-
-            call_ajax(url, data, text_ok, text_err, function(){
-                if ( inst_db_type === "MySQL") {
-                    run_install_step(CHECK_DB_CONNECTION);
-                }
-                else
-                if ( inst_db_type === "SQLite") {
-                }
-            });
+            if ( inst_db_type === "MySQL") {
+                data = 'dbt='  + inst_db_type     + '&dbn='  + inst_db_name     +
+                       '&dbh=' + inst_db_hostname + '&dbu='  + inst_db_username +
+                       '&dbp=' + inst_db_password + '&tpfx=' + inst_db_tblprefix;
+                call_ajax(url, data, text_ok, text_err, function(){
+                    run_install_step(MYSQL_DB);
+                });
+            }
+            else
+            if ( inst_db_type === "SQLite") {
+                data = 'dbt='  + inst_db_type + '&dbn=' + inst_db_name + '&tpfx=' + inst_db_tblprefix;;
+                call_ajax(url, data, text_ok, text_err, function(){
+                    run_install_step(SQLITE_DB);
+                });
+            }
 
             break;
         // STEP 1: check if database exists; if not, try to create it
@@ -265,6 +251,14 @@ function call_ajax(ajx_url, ajx_data, ajx_text_ok, ajx_text_err, callback) {
 
                 callback();
                 return true;                // this is the final return TRUE if everything goes right!
+            }
+            else
+            if ( !r.success ) {
+                $res_blk.html(ajx_text_err);
+                $res_blk.removeClass("alert-success", "alert-error");
+                animate_opacity($res_blk.parent(), 1);
+
+                return false;
             }
         },
         error : function(jqxhr, text, error) {

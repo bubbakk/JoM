@@ -104,9 +104,9 @@ require_once(DIR_BASE.'cfg/config.php');
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label" for="inst_db_removeiftableexist">Clear tables if database exists</label>
+                            <label class="control-label" for="inst_db_deliftbl_mysql">Clear tables if database exists</label>
                             <div class="controls">
-                                <input id="inst_db_removeiftableexist" type="checkbox">
+                                <input id="inst_db_deliftbl_mysql" type="checkbox">
                             </div>
                         </div>
                         <div class="control-group">
@@ -174,9 +174,9 @@ require_once(DIR_BASE.'cfg/config.php');
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label" for="inst_db_removetables">Clear tables if database exists</label>
+                            <label class="control-label" for="inst_db_deliftbl_sqlite">Clear tables if database exists</label>
                             <div class="controls">
-                                <input id="inst_db_removetables" type="checkbox">
+                                <input id="inst_db_deliftbl_sqlite" type="checkbox">
                             </div>
                         </div>
                         <div class="control-group">

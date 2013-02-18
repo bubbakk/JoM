@@ -35,7 +35,9 @@ body { background:url('../img/sitebg.jpg') }
   position: absolute;
   top: 0;
   left: 0;
-  width: 250px;
+  padding-right: 15px;
+  overflow: hidden;
+  white-space: nowrap;
   background-color: rgba(180, 180, 180, 0.3);
   padding-left: 75px;
   z-index: -1;

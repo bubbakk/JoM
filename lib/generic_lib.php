@@ -9,6 +9,8 @@
  *
  */
 function json_output_and_die($data) {
+    header('Content-Type: application/json');
+    if ( !JOM_DEBUG ) { echo "ciao"; unset($data['dbg_msg']); }
     echo json_encode($data);
     die();
 }
@@ -22,5 +24,13 @@ function json_output_and_die($data) {
  *
  */
 function post_or_get($name) {
-    return ( $_POST[$name]=='' ? $_GET[$name] : $_POST[$name] );
+    if ( isset($_GET[$name]) ) {
+        return $_GET[$name];
+    }
+
+    if ( isset($_POST[$name]) ) {
+        return $_POST[$name];
+    }
+
+    return false;
 }

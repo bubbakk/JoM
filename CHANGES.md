@@ -1,6 +1,12 @@
 Version 0.1
 ===========
 
+19.02.2013
+----------
+- simplified ajax calls for installation
+- inst/save_config.php reviewed: more error checks and messages; almost finished
+- global improvements to save configuration procedure
+- minor fixes
 
 18.02.2013
 ----------
