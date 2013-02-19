@@ -7,6 +7,10 @@ Version 0.1
 - inst/save_config.php reviewed: more error checks and messages; almost finished
 - global improvements to save configuration procedure
 - minor fixes
+- now the installation info result block shows an icon that contains (on hover) the error explanation
+- made STEP a global variable
+- made the progress bar work
+- checked config file save: save_config.php should be ok. Needed more tests, mainly checks against SQL injection
 
 18.02.2013
 ----------

@@ -195,7 +195,7 @@ require_once(DIR_BASE.'cfg/config.php');
             <br>
             <div class="span8 offset2">
                 <div class="progress">
-                  <div class="bar" style="width: 10%;"></div>
+                  <div class="bar" style="width: 0%;"></div>
                 </div>
             </div>
         </div>
@@ -208,6 +208,7 @@ require_once(DIR_BASE.'cfg/config.php');
                 </div>
                 <div class="span2 text-center" style="opacity: 0">
                     <div class="alert alert-success">
+                        <i class="icon-info-sign"></i>
                         <strong>OK</strong>
                     </div>
                 </div>

@@ -8,9 +8,9 @@ $config['DB']['type'] = '#DBTYPE#';   // [mysql|sqlite]
     $config['DB']['mysql']['username']  = '#DBUSER#';       // database connection username
     $config['DB']['mysql']['password']  = '#DBPASS#';
     $config['DB']['mysql']['host']      = '#DBHOST#';
-    $config['DB']['mysql']['dbname']    = '#DBNAME#';           // database name
+    $config['DB']['mysql']['dbname']    = '#DBNAME_MYSQL#';           // database name
     // SQLite
-    $config['DB']['sqlite']['filename'] = '#DBNAME#.sqlite';    // sqlite database name
+    $config['DB']['sqlite']['filename'] = '#DBNAME_SQLITE#';    // sqlite database name
 
 $config['SERVER']['domain']       = 'http:\/\/localhost';
 $config['SERVER']['domain_path']  = 'JoM';

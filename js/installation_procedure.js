@@ -58,7 +58,10 @@ function go_to_step(step) {
             animate_opacity( $("#jom_rowgoon"), 0);
             animate_opacity( $("#fieldset_1"), 0, function(){
                 animate_opacity( $("#jom_install_feedback_bar"), 1, function(){
-                    run_install_step();
+                    // setting progress bar to 5%
+                    $(".progress > .bar").attr("style","width: 5%");
+                    $(".progress > .bar").html("5%");
+                    var dummy = setTimeout("run_install_step()", 1000);
                 });
             });
             animate_opacity( $("#fieldset_2"), 0);
@@ -129,17 +132,11 @@ function animate_opacity(target, opacity_val, callback)
 var $new_blk = undefined;
 var $msg_blk = undefined;
 var $res_blk = undefined;
+var STEP     = undefined;
 
-function run_install_step(step) {
+function run_install_step() {
 
     var url, data, text_ok, text_err;
-
-    // SQLite Procedure:
-    //   1. SAVE_CONFIG
-    //      true                               -> 2 (CHECK_DB_EXISTS)
-    //      false                              -> **END**
-    //   2. SQLITE_DB
-    // MySQL Procedure:
 
     // operating statuses
     var SAVE_CONFIG               = 0;
@@ -150,7 +147,6 @@ function run_install_step(step) {
     var DB_TABLES_CREATE          = 3;
     var DB_TABLES_SOME_DATA       = 4;
 
-
     // error statuses
     var ERROR_SAVE_CONFIG         = 100;
     var ERROR_DB_CONNECTION       = 101;
@@ -159,7 +155,7 @@ function run_install_step(step) {
     var ERROR_EXAMPLE_DATA_INSERT = 104;
 
     // step
-    if ( step === undefined ) step = SAVE_CONFIG;
+    if ( STEP === undefined ) STEP = SAVE_CONFIG;
 
 
     var $prog_bar = $('#jom_install_feedback_bar').find('[class="bar"]');
@@ -167,27 +163,33 @@ function run_install_step(step) {
 //animate_opacity( $("#jom_install_feedback_messages"), 1 );
 
     $new_blk = $("#jom_install_feedback_messages").clone();
-    $new_blk.attr('id', '#jom_install_feedback_messages_step' + step );
+    $new_blk.attr('id', '#jom_install_feedback_messages_step' + STEP );
     $msg_blk  = $new_blk.children().eq(0).children().eq(0);
     $res_blk  = $new_blk.children().eq(1).children().eq(0);
 
-    var inst_db_type          = $('#inst_db_type').val();                                   // MySQL / SQLite
-    var inst_db_name          = $('#inst_db_name').val();                                   // MySQL / SQLite
+    var inst_db_type             = $('#inst_db_type').val();                                   // MySQL / SQLite
+    var inst_db_name             = $('#inst_db_name').val();                                   // MySQL / SQLite
 
-    var flag_db_createdb      = ( $('#inst_db_createdb').is(':checked') ? 1 : 0 );          // MySQL
-    var flag_db_deltbl_mysql  = ( $('#inst_db_deliftbl_mysql').is(':checked') ? 1 : 0 );    // MySQL
-    var flag_db_delfile       = ( $('#inst_db_delprevfile').is(':checked') ? 1 : 0 );       // SQLite
-    var flag_db_deltbl_sqlite = ( $('#inst_db_deliftbl_sqlite').is(':checked') ? 1 : 0 );   // SQLite
+    var flag_db_createdb         = ( $('#inst_db_createdb').is(':checked') ? 1 : 0 );          // MySQL
+    var flag_db_deltbl_mysql     = ( $('#inst_db_deliftbl_mysql').is(':checked') ? 1 : 0 );    // MySQL
+    var flag_db_delfile          = ( $('#inst_db_delprevfile').is(':checked') ? 1 : 0 );       // SQLite
+    var flag_db_deltbl_sqlite    = ( $('#inst_db_deliftbl_sqlite').is(':checked') ? 1 : 0 );   // SQLite
 
-    var inst_db_hostname      = $('#inst_db_hostname').val();                               // MySQL
-    var inst_db_username      = $('#inst_db_username').val();                               // MySQL
-    var inst_db_password      = $('#inst_db_password').val();                               // MySQL
-    var inst_db_tblprefix     = $('#inst_db_tableprepend').val();                           // MySQL / SQLite
+    var inst_db_hostname         = $('#inst_db_hostname').val();                               // MySQL
+    var inst_db_username         = $('#inst_db_username').val();                               // MySQL
+    var inst_db_password         = $('#inst_db_password').val();                               // MySQL
+    var inst_db_tblprefix        = $('#inst_db_tableprepend').val();                           // MySQL / SQLite
+    var inst_db_tblprefix_sqlite = $('#inst_db_tableprependfile').val();                       // MySQL / SQLite
 
-    switch (step)
+    switch (STEP)
     {
-        // STEP SAVE_CONFIG: save config.inc.php from template config.inc.template.php
+////////// 1. SAVE CONFIGURATION
+        //    SAVE_CONFIG step: save config.inc.php from template config.inc.template.php
         case SAVE_CONFIG:
+
+            // setting progress bar to 15%
+            $(".progress > .bar").attr("style","width: 15%");
+            $(".progress > .bar").html("15%");
 
             // setting message feedback
             $msg_blk.html('<strong>Setting</strong> configuration file');
@@ -195,8 +197,8 @@ function run_install_step(step) {
             animate_opacity($new_blk, 1);
             animate_opacity($msg_blk, 1);
 
-            text_ok  = '<strong>saved</strong>';
-            text_err = '<strong>not saved</strong>';
+            text_ok  = '<i class="icon-check"></i> <strong>saved</strong>';
+            text_err = '<i class="icon-warning-sign" title="#REPLACE_ME#"></i> <strong>not saved</strong>';
 
             // Ajax call
             url  = './inst/save_config.php';
@@ -205,24 +207,36 @@ function run_install_step(step) {
                        '&dbh=' + inst_db_hostname + '&dbu='  + inst_db_username +
                        '&dbp=' + inst_db_password + '&tpfx=' + inst_db_tblprefix;
                 call_ajax(url, data, text_ok, text_err, function(){
-                    run_install_step(MYSQL_DB);
+                    STEP = MYSQL_DB;
+                    run_install_step();
                 });
             }
             else
             if ( inst_db_type === "SQLite") {
-                data = 'dbt='  + inst_db_type + '&dbn=' + inst_db_name + '&tpfx=' + inst_db_tblprefix;;
+                data = 'dbt='  + inst_db_type + '&dbn=' + inst_db_name + '&tpfx=' + inst_db_tblprefix_sqlite;
                 call_ajax(url, data, text_ok, text_err, function(){
-                    run_install_step(SQLITE_DB);
+                    STEP = SQLITE_DB;
+                    run_install_step();
                 });
             }
 
             break;
-        // STEP 1: check if database exists; if not, try to create it
-        case 1:
+////////// ...END
+
+////////// 2. CHECK/CLEAR/SAVE DATABASE
+        //    SQLITE_DB: check and/or create database according to flags
+        case SQLITE_DB:
+            // setting progress bar to 35%
+            $(".progress > .bar").attr("style","width: 35%");
+            $(".progress > .bar").html("35%");
             break;
-        // STEP 2: drop existing tables and create new one
-        case 2:
+        //    MYSQL_DB: check and/or create database according to flags
+        case MYSQL_DB:
+            // setting progress bar to 35%
+            $(".progress > .bar").attr("style","width: 35%");
+            $(".progress > .bar").html("35%");
             break;
+////////// ...END
         case 3:
             break;
     }
@@ -246,16 +260,17 @@ function call_ajax(ajx_url, ajx_data, ajx_text_ok, ajx_text_err, callback) {
             else
             if ( r.success ) {
                 // print result
-                $res_blk.html(ajx_text_ok);
-                animate_opacity($res_blk.parent(), 1);
+                $res_blk.html(ajx_text_ok);                             // set result block text...
+                animate_opacity($res_blk.parent(), 1);                  // ..and show it
 
-                callback();
+                var dummy = setTimeout(function(){callback();}, 1000);
                 return true;                // this is the final return TRUE if everything goes right!
             }
             else
             if ( !r.success ) {
-                $res_blk.html(ajx_text_err);
-                $res_blk.removeClass("alert-success", "alert-error");
+                ajx_text_err = ajx_text_err.replace("#REPLACE_ME#", r.err_msg);
+                $res_blk.html(ajx_text_err);                            // set result block text...
+                $res_blk.removeClass("alert-success", "alert-error");   // ..and show it
                 animate_opacity($res_blk.parent(), 1);
 
                 return false;

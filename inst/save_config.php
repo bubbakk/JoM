@@ -39,18 +39,22 @@ else {
         $dbuser = '';
         $dbpass = '';
         $dbhost = '';
+        $dbname_mysql  = '';
+        $dbname_sqlite = $dbname.'.sqlite';
     }
     else if ( $dbtype=='mysql' ) {
         $dbuser = post_or_get('dbu');
         $dbpass = post_or_get('dbp');
         $dbhost = post_or_get('dbh');
-        $dbhost = post_or_get('dbh');
+        $dbname_mysql  = $dbname;
+        $dbname_sqlite = '';
     }
     $tbl_prefix = post_or_get('tpfx');
 
     // replace occurrences in the template
     $template_file = str_replace("#DBTYPE#",  $dbtype,     $template_file);
-    $template_file = str_replace("#DBNAME#",  $dbname,     $template_file);
+    $template_file = str_replace("#DBNAME_MYSQL#",  $dbname_mysql,  $template_file);
+    $template_file = str_replace("#DBNAME_SQLITE#", $dbname_sqlite, $template_file);
     $template_file = str_replace("#DBUSER#",  $dbuser,     $template_file);
     $template_file = str_replace("#DBPASS#",  $dbpass,     $template_file);
     $template_file = str_replace("#DBHOST#",  $dbhost,     $template_file);
@@ -58,7 +62,7 @@ else {
 
     // check write permissions
     if ( !is_writable(DIR_BASE.CONFIG_FILENAME) ) {
-        $retval['err_msg'] = 'Configuration file '.CONFIG_FILENAME.' in base installation path is not writeable. Please check permissions';
+        $retval['err_msg'] = 'Configuration file '.CONFIG_FILENAME.' is not writeable. Please check write permissions';
         $retval['dbg_msg'] = 'File '.DIR_BASE.CONFIG_FILENAME.' not writeable';
         json_output_and_die($retval);
     }
