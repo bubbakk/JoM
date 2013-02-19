@@ -17,10 +17,13 @@ function json_output_and_die($data) {
 
 /*
  * Function: post_or_get
- * Print the passed argument in JSON format and die the script
+ * Try to return GET or POST value of the passed name variable.
+ *
+ * Returns:
+ *   the value of the passed name variable. If not defined, return false
  *
  * Parameters:
- *   $data - data to output in JSON format. Better if is an associative array
+ *   $data - data variable to read in GET or POST
  *
  */
 function post_or_get($name) {

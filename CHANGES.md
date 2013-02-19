@@ -11,6 +11,7 @@ Version 0.1
 - made STEP a global variable
 - made the progress bar work
 - checked config file save: save_config.php should be ok. Needed more tests, mainly checks against SQL injection
+- created the structure for database check/create
 
 18.02.2013
 ----------

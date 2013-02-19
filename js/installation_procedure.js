@@ -174,6 +174,7 @@ function run_install_step() {
     var flag_db_deltbl_mysql     = ( $('#inst_db_deliftbl_mysql').is(':checked') ? 1 : 0 );    // MySQL
     var flag_db_delfile          = ( $('#inst_db_delprevfile').is(':checked') ? 1 : 0 );       // SQLite
     var flag_db_deltbl_sqlite    = ( $('#inst_db_deliftbl_sqlite').is(':checked') ? 1 : 0 );   // SQLite
+    if ( flag_db_delfile ) flag_db_deltbl_sqlite = 0;                                          // do not clear tables if just created a new database
 
     var inst_db_hostname         = $('#inst_db_hostname').val();                               // MySQL
     var inst_db_username         = $('#inst_db_username').val();                               // MySQL
@@ -192,13 +193,13 @@ function run_install_step() {
             $(".progress > .bar").html("15%");
 
             // setting message feedback
-            $msg_blk.html('<strong>Setting</strong> configuration file');
+            $msg_blk.html('<strong>Configuring</strong> configuration file');
             $("#jom_msgs_container").append($new_blk);
             animate_opacity($new_blk, 1);
             animate_opacity($msg_blk, 1);
 
-            text_ok  = '<i class="icon-check"></i> <strong>saved</strong>';
-            text_err = '<i class="icon-warning-sign" title="#REPLACE_ME#"></i> <strong>not saved</strong>';
+            text_ok  = '<i class="icon-check"></i> <strong>done</strong>';
+            text_err = '<i class="icon-warning-sign" title="#REPLACE_ME#"></i> <strong>error</strong>';
 
             // Ajax call
             url  = './inst/save_config.php';
@@ -229,6 +230,24 @@ function run_install_step() {
             // setting progress bar to 35%
             $(".progress > .bar").attr("style","width: 35%");
             $(".progress > .bar").html("35%");
+
+            // setting message feedback
+            $msg_blk.html('<strong>Setting</strong> SQLite database');
+            $("#jom_msgs_container").append($new_blk);
+            animate_opacity($new_blk, 1);
+            animate_opacity($msg_blk, 1);
+
+            text_ok  = '<i class="icon-check"></i> <strong>done</strong>';
+            text_err = '<i class="icon-warning-sign" title="#REPLACE_ME#"></i> <strong>error</strong>';
+
+            // Ajax call
+            url  = './inst/set_database.php';
+            data = 'def=' + flag_db_delfile + '&ctbl=' + flag_db_deltbl_sqlite;
+            call_ajax(url, data, text_ok, text_err, function(){
+                STEP = DB_TABLES_CREATE;
+                run_install_step();
+            });
+
             break;
         //    MYSQL_DB: check and/or create database according to flags
         case MYSQL_DB:
@@ -277,6 +296,7 @@ function call_ajax(ajx_url, ajx_data, ajx_text_ok, ajx_text_err, callback) {
             }
         },
         error : function(jqxhr, text, error) {
+            ajx_text_err = ajx_text_err.replace("#REPLACE_ME#", "server reply error");
             $res_blk.html(ajx_text_err);
             $res_blk.removeClass("alert-success", "alert-error");
             animate_opacity($res_blk.parent(), 1);
