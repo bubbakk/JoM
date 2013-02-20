@@ -1,27 +1,16 @@
 <?php
 
 define('DIR_BASE', '../');
-require_once(DIR_BASE.'cfg/config.php');
 require_once(DIR_BASE.'/user_config.php');
+require_once(DIR_BASE.'cfg/config.php');
 require_once(DIR_LIB.'generic_lib.php');
+
+require_once(DIR_OOL.'bbkk_base_class.php');
+require_once(DIR_OOL.'bbkk_pdo.php');
 
 $retval['success'] = false;
 
 // reading input parameters
-
-// DBTYPE
-if ( post_or_get('dbt')===false) {
-    $retval['err_msg'] = 'Missing parameter';
-    $retval['dbg_msg'] = 'Missing dbt parameter';
-    json_output_and_die($retval);
-}
-$dbtype = strtolower( post_or_get('dbt') );
-if ( $dbtype!='mysql' && $dbtype!='sqlite' ) {
-    $retval['err_msg'] = 'Wrong parameter value';
-    $retval['dbg_msg'] = 'Parameter dbtype should be a valid value (by now, only mysql or sqlite)';
-    json_output_and_die($retval);
-}
-
 
 
 // SQLITE
@@ -43,13 +32,34 @@ if ( $config['DB']['type']==='sqlite' ) {
     }
 
     // check if file exist
-    $file_to_check = DIR_DBSQLT.$config['DB']['sqlite']['filename'];
+    $sqlite_db_file = DIR_DBSQLT.$config['DB']['sqlite']['filename'];
 
     // have to delete a previous existing database
     if ( $flag_delete_old_db ) {
+        if ( is_file($sqlite_db_file) ) {
+            if ( !is_writable($sqlite_db_file) ) {
+                $retval['err_msg'] = 'Can\'t delete old sqlite database';
+                $retval['dbg_msg'] = 'The file '.$sqlite_db_file.' exists but is not writable';
+                json_output_and_die($retval);
+            }
+            else {
+                if ( !unlink($sqlite_db_file) ) {
+                    $retval['err_msg'] = 'Can\'t delete old sqlite database. Probably the directory is not writable';
+                    $retval['dbg_msg'] = 'Can\'t unlink '.$sqlite_db_file.' (even if exists and is writable). Directory may not have write permissions';
+                    json_output_and_die($retval);
+                }
+            }
+        }
     }
 
-    // At this point, open existing SQLite database. If does not exist, it will be created
+    // At this point, open SQLite database. If does not exist, it will be created
+    $PDO = new BBKK_PDO($config['DB']['type']);
+    $PDO->dbname = $sqlite_db_file;
+    if ( !$PDO->open_database() ) {
+        $retval['err_msg'] = 'Could not open sqlite database';
+        $retval['dbg_msg'] = 'PDO database open failed';
+        json_output_and_die($retval);
+    }
 
 
     // once opened, check if have to clear tables
@@ -57,6 +67,11 @@ if ( $config['DB']['type']==='sqlite' ) {
     }
 
 }
+else
+// MYSQL
+if ( $config['DB']['type']==='mysql' ) {
+}
+
 
 $retval['success'] = true;
 json_output_and_die($retval);

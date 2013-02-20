@@ -1,6 +1,12 @@
 Version 0.1
 ===========
 
+20.02.2013
+----------
+- added PDO and Base_Class PHP classes
+- in PDO, added sqlite database open
+- now the inst/set_database.php script creates/opens correctly the SQLite database file
+
 19.02.2013
 ----------
 - simplified ajax calls for installation
