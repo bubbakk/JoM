@@ -79,9 +79,9 @@ function create_new_database_toggled(check) {
             $("#inst_db_superuser").removeAttr('readonly', true);
             $("#inst_db_superpass").removeAttr('readonly', true);
 
-            $("#inst_db_removeifany").attr('readonly', true);
+            $("#inst_db_deliftbl_mysql").attr('readonly', true);
         });
-        animate_opacity($("#inst_db_removeifany").parent().parent(), 0.1);
+        animate_opacity($("#inst_db_deliftbl_mysql").parent().parent(), 0.1);
 
     }
     else {
@@ -89,9 +89,9 @@ function create_new_database_toggled(check) {
             $("#inst_db_superuser").attr('readonly', true);
             $("#inst_db_superpass").attr('readonly', true);
 
-            $("#inst_db_removeifany").removeAttr('readonly');
+            $("#inst_db_deliftbl_mysql").removeAttr('readonly');
         });
-        animate_opacity($("#inst_db_removeifany").parent().parent(), 1);
+        animate_opacity($("#inst_db_deliftbl_mysql").parent().parent(), 1);
     }
 }
 
@@ -140,7 +140,7 @@ function run_install_step() {
 
     // operating statuses
     var SAVE_CONFIG               = 0;
-    // Database operations
+    // Database operations (also clear existing tables)
     var SQLITE_DB                 = 1;
     var MYSQL_DB                  = 2;
     // tables operations
@@ -167,20 +167,18 @@ function run_install_step() {
     $msg_blk  = $new_blk.children().eq(0).children().eq(0);
     $res_blk  = $new_blk.children().eq(1).children().eq(0);
 
-    var inst_db_type             = $('#inst_db_type').val();                                   // MySQL / SQLite
-    var inst_db_name             = $('#inst_db_name').val();                                   // MySQL / SQLite
+    var inst_db_type             = $('#inst_db_type').val();                                   // MySQL / SQLite    (SAVE_CONFIG)
+    var inst_db_name             = $('#inst_db_name').val();                                   // MySQL / SQLite    (SAVE_CONFIG)
 
     var flag_db_createdb         = ( $('#inst_db_createdb').is(':checked') ? 1 : 0 );          // MySQL
     var flag_db_deltbl_mysql     = ( $('#inst_db_deliftbl_mysql').is(':checked') ? 1 : 0 );    // MySQL
-    var flag_db_delfile          = ( $('#inst_db_delprevfile').is(':checked') ? 1 : 0 );       // SQLite
-    var flag_db_deltbl_sqlite    = ( $('#inst_db_deliftbl_sqlite').is(':checked') ? 1 : 0 );   // SQLite
-    if ( flag_db_delfile ) flag_db_deltbl_sqlite = 0;                                          // do not clear tables if just created a new database
+    var flag_db_delfile          = ( $('#inst_db_delprevfile').is(':checked') ? 1 : 0 );       // SQLite            (SQLITE_DB)
 
-    var inst_db_hostname         = $('#inst_db_hostname').val();                               // MySQL
-    var inst_db_username         = $('#inst_db_username').val();                               // MySQL
-    var inst_db_password         = $('#inst_db_password').val();                               // MySQL
+    var inst_db_hostname         = $('#inst_db_hostname').val();                               // MySQL             (SAVE_CONFIG)
+    var inst_db_username         = $('#inst_db_username').val();                               // MySQL             (SAVE_CONFIG)
+    var inst_db_password         = $('#inst_db_password').val();                               // MySQL             (SAVE_CONFIG)
     var inst_db_tblprefix        = $('#inst_db_tableprepend').val();                           // MySQL / SQLite
-    var inst_db_tblprefix_sqlite = $('#inst_db_tableprependfile').val();                       // MySQL / SQLite
+    var inst_db_tblprefix_sqlite = $('#inst_db_tableprependfile').val();                       // SQLite            (SAVE_CONFIG)
 
     switch (STEP)
     {
@@ -242,18 +240,34 @@ function run_install_step() {
 
             // Ajax call
             url  = './inst/set_database.php';
-            data = 'def=' + flag_db_delfile + '&ctbl=' + flag_db_deltbl_sqlite;
+            data = 'def=' + flag_db_delfile
             call_ajax(url, data, text_ok, text_err, function(){
                 STEP = DB_TABLES_CREATE;
                 run_install_step();
             });
-
             break;
         //    MYSQL_DB: check and/or create database according to flags
         case MYSQL_DB:
             // setting progress bar to 35%
             $(".progress > .bar").attr("style","width: 35%");
             $(".progress > .bar").html("35%");
+
+            // setting message feedback
+            $msg_blk.html('<strong>Preparing</strong> MySQL database');
+            $("#jom_msgs_container").append($new_blk);
+            animate_opacity($new_blk, 1);
+            animate_opacity($msg_blk, 1);
+
+            text_ok  = '<i class="icon-check"></i> <strong>done</strong>';
+            text_err = '<i class="icon-warning-sign" title="#REPLACE_ME#"></i> <strong>error</strong>';
+
+            // Ajax call
+            url  = './inst/set_database.php';
+            data = '';
+            call_ajax(url, data, text_ok, text_err, function(){
+                STEP = DB_TABLES_CREATE;
+                run_install_step();
+            });
             break;
 ////////// ...END
         case 3:

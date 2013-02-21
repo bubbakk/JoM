@@ -5,36 +5,84 @@ define('BBKK_BASE_CLASS__DIE_ON_E_ERRORS', 'true');      // can be set to 'true'
 
 
 /*
- * Class: BBKK_Base_Class
- * This class implements common useful methods and properties for all classes. Common usage
- * is for error management, logging and other common utilities
- *
- *
+   Class: BBKK_Base_Class
+   This class implements common useful methods and properties for all classes. Common usage
+  is for *error and message logging*.
+
  */
 class BBKK_Base_Class {
 
-    public    $filename    = '';     // filename
-    public    $classname   = '';     // class name
-    public    $method      = '';     // method
-    public    $line        = null;   // default is a null value (0 could be interpreted as the first line)
-    public    $version     = null;   // version is usually a free string
+    /*
+       Variable: $filename
+       File name of the class.
+    */
+    protected    $filename    = '';
 
-    public    $error       = false;  // normally, the class in not in error
-    public    $error_text  = '';
-    private   $error_type  = 0;      // using codes from PHP constants (see http://php.net/manual/en/errorfunc.constants.php)
+    /*
+       Variable: $classname
+       The name of the class.
+    */
+    protected    $classname   = '';
 
+    /*
+       Variable: $method
+       The method name (generally set a while before logging).
+    */
+    protected    $method      = '';
+
+    /*
+       Variable: $line
+       The code line (generally set a while before logging).
+       Default is a null value (0 could be interpreted as the first line)
+    */
+    protected    $line        = null;
+
+    /*
+       Variable: $version
+       Class version. Is a free string.
+    */
+    protected    $version     = null;
+
+    /*
+       Variable: $error
+       If true, the class or super-class in in error state.
+    */
+    protected    $error       = false;
+
+    /*
+       Variable: $error_text_usr
+       A string message that specifies the error/warning/message. Is user-oriented.
+    */
+    protected    $error_text_usr  = '';
+
+    /*
+       Variable: $error_text_dbg
+       A string message that specifies the error/warning/message. Is programmer-oriented.
+    */
+    public    $error_text_dbg  = '';
+
+    /*
+       Variable: $error_type
+       Values are the same as PHP constants (see http://php.net/manual/en/errorfunc.constants.php)
+    */
+    protected $error_type  = 0;
 
     protected $auto_log    = false;  // set if the error have to be always logged once set
-    private   $logger      = null;   // normally, the logger is not set
+
+    /*
+       Variable: $logger
+       Instance of logger object. Must implement a specific interface. By default is not set
+    */
+    private   $logger      = null;
 
 
    /*
     * Constructor: __construct
-    * The constructor needs to be called passing the file name and the class name
+    * The constructor sets filename and classname properties
     *
     * Parameters:
-    *   $file_name  - file name of the calling class (caller can use the __FILE__ magic variable)
-    *   $class_name - calling class name (caller can use the __CLASS__ magic variable)
+    *   $file_name  - file name of the calling class (caller can pass the PHP's __FILE__ magic variable)
+    *   $class_name - calling class name (caller can pass the PHP's __CLASS__ magic variable)
     */
     public function __construct($file_name = '', $class_name = '')
     {

@@ -1,6 +1,15 @@
 Version 0.1
 ===========
 
+21.02.2013
+----------
+- documented BBKK_Base_Class properties
+- created (compiled) first documentation files via naturalDocs
+- chiamata alla set_database.php per database MySQL ora attiva
+- fix minori nella GUI di installazione
+
+
+
 20.02.2013
 ----------
 - added PDO and Base_Class PHP classes

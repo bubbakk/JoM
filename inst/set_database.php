@@ -1,7 +1,7 @@
 <?php
 
 define('DIR_BASE', '../');
-require_once(DIR_BASE.'/user_config.php');
+require_once(DIR_BASE.'cfg/user_config.php');
 require_once(DIR_BASE.'cfg/config.php');
 require_once(DIR_LIB.'generic_lib.php');
 
@@ -21,13 +21,6 @@ if ( $config['DB']['type']==='sqlite' ) {
     if ( $flag_delete_old_db === false ) {
         $retval['err_msg'] = 'Missing parameter';
         $retval['dbg_msg'] = 'Missing def parameter';
-        json_output_and_die($retval);
-    }
-    // read flag "delete tables" if database exists
-    $flag_delete_tables = post_or_get('ctbl');
-    if ( $flag_delete_tables === false ) {
-        $retval['err_msg'] = 'Missing parameter';
-        $retval['dbg_msg'] = 'Missing ctbl parameter';
         json_output_and_die($retval);
     }
 
@@ -61,15 +54,26 @@ if ( $config['DB']['type']==='sqlite' ) {
         json_output_and_die($retval);
     }
 
-
-    // once opened, check if have to clear tables
-    if ( $flag_delete_tables ) {
-    }
-
 }
 else
 // MYSQL
 if ( $config['DB']['type']==='mysql' ) {
+    // if flag is set, create new DB using super-user and super-pass
+        // if flag is set remove existing previous database
+    // connect to db
+    $PDO = new BBKK_PDO($config['DB']['type']);
+    $PDO->host     =
+    $PDO->dbname   =
+    $PDO->username =
+    $PDO->password =
+
+    if ( !$PDO->open_database() ) {
+        $retval['err_msg'] = 'Could not open sqlite database';
+        $retval['dbg_msg'] = 'PDO database open failed';
+        json_output_and_die($retval);
+    }
+        // if flag is set, remove all tables
+        // create tables
 }
 
 

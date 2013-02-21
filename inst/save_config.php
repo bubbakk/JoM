@@ -59,14 +59,14 @@ else {
     $template_file = str_replace("#TBLPRFX#", $tbl_prefix, $template_file);
 
     // check write permissions
-    if ( !is_writable(DIR_BASE.CONFIG_FILENAME) ) {
+    if ( !is_writable(DIR_CFG) ) {
         $retval['err_msg'] = 'Configuration file '.CONFIG_FILENAME.' is not writeable. Please check write permissions';
         $retval['dbg_msg'] = 'File '.DIR_BASE.CONFIG_FILENAME.' not writeable';
         json_output_and_die($retval);
     }
 
     // save the file
-    if ( file_put_contents(DIR_BASE.CONFIG_FILENAME, $template_file) === FALSE ) {
+    if ( file_put_contents(DIR_CFG.CONFIG_FILENAME, $template_file) === FALSE ) {
         $retval['err_msg'] = 'Can not save configuration file. Please check permissions in cfg/ directory';
         json_output_and_die($retval);
     }
