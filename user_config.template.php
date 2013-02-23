@@ -5,12 +5,12 @@ $config['DB']['type'] = '#DBTYPE#';   // [mysql|sqlite]
 
 // Specific database settings
     // MySQL
-    $config['DB']['mysql']['username']  = '#DBUSER#';       // database connection username
-    $config['DB']['mysql']['password']  = '#DBPASS#';
-    $config['DB']['mysql']['host']      = '#DBHOST#';
-    $config['DB']['mysql']['dbname']    = '#DBNAME_MYSQL#';           // database name
+    $config['DB']['mysql']['username'] = '#DBUSER#';       // database connection username
+    $config['DB']['mysql']['password'] = '#DBPASS#';
+    $config['DB']['mysql']['host']     = '#DBHOST#';
+    $config['DB']['mysql']['dbname']   = '#DBNAME_MYSQL#';           // database name
     // SQLite
-    $config['DB']['sqlite']['filename'] = '#DBNAME_SQLITE#';    // sqlite database name
+    $config['DB']['sqlite']['dbname']  = '#DBNAME_SQLITE#';    // sqlite database name
 
 $config['SERVER']['domain']       = 'http:\/\/localhost';
 $config['SERVER']['domain_path']  = 'JoM';

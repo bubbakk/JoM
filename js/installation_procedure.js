@@ -1,4 +1,5 @@
-function go_to_step(step) {
+function go_to_step(step)
+{
     var actual_step = $("body").data('step');
     actual_step += step;
     $("body").data('step', actual_step);
@@ -73,7 +74,8 @@ function go_to_step(step) {
 
 }
 
-function create_new_database_toggled(check) {
+function create_new_database_toggled(check)
+{
     if (check) {
         animate_opacity($("#fieldset_1_b"), 1, function() {
             $("#inst_db_superuser").removeAttr('readonly', true);
@@ -95,7 +97,8 @@ function create_new_database_toggled(check) {
     }
 }
 
-function delete_existing_file_toggled(check) {
+function delete_existing_file_toggled(check)
+{
     if (check) {
         $("#inst_db_removeifanyfile").attr('readonly', true);
         animate_opacity($("#inst_db_removeifanyfile").parent().parent(), 0.1);
@@ -266,6 +269,28 @@ function run_install_step() {
             data = '';
             call_ajax(url, data, text_ok, text_err, function(){
                 STEP = DB_TABLES_CREATE;
+                run_install_step();
+            });
+            break;
+        case DB_TABLES_CREATE:
+            // setting progress bar to 80%
+            $(".progress > .bar").attr("style","width: 80%");
+            $(".progress > .bar").html("80%");
+
+            // setting message feedback
+            $msg_blk.html('<strong>Creating</strong>tables');
+            $("#jom_msgs_container").append($new_blk);
+            animate_opacity($new_blk, 1);
+            animate_opacity($msg_blk, 1);
+
+            text_ok  = '<i class="icon-check"></i> <strong>done</strong>';
+            text_err = '<i class="icon-warning-sign" title="#REPLACE_ME#"></i> <strong>error</strong>';
+
+            // Ajax call
+            url  = './inst/create_tables.php';
+            data = '';
+            call_ajax(url, data, text_ok, text_err, function(){
+                STEP = DB_TABLES_SOME_DATA;
                 run_install_step();
             });
             break;

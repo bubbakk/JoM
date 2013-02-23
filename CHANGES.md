@@ -1,6 +1,12 @@
 Version 0.1
 ===========
 
+23.02.2013
+----------
+- started tables creation
+- created inst/create_tables.php script for tables creation (not DB dependant)
+- created inst/tables_specification.php; contains an array of tables and CREATE SQL statement, for each DBMS
+
 21.02.2013
 ----------
 - documented BBKK_Base_Class properties
