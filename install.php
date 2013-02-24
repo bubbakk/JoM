@@ -118,7 +118,7 @@ require_once(DIR_BASE.'cfg/config.php');
                         <div class="control-group">
                             <label class="control-label" for="inst_db_password">Password</label>
                             <div class="controls">
-                                <input id="inst_db_password" type="text">
+                                <input id="inst_db_password" type="password">
                             </div>
                         </div>
                         <div class="control-group">
@@ -147,7 +147,7 @@ require_once(DIR_BASE.'cfg/config.php');
                         <div class="control-group jom_create_db">
                             <label class="control-label" for="inst_db_superpass">Password</label>
                             <div class="controls">
-                                <input id="inst_db_superpass" type="text">
+                                <input id="inst_db_superpass" type="password">
                             </div>
                         </div>
                         <div class="control-group">

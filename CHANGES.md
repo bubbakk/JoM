@@ -1,11 +1,19 @@
 Version 0.1
 ===========
 
+24.02.2013
+----------
+- fixed password input field to regular type="password"
+- now the installer can create tables in both implemented databases type (mysql and sqlite). Tables prepend correctly managed
+- created first table "Companies"
+- created tabke "Users"
+
 23.02.2013
 ----------
 - started tables creation
 - created inst/create_tables.php script for tables creation (not DB dependant)
 - created inst/tables_specification.php; contains an array of tables and CREATE SQL statement, for each DBMS
+- fixed user_config_template.php: the array index od DB name is now the same in SQLite ad MySQL (so that there can be one only database open procedure)
 
 21.02.2013
 ----------

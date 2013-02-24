@@ -167,7 +167,9 @@ class BBKK_Base_Class {
         $this->error_text   = $msg;
         $this->error_method = $method;
         $this->error_line   = $line;
+/*
         $this->error_type   = $type;
+*/
 
         return true;
     }

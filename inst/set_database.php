@@ -25,7 +25,7 @@ if ( $config['DB']['type']==='sqlite' ) {
     }
 
     // check if file exist
-    $sqlite_db_file = DIR_DBSQLT.$config['DB']['sqlite']['filename'];
+    $sqlite_db_file = DIR_DBSQLT.$config['DB']['sqlite']['dbname'];
 
     // have to delete a previous existing database
     if ( $flag_delete_old_db ) {
@@ -62,10 +62,10 @@ if ( $config['DB']['type']==='mysql' ) {
         // if flag is set remove existing previous database
     // connect to db
     $PDO = new BBKK_PDO($config['DB']['type']);
-    $PDO->host     =
-    $PDO->dbname   =
-    $PDO->username =
-    $PDO->password =
+    $PDO->host     = $config['DB'][$config['DB']['type']]['host'];
+    $PDO->dbname   = $config['DB'][$config['DB']['type']]['dbname'];
+    $PDO->username = $config['DB'][$config['DB']['type']]['username'];
+    $PDO->password = $config['DB'][$config['DB']['type']]['password'];
 
     if ( !$PDO->open_database() ) {
         $retval['err_msg'] = 'Could not open sqlite database';

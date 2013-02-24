@@ -278,7 +278,7 @@ function run_install_step() {
             $(".progress > .bar").html("80%");
 
             // setting message feedback
-            $msg_blk.html('<strong>Creating</strong>tables');
+            $msg_blk.html('<strong>Creating</strong> tables');
             $("#jom_msgs_container").append($new_blk);
             animate_opacity($new_blk, 1);
             animate_opacity($msg_blk, 1);
