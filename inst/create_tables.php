@@ -21,9 +21,9 @@ require_once('tables_specification.php');                                       
 $DBH = $PDO->get_dbh();
 
 $res = $DBH->exec($tables['Companies'][$config['DB']['type']]);                     // execute query for Companies
-if ( $res===false ) die(__LINE__ . " - ".print_r($DBH->errorInfo(), true));;
+if ( $res===false ) die(__LINE__ . " - ".print_r($DBH->errorInfo(), true));
 $res = $DBH->exec($tables['Users'][$config['DB']['type']]);                         // execute query for Users
-if ( $res===false ) die(__LINE__ . " - ".print_r($DBH->errorInfo(), true));;
+if ( $res===false ) die(__LINE__ . " - ".print_r($DBH->errorInfo(), true));
 
 
 $retval['success'] = true;

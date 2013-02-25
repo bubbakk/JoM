@@ -149,6 +149,7 @@ function run_install_step() {
     // tables operations
     var DB_TABLES_CREATE          = 3;
     var DB_TABLES_SOME_DATA       = 4;
+    var DONE                      = 5;
 
     // error statuses
     var ERROR_SAVE_CONFIG         = 100;
@@ -295,7 +296,29 @@ function run_install_step() {
             });
             break;
 ////////// ...END
-        case 3:
+        case DB_TABLES_SOME_DATA:
+            // setting progress bar to 80%
+            $(".progress > .bar").attr("style","width: 100%");
+            $(".progress > .bar").html("100%");
+
+            // setting message feedback
+            $msg_blk.html('<strong>Creating</strong> sample data');
+            $("#jom_msgs_container").append($new_blk);
+            animate_opacity($new_blk, 1);
+            animate_opacity($msg_blk, 1);
+
+            text_ok  = '<i class="icon-check"></i> <strong>done</strong>';
+            text_err = '<i class="icon-warning-sign" title="#REPLACE_ME#"></i> <strong>error</strong>';
+
+            // Ajax call
+            url  = './inst/create_sample_data.php';
+            data = '';
+            call_ajax(url, data, text_ok, text_err, function(){
+                STEP = DONE;
+                run_install_step();
+            });
+            break;
+        case DONE:
             break;
     }
 

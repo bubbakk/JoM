@@ -22,7 +22,7 @@ $tables = array (
                         Company_id                      INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE,
                         Company_name                    VARCHAR NOT NULL,
                         Company_address                 VARCHAR NOT NULL,
-                        Company_location                VARCHAR NOT NULL,
+                        Company_geo_location            VARCHAR NOT NULL,
                         Company_main_telephone_number   VARCHAR NOT NULL,
                         Company_piva                    VARCHAR NOT NULL,
                         Company_trashed                 BOOL DEFAULT 0)"
