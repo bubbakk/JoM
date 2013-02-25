@@ -17,7 +17,7 @@ $tables = array (
                         `Company_piva`                  varchar(50) CHARACTER SET utf8  NOT NULL DEFAULT '',
                         `Company_trashed`               tinyint(1) unsigned             NOT NULL DEFAULT '0',
                         PRIMARY KEY (`Company_id`)
-                 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;",
+                 ) ENGINE=MyISAM DEFAULT CHARSET=utf8",
     'sqlite'  => "CREATE TABLE IF NOT EXISTS ".TBL_COMPANIES." (
                         Company_id                      INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE,
                         Company_name                    VARCHAR NOT NULL,
@@ -52,7 +52,7 @@ $tables = array (
                         `User_external_id_join`         integer                         NOT NULL DEFAULT '0' COMMENT 'to be used only if external authenication is enabled (to be developed)',
                         `User_trashed`                  tinyint(1) unsigned             NOT NULL DEFAULT '0',
                         PRIMARY KEY (`User_id`)
-                 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;",
+                 ) ENGINE=MyISAM DEFAULT CHARSET=utf8",
     'sqlite'  => "CREATE TABLE IF NOT EXISTS ".TBL_USERS." (
                         User_id                       INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE,
                         User_firstname                VARCHAR(50) NOT NULL,
@@ -76,5 +76,34 @@ $tables = array (
                         User_freegroup_id_grpD        INTEGER               NOT NULL DEFAULT 0,
                         User_external_id_join         INTEGER               NOT NULL DEFAULT 0,
                         User_trashed                  BOOL NOT NULL DEFAULT 0)"
+  ),
+  'Jobs' => array(
+    'mysql'  => "CREATE TABLE IF NOT EXISTS `Jobs` (
+                        `Job_id`                      INTEGER unsigned      NOT NULL AUTO_INCREMENT,
+                        `Job_subject`                 varchar(255)          NOT NULL DEFAULT '',
+                        `Job_description`             text                  NOT NULL,
+                        `Job_category_level_1`        INTEGER unsigned      NOT NULL DEFAULT '0',
+                        `Job_category_level_2`        INTEGER unsigned      NOT NULL DEFAULT '0',
+                        `Job_category_level_3`        INTEGER unsigned      NOT NULL DEFAULT '0',
+                        `Job_tags`                    text                  NOT NULL DEFAULT '',
+                        `Job_priority`                tinyint(4) unsigned   NOT NULL DEFAULT '1',
+                        `Job_creation_datetime`       INTEGER unsigned      NOT NULL DEFAULT '0',
+                        `Job_percent_completed`       tinyint(1) unsigned   NOT NULL DEFAULT '0',
+                        `Job_attachment_1`            mediumblob            NOT NULL,
+                        `Job_attachment_2`            mediumblob            NOT NULL,
+                        `Job_deadline_datetime`       INTEGER unsigned      NOT NULL DEFAULT '0',
+                        `Job_assigned_to_User`        INTEGER unsigned      NOT NULL DEFAULT '0',
+                        `Job_assigned_to_chainedgroup_cat_A` INTEGER unsigned NOT NULL DEFAULT '0',
+                        `Job_assigned_to_chainedgroup_cat_B` INTEGER unsigned NOT NULL DEFAULT '0',
+                        `Job_assigned_to_chainedgroup_cat_C` INTEGER unsigned NOT NULL DEFAULT '0',
+                        `Job_assigned_to_chainedgroup_cat_D` INTEGER unsigned NOT NULL DEFAULT '0',
+                        `Job_assigned_to_freegroup_A` INTEGER unsigned      NOT NULL DEFAULT '0',
+                        `Job_assigned_to_freegroup_B` INTEGER unsigned      NOT NULL DEFAULT '0',
+                        `Job_assigned_to_freegroup_C` INTEGER unsigned      NOT NULL DEFAULT '0',
+                        `Job_assigned_to_freegroup_D` INTEGER unsigned      NOT NULL DEFAULT '0',
+                        `Job_trashed`                 tinyint(1)            NOT NULL DEFAULT '0',
+                        PRIMARY KEY (`Job_id`)
+                 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;",
+    'sqlite' =>
   )
 );

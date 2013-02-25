@@ -1,6 +1,16 @@
 Version 0.1
 ===========
 
+26.02.2013
+----------
+- added Jobs table
+
+25.02.2013
+----------
+- sample data creation routines implemented and working.
+- installation procedure correctly call all scripts
+
+
 24.02.2013
 ----------
 - fixed password input field to regular type="password"

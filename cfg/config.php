@@ -3,7 +3,7 @@
 define('JOM_DEBUG',     true);
 define('JOM_LOG',       true);
 define('JOM_MILESTONE', '0.1');                         // installer version (refer to MILESTONES.md for versioning progression)
-define('JOM_RELEASE',   '6');
+define('JOM_RELEASE',   '8');
 define('JOM_VERSION',   JOM_MILESTONE.'.'.JOM_RELEASE); // milestone.release
 define('JOM_DESC_VER',  'v. '.JOM_MILESTONE.'.x: installation procedure / database main tables');   // milestone version description
 
@@ -26,7 +26,8 @@ define('DIR_DBSQLT', DIR_BASE.'sqlite/');
 
 // tables definition
 if ( !defined('TABLES_PREFIX') ) define('TABLES_PREFIX', '');
-define('TBL_USERS',               TABLES_PREFIX.'users');
-define('TBL_USERS_ACL',           TABLES_PREFIX.'users_acl');
+define('TBL_COMPANIES',           TABLES_PREFIX.'Company');
+define('TBL_USERS',               TABLES_PREFIX.'Users');
+define('TBL_USERS_ACL',           TABLES_PREFIX.'Users_acl');
 define('TBL_PROBLEMS_CATEGORIES', TABLES_PREFIX.'problems_categories');
 define('TBL_LOGGER',              TABLES_PREFIX.'log');
