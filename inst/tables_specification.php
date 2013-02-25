@@ -12,7 +12,7 @@ $tables = array (
                         `Company_id`                    INTEGER unsigned                NOT NULL AUTO_INCREMENT,
                         `Company_name`                  varchar(50) CHARACTER SET utf8  NOT NULL DEFAULT '',
                         `Company_address`               varchar(200) CHARACTER SET utf8 NOT NULL DEFAULT '',
-                        `Company_location`              varchar(100) CHARACTER SET utf8 NOT NULL DEFAULT '',
+                        `Company_geo_location`          varchar(100) CHARACTER SET utf8 NOT NULL DEFAULT '',
                         `Company_main_telephone_number` varchar(30) CHARACTER SET utf8  NOT NULL DEFAULT '',
                         `Company_piva`                  varchar(50) CHARACTER SET utf8  NOT NULL DEFAULT '',
                         `Company_trashed`               tinyint(1) unsigned             NOT NULL DEFAULT '0',

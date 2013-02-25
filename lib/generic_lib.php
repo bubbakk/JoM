@@ -37,3 +37,27 @@ function post_or_get($name) {
 
     return false;
 }
+
+
+function open_database($type, $DB_cfg)
+{
+    $PDO = new BBKK_PDO($type);
+
+    $PDO->dbname = $DB_cfg['dbname'];
+    if ( !empty($DB_cfg['host']) ) {
+        $PDO->dbname   = $DB_cfg['dbname'];
+        $PDO->host     = $DB_cfg['host'];
+        $PDO->username = $DB_cfg['username'];
+        $PDO->password = $DB_cfg['password'];
+    }
+    else {
+        $PDO->dbname   = DIR_DBSQLT.$DB_cfg['dbname'];
+    }
+    if ( !$PDO->open_database() ) {
+        $retval['err_msg'] = 'Could not open '.$config['DB']['type'].' database';
+        $retval['dbg_msg'] = 'PDO database open failed';
+        json_output_and_die($retval);
+    }
+
+    return $PDO;
+}
