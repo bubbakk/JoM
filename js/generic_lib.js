@@ -1,5 +1,5 @@
 /*
- * Function
+ * Function: get__e_commerce_bullshit
  * Useful sentence generator
  *
  * Thank you:
@@ -45,4 +45,35 @@ function get__e_commerce_bullshit() {
     index3 = Math.round(Math.random() * max3);
 
     return array1[index1] + " " + array2[index2] + " " + array3[index3];
+}
+
+
+/*
+   Function: animate_opacity
+   Animate opacity transitions with useful addictions such as show/hide and callbacks
+
+   Parameters:
+     target - jQuery target
+     opacity_val - opacity to be applied
+     callback - optional callback
+ */
+function animate_opacity(target, opacity_val, callback)
+{
+    if ( opacity_val > 0 ) target.show();
+
+    if ( callback===undefined ) {
+        target.animate({
+            opacity: opacity_val,
+        }, 500, function(){
+            if ( opacity_val == 0 ) target.hide();
+        });
+    }
+    else {
+        target.animate({
+            opacity: opacity_val,
+        }, 500, function(){
+            callback();
+            if ( opacity_val == 0 ) target.hide();
+        });
+    }
 }

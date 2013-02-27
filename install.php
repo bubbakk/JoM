@@ -6,6 +6,7 @@ require_once(DIR_BASE.'cfg/config.php');
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link type="text/plain" rel="author" href="./humans.txt" />
     <link href="./css/bootstrap.min.css" rel="stylesheet"  type="text/css" media="screen">
     <link href="./css/jom_default_style.css" rel="stylesheet"  type="text/css" media="screen">
     <link href="./css/install.css" rel="stylesheet"  type="text/css" media="screen">
@@ -224,12 +225,14 @@ require_once(DIR_BASE.'cfg/config.php');
                 </div>
             </div>
         </div>
+    </div>
 
-    <script src="./js/lib/bootstrap.min.js"></script>
     <div id="jom_version_ribbon">
         <div class="jom_label">ver.</div>
         <div class="jom_version" title="<?php print(JOM_DESC_VER);?>" onclick="javascript: $(this).next().text(get__e_commerce_bullshit()); animate_opacity($(this).next(), 1);"><?php print(JOM_VERSION);?></div>
         <div class="jom_useful_sentence"></div>
     </div>
+
+    <script src="./js/lib/bootstrap.min.js"></script>
 </body>
 </html>

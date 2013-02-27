@@ -109,27 +109,6 @@ function delete_existing_file_toggled(check)
     }
 }
 
-function animate_opacity(target, opacity_val, callback)
-{
-    if ( opacity_val > 0 ) target.show();
-
-    if ( callback===undefined ) {
-        target.animate({
-            opacity: opacity_val,
-        }, 500, function(){
-            if ( opacity_val == 0 ) target.hide();
-        });
-    }
-    else {
-        target.animate({
-            opacity: opacity_val,
-        }, 500, function(){
-            callback();
-            if ( opacity_val == 0 ) target.hide();
-        });
-    }
-}
-
 
 
 var $new_blk = undefined;

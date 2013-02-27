@@ -1,9 +1,16 @@
 Version 0.1
 ===========
 
+27.02.2013
+----------
+- ...working on main application page design...
+- added humans.txt and linked in install and application
+
 26.02.2013
 ----------
 - added Jobs table
+- started main application page design
+- Javascript function animate_opacity() moved from installation_procedure.js to generic_lib.js
 
 25.02.2013
 ----------
