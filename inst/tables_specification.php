@@ -2,12 +2,12 @@
 
 if ( !defined('TABLES_PREFIX') ) define('TABLES_PREFIX', '');
 
-$tables = array (
-  'Users' => array (
+$tables = array(
+  'Users' => array(
     'mysql'   => "",
     'sqlite'  => ""
   ),
-  'Companies' => array (
+  'Companies' => array(
     'mysql'   => "CREATE TABLE IF NOT EXISTS `".TBL_COMPANIES."` (
                         `Company_id`                    INTEGER unsigned                NOT NULL AUTO_INCREMENT,
                         `Company_name`                  varchar(50) CHARACTER SET utf8  NOT NULL DEFAULT '',
@@ -51,20 +51,21 @@ $tables = array (
                         `User_freegroup_id_grpD`        integer unsigned                NOT NULL DEFAULT '0',
                         `User_external_id_join`         integer                         NOT NULL DEFAULT '0' COMMENT 'to be used only if external authenication is enabled (to be developed)',
                         `User_trashed`                  tinyint(1) unsigned             NOT NULL DEFAULT '0',
-                        PRIMARY KEY (`User_id`)
+                        PRIMARY KEY (`User_id`),
+                        UNIQUE  KEY `USERNAME` (`User_username`)
                  ) ENGINE=MyISAM DEFAULT CHARSET=utf8",
     'sqlite'  => "CREATE TABLE IF NOT EXISTS ".TBL_USERS." (
                         User_id                       INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE,
-                        User_firstname                VARCHAR(50) NOT NULL,
-                        User_lastname                 VARCHAR(50) NOT NULL,
-                        User_username                 VARCHAR(20) NOT NULL,
-                        User_password                 VARCHAR(50) NOT NULL,
-                        User_nickname                 VARCHAR(50) NOT NULL,
+                        User_firstname                VARCHAR(50)           NOT NULL,
+                        User_lastname                 VARCHAR(50)           NOT NULL,
+                        User_username                 VARCHAR(20)           NOT NULL,
+                        User_password                 VARCHAR(50)           NOT NULL,
+                        User_nickname                 VARCHAR(50)           NOT NULL,
                         User_contacts_internal_telephone_number VARCHAR(20) NOT NULL,
                         User_contacts_telephone_number VARCHAR(50)          NOT NULL,
                         User_contacts_mobile          VARCHAR(50)           NOT NULL,
                         User_contacts_email           VARCHAR(100)          NOT NULL,
-                        User_is_internal_company      BOOL(1)               NOT NULL DEFAULT 1,
+                        User_is_internal_company      BOOL                  NOT NULL DEFAULT 1,
                         User_company_id               INTEGER               NOT NULL,
                         User_chainedgroup_id_catA     INTEGER               NOT NULL DEFAULT 0,
                         User_chainedgroup_id_catB     INTEGER               NOT NULL DEFAULT 0,
@@ -75,7 +76,7 @@ $tables = array (
                         User_freegroup_id_grpC        INTEGER               NOT NULL DEFAULT 0,
                         User_freegroup_id_grpD        INTEGER               NOT NULL DEFAULT 0,
                         User_external_id_join         INTEGER               NOT NULL DEFAULT 0,
-                        User_trashed                  BOOL NOT NULL DEFAULT 0)"
+                        User_trashed                  BOOL                  NOT NULL DEFAULT 0)"
   ),
   'Jobs' => array(
     'mysql'  => "CREATE TABLE IF NOT EXISTS `Jobs` (
@@ -104,6 +105,29 @@ $tables = array (
                         `Job_trashed`                 tinyint(1)            NOT NULL DEFAULT '0',
                         PRIMARY KEY (`Job_id`)
                  ) ENGINE=MyISAM DEFAULT CHARSET=utf8;",
-    'sqlite' =>
+    'sqlite' => "CREATE TABLE IF NOT EXISTS Jobs (
+                        Job_id                      INTEGER       PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE,
+                        Job_subject                 VARCHAR       NOT NULL DEFAULT '',
+                        Job_description             TEXT          NOT NULL,
+                        Job_category_level_1        INTEGER       NOT NULL DEFAULT 0,
+                        Job_category_level_2        INTEGER       NOT NULL DEFAULT 0,
+                        Job_category_level_3        INTEGER       NOT NULL DEFAULT 0,
+                        Job_tags                    TEXT          NOT NULL DEFAULT '',
+                        Job_priority                INTEGER       NOT NULL DEFAULT 1,
+                        Job_creation_datetime       INTEGER       NOT NULL DEFAULT 0,
+                        Job_percent_completed       INTEGER       NOT NULL DEFAULT 0,
+                        Job_attachment_1            BLOB          NOT NULL,
+                        Job_attachment_2            BLOB          NOT NULL,
+                        Job_deadline_datetime       INTEGER       NOT NULL DEFAULT 0,
+                        Job_assigned_to_User        INTEGER       NOT NULL DEFAULT 0,
+                        Job_assigned_to_chainedgroup_cat_A INTEGER  NOT NULL DEFAULT 0,
+                        Job_assigned_to_chainedgroup_cat_B INTEGER  NOT NULL DEFAULT 0,
+                        Job_assigned_to_chainedgroup_cat_C INTEGER  NOT NULL DEFAULT 0,
+                        Job_assigned_to_chainedgroup_cat_D INTEGER  NOT NULL DEFAULT 0,
+                        Job_assigned_to_freegroup_A INTEGER       NOT NULL DEFAULT 0,
+                        Job_assigned_to_freegroup_B INTEGER       NOT NULL DEFAULT 0,
+                        Job_assigned_to_freegroup_C INTEGER       NOT NULL DEFAULT 0,
+                        Job_assigned_to_freegroup_D INTEGER       NOT NULL DEFAULT 0,
+                        Job_trashed                 INTEGER       NOT NULL DEFAULT 0)"
   )
 );

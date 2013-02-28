@@ -1,9 +1,15 @@
 Version 0.1
 ===========
 
+28.02.2013
+----------
+- table Users created
+- table Jobs for sqlite created
+- User sample data created
+
 27.02.2013
 ----------
-- ...working on main application page design...
+- working on main application page design: added a modal window for Job creation
 - added humans.txt and linked in install and application
 
 26.02.2013
