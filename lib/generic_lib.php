@@ -54,7 +54,7 @@ function open_database($type, $DB_cfg)
         $PDO->dbname   = DIR_DBSQLT.$DB_cfg['dbname'];
     }
     if ( !$PDO->open_database() ) {
-        $retval['err_msg'] = 'Could not open '.$config['DB']['type'].' database';
+        $retval['err_msg'] = 'Could not open '.$type.' database';
         $retval['dbg_msg'] = 'PDO database open failed';
         json_output_and_die($retval);
     }

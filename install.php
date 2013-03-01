@@ -70,7 +70,7 @@ require_once(DIR_BASE.'cfg/config.php');
                             <label class="control-label" for="inst_db_type">Database type</label>
                             <div class="controls">
                                 <select id="inst_db_type" placeholder="Select database type">
-                                    <option value="MySQL">MySQL</option>
+                                    <option value="MySQL" selected>MySQL</option>
                                     <option value="SQLite">SQLite</option>
                                 </select>
                             </div>

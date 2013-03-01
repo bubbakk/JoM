@@ -62,18 +62,7 @@ if ( $config['DB']['type']==='mysql' ) {
         // if flag is set remove existing previous database
     // connect to db
     $PDO = new BBKK_PDO($config['DB']['type']);
-    $PDO->host     = $config['DB'][$config['DB']['type']]['host'];
-    $PDO->dbname   = $config['DB'][$config['DB']['type']]['dbname'];
-    $PDO->username = $config['DB'][$config['DB']['type']]['username'];
-    $PDO->password = $config['DB'][$config['DB']['type']]['password'];
-
-    if ( !$PDO->open_database() ) {
-        $retval['err_msg'] = 'Could not open sqlite database';
-        $retval['dbg_msg'] = 'PDO database open failed';
-        json_output_and_die($retval);
-    }
-        // if flag is set, remove all tables
-        // create tables
+    $PDO = open_database($config['DB']['type'], $config['DB'][$config['DB']['type']]);  // open DB
 }
 
 

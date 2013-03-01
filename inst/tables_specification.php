@@ -79,7 +79,7 @@ $tables = array(
                         User_trashed                  BOOL                  NOT NULL DEFAULT 0)"
   ),
   'Jobs' => array(
-    'mysql'  => "CREATE TABLE IF NOT EXISTS `Jobs` (
+    'mysql'  => "CREATE TABLE IF NOT EXISTS `".TBL_JOBS."` (
                         `Job_id`                      INTEGER unsigned      NOT NULL AUTO_INCREMENT,
                         `Job_subject`                 varchar(255)          NOT NULL DEFAULT '',
                         `Job_description`             text                  NOT NULL,
@@ -105,7 +105,7 @@ $tables = array(
                         `Job_trashed`                 tinyint(1)            NOT NULL DEFAULT '0',
                         PRIMARY KEY (`Job_id`)
                  ) ENGINE=MyISAM DEFAULT CHARSET=utf8;",
-    'sqlite' => "CREATE TABLE IF NOT EXISTS Jobs (
+    'sqlite' => "CREATE TABLE IF NOT EXISTS ".TBL_JOBS." (
                         Job_id                      INTEGER       PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE,
                         Job_subject                 VARCHAR       NOT NULL DEFAULT '',
                         Job_description             TEXT          NOT NULL,
@@ -129,5 +129,35 @@ $tables = array(
                         Job_assigned_to_freegroup_C INTEGER       NOT NULL DEFAULT 0,
                         Job_assigned_to_freegroup_D INTEGER       NOT NULL DEFAULT 0,
                         Job_trashed                 INTEGER       NOT NULL DEFAULT 0)"
+  ),
+  'Categories_A' => array(
+    'mysql'  => "CREATE TABLE IF NOT EXISTS `".TBL_CATEGORIES_A."` (
+                          `Category_A_id`            int(10) unsigned    NOT NULL AUTO_INCREMENT,
+                          `Category_A_name`          varchar(50)         NOT NULL DEFAULT '',
+                          `Category_A_description`   varchar(255)        NOT NULL DEFAULT '',
+                          `Category_A_trashed`       tinyint(1) unsigned NOT NULL DEFAULT '0',
+                          PRIMARY KEY (`Category_A_id`)
+                        ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;",
+    'sqlite'  => "CREATE TABLE IF NOT EXISTS ".TBL_CATEGORIES_A." (
+                          Category_A_id              INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE,
+                          Category_A_name            VARCHAR NOT NULL DEFAULT '',
+                          Category_A_description     VARCHAR NOT NULL DEFAULT '',
+                          Category_A_trashed         INTEGER NOT NULL DEFAULT '0');"
+  ),
+  'Categories_B' => array(
+    'mysql'  => "CREATE TABLE IF NOT EXISTS `".TBL_CATEGORIES_B."` (
+                          `Category_B_id`            int(10) unsigned    NOT NULL AUTO_INCREMENT,
+                          `Category_B_id_Category_A` int(10) unsigned    NOT NULL,
+                          `Category_B_name`          varchar(50)         NOT NULL DEFAULT '',
+                          `Category_B_description`   varchar(255)        NOT NULL DEFAULT '',
+                          `Category_B_trashed`       tinyint(1) unsigned NOT NULL DEFAULT '0',
+                          PRIMARY KEY (`Category_B_id`)
+                        ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;",
+    'sqlite'  => "CREATE TABLE IF NOT EXISTS ".TBL_CATEGORIES_B." (
+                          Category_B_id              INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE,
+                          Category_B_id_Category_A   INTEGER NOT NULL,
+                          Category_B_name            VARCHAR NOT NULL DEFAULT '',
+                          Category_B_description     VARCHAR NOT NULL DEFAULT '',
+                          Category_B_trashed         INTEGER NOT NULL DEFAULT '0');"
   )
 );
