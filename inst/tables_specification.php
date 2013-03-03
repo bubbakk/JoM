@@ -130,34 +130,34 @@ $tables = array(
                         Job_assigned_to_freegroup_D INTEGER       NOT NULL DEFAULT 0,
                         Job_trashed                 INTEGER       NOT NULL DEFAULT 0)"
   ),
-  'Categories_A' => array(
-    'mysql'  => "CREATE TABLE IF NOT EXISTS `".TBL_CATEGORIES_A."` (
-                          `Category_A_id`            int(10) unsigned    NOT NULL AUTO_INCREMENT,
-                          `Category_A_name`          varchar(50)         NOT NULL DEFAULT '',
-                          `Category_A_description`   varchar(255)        NOT NULL DEFAULT '',
-                          `Category_A_trashed`       tinyint(1) unsigned NOT NULL DEFAULT '0',
-                          PRIMARY KEY (`Category_A_id`)
+  'Categories_1' => array(
+    'mysql'  => "CREATE TABLE IF NOT EXISTS `".TBL_Categories_1."` (
+                          `Category_1_id`            int(10) unsigned    NOT NULL AUTO_INCREMENT,
+                          `Category_1_name`          varchar(50)         NOT NULL DEFAULT '',
+                          `Category_1_description`   varchar(255)        NOT NULL DEFAULT '',
+                          `Category_1_trashed`       tinyint(1) unsigned NOT NULL DEFAULT '0',
+                          PRIMARY KEY (`Category_1_id`)
                         ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;",
-    'sqlite'  => "CREATE TABLE IF NOT EXISTS ".TBL_CATEGORIES_A." (
-                          Category_A_id              INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE,
-                          Category_A_name            VARCHAR NOT NULL DEFAULT '',
-                          Category_A_description     VARCHAR NOT NULL DEFAULT '',
-                          Category_A_trashed         INTEGER NOT NULL DEFAULT '0');"
+    'sqlite'  => "CREATE TABLE IF NOT EXISTS ".TBL_Categories_1." (
+                          Category_1_id              INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE,
+                          Category_1_name            VARCHAR NOT NULL DEFAULT '',
+                          Category_1_description     VARCHAR NOT NULL DEFAULT '',
+                          Category_1_trashed         INTEGER NOT NULL DEFAULT '0');"
   ),
-  'Categories_B' => array(
+  'Categories_2' => array(
     'mysql'  => "CREATE TABLE IF NOT EXISTS `".TBL_CATEGORIES_B."` (
-                          `Category_B_id`            int(10) unsigned    NOT NULL AUTO_INCREMENT,
-                          `Category_B_id_Category_A` int(10) unsigned    NOT NULL,
-                          `Category_B_name`          varchar(50)         NOT NULL DEFAULT '',
-                          `Category_B_description`   varchar(255)        NOT NULL DEFAULT '',
-                          `Category_B_trashed`       tinyint(1) unsigned NOT NULL DEFAULT '0',
-                          PRIMARY KEY (`Category_B_id`)
+                          `Category_2_id`            int(10) unsigned    NOT NULL AUTO_INCREMENT,
+                          `Category_2_id_Category_1` int(10) unsigned    NOT NULL,
+                          `Category_2_name`          varchar(50)         NOT NULL DEFAULT '',
+                          `Category_2_description`   varchar(255)        NOT NULL DEFAULT '',
+                          `Category_2_trashed`       tinyint(1) unsigned NOT NULL DEFAULT '0',
+                          PRIMARY KEY (`Category_2_id`)
                         ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;",
     'sqlite'  => "CREATE TABLE IF NOT EXISTS ".TBL_CATEGORIES_B." (
-                          Category_B_id              INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE,
-                          Category_B_id_Category_A   INTEGER NOT NULL,
-                          Category_B_name            VARCHAR NOT NULL DEFAULT '',
-                          Category_B_description     VARCHAR NOT NULL DEFAULT '',
-                          Category_B_trashed         INTEGER NOT NULL DEFAULT '0');"
+                          Category_2_id              INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE,
+                          Category_2_id_Category_1   INTEGER NOT NULL,
+                          Category_2_name            VARCHAR NOT NULL DEFAULT '',
+                          Category_2_description     VARCHAR NOT NULL DEFAULT '',
+                          Category_2_trashed         INTEGER NOT NULL DEFAULT '0');"
   )
 );

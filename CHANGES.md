@@ -1,6 +1,12 @@
 Version 0.1
 ===========
 
+03.03.2013
+----------
+- created js/categories.js; first class definition for categories and subcategories for data interaction
+- created ard.php (Ajax Request Dispatcher) in root folder: parses passed 'd' parameter (domain) and opens a PHP contained in ./lib
+- renamed tables Categories_[A|B] in Categories_[1|2]
+
 28.02.2013
 ----------
 - table Users created

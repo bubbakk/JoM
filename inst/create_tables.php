@@ -26,9 +26,9 @@ $res = $DBH->exec($tables['Users'][$config['DB']['type']]);                     
 if ( $res===false ) die(__LINE__ . " - ".print_r($DBH->errorInfo(), true));
 $res = $DBH->exec($tables['Jobs'][$config['DB']['type']]);                          // execute query for Jobs
 if ( $res===false ) die(__LINE__ . " - ".print_r($DBH->errorInfo(), true));
-$res = $DBH->exec($tables['Categories_A'][$config['DB']['type']]);                  // execute query for Categories A
+$res = $DBH->exec($tables['Categories_1'][$config['DB']['type']]);                  // execute query for Categories 1
 if ( $res===false ) die(__LINE__ . " - ".print_r($DBH->errorInfo(), true));
-$res = $DBH->exec($tables['Categories_B'][$config['DB']['type']]);                  // execute query for Categories B
+$res = $DBH->exec($tables['Categories_2'][$config['DB']['type']]);                  // execute query for Categories 2
 if ( $res===false ) die(__LINE__ . " - ".print_r($DBH->errorInfo(), true));
 
 $retval['success'] = true;

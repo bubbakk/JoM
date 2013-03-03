@@ -37,5 +37,30 @@ $DBH = $PDO->get_dbh();
 $res = $DBH->exec($query_company_data);                                      // insert Company data
 if ( $res===false ) die(__LINE__ . " - ".print_r($DBH->errorInfo(), true));
 
+$query_categories_a = 'INSERT INTO '.TBL_CATEGORIES_1.' '.
+                      '            (Category_1_id, Category_1_name, Category_1_description, Category_1_trashed) '.
+                      '     VALUES (1, "SPES - Assistenza informatica", "Problematiche con PC, rete, sistema operativo, stampanti, configurazioni, telefonia, server, ecc...", 0), '.
+                      '            (2, "Sviluppo software", "Lavori di architettura e creazione codice", 0), '.
+                      '            (999, "-- nessuna --", "", 0);';
+echo "PROBLEMI QUI: ".$query_categories_a."\n";
+$DBH = $PDO->get_dbh();
+$res = $DBH->exec($query_categories_a);                                      // insert Categories_A data
+if ( $res===false ) die(__LINE__ . " - ".print_r($DBH->errorInfo(), true));
+
+
+
+
+$query_categories_b = 'INSERT INTO '.TBL_CATEGORIES_1.' '.
+                      '            (Category_2_id, Category_2_id_Category_1, Category_2_name, Category_2_description, Category_2_trashed) '.
+                      '     VALUES (1, 1, "Disco o memoria danneggiata", "Problematiche di varia natura su disco fisso o altro sistema di memorizzazione", 0), '.
+                      '            (2, 1, "Configurazione/verifica gateway/DNS/NATP", "Configurazione di apparati di rete per accessi e controlli", 0), '.
+                      '            (3, 2, "Sviluppo GUI", "Architettura e sviluppo interfaccia utente", 0), '.
+                      '            (4, 2, "Sviluppo logiche server-side", "Architettura e sviluppo di software per interazione remota con il server", 0), '.
+                      '            (0, 0, "-- nessuna --", "", 0); ';
+$DBH = $PDO->get_dbh();
+//$res = $DBH->exec($query_categories_b);                                      // insert Categories_B data
+if ( $res===false ) die(__LINE__ . " - ".print_r($DBH->errorInfo(), true));
+
+
 $retval['success'] = true;
 json_output_and_die($retval);
