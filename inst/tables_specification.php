@@ -131,21 +131,21 @@ $tables = array(
                         Job_trashed                 INTEGER       NOT NULL DEFAULT 0)"
   ),
   'Categories_1' => array(
-    'mysql'  => "CREATE TABLE IF NOT EXISTS `".TBL_Categories_1."` (
+    'mysql'  => "CREATE TABLE IF NOT EXISTS `".TBL_CATEGORIES_1."` (
                           `Category_1_id`            int(10) unsigned    NOT NULL AUTO_INCREMENT,
                           `Category_1_name`          varchar(50)         NOT NULL DEFAULT '',
                           `Category_1_description`   varchar(255)        NOT NULL DEFAULT '',
                           `Category_1_trashed`       tinyint(1) unsigned NOT NULL DEFAULT '0',
                           PRIMARY KEY (`Category_1_id`)
                         ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;",
-    'sqlite'  => "CREATE TABLE IF NOT EXISTS ".TBL_Categories_1." (
+    'sqlite'  => "CREATE TABLE IF NOT EXISTS ".TBL_CATEGORIES_1." (
                           Category_1_id              INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE,
                           Category_1_name            VARCHAR NOT NULL DEFAULT '',
                           Category_1_description     VARCHAR NOT NULL DEFAULT '',
                           Category_1_trashed         INTEGER NOT NULL DEFAULT '0');"
   ),
   'Categories_2' => array(
-    'mysql'  => "CREATE TABLE IF NOT EXISTS `".TBL_CATEGORIES_B."` (
+    'mysql'  => "CREATE TABLE IF NOT EXISTS `".TBL_CATEGORIES_2."` (
                           `Category_2_id`            int(10) unsigned    NOT NULL AUTO_INCREMENT,
                           `Category_2_id_Category_1` int(10) unsigned    NOT NULL,
                           `Category_2_name`          varchar(50)         NOT NULL DEFAULT '',
@@ -153,7 +153,7 @@ $tables = array(
                           `Category_2_trashed`       tinyint(1) unsigned NOT NULL DEFAULT '0',
                           PRIMARY KEY (`Category_2_id`)
                         ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;",
-    'sqlite'  => "CREATE TABLE IF NOT EXISTS ".TBL_CATEGORIES_B." (
+    'sqlite'  => "CREATE TABLE IF NOT EXISTS ".TBL_CATEGORIES_2." (
                           Category_2_id              INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE,
                           Category_2_id_Category_1   INTEGER NOT NULL,
                           Category_2_name            VARCHAR NOT NULL DEFAULT '',

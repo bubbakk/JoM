@@ -1,5 +1,14 @@
+Version 0.2
+===========
+
+
 Version 0.1
 ===========
+
+05.03.2013
+----------
+- fixed table creation
+- fixed sample data creation
 
 03.03.2013
 ----------
