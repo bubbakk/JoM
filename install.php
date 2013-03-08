@@ -44,9 +44,11 @@ require_once(DIR_BASE.'cfg/config.php');
 </head>
 <body>
     <div class="container">
-        <h1 class="text-center">
-            <img src="./img/JoM_logo.png" alt="JoM logo image: JoM - the Job Manager" title="JoM logo"0>
-        </h1>
+        <div class="row">
+            <h1 class="text-center">
+                <img src="./img/JoM_logo.png" alt="JoM logo image: JoM - the Job Manager" title="JoM logo">
+            </h1>
+        </div>
         <div class="row">
             <h2>Software installation procedure</h2>
         </div>

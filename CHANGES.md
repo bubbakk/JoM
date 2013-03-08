@@ -1,9 +1,23 @@
 Version 0.2
 ===========
 
+08.03.2013
+----------
+- created HTML login page (GUI): some animations added; good styling added
+
 
 Version 0.1
 ===========
+
+Completed.
+Still remains:
+- all other table creation (other tables missing: not in the core); sample data too
+- MySQL database creation is not yet implemented
+- not all data passed to PHP scripts are checked
+- BACK button in the (last) installation phase, that can go back to make parameters changes if something goes wrong
+- if installation is successful, make appear a button to go to login page
+- admin user creation
+
 
 05.03.2013
 ----------
@@ -118,3 +132,8 @@ Version 0.1
 - added Bootstrap components (css, js, imgs)
 - minor fix in install.php file
 - some install.php page graphic remake
+
+Version 0.0
+===========
+
+Completed.
