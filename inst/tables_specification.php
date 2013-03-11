@@ -33,7 +33,8 @@ $tables = array(
                         `User_firstname`                varchar(50) CHARACTER SET utf8  NOT NULL DEFAULT '',
                         `User_lastname`                 varchar(50) CHARACTER SET utf8  NOT NULL DEFAULT '',
                         `User_username`                 varchar(20) CHARACTER SET utf8  NOT NULL DEFAULT '',
-                        `User_password`                 varchar(50) CHARACTER SET utf8  NOT NULL DEFAULT '',
+                        `User_password`                 char(128)   CHARACTER SET utf8  NOT NULL DEFAULT '',
+                        `User_salt`                     char(128)   CHARACTER SET utf8  NOT NULL DEFAULT '',
                         `User_nickname`                 varchar(50) CHARACTER SET utf8  NOT NULL DEFAULT '' COMMENT 'the name the system will show to other users',
                         `User_contacts_internal_telephone_number` varchar(20) CHARACTER SET utf8  NOT NULL DEFAULT '',
                         `User_contacts_telephone_number` varchar(50)          CHARACTER SET utf8  NOT NULL DEFAULT '',
@@ -59,7 +60,8 @@ $tables = array(
                         User_firstname                VARCHAR(50)           NOT NULL,
                         User_lastname                 VARCHAR(50)           NOT NULL,
                         User_username                 VARCHAR(20)           NOT NULL,
-                        User_password                 VARCHAR(50)           NOT NULL,
+                        User_password                 CHAR(128)             NOT NULL,
+                        User_salt                     CHAR(128)             NOT NULL,
                         User_nickname                 VARCHAR(50)           NOT NULL,
                         User_contacts_internal_telephone_number VARCHAR(20) NOT NULL,
                         User_contacts_telephone_number VARCHAR(50)          NOT NULL,
@@ -152,12 +154,22 @@ $tables = array(
                           `Category_2_description`   varchar(255)        NOT NULL DEFAULT '',
                           `Category_2_trashed`       tinyint(1) unsigned NOT NULL DEFAULT '0',
                           PRIMARY KEY (`Category_2_id`)
-                        ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;",
+                        ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;",
     'sqlite'  => "CREATE TABLE IF NOT EXISTS ".TBL_CATEGORIES_2." (
                           Category_2_id              INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE,
                           Category_2_id_Category_1   INTEGER NOT NULL,
                           Category_2_name            VARCHAR NOT NULL DEFAULT '',
                           Category_2_description     VARCHAR NOT NULL DEFAULT '',
                           Category_2_trashed         INTEGER NOT NULL DEFAULT '0');"
+  ),
+  'Login_attempts' => array(
+    'mysql'  => "CREATE TABLE IF NOT EXISTS `".TBL_LOGIN_ATTEMPTS."` (
+                          `Login_attempts_User_id`   INT NOT NULL     DEFAULT '0',
+                          `Login_attempts_time`      INT NOT NULL     DEFAULT '0',
+                          UNIQUE (`Login_attempts_time`)
+                        ) ENGINE = MYISAM ;",
+    'sqlite' => "CREATE TABLE IF NOT EXISTS `".TBL_LOGIN_ATTEMPTS."` (
+                          `Login_attempts_User_id`   INT NOT NULL     DEFAULT '0',
+                          `Login_attempts_time`      INT NOT NULL     DEFAULT '0');"
   )
 );

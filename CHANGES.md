@@ -1,6 +1,14 @@
 Version 0.2
 ===========
 
+09.03.2013
+----------
+- modified User_password field in Users table, from VARCHAR(5) to CHAR(128)
+- added User_salt field in Users table, a CHAR(128)
+- added new table "Login_attempts" and so all necessary data for installation scripts: tables_specification.php, config.php, create_tables.php
+- fixed multiple values INSERT in SQLITE
+
+
 08.03.2013
 ----------
 - created HTML login page (GUI): some animations added; good styling added

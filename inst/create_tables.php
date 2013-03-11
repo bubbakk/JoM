@@ -30,6 +30,8 @@ $res = $DBH->exec($tables['Categories_1'][$config['DB']['type']]);              
 if ( $res===false ) die(__LINE__ . " - ".print_r($DBH->errorInfo(), true));
 $res = $DBH->exec($tables['Categories_2'][$config['DB']['type']]);                  // execute query for Categories 2
 if ( $res===false ) die(__LINE__ . " - ".print_r($DBH->errorInfo(), true));
+$res = $DBH->exec($tables['Login_attempts'][$config['DB']['type']]);                // execute query for Login_attempts
+if ( $res===false ) die(__LINE__ . " - ".print_r($DBH->errorInfo(), true));
 
 $retval['success'] = true;
 json_output_and_die($retval);

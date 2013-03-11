@@ -30,6 +30,7 @@ require_once(DIR_BASE.'cfg/config.php');
     </script>
 </head>
 <body>
+    <?php echo openssl_digest ( 'prova' , 'sha512' ); ?>
     <div class="container">
         <div class="row">
             <div class="span4 offset4">
@@ -54,12 +55,12 @@ require_once(DIR_BASE.'cfg/config.php');
                             <label style="padding-top: 15px;">User name or email</label>
                             <div class="input-prepend">
                                 <span class="add-on"><i class="icon-user"></i></span>
-                                <input class="input-xlarge" type="text" placeholder="enter your user name" style="font-size: 18px; font-weight: bold;">
+                                <input class="input-block-level" type="text" placeholder="enter user name or email" style="font-size: 18px; font-weight: bold;">
                             </div>
                             <label>Password</label>
                             <div class="input-prepend">
                                 <span class="add-on"><i class="icon-key"></i></span>
-                                <input class="input-xlarge" type="password" placeholder="enter your password" style="font-size: 18px; font-weight: bold;">
+                                <input class="input-block-level" type="password" placeholder="enter password" style="font-size: 18px; font-weight: bold;">
                             </div>
                         </div>
                     </div>
