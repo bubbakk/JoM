@@ -8,16 +8,20 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
 
     private $httponly             = true;         // Stop javascript being able to access the session id.
     private $session_hash         = 'sha512';     // Hash algorithm to use for the sessionid. (use hash_algos() to get a list of available hashes.)
+    private $crypt_hash           = 'sha256';     // encrypt/decrypt hashing algorithm
     private $default_session_name = 'JOMsessID';  // Default session name
+    private $salt                 = null;         //
 
     private $pdo_dbh   = null;          // PDO database class
     private $read_stmt = null;          // read statement
     private $key_stmt  = null;          // key generation statement
+    private $gc_stmt   = null;          // garbage collector statement
 
 
     /*
        Function: __construct
-       The constructor calls <BBKK_Base_Class.__construct> to set base properties and registers session custom handlers
+       The constructor calls <BBKK_Base_Class.__construct> to set base properties and registers session custom handlers.
+       Also sets session handlers functions and registers the call to session_write_close() on script shutdown
     */
     public function __construct()
     {
@@ -33,8 +37,13 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
 
 
     public function __set($name, $value) {
-        ;   // add code here for custom local setters
-        parent::__set($name, $value);
+        // set salt property
+        if ( $name==='salt' && is_string($value) && !empty($value) ) {
+            $this->salt = $value;
+        }
+        else {
+            parent::__set($name, $value);
+        }
     }
 
     /*
@@ -50,7 +59,8 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
          boolean value according to method success
     */
     public function start_session($session_name, $secure, $_pdo_dbh) {
-        // set actual method
+
+        // set actual method's name
         $this->method = __METHOD__;
 
         // check PDO database handler passed
@@ -129,10 +139,13 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
     }
 
 
-    function write($id, $data) {
+    function write($session_id, $data) {
 /*
+        // set actual method's name
+        $this->method = __METHOD__;
+
         // Get unique key
-        $key = $this->getkey($id);
+        $key = $this->getkey($session_id);
         // Encrypt the data
         $data = $this->encrypt($data, $key);
 
@@ -152,8 +165,53 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
         ;       // nothing to do here
     }
 
-    function gc() {
-        ;       // won't close database connection: is used by other scripts
+
+    function gc($max) {
+
+        // set actual method's name
+        $this->method = __METHOD__;
+
+        // check that PDO pointer is set
+        if ( $this->pdo_dbh != null              &&
+             gettype($this->pdo_dbh)!='object'   &&
+             !(get_class($this->pdo_dbh)==='PDO')   ) {
+            $this->set_error('Database connection error: please submit bug',
+                             'Il puntatore all\'oggetto $_pdo_dbh è di tipo  '.gettype($this->pdo_dbh).', classe e non PDO '.get_class($this->pdo_dbh),
+                             __LINE__,
+                             E_ERROR);
+            return false;
+        }
+
+        if( $this->gc_stmt === null ) {
+            try {
+                $this->gc_stmt = $this->db->prepare("DELETE FROM sessions WHERE set_time < :exipration_time");
+            }
+            catch (PDOException $e)
+            {
+                $this->set_error('Database query prepare error: please submit bug',
+                                 $e->getMessage(),
+                                 __LINE__,
+                                 E_ERROR);
+                return false;
+            }
+        }
+
+        $old = time() - $max;
+
+        try {
+            $this->gc_stmt->bind_param(':exipration_time', $old);
+            $this->gc_stmt->execute();
+        }
+        catch (PDOException $e)
+        {
+            $this->set_error('Database interaction error: please submit bug',
+                             $e->getMessage(),
+                             __LINE__,
+                             E_ERROR);
+            return false;
+        }
+
+        return true;
     }
 
 
@@ -168,15 +226,15 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
        Returns:
          unique generated key (new or existing in Session table); false if something goes wrong
     */
-    public function getkey($session_id) {
+    private function getkey($session_id) {
 
-        // set actual method
+        // set actual method's name
         $this->method = __METHOD__;
 
         $generate_new = false;
 
         // if no valid $session_id is passed, want to generate a new one
-        if ( !isset($session_id) || $session_id === null ) {
+        if ( !isset($session_id) || $session_id === null || empty($session_id) ) {
             $generate_new = true;
         }
 
@@ -209,17 +267,27 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
                 }
                 catch (PDOException $e)
                 {
-                    $this->set_error('Database error: please submit bug',
+                    $this->set_error('Database query prepare error: please submit bug',
+                                     $e->getMessage(),
+                                     __LINE__,
+                                     E_ERROR);
+                    return false;
+                }
+
+                try {
+                    $this->key_stmt->bind_param(':session_id', $session_id);
+                    $this->key_stmt->execute();
+                    $row = $this->key_stmt->fetchColumn();                      // fetches first column (Session_key: the only one requested)
+                }
+                catch (PDOException $e)
+                {
+                    $this->set_error('Database interaction error: please submit bug',
                                      $e->getMessage(),
                                      __LINE__,
                                      E_ERROR);
                     return false;
                 }
             }
-            $this->key_stmt->bind_param(':session_id', $session_id);
-            $this->key_stmt->execute();
-            $row = $this->key_stmt->fetchColumn();                      // fetches first column (Session_key: the only one requested)
-
             // if no row is found, have to generate a new random key
             if ( $row === false ) {
                 $generate_new = true;
@@ -238,6 +306,74 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
         }
 
         return $key;
+    }
+
+    /*
+       Function: encrypt
+       Encrypt the data of the sessions. Do not directly use the key in the encryption, but use it to make the key hash even more random.
+       Function uses serialize() before encoding
+
+       Parameters:
+         $data - data to encode (can be any type, except resources)
+         $session_key - key used to encode data
+
+       Returns:
+         unique generated key (new or existing in Session table); false if something goes wrong
+    */
+    private function encrypt($data, $session_key) {
+
+        // set actual method's name
+        $this->method = __METHOD__;
+
+        // check salt string
+        if ( $this->salt === null || strlen($this->salt) < 64 ) {
+            $this->set_error('Salt random string not set or too short',
+                             'Salt property too short or not set',
+                              __LINE__,
+                              E_ERROR);
+            return false;
+        }
+
+        $key       = substr(hash($this->crypt_hash, $this->salt.$session_key.$this->salt), 0, 32);
+        $iv_size   = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB);
+        $iv        = mcrypt_create_iv($iv_size, MCRYPT_RAND);
+        $encrypted = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, $key, serialize($data), MCRYPT_MODE_ECB, $iv));
+
+        return $encrypted;
+    }
+
+    /*
+       Function: decrypt
+       Decrypt the data of the sessions. Do not directly use the key in the decryption, but use it to make the key hash even more random.
+       Function uses unserialize() to revert.
+
+       Parameters:
+         $data - encrypted data to decode
+         $session_key - key used to encode data (will be used to decode)
+
+       Returns:
+         descripted data
+    */
+    private function decrypt($data, $session_key) {
+
+        // set actual method's name
+        $this->method = __METHOD__;
+
+        // check salt string
+        if ( $this->salt === null || strlen($this->salt) < 64 ) {
+            $this->set_error('Salt random string not set or too short',
+                             'Salt property too short or not set',
+                              __LINE__,
+                              E_ERROR);
+            return false;
+        }
+
+        $key       = substr(hash($this->crypt_hash, $this->salt.$session_key.$this->salt), 0, 32);
+        $iv_size   = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB);
+        $iv        = mcrypt_create_iv($iv_size, MCRYPT_RAND);
+        $decrypted = mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $key, base64_decode($data), MCRYPT_MODE_ECB, $iv);
+
+        return unserialize($decrypted);
     }
 
 }

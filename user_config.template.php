@@ -16,6 +16,9 @@ $config['SERVER']['domain']       = 'http:\/\/localhost';
 $config['SERVER']['domain_path']  = 'JoM';
 $config['SERVER']['install_path'] = '/var/www/JoM/demo/';
 
+// Application salt
+$config['SALT'] = '#APP_SALT#';
+
 // tables definition
 define('TABLES_PREFIX', '#TBLPRFX#');
 

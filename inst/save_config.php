@@ -49,14 +49,18 @@ else {
     }
     $tbl_prefix = post_or_get('tpfx');
 
+    // generate random 64 characters random string using extended symbols
+    $random_salt = generate_random_string(64, false);
+
     // replace occurrences in the template
-    $template_file = str_replace("#DBTYPE#",  $dbtype,     $template_file);
+    $template_file = str_replace("#DBTYPE#",        $dbtype,        $template_file);
     $template_file = str_replace("#DBNAME_MYSQL#",  $dbname_mysql,  $template_file);
     $template_file = str_replace("#DBNAME_SQLITE#", $dbname_sqlite, $template_file);
-    $template_file = str_replace("#DBUSER#",  $dbuser,     $template_file);
-    $template_file = str_replace("#DBPASS#",  $dbpass,     $template_file);
-    $template_file = str_replace("#DBHOST#",  $dbhost,     $template_file);
-    $template_file = str_replace("#TBLPRFX#", $tbl_prefix, $template_file);
+    $template_file = str_replace("#DBUSER#",        $dbuser,        $template_file);
+    $template_file = str_replace("#DBPASS#",        $dbpass,        $template_file);
+    $template_file = str_replace("#DBHOST#",        $dbhost,        $template_file);
+    $template_file = str_replace("#TBLPRFX#",       $tbl_prefix,    $template_file);
+    $template_file = str_replace("#APP_SALT#",      $random_salt,   $template_file);
 
     // check write permissions
     if ( !is_writable(DIR_CFG) ) {

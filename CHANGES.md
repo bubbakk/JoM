@@ -5,6 +5,11 @@ Version 0.2
 ----------
 - some changes made in BBKK_Base_Class class.
 - fixed and tested in BBKK_Session_Manager, methods: constructor(), __set(), start_session()
+- added generate_random_string() function in lib/generic_lib.php file
+- added $config['SALT'] in user_config.template. Need to add random generation
+- added encrypt and decrypt private methods in BBKK_Session_Manager class: can encode/decode any data structure via serialize/unserialize
+- added 64 characters string generation during configuration save (useful for encryption tasks)
+- implemented garbage collector method in BBKK_Session_Manager class
 
 13.03.2013
 ----------
