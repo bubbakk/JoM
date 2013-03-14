@@ -35,7 +35,7 @@ class BBKK_Base_Class {
        The code line (generally set a while before logging).
        Default is a null value (0 could be interpreted as the first line)
     */
-    protected    $line        = null;
+    protected    $error_line  = null;
 
     /*
        Variable: $version
@@ -84,7 +84,7 @@ class BBKK_Base_Class {
     *   $file_name  - file name of the calling class (caller can pass the PHP's __FILE__ magic variable)
     *   $class_name - calling class name (caller can pass the PHP's __CLASS__ magic variable)
     */
-    public function __construct($file_name = '', $class_name = '')
+    protected function __construct($file_name = '', $class_name = '')
     {
       //// Preliminary checks
         // Wrong parameter make the script die and the programmer warned
@@ -125,7 +125,7 @@ class BBKK_Base_Class {
     */
     public function __set($name, $value)
     {
-        if ( $name === 'error_type' )
+        if ( $name === 'error_type_' )
         {
             if ( !is_int($value) || ($value != E_NOTICE && $value != E_WARNING && $value != E_ERROR) )
                 die('Error type '.$value.' not admitted - '.__METHOD__.' ('.__LINE__.')');
@@ -139,7 +139,7 @@ class BBKK_Base_Class {
             }
 
             // evaluate if the script have to die() because of an E_ERROR
-            if ( $value === E_ERROR && defined('BBKK_BASE_CLASS__DIE_ON_E_ERRORS') && BBKK_BASE_CLASS__DIE_ON_E_ERRORS === 'true')
+            if ( $value === E_ERROR && defined('JOM_DEBUG') && JOM_DEBUG === true)
                 die($this->get_error_text());
         }
     }
@@ -149,13 +149,13 @@ class BBKK_Base_Class {
         if ( $name === 'error_type' ) return $this->error_type;
     }
 
-    public function set_error($msg = '', $method = '', $line = null)
+    protected function set_error($msg_user = '', $msg_dbg = '', $line = null)
     {
       //// Preliminary checks
         // Wrong parameters make the script die and the programmer warned
 
-        // no message, no error
-        if ( empty($msg) )
+        // no user message, no error
+        if ( empty($msg_dbg) )
             die('Empty message is not admitted - '. __METHOD__ .' ('. __LINE__ .')');
         // if error line is passed, it must be an integer value
         if ( !is_null($line) && !is_int($line) )
@@ -163,41 +163,43 @@ class BBKK_Base_Class {
 
       //// Setting error status and data
         //
-        $this->error        = true;
-        $this->error_text   = $msg;
-        $this->error_method = $method;
-        $this->error_line   = $line;
-/*
-        $this->error_type   = $type;
-*/
+        $this->error          = true;
+        $this->error_text_usr = $msg_user;
+        $this->error_text_dbg = $msg_dbg;
+        $this->error_line     = $line;
+
+        if ( func_num_args() == 4 ) {
+            $this->error_type_  = func_get_arg(3);
+        }
 
         return true;
     }
 
-    public function reset_error_state()
+    protected function reset_error_state()
     {
-        $this->error        = false;
-        $this->error_text   = '';
-        $this->error_type   = 0;
+        $this->error           = false;
+        $this->error_text_dbg  = '';
+        $this->error_text_usr  = '';
+        $this->error_type      = 0;
 
         return true;
     }
 
     public function get_error_text()
     {
-        $method_text = ( empty($this->error_method) ? '' : htmlentities($this->error_method)        );
+        $method_text = ( empty($this->method)       ? '' : htmlentities($this->method)              );
         $line_text   = ( is_null($this->error_line) ? '' : ' ('.htmlentities($this->error_line).')' );
 
         $hash        = ( empty($method_text) && empty($line_text) ? '' : ' - ' );
 
-        return htmlentities($this->error_text).' in file <strong>'.$this->filename.'</strong>'.$hash.$method_text.$line_text;
+        return $this->error_text_dbg.' in file <strong>'.$this->filename.'</strong>'.$hash.$method_text.$line_text;
     }
 
 
 
 ///// LOGGING METHODS
 
-    public function set_logger($logger_object = null)
+    protected function set_logger($logger_object = null)
     {
       //// Preliminary checks
         // Wrong parameter make the script die and the programmer warned
@@ -210,7 +212,7 @@ class BBKK_Base_Class {
         return true;
     }
 
-    public function log_error($debug_info = '', $ext1 = false, $ext2 = false, $ext3 = false )
+    protected function log_error($debug_info = '', $ext1 = false, $ext2 = false, $ext3 = false )
     {
       //// Preliminary checks
         // If logger is not set, this method returns false and does nothing else

@@ -1,13 +1,26 @@
 Version 0.2
 ===========
 
+14.03.2013
+----------
+- some changes made in BBKK_Base_Class class.
+- fixed and tested in BBKK_Session_Manager, methods: constructor(), __set(), start_session()
+
+13.03.2013
+----------
+- added table Sessions in install procedure
+- continues Session Managemen class creation
+- created test script in test/ for Session Managemen class tests
+
+11.03.2013
+----------
+- added new table "Login_attempts" and so all necessary data for installation scripts: tables_specification.php, config.php, create_tables.php
+- fixed multiple values INSERT in SQLITE
+
 09.03.2013
 ----------
 - modified User_password field in Users table, from VARCHAR(5) to CHAR(128)
 - added User_salt field in Users table, a CHAR(128)
-- added new table "Login_attempts" and so all necessary data for installation scripts: tables_specification.php, config.php, create_tables.php
-- fixed multiple values INSERT in SQLITE
-
 
 08.03.2013
 ----------

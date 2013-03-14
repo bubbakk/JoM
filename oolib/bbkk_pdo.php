@@ -90,5 +90,12 @@ class BBKK_PDO extends BBKK_Base_Class {
 
         return true;
     }
+
+    /*
+       Function: close_database
+       Close database connection
+    */
+    public function close_database() {
+        $this->dbh = null;
+    }
 }
-?>

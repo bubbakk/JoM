@@ -30,7 +30,6 @@ require_once(DIR_BASE.'cfg/config.php');
     </script>
 </head>
 <body>
-    <?php echo openssl_digest ( 'prova' , 'sha512' ); ?>
     <div class="container">
         <div class="row">
             <div class="span4 offset4">

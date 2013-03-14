@@ -44,6 +44,7 @@ function open_database($type, $DB_cfg)
     $PDO = new BBKK_PDO($type);
 
     $PDO->dbname = $DB_cfg['dbname'];
+
     if ( !empty($DB_cfg['host']) ) {
         $PDO->dbname   = $DB_cfg['dbname'];
         $PDO->host     = $DB_cfg['host'];
