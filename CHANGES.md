@@ -1,6 +1,16 @@
 Version 0.2
 ===========
 
+15.03.2013
+----------
+- in BBKK_Session_Manager created private properties for errors
+- in BBKK_Session_Manager moved some class setting to constructor
+- in BBKK_Session_Manager added defaults for parameters in order to avoid parameter number passing warning
+- in BBKK_Session_Manager implemented destroy() method
+- in BBKK_Session_Manager implemented read() method
+- in BBKK_Session_Manager added possibility enable/disable encrtyption
+
+
 14.03.2013
 ----------
 - some changes made in BBKK_Base_Class class.

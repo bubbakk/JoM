@@ -199,6 +199,12 @@ class BBKK_Base_Class {
 
 ///// LOGGING METHODS
 
+    protected function log_info($msg) {
+        if ( defined('JOM_DEBUG') && JOM_DEBUG ) {
+            echo $this->class. '.' . $this->method . ' - ' . $msg . '<br>';
+        }
+    }
+
     protected function set_logger($logger_object = null)
     {
       //// Preliminary checks

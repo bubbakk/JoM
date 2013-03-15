@@ -11,11 +11,25 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
     private $crypt_hash           = 'sha256';     // encrypt/decrypt hashing algorithm
     private $default_session_name = 'JOMsessID';  // Default session name
     private $salt                 = null;         //
+    private $table_name           = null;         //
+    private $do_encrypt           = false;        // is possible to enable/disable encryption!
 
-    private $pdo_dbh   = null;          // PDO database class
-    private $read_stmt = null;          // read statement
-    private $key_stmt  = null;          // key generation statement
-    private $gc_stmt   = null;          // garbage collector statement
+    private $pdo_dbh     = null;        // PDO database class
+    private $read_stmt   = null;        // read statement
+    private $write_stmt  = null;        // write statement
+    private $delete_stmt = null;        // delete statement
+    private $key_stmt    = null;        // key generation statement
+    private $gc_stmt     = null;        // garbage collector statement
+
+
+    // ERROR MESSAGES
+    private $USR_ERR_MSG__DATABASE_CONNECT    = 'DB connection error: please submit bug';
+    private $USR_ERR_MSG__HASH_ALG_NOT_EXSTS  = '';     // have to set in the constructor: parametric error!
+    private $USR_ERR_MSG__PREPARE_STATEMENT   = 'Database query prepare error: please submit bug';
+    private $USR_ERR_MSG__BIND_EXEC_STATEMENT = 'Database interaction error: please submit bug';
+    private $USR_ERR_MSG__MISSING_PARAMETER   = 'Missing parameter. Please submit bug';
+    private $USR_ERR_MSG__PARAMETER_ERROR     = 'Wrong parameter data and/or type. Please submit bug';
+
 
 
     /*
@@ -23,22 +37,64 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
        The constructor calls <BBKK_Base_Class.__construct> to set base properties and registers session custom handlers.
        Also sets session handlers functions and registers the call to session_write_close() on script shutdown
     */
-    public function __construct()
+    public function __construct($_table_name = '', $_pdo_dbh = '')
     {
         $this->auto_log = true;                     // set auto-log errors feature on
         parent::__construct(__FILE__, __CLASS__);
+
+        // set actual method's name
+        $this->method = __METHOD__;
+
+        $this->log_info('Constructor called');
+
+        // check that session table name constant is set
+            if ( empty($_table_name) || !is_string($_table_name) ) {
+                $this->set_error($USR_ERR_MSG__MISSING_PARAMETER,
+                                 'Session table name is not defined set correctly: '. var_dump($_table_name),
+                                  __LINE__,
+                                  E_ERROR);
+                return false;
+            }
+            $this->table_name = $_table_name;           // set session table_name private property
+
+        // check PDO database handler passed
+            if ( empty($_pdo_dbh) || gettype($_pdo_dbh) != 'object' || !(get_class($_pdo_dbh) === 'PDO') ) {
+                $this->set_error($USR_ERR_MSG__DATABASE_CONNECT,
+                                 'Pointer to object $_pdo_dbh is  ' . gettype($_pdo_dbh) . ' type and class ' . get_class($_pdo_dbh). '. Should be PDO',
+                                 __LINE__,
+                                 E_ERROR);
+                return false;
+            }
+            $this->pdo_dbh = $_pdo_dbh;                 // set PDO database handler pointer
 
         // set our custom session functions.
         session_set_save_handler(array($this, 'open'), array($this, 'close'), array($this, 'read'), array($this, 'write'), array($this, 'destroy'), array($this, 'gc'));
 
         // This line prevents unexpected effects when using objects as save handlers.
         register_shutdown_function('session_write_close');
+
+        $this->USR_ERR_MSG__HASH_ALG_NOT_EXSTS = 'Hashing algorithm \''. $this->session_hash . '\' is not supported: please submit this message';
     }
 
 
+    /*
+       Function: __set
+       Magic function automatically triggered when setting a property. Remember that works only when setting private properties.
+       Parameters default values are not set: they always exist!
+
+       Parameters:
+         $name - property name
+         $value - value to assign to property
+    */
     public function __set($name, $value) {
+
+        // set actual method's name
+        $this->method = __METHOD__;
+
+        $this->log_info('Magic method called. name: ' . $name . ' value: ' . $value);
+
         // set salt property
-        if ( $name==='salt' && is_string($value) && !empty($value) ) {
+        if ( $name === 'salt' && is_string($value) && !empty($value) ) {
             $this->salt = $value;
         }
         else {
@@ -58,27 +114,42 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
        Returns:
          boolean value according to method success
     */
-    public function start_session($session_name, $secure, $_pdo_dbh) {
+    public function start_session($session_name = '', $secure = '', $_pdo_dbh = '') {
 
         // set actual method's name
         $this->method = __METHOD__;
 
-        // check PDO database handler passed
-        if ( gettype($_pdo_dbh)!='object' || !(get_class($_pdo_dbh)==='PDO') ) {
-            $this->set_error('DB connection error: please submit bug',
+        $this->log_info('Starting session: session_name: ' . $session_name . ' secure: ' . $secure);
+
+        // set a default session name
+        if ( empty($session_name) ) {
+            $session_name = $this->default_session_name;
+            $this->log_info('Setting default session name: ' . $this->default_session_name);
+        }
+
+        // Check if hashing algorithm is available
+        if ( in_array($this->session_hash, hash_algos()) ) {
+            // Set the has function.
+            ini_set('session.hash_function', $this->session_hash);
+        }
+        else {
+            $this->set_error($USR_ERR_MSG__HASH_ALG_NOT_EXSTS,
                              'Il puntatore all\'oggetto $_pdo_dbh è di tipo  '.gettype($_pdo_dbh).', classe e non PDO '.get_class($_pdo_dbh),
                              __LINE__,
                              E_ERROR);
             return false;
         }
-        $this->pdo_dbh = $_pdo_dbh;                 // set PDO database handler pointer
 
-        if ( empty($session_name) ) $session_name = $this->default_session_name;
-        // Check if hash is available
-        if ( in_array($this->session_hash, hash_algos()) ) {
-            // Set the has function.
-            ini_set('session.hash_function', $this->session_hash);
+        // Check secure paramter passed
+        if ( !is_bool($secure) ) {
+            $this->set_error($USR_ERR_MSG__PARAMETER_ERROR,
+                             'Secure paramter has wrong data type: '. var_dump($secure),
+                              __LINE__,
+                              E_ERROR);
+            return false;
         }
+
+
         // How many bits per character of the hash.
         // The possible values are '4' (0-9, a-f), '5' (0-9, a-v), and '6' (0-9, a-z, A-Z, "-", ",").
         ini_set('session.hash_bits_per_character', 5);
@@ -88,6 +159,7 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
 
         // Get session cookie parameters
         $cookieParams = session_get_cookie_params();
+        $this->log_info('Cookie parameters: '. var_dump($cookieParams));
         // Set the parameters
         session_set_cookie_params($cookieParams["lifetime"], $cookieParams["path"], $cookieParams["domain"], $secure, $this->httponly);
         // Change the session name
@@ -101,13 +173,23 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
         return true;
     }
 
-
     function open() {
-        ;       // nothing to do here
+
+        // set actual method's name
+        $this->method = __METHOD__;
+
+        $this->log_info('Called open().');
+
+        return true;       // nothing to do here
     }
 
     function close() {
-        ;       // won't close database connection: is used by other scripts
+        // set actual method's name
+        $this->method = __METHOD__;
+
+        $this->log_info('Called open().');
+
+        return true;       // won't close database connection: is used by other scripts
     }
 
     /*
@@ -117,78 +199,192 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
        Parameters:
          $session_id - session id (previousely saved in database)
     */
-    function read($session_id) {
-        /*
+    function read($session_id = '') {
+
+        // set actual method's name
+        $this->method = __METHOD__;
+
+        $this->log_info('Called read(). session_id: ' . $session_id);
+
+
         // prepare the statement only once
-        if( !($this->read_stmt === null) ) {
-            $query = 'SELECT Session_data FROM '.TBL_SESSIONS.' WHERE id = :session_id LIMIT 1';
-            $this->read_stmt = $this->pdo_dbh->prepare($query);
-        }
-        $this->read_stmt->bindParam(":session_id", $session_id);
-        $this->read_stmt->execute();
-
-        ?????????????
-
-        $this->read_stmt->bind_result($data);
-        $this->read_stmt->fetch();
-        $key  = $this->getkey($id);
-        $data = $this->decrypt($data, $key);
-
-        return $data;
-    */
-    }
-
-
-    function write($session_id, $data) {
-/*
-        // set actual method's name
-        $this->method = __METHOD__;
-
-        // Get unique key
-        $key = $this->getkey($session_id);
-        // Encrypt the data
-        $data = $this->encrypt($data, $key);
-
-        $time = time();
-        if(!isset($this->w_stmt)) {
-            $this->w_stmt = $this->db->prepare("REPLACE INTO sessions (id, set_time, data, session_key) VALUES (?, ?, ?, ?)");
+        if( $this->read_stmt === null )
+        {
+            $this->log_info('Statement does not exist: creating new one.');
+            try {
+                $this->read_stmt = $this->pdo_dbh->prepare('SELECT Session_data, Session_key FROM ' . $this->table_name . ' WHERE id = :session_id LIMIT 1');
+            }
+            catch (PDOException $e)
+            {
+                $this->set_error($USR_ERR_MSG__PREPARE_STATEMENT,
+                                 $e->getMessage(),
+                                 __LINE__,
+                                 E_ERROR);
+                return false;
+            }
         }
 
-        $this->w_stmt->bind_param('siss', $id, $time, $data, $key);
-        $this->w_stmt->execute();
-        return true;
-*/
-    }
+        try {
+            $this->log_info('Binding parameters and executing query.');
 
+            $this->read_stmt->bindParam(":session_id", $session_id, PDO::PARAM_STR);
+            $this->read_stmt->execute();
+            $session_data = $this->read_stmt->fetchColumn();        // fetch first column (Session_data)
+            $session_key  = $this->read_stmt->fetchColumn(1);       // fetch second column (Session_key)
 
-    function destroy() {
-        ;       // nothing to do here
-    }
-
-
-    function gc($max) {
-
-        // set actual method's name
-        $this->method = __METHOD__;
-
-        // check that PDO pointer is set
-        if ( $this->pdo_dbh != null              &&
-             gettype($this->pdo_dbh)!='object'   &&
-             !(get_class($this->pdo_dbh)==='PDO')   ) {
-            $this->set_error('Database connection error: please submit bug',
-                             'Il puntatore all\'oggetto $_pdo_dbh è di tipo  '.gettype($this->pdo_dbh).', classe e non PDO '.get_class($this->pdo_dbh),
+            $this->log_info('Affected ' . $this->read_stmt->rowCount() . ' rows');
+        }
+        catch (PDOException $e)
+        {
+            $this->set_error($USR_ERR_MSG__BIND_EXEC_STATEMENT,
+                             $e->getMessage(),
                              __LINE__,
                              E_ERROR);
             return false;
         }
 
-        if( $this->gc_stmt === null ) {
+        // Decrypt data
+        if ( $this->do_encrypt ) {
+            $data = $this->decrypt($session_data, $session_key);
+        }
+        else {
+            $data = unserialize($session_data);
+        }
+
+        $this->log_info('All done.');
+        return $data;
+    }
+
+
+    function write($session_id = '', $data = '') {
+
+        // set actual method's name
+        $this->method = __METHOD__;
+
+        $this->log_info('Called write(). session_id: ' . $session_id . ' data: ' . $data);
+
+        // Get unique key
+        $session_key = $this->getkey($session_id);
+        $this->method = __METHOD__;                 // annoying manual method property reset after method call
+
+        // Encrypt data
+        if ( $this->do_encrypt ) {
+            $data = $this->encrypt($data, $session_key);
+        }
+        else {
+            $data = serialize($data);
+        }
+        $this->method = __METHOD__;                 // annoying manual method property reset after method call
+
+        $time = time();
+
+        // Try first to UPDATE.
+        if( $this->write_stmt === null )
+        {
+            $this->log_info('Statement does not exist: creating new one.');
             try {
-                $this->gc_stmt = $this->db->prepare("DELETE FROM sessions WHERE set_time < :exipration_time");
+                $this->write_stmt = $this->pdo_dbh->prepare('REPLACE INTO ' . $this->table_name . ' (Session_id, Session_set_time, Session_data, Session_key) VALUES (:session_id, :set_time, :data, :session_key)');
             }
             catch (PDOException $e)
             {
-                $this->set_error('Database query prepare error: please submit bug',
+                $this->set_error($USR_ERR_MSG__PREPARE_STATEMENT,
+                                 $e->getMessage(),
+                                 __LINE__,
+                                 E_ERROR);
+                return false;
+            }
+        }
+
+        try {
+            $this->log_info('Binding parameters and executing query.');
+
+            $this->write_stmt->bindParam(':session_id', $session_id,    PDO::PARAM_STR);
+            $this->write_stmt->bindParam(':set_time',   $time,          PDO::PARAM_INT);
+            $this->write_stmt->bindParam(':data',       $data,          PDO::PARAM_STR);
+            $this->write_stmt->bindParam(':session_key',$session_key,   PDO::PARAM_STR);
+            $this->write_stmt->execute();
+
+            $this->log_info('Affected ' . $this->write_stmt->rowCount() . ' rows');
+        }
+        catch (PDOException $e)
+        {
+            $this->set_error($USR_ERR_MSG__BIND_EXEC_STATEMENT,
+                             $e->getMessage(),
+                             __LINE__,
+                             E_ERROR);
+            return false;
+        }
+
+        $this->log_info('All done.');
+        return true;
+    }
+
+
+    function destroy($session_id = '') {
+        // set actual method's name
+        $this->method = __METHOD__;
+
+        $this->log_info('Called destroy()');
+
+        // check that session id is passed
+        if ( empty($session_id) || !is_string($session_id) ) {
+            $this->set_error($USR_ERR_MSG__MISSING_PARAMETER,
+                             'Session table name is not defined set correctly: '. var_dump($_table_name),
+                              __LINE__,
+                              E_ERROR);
+            return false;
+        }
+
+        if( $this->delete_stmt === null )
+        {
+            $this->log_info('Statement does not exist: creating new one.');
+
+            try {
+                $this->delete_stmt = $this->pdo_dbh->prepare('DELETE FROM ' . $this->table_name . ' WHERE id = :session_id');
+            }
+            catch (PDOException $e)
+            {
+                $this->set_error($USR_ERR_MSG__PREPARE_STATEMENT,
+                                 $e->getMessage(),
+                                 __LINE__,
+                                 E_ERROR);
+                return false;
+            }
+        }
+
+        try {
+            $this->log_info('Binding parameters and executing query.');
+
+            $this->delete_stmt->bindParam(':session_id', $session_id, PDO::PARAM_STR);
+            $this->delete_stmt->execute();
+        }
+        catch (PDOException $e)
+        {
+            $this->set_error($USR_ERR_MSG__BIND_EXEC_STATEMENT,
+                             $e->getMessage(),
+                             __LINE__,
+                             E_ERROR);
+            return false;
+        }
+
+        return true;
+    }
+
+
+    function gc($max) {
+        // set actual method's name
+        $this->method = __METHOD__;
+
+        $this->log_info('Called the garbage collector.');
+
+
+        if( $this->gc_stmt === null ) {
+            try {
+                $this->gc_stmt = $this->pdo_dbh->prepare('DELETE FROM ' . $this->table_name . ' WHERE set_time < :exipration_time');
+            }
+            catch (PDOException $e)
+            {
+                $this->set_error($USR_ERR_MSG__PREPARE_STATEMENT,
                                  $e->getMessage(),
                                  __LINE__,
                                  E_ERROR);
@@ -199,12 +395,13 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
         $old = time() - $max;
 
         try {
-            $this->gc_stmt->bind_param(':exipration_time', $old);
+            $this->log_info('Deleting garbage.');
+            $this->gc_stmt->bindParam(':exipration_time', $old, PDO::PARAM_INT);
             $this->gc_stmt->execute();
         }
         catch (PDOException $e)
         {
-            $this->set_error('Database interaction error: please submit bug',
+            $this->set_error($USR_ERR_MSG__BIND_EXEC_STATEMENT,
                              $e->getMessage(),
                              __LINE__,
                              E_ERROR);
@@ -231,6 +428,8 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
         // set actual method's name
         $this->method = __METHOD__;
 
+        $this->log_info('Called getkey()');
+
         $generate_new = false;
 
         // if no valid $session_id is passed, want to generate a new one
@@ -240,14 +439,7 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
 
         if ( !$generate_new )
         {
-            // check that session table name constant is set
-            if ( !defined('TBL_SESSIONS') ) {
-                $this->set_error('Coding error: please submit bug',
-                                 'Constant TBL_SESSIONS for session table name is not set',
-                                  __LINE__,
-                                  E_ERROR);
-                return false;
-            }
+            $this->log_info('Retrieve from database the key');
 
             // check that PDO pointer is set
             if ( $this->pdo_dbh != null              &&
@@ -261,9 +453,9 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
             }
 
             // if does not exist, prepare the statement for selecting session_key in the table
-            if( !($this->key_stmt === null) ) {
+            if( $this->key_stmt === null ) {
                 try {
-                    $this->key_stmt = $this->pdo_dbh->prepare('SELECT Session_key FROM '.TBL_SESSIONS.' WHERE Session_id = :session_id LIMIT 1');
+                    $this->key_stmt = $this->pdo_dbh->prepare('SELECT Session_key FROM ' . $this->table_name . ' WHERE Session_id = :session_id LIMIT 1');
                 }
                 catch (PDOException $e)
                 {
@@ -273,36 +465,40 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
                                      E_ERROR);
                     return false;
                 }
-
-                try {
-                    $this->key_stmt->bind_param(':session_id', $session_id);
-                    $this->key_stmt->execute();
-                    $row = $this->key_stmt->fetchColumn();                      // fetches first column (Session_key: the only one requested)
-                }
-                catch (PDOException $e)
-                {
-                    $this->set_error('Database interaction error: please submit bug',
-                                     $e->getMessage(),
-                                     __LINE__,
-                                     E_ERROR);
-                    return false;
-                }
             }
+
+            try {
+                $this->log_info('Querying the database: searching key.');
+
+                $this->key_stmt->bindParam(':session_id', $session_id, PDO::PARAM_STR);
+                $this->key_stmt->execute();
+                $row = $this->key_stmt->fetchColumn();                      // fetches first column (Session_key: the only one requested)
+            }
+            catch (PDOException $e)
+            {
+                $this->set_error('Database interaction error: please submit bug',
+                                 $e->getMessage(),
+                                 __LINE__,
+                                 E_ERROR);
+                return false;
+            }
+
             // if no row is found, have to generate a new random key
             if ( $row === false ) {
+                $this->log_info('Key not found in the database: generating a new one.');
                 $generate_new = true;
             }
             // else return the existing one
             else {
                 $key = $row;
-                if ( defined('JOM_DEBUG') && JOM_DEBUG ) { echo 'returned existing key: '.$key.'<br>'; }
+                $this->log_info('returned existing key: '.$key);
             }
         }
 
         if ( $generate_new ) {
             // 23 random characters key
             $key = hash($this->session_hash, uniqid(mt_rand(1, mt_getrandmax()), true) );
-            if ( defined('JOM_DEBUG') && JOM_DEBUG ) { echo 'generating new random key: '.$key.'<br>'; }
+            $this->log_info('Generated new random key: '.$key);
         }
 
         return $key;
@@ -324,6 +520,8 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
 
         // set actual method's name
         $this->method = __METHOD__;
+
+        $this->log_info('Encryption called: session_key: '.$session_key);
 
         // check salt string
         if ( $this->salt === null || strlen($this->salt) < 64 ) {
@@ -358,6 +556,8 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
 
         // set actual method's name
         $this->method = __METHOD__;
+
+        $this->log_info('Decryption called: session_key: '.$session_key);
 
         // check salt string
         if ( $this->salt === null || strlen($this->salt) < 64 ) {
