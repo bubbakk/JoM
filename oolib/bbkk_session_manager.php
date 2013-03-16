@@ -103,7 +103,7 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
     }
 
     /*
-       Function: session_start
+       Function: start_session
        Set needed parameters, database connection handler and start session
 
        Parameters:
@@ -166,9 +166,11 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
         session_name($session_name);
         // Now we cat start the session
         session_start();
+        $this->log_info('Session started');
         // This line regenerates the session and delete the old one.
         // It also generates a new encryption key in the database.
-        session_regenerate_id(true);
+        //session_regenerate_id(true);
+        //$this->log_info('Session regenerate id');
 
         return true;
     }
@@ -212,7 +214,8 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
         {
             $this->log_info('Statement does not exist: creating new one.');
             try {
-                $this->read_stmt = $this->pdo_dbh->prepare('SELECT Session_data, Session_key FROM ' . $this->table_name . ' WHERE id = :session_id LIMIT 1');
+                $this->read_stmt = $this->pdo_dbh->prepare('SELECT Session_data, Session_key FROM ' . $this->table_name . ' WHERE Session_id = :session_id LIMIT 1');
+                echo 'SELECT Session_data, Session_key FROM ' . $this->table_name . ' WHERE Session_id = :session_id LIMIT 1';
             }
             catch (PDOException $e)
             {
@@ -231,8 +234,6 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
             $this->read_stmt->execute();
             $session_data = $this->read_stmt->fetchColumn();        // fetch first column (Session_data)
             $session_key  = $this->read_stmt->fetchColumn(1);       // fetch second column (Session_key)
-
-            $this->log_info('Affected ' . $this->read_stmt->rowCount() . ' rows');
         }
         catch (PDOException $e)
         {
@@ -248,20 +249,22 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
             $data = $this->decrypt($session_data, $session_key);
         }
         else {
-            $data = unserialize($session_data);
+            //$data = unserialize($session_data);
+            $data = $session_data;
         }
 
         $this->log_info('All done.');
+
         return $data;
     }
 
 
-    function write($session_id = '', $data = '') {
+    function write($session_id = '', $session_data = '') {
 
         // set actual method's name
         $this->method = __METHOD__;
 
-        $this->log_info('Called write(). session_id: ' . $session_id . ' data: ' . $data);
+        $this->log_info('Called write(). session_id: ' . $session_id . ' data: ' . $session_data);
 
         // Get unique key
         $session_key = $this->getkey($session_id);
@@ -269,10 +272,11 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
 
         // Encrypt data
         if ( $this->do_encrypt ) {
-            $data = $this->encrypt($data, $session_key);
+            $data = $this->encrypt($session_data, $session_key);
         }
         else {
-            $data = serialize($data);
+            //$data = serialize($session_data);
+            $data = $session_data;
         }
         $this->method = __METHOD__;                 // annoying manual method property reset after method call
 

@@ -9,6 +9,9 @@ Version 0.2
 - in BBKK_Session_Manager implemented destroy() method
 - in BBKK_Session_Manager implemented read() method
 - in BBKK_Session_Manager added possibility enable/disable encrtyption
+- in BBKK_Session_Manager removed the session_id regeneration on each start: in this way the session can be recovered
+- in BBKK_Session_Manager, in the read() method, fixed a bug in the query
+
 
 
 14.03.2013
