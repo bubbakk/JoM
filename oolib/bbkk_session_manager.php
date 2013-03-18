@@ -49,7 +49,7 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
 
         // check that session table name constant is set
             if ( empty($_table_name) || !is_string($_table_name) ) {
-                $this->set_error($USR_ERR_MSG__MISSING_PARAMETER,
+                $this->set_error($this->USR_ERR_MSG__MISSING_PARAMETER,
                                  'Session table name is not defined set correctly: '. var_dump($_table_name),
                                   __LINE__,
                                   E_ERROR);
@@ -59,7 +59,7 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
 
         // check PDO database handler passed
             if ( empty($_pdo_dbh) || gettype($_pdo_dbh) != 'object' || !(get_class($_pdo_dbh) === 'PDO') ) {
-                $this->set_error($USR_ERR_MSG__DATABASE_CONNECT,
+                $this->set_error($this->USR_ERR_MSG__DATABASE_CONNECT,
                                  'Pointer to object $_pdo_dbh is  ' . gettype($_pdo_dbh) . ' type and class ' . get_class($_pdo_dbh). '. Should be PDO',
                                  __LINE__,
                                  E_ERROR);
@@ -133,7 +133,7 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
             ini_set('session.hash_function', $this->session_hash);
         }
         else {
-            $this->set_error($USR_ERR_MSG__HASH_ALG_NOT_EXSTS,
+            $this->set_error($this->USR_ERR_MSG__HASH_ALG_NOT_EXSTS,
                              'Il puntatore all\'oggetto $_pdo_dbh è di tipo  '.gettype($_pdo_dbh).', classe e non PDO '.get_class($_pdo_dbh),
                              __LINE__,
                              E_ERROR);
@@ -142,7 +142,7 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
 
         // Check secure paramter passed
         if ( !is_bool($secure) ) {
-            $this->set_error($USR_ERR_MSG__PARAMETER_ERROR,
+            $this->set_error($this->USR_ERR_MSG__PARAMETER_ERROR,
                              'Secure paramter has wrong data type: '. var_dump($secure),
                               __LINE__,
                               E_ERROR);
@@ -219,7 +219,7 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
             }
             catch (PDOException $e)
             {
-                $this->set_error($USR_ERR_MSG__PREPARE_STATEMENT,
+                $this->set_error($this->USR_ERR_MSG__PREPARE_STATEMENT,
                                  $e->getMessage(),
                                  __LINE__,
                                  E_ERROR);
@@ -237,7 +237,7 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
         }
         catch (PDOException $e)
         {
-            $this->set_error($USR_ERR_MSG__BIND_EXEC_STATEMENT,
+            $this->set_error($this->USR_ERR_MSG__BIND_EXEC_STATEMENT,
                              $e->getMessage(),
                              __LINE__,
                              E_ERROR);
@@ -291,7 +291,7 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
             }
             catch (PDOException $e)
             {
-                $this->set_error($USR_ERR_MSG__PREPARE_STATEMENT,
+                $this->set_error($this->USR_ERR_MSG__PREPARE_STATEMENT,
                                  $e->getMessage(),
                                  __LINE__,
                                  E_ERROR);
@@ -312,7 +312,7 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
         }
         catch (PDOException $e)
         {
-            $this->set_error($USR_ERR_MSG__BIND_EXEC_STATEMENT,
+            $this->set_error($this->USR_ERR_MSG__BIND_EXEC_STATEMENT,
                              $e->getMessage(),
                              __LINE__,
                              E_ERROR);
@@ -332,7 +332,7 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
 
         // check that session id is passed
         if ( empty($session_id) || !is_string($session_id) ) {
-            $this->set_error($USR_ERR_MSG__MISSING_PARAMETER,
+            $this->set_error($this->USR_ERR_MSG__MISSING_PARAMETER,
                              'Session table name is not defined set correctly: '. var_dump($_table_name),
                               __LINE__,
                               E_ERROR);
@@ -348,7 +348,7 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
             }
             catch (PDOException $e)
             {
-                $this->set_error($USR_ERR_MSG__PREPARE_STATEMENT,
+                $this->set_error($this->USR_ERR_MSG__PREPARE_STATEMENT,
                                  $e->getMessage(),
                                  __LINE__,
                                  E_ERROR);
@@ -364,7 +364,7 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
         }
         catch (PDOException $e)
         {
-            $this->set_error($USR_ERR_MSG__BIND_EXEC_STATEMENT,
+            $this->set_error($this->USR_ERR_MSG__BIND_EXEC_STATEMENT,
                              $e->getMessage(),
                              __LINE__,
                              E_ERROR);
@@ -388,7 +388,7 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
             }
             catch (PDOException $e)
             {
-                $this->set_error($USR_ERR_MSG__PREPARE_STATEMENT,
+                $this->set_error($this->USR_ERR_MSG__PREPARE_STATEMENT,
                                  $e->getMessage(),
                                  __LINE__,
                                  E_ERROR);
@@ -405,7 +405,7 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
         }
         catch (PDOException $e)
         {
-            $this->set_error($USR_ERR_MSG__BIND_EXEC_STATEMENT,
+            $this->set_error($this->USR_ERR_MSG__BIND_EXEC_STATEMENT,
                              $e->getMessage(),
                              __LINE__,
                              E_ERROR);

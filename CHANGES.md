@@ -1,6 +1,25 @@
 Version 0.2
 ===========
 
+TODOS:
+  implement a method in bbkk_base_class that checks $pdo variable connection and $tablename variable. Also some general user error messages,
+  like prepare statement, connection missing, ....
+
+19.03.2013
+----------
+- rinominata classe in JOM_User
+- aggiunta query di login e testata
+- creato script di test di login
+
+18.03.2013
+----------
+- creata classe bbkk_user con metodo authenticate
+
+16.03.2013
+----------
+- in BBKK_Session_Manager removed the session_id regeneration on each start: in this way the session can be recovered
+- in BBKK_Session_Manager, in the read() method, fixed a bug in the query
+
 15.03.2013
 ----------
 - in BBKK_Session_Manager created private properties for errors
@@ -9,10 +28,6 @@ Version 0.2
 - in BBKK_Session_Manager implemented destroy() method
 - in BBKK_Session_Manager implemented read() method
 - in BBKK_Session_Manager added possibility enable/disable encrtyption
-- in BBKK_Session_Manager removed the session_id regeneration on each start: in this way the session can be recovered
-- in BBKK_Session_Manager, in the read() method, fixed a bug in the query
-
-
 
 14.03.2013
 ----------
