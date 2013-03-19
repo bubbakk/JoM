@@ -11,6 +11,9 @@ require_once(DIR_BASE.'cfg/config.php');
     <link href="./css/jom_default_style.css" rel="stylesheet" type="text/css" media="screen">
     <link href="./css/font-awesome.min.css"  rel="stylesheet" type="text/css" media="screen">
     <script language="javascript" type="text/javascript" src="./js/lib/jquery-1.9.0.min.js"></script>
+    <script language="javascript" type="text/javascript" src="./js/lib/pidCrypt/pidcrypt.js"></script>
+    <script language="javascript" type="text/javascript" src="./js/lib/pidCrypt/pidcrypt_util.js"></script>
+    <script language="javascript" type="text/javascript" src="./js/lib/pidCrypt/sha256.js"></script>
     <script language="javascript" type="text/javascript" src="./js/generic_lib.js"></script>
     <title>Entra in JoM - autenticazione</title>
     <script>
@@ -19,14 +22,40 @@ require_once(DIR_BASE.'cfg/config.php');
         $('#jom_loginpanel').css('opacity', 0);
         animate_opacity($("#jom_logo"), 1, function(){
             animate_opacity($("#jom_loginpanel"), 1, function(){
-                // do something...
+                $('#user').focus();
             });
         });
         $('#jom_infopanel').hide();
         $('#jom_infopanelctrl').unbind().bind('click', function(){
             $('#jom_infopanel').slideToggle('slow');
         });
+
+        $('#user').unbind().keypress(function(e){
+            if ( e.which == 13 ) { $('#pass').val(""); $('#pass').focus(); }
+        });
+
+        $('#pass').unbind().keypress(function(e){
+            if ( e.which == 13 ) { check_login( $("#submit") ); }
+        });
+
     });
+
+
+
+
+    function check_login(el) {
+
+        // loading cursor...
+
+        var hashedpass = pidCrypt.SHA256($('#pass').val());
+        var username   = $('#user').val();
+
+        // ajax call to check login and
+        // if successful redirect to application page
+        // if not, prompt error
+            // unset loading cursor
+
+    }
     </script>
 </head>
 <body>
@@ -54,19 +83,19 @@ require_once(DIR_BASE.'cfg/config.php');
                             <label style="padding-top: 15px;">User name or email</label>
                             <div class="input-prepend">
                                 <span class="add-on"><i class="icon-user"></i></span>
-                                <input class="input-block-level" type="text" placeholder="enter user name or email" style="font-size: 18px; font-weight: bold;">
+                                <input id="user" class="input-block-level" type="text" placeholder="enter user name or email" style="font-size: 18px; font-weight: bold;">
                             </div>
                             <label>Password</label>
                             <div class="input-prepend">
                                 <span class="add-on"><i class="icon-key"></i></span>
-                                <input class="input-block-level" type="password" placeholder="enter password" style="font-size: 18px; font-weight: bold;">
+                                <input id="pass" class="input-block-level" type="password" placeholder="enter password" style="font-size: 18px; font-weight: bold;">
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row" style="margin-top: 5px;">
                     <div class="span2 offset1 text-center">
-                        <button type="submit" class="btn"><i class="icon-signin"></i> Enter</button>
+                        <button id="submit" type="submit" class="btn" onclick='javascript: check_login(this);'><i class="icon-signin"></i> Enter</button>
                     </div>
                 </div>
                 <br>

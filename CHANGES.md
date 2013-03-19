@@ -9,6 +9,8 @@ TODOS:
 ----------
 - renamed field User_password in User_password_hash in the table Users
 - added key in mysql table Users for User_contacts_email and in sqlite for User_contacts_email and User_username
+- added pidCrypt SHA256 library load in login.php script; it correctly generates the hash for password field
+- added enter bind event on login GUI fields
 
 18.03.2013
 ----------
@@ -65,11 +67,14 @@ TODOS:
 - created HTML login page (GUI): some animations added; good styling added
 
 
+
+
 Version 0.1
 ===========
 
 Completed.
-Still remains:
+
+TODOS:
 - all other table creation (other tables missing: not in the core); sample data too
 - MySQL database creation is not yet implemented
 - not all data passed to PHP scripts are checked
