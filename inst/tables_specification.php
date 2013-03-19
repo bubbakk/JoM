@@ -33,7 +33,7 @@ $tables = array(
                         `User_firstname`                varchar(50) CHARACTER SET utf8  NOT NULL DEFAULT '',
                         `User_lastname`                 varchar(50) CHARACTER SET utf8  NOT NULL DEFAULT '',
                         `User_username`                 varchar(20) CHARACTER SET utf8  NOT NULL DEFAULT '',
-                        `User_password`                 char(128)   CHARACTER SET utf8  NOT NULL DEFAULT '',
+                        `User_password_hash`            char(128)   CHARACTER SET utf8  NOT NULL DEFAULT '',
                         `User_salt`                     char(128)   CHARACTER SET utf8  NOT NULL DEFAULT '',
                         `User_nickname`                 varchar(50) CHARACTER SET utf8  NOT NULL DEFAULT '' COMMENT 'the name the system will show to other users',
                         `User_contacts_internal_telephone_number` varchar(20) CHARACTER SET utf8  NOT NULL DEFAULT '',
@@ -53,14 +53,15 @@ $tables = array(
                         `User_external_id_join`         integer                         NOT NULL DEFAULT '0' COMMENT 'to be used only if external authenication is enabled (to be developed)',
                         `User_trashed`                  tinyint(1) unsigned             NOT NULL DEFAULT '0',
                         PRIMARY KEY (`User_id`),
-                        UNIQUE  KEY `USERNAME` (`User_username`)
+                        UNIQUE  KEY `USERNAME` (`User_username`),
+                        UNIQUE  KEY `USERNAME` (`User_contacts_email`)
                  ) ENGINE=MyISAM DEFAULT CHARSET=utf8",
     'sqlite'  => "CREATE TABLE IF NOT EXISTS ".TBL_USERS." (
                         User_id                       INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE,
                         User_firstname                VARCHAR(50)           NOT NULL,
                         User_lastname                 VARCHAR(50)           NOT NULL,
                         User_username                 VARCHAR(20)           NOT NULL,
-                        User_password                 CHAR(128)             NOT NULL,
+                        User_password_hash            CHAR(128)             NOT NULL,
                         User_salt                     CHAR(128)             NOT NULL,
                         User_nickname                 VARCHAR(50)           NOT NULL,
                         User_contacts_internal_telephone_number VARCHAR(20) NOT NULL,
@@ -78,7 +79,9 @@ $tables = array(
                         User_freegroup_id_grpC        INTEGER               NOT NULL DEFAULT 0,
                         User_freegroup_id_grpD        INTEGER               NOT NULL DEFAULT 0,
                         User_external_id_join         INTEGER               NOT NULL DEFAULT 0,
-                        User_trashed                  BOOL                  NOT NULL DEFAULT 0)"
+                        User_trashed                  BOOL                  NOT NULL DEFAULT 0);
+                CREATE UNIQUE INDEX \"main\".\"Users_username_idx\" ON \"".TBL_USERS."\" (\"User_username\" ASC);
+                CREATE UNIQUE INDEX \"main\".\"Users_username_idx\" ON \"".TBL_USERS."\" (\"User_contacts_email\" ASC);"
   ),
   'Jobs' => array(
     'mysql'  => "CREATE TABLE IF NOT EXISTS `".TBL_JOBS."` (

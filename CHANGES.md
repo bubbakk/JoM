@@ -7,6 +7,11 @@ TODOS:
 
 19.03.2013
 ----------
+- renamed field User_password in User_password_hash in the table Users
+- added key in mysql table Users for User_contacts_email and in sqlite for User_contacts_email and User_username
+
+18.03.2013
+----------
 - rinominata classe in JOM_User
 - aggiunta query di login e testata
 - creato script di test di login
