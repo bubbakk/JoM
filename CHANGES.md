@@ -1,9 +1,19 @@
+
 Version 0.2
 ===========
 
 TODOS:
   implement a method in bbkk_base_class that checks $pdo variable connection and $tablename variable. Also some general user error messages,
   like prepare statement, connection missing, ....
+
+20.03.2013
+----------
+- in login page 'show details...' text swaps with 'hide details...' on open/close
+- added comments to javascript code
+- replaced var_dump with var_export (because the latter returns the string: useful for debug on/off purposes)
+- added boolean $debug_on_screen public property in base_class: can enable/disable log_info() method to output debug
+  messages on screen
+- now login page starts the session
 
 19.03.2013
 ----------

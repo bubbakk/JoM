@@ -1,6 +1,21 @@
 <?php
 define('DIR_BASE', './');
+require_once(DIR_BASE.'cfg/user_config.php');
 require_once(DIR_BASE.'cfg/config.php');
+require_once(DIR_LIB.'generic_lib.php');
+require_once(DIR_OOL.'bbkk_base_class.php');
+require_once(DIR_OOL.'bbkk_pdo.php');
+require_once(DIR_OOL.'bbkk_session_manager.php');
+
+// database connection
+$PDO = open_database($config['DB']['type'], $config['DB'][$config['DB']['type']]);  // open DB
+$DBH = $PDO->get_dbh();                                                             // get the handler
+// session manager
+$SMAN = new BBKK_Session_Manager(TBL_SESSIONS, $DBH);   // constructor
+$SMAN->debug_on_screen = false;
+$SMAN->salt = $config['SALT'];                          // explicitly set application salt
+$SMAN->start_session('', false);                        // starting session
+
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -22,18 +37,32 @@ require_once(DIR_BASE.'cfg/config.php');
         $('#jom_loginpanel').css('opacity', 0);
         animate_opacity($("#jom_logo"), 1, function(){
             animate_opacity($("#jom_loginpanel"), 1, function(){
+                // set focus to username field after page is appeared
                 $('#user').focus();
             });
         });
+
+        // info panel is hidden at the beginning
         $('#jom_infopanel').hide();
+
+        // bind click event for "show info" link-button
         $('#jom_infopanelctrl').unbind().bind('click', function(){
             $('#jom_infopanel').slideToggle('slow');
+            var old_text = $(this).contents().last()[0].textContent;
+            if ( old_text == ' show details...' ) {
+                $(this).contents().last()[0].textContent = ' hide details...';
+            }
+            else {
+                $(this).contents().last()[0].textContent = ' show details...';
+            }
         });
 
+        // bind enter key for username field
         $('#user').unbind().keypress(function(e){
             if ( e.which == 13 ) { $('#pass').val(""); $('#pass').focus(); }
         });
 
+        // bind enter key for password field
         $('#pass').unbind().keypress(function(e){
             if ( e.which == 13 ) { check_login( $("#submit") ); }
         });
@@ -101,8 +130,7 @@ require_once(DIR_BASE.'cfg/config.php');
                 <br>
                 <div class="row">
                     <div class="span4" id="jom_infopanelctrl" style="cursor: pointer;">
-                        <i class="icon-info-sign"></i> show details...
-                    </div>
+                        <i class="icon-info-sign"></i> show details...</div>
                 </div>
                 <div class="row" id="jom_infopanel">
                     <div class="span4">

@@ -61,6 +61,14 @@ class BBKK_Base_Class {
     */
     public    $error_text_dbg  = '';
 
+
+    /* Varibale $debug_on_screen
+       If set to true, the log_info method will output debug/info messages
+
+       See also:
+         <log_info>
+    */
+    public $debug_on_screen    = false;
     /*
        Variable: $error_type
        Values are the same as PHP constants (see http://php.net/manual/en/errorfunc.constants.php)
@@ -74,6 +82,8 @@ class BBKK_Base_Class {
        Instance of logger object. Must implement a specific interface. By default is not set
     */
     private   $logger      = null;
+
+
 
 
    /*
@@ -200,7 +210,7 @@ class BBKK_Base_Class {
 ///// LOGGING METHODS
 
     protected function log_info($msg) {
-        if ( defined('JOM_DEBUG') && JOM_DEBUG ) {
+        if ( defined('JOM_DEBUG') && JOM_DEBUG && $this->debug_on_screen) {
             echo $this->class. '.' . $this->method . ' - ' . $msg . '<br>';
         }
     }

@@ -50,7 +50,7 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
         // check that session table name constant is set
             if ( empty($_table_name) || !is_string($_table_name) ) {
                 $this->set_error($this->USR_ERR_MSG__MISSING_PARAMETER,
-                                 'Session table name is not defined set correctly: '. var_dump($_table_name),
+                                 'Session table name is not defined set correctly: '. var_export($_table_name, true),
                                   __LINE__,
                                   E_ERROR);
                 return false;
@@ -143,7 +143,7 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
         // Check secure paramter passed
         if ( !is_bool($secure) ) {
             $this->set_error($this->USR_ERR_MSG__PARAMETER_ERROR,
-                             'Secure paramter has wrong data type: '. var_dump($secure),
+                             'Secure paramter has wrong data type: '. var_export($secure, true),
                               __LINE__,
                               E_ERROR);
             return false;
@@ -159,7 +159,7 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
 
         // Get session cookie parameters
         $cookieParams = session_get_cookie_params();
-        $this->log_info('Cookie parameters: '. var_dump($cookieParams));
+        $this->log_info('Cookie parameters: '. var_export($cookieParams, true));
         // Set the parameters
         session_set_cookie_params($cookieParams["lifetime"], $cookieParams["path"], $cookieParams["domain"], $secure, $this->httponly);
         // Change the session name
@@ -215,7 +215,7 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
             $this->log_info('Statement does not exist: creating new one.');
             try {
                 $this->read_stmt = $this->pdo_dbh->prepare('SELECT Session_data, Session_key FROM ' . $this->table_name . ' WHERE Session_id = :session_id LIMIT 1');
-                echo 'SELECT Session_data, Session_key FROM ' . $this->table_name . ' WHERE Session_id = :session_id LIMIT 1';
+                $this->log_info('SELECT Session_data, Session_key FROM ' . $this->table_name . ' WHERE Session_id = :session_id LIMIT 1');
             }
             catch (PDOException $e)
             {
@@ -333,7 +333,7 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
         // check that session id is passed
         if ( empty($session_id) || !is_string($session_id) ) {
             $this->set_error($this->USR_ERR_MSG__MISSING_PARAMETER,
-                             'Session table name is not defined set correctly: '. var_dump($_table_name),
+                             'Session table name is not defined set correctly: '. var_export($_table_name, true),
                               __LINE__,
                               E_ERROR);
             return false;
