@@ -8,12 +8,18 @@ TODOS:
 
 20.03.2013
 ----------
+- fixed ard.php (Ajax Requests Dispatcher) in calling right script to handle request
+- more tests on SESSION
+
+20.03.2013
+----------
 - in login page 'show details...' text swaps with 'hide details...' on open/close
 - added comments to javascript code
 - replaced var_dump with var_export (because the latter returns the string: useful for debug on/off purposes)
 - added boolean $debug_on_screen public property in base_class: can enable/disable log_info() method to output debug
   messages on screen
 - now login page starts the session
+- now the Ajax dispatcher starts session
 
 19.03.2013
 ----------

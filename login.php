@@ -7,10 +7,14 @@ require_once(DIR_OOL.'bbkk_base_class.php');
 require_once(DIR_OOL.'bbkk_pdo.php');
 require_once(DIR_OOL.'bbkk_session_manager.php');
 
+//
 // database connection
+//
 $PDO = open_database($config['DB']['type'], $config['DB'][$config['DB']['type']]);  // open DB
 $DBH = $PDO->get_dbh();                                                             // get the handler
+//
 // session manager
+//
 $SMAN = new BBKK_Session_Manager(TBL_SESSIONS, $DBH);   // constructor
 $SMAN->debug_on_screen = false;
 $SMAN->salt = $config['SALT'];                          // explicitly set application salt
