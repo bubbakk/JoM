@@ -66,7 +66,7 @@ class JOM_User extends BBKK_Base_Class {
          $password_hash - password hash to check
 
        Returns:
-         true if a user is authenticad, false otherwise
+         true if a user is authenticated, false otherwise
     */
     public function authenticate($user_or_email = '', $password_hash = '') {
         // check if PDO connection is set
@@ -106,10 +106,6 @@ class JOM_User extends BBKK_Base_Class {
 
             $this->user_data = $this->stmt_login->fetch(PDO::FETCH_OBJ );        // fetch first column (Session_data)
             $this->stmt_login->closeCursor();
-
-            print "<pre>";
-            var_dump($this->user_data);
-            print "</pre>";
 
             if ( $this->user_data === false ) {
                 return false;

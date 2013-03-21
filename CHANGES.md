@@ -6,10 +6,18 @@ TODOS:
   implement a method in bbkk_base_class that checks $pdo variable connection and $tablename variable. Also some general user error messages,
   like prepare statement, connection missing, ....
 
+21.03.2013
+----------
+- now login.php page call ajax dispatcher passing user and hashed password parameters
+- enhanced GUI interaction and effects
+- added warning message for unsuccessfull login
+-
+
 20.03.2013
 ----------
 - fixed ard.php (Ajax Requests Dispatcher) in calling right script to handle request
 - more tests on SESSION
+- added SESSION_EXPIRE define in config.php
 
 20.03.2013
 ----------

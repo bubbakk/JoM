@@ -28,11 +28,6 @@ $SMAN->debug_on_screen = false;
 $SMAN->salt = $config['SALT'];                          // explicitly set application salt
 $SMAN->start_session('', false);                        // starting session
 
-// check if user is logged in
-
-// update user's last visit datetime
-$_SESSION['user']['last_visit'] = time();
-
 $retval['success'] = false;
 
 
@@ -72,6 +67,12 @@ if ( array_key_exists($domain, $domains) &&
      array_key_exists($request, $requests[$domains[$domain]])
    ) {
     require_once(DIR_LIB . 'requests_' . $domains[$domain] . '.php');
+
+    // check if user is logged in
+
+    // update user's last visit datetime
+    $_SESSION['user']['last_visit'] = time();
+
     dispatch_request($requests[$domains[$domain]][$request]);
 }
 else {
@@ -82,5 +83,4 @@ else {
 }
 
 
-$retval['success'] = true;
 json_output_and_die($retval);

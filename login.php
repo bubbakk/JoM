@@ -32,7 +32,7 @@ $SMAN->start_session('', false);                        // starting session
     <script language="javascript" type="text/javascript" src="./js/lib/jquery-1.9.0.min.js"></script>
     <script language="javascript" type="text/javascript" src="./js/lib/pidCrypt/pidcrypt.js"></script>
     <script language="javascript" type="text/javascript" src="./js/lib/pidCrypt/pidcrypt_util.js"></script>
-    <script language="javascript" type="text/javascript" src="./js/lib/pidCrypt/sha256.js"></script>
+    <script language="javascript" type="text/javascript" src="./js/lib/pidCrypt/sha512.js"></script>
     <script language="javascript" type="text/javascript" src="./js/generic_lib.js"></script>
     <title>Entra in JoM - autenticazione</title>
     <script>
@@ -47,7 +47,12 @@ $SMAN->start_session('', false);                        // starting session
         });
 
         // info panel is hidden at the beginning
+        $('#jom_message_container').hide();
         $('#jom_infopanel').hide();
+
+        $("button[data-dismiss='alert']").on("click", function(){
+            $('#jom_message_container').fadeOut();
+        });
 
         // bind click event for "show info" link-button
         $('#jom_infopanelctrl').unbind().bind('click', function(){
@@ -79,15 +84,48 @@ $SMAN->start_session('', false);                        // starting session
     function check_login(el) {
 
         // loading cursor...
+        $(el).find('i').attr("class", "icon-spinner icon-spin");
 
-        var hashedpass = pidCrypt.SHA256($('#pass').val());
+        var hashedpass = pidCrypt.SHA512($('#pass').val());
         var username   = $('#user').val();
 
-        // ajax call to check login and
-        // if successful redirect to application page
-        // if not, prompt error
-            // unset loading cursor
 
+        // ajax call to check login and
+        $.ajax({
+            url : "./ard.php",
+            type : "GET",
+            dataType : 'json',
+            data : 'd=usr&r=lin&u=' + username + '&p=' + hashedpass + '&n=none_',
+            success : function(data) {
+                $(el).find('i').attr("class", "icon-info-sign");
+                // if successful
+                if ( data.success )
+                {
+                    // redirect to application page
+                    animate_opacity($('#jom_message_container'),0, function(){
+                        animate_opacity($("#jom_loginpanel"), 0, function(){
+                            animate_opacity($("#jom_logo"), 0, function(){
+                                // set focus to username field after page is appeared
+                                $('#user').focus();
+                            });
+                        });
+                    });
+                }
+                // if not
+                else {
+                    // prompt error
+                    $('#jom_message_container').html('<div class="alert text-center" style="box-shadow: 2px 2px 8px #888;">' +
+                                           '    <button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                                           '    <div id="jom_message">' + data.usr_msg + '</div>' +
+                                           '</div>');
+                    $('#jom_message_container').fadeIn();
+                }
+            },
+            error : function(jqxhr, text, error) {
+                $(el).find('i').attr("class", "icon-info-sign");
+                alert("errore");
+            }
+        });
     }
     </script>
 </head>
@@ -99,6 +137,11 @@ $SMAN->start_session('', false);                        // starting session
             </div>
         </div>
         <br>
+        <br>
+        <div class="row" style="position: absolute; top: 120px;">
+            <div class="span6 offset3" style="padding: 0 15px 0 15px;" id="jom_message_container">
+            </div>
+        </div>
         <div class="row" id="jom_loginpanel">
             <div class="span4 offset4" style="border: 1px solid #AFAFAF; border-radius: 10px; box-shadow: 1px 1px 2px #888; background-color: white; padding: 15px;">
                 <div class="row">

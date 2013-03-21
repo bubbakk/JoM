@@ -3,9 +3,11 @@
 define('JOM_DEBUG',     true);
 define('JOM_LOG',       true);
 define('JOM_MILESTONE', '0.2');                                         // LOGIN version (refer to MILESTONES.md for versioning progression)
-define('JOM_RELEASE',   '7');
+define('JOM_RELEASE',   '8');
 define('JOM_VERSION',   JOM_MILESTONE.'.'.JOM_RELEASE);                 // milestone.release
 define('JOM_DESC_VER',  'v. '.JOM_MILESTONE.'.x: login procedures');    // milestone version description
+
+define('SESSION_EXPIRE', 6 * 60 * 60 * 1000 );                          // session expires in 6 hours
 
 
 // directories definition
