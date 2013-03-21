@@ -3,9 +3,11 @@ define('DIR_BASE', './');
 require_once(DIR_BASE.'cfg/user_config.php');
 require_once(DIR_BASE.'cfg/config.php');
 require_once(DIR_LIB.'generic_lib.php');
+require_once(DIR_LIB.'ft-nonce-lib.php');
 require_once(DIR_OOL.'bbkk_base_class.php');
 require_once(DIR_OOL.'bbkk_pdo.php');
 require_once(DIR_OOL.'bbkk_session_manager.php');
+
 
 //
 // database connection
@@ -88,33 +90,33 @@ $SMAN->start_session('', false);                        // starting session
 
         var hashedpass = pidCrypt.SHA512($('#pass').val());
         var username   = $('#user').val();
-
+        var nonce      = $("input[name='_nonce']").val();
 
         // ajax call to check login and
         $.ajax({
             url : "./ard.php",
             type : "GET",
             dataType : 'json',
-            data : 'd=usr&r=lin&u=' + username + '&p=' + hashedpass + '&n=none_',
+            data : 'd=usr&r=lin&u=' + username + '&p=' + hashedpass + '&n=' + nonce,
             success : function(data) {
                 $(el).find('i').attr("class", "icon-info-sign");
                 // if successful
                 if ( data.success )
                 {
                     // redirect to application page
-                    animate_opacity($('#jom_message_container'),0, function(){
-                        animate_opacity($("#jom_loginpanel"), 0, function(){
-                            animate_opacity($("#jom_logo"), 0, function(){
-                                // set focus to username field after page is appeared
-                                $('#user').focus();
-                            });
+                    $('#jom_message_container').hide();
+                    animate_opacity($("#jom_loginpanel"), 0, function(){
+                        animate_opacity($("#jom_logo"), 0, function(){
+                            // redirect to application
+                            window.location.href = "./application.php";
                         });
                     });
                 }
                 // if not
                 else {
                     // prompt error
-                    $('#jom_message_container').html('<div class="alert text-center" style="box-shadow: 2px 2px 8px #888;">' +
+                    $('#jom_message_container').hide();
+                    $('#jom_message_container').html('<div class="alert text-center" style="box-shadow: 2px 2px 8px #AAA;">' +
                                            '    <button type="button" class="close" data-dismiss="alert">&times;</button>' +
                                            '    <div id="jom_message">' + data.usr_msg + '</div>' +
                                            '</div>');
@@ -166,6 +168,7 @@ $SMAN->start_session('', false);                        // starting session
                                 <span class="add-on"><i class="icon-key"></i></span>
                                 <input id="pass" class="input-block-level" type="password" placeholder="enter password" style="font-size: 18px; font-weight: bold;">
                             </div>
+                            <?php ft_nonce_create_form_input( '/users/login' ); ?>
                         </div>
                     </div>
                 </div>

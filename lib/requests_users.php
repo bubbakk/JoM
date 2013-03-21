@@ -12,7 +12,7 @@ function dispatch_request($request)
 
             global $DBH, $retval;
 
-            // user is not logged in
+            // impose that user is not logged in
             $_SESSION['user']['is_logged_in'] = false;
             $USR = new JOM_User(TBL_USERS, $DBH);                                   // constructor
             $user_auth = $USR->authenticate(post_or_get('u'), post_or_get('p'));    // try to authenticate
@@ -23,12 +23,14 @@ function dispatch_request($request)
                 $retval['usr_msg'] = 'Wrong username/e-mail and password combination';
                 return;
             }
-
-                $retval['success'] = true;
-                $retval['usr_msg'] = 'Authenticated';
+            // authenticated successfully
+            $_SESSION['user']['is_logged_in'] = true;
+            $retval['success'] = true;
+            $retval['usr_msg'] = 'Authenticated';
 
             break;
         case 'logout':
+            $_SESSION['user']['is_logged_in'] = false;
             break;
         default:
             echo "CANT'T BE HERE!!!!\n";

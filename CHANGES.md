@@ -11,7 +11,10 @@ TODOS:
 - now login.php page call ajax dispatcher passing user and hashed password parameters
 - enhanced GUI interaction and effects
 - added warning message for unsuccessfull login
--
+- added redirect on successful login
+- added nonce library (and testing) ft-nonce-lib
+- optimized ARD
+- set some session variables
 
 20.03.2013
 ----------
