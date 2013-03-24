@@ -11,7 +11,7 @@ define('DIR_BASE', './');
 require_once(DIR_BASE.'cfg/user_config.php');
 require_once(DIR_BASE.'cfg/config.php');
 require_once(DIR_LIB.'generic_lib.php');
-require_once(DIR_LIB.'ft-nonce-lib.php');
+require_once(DIR_LIB.'nonce_lib.php');
 require_once(DIR_OOL.'bbkk_base_class.php');
 require_once(DIR_OOL.'bbkk_pdo.php');
 require_once(DIR_OOL.'bbkk_session_manager.php');
@@ -42,6 +42,12 @@ if ( post_or_get('n')===false) {
     $retval['dbg_msg'] = 'Missing n parameter';
     json_output_and_die($retval);
 }
+// read TIMESTAMP
+if ( post_or_get('t')===false) {
+    $retval['err_msg'] = 'Missing parameter';
+    $retval['dbg_msg'] = 'Missing t parameter';
+    json_output_and_die($retval);
+}
 // read DOMAIN
 if ( post_or_get('d')===false) {
     $retval['err_msg'] = 'Missing parameter';
@@ -54,16 +60,12 @@ if ( post_or_get('r')===false) {
     $retval['dbg_msg'] = 'Missing r parameter';
     json_output_and_die($retval);
 }
-$domain  = post_or_get('d'); // echo 'domain: '.$domain."\n";
-$request = post_or_get('r'); // echo 'request: '.$request."\n";
-$nonce   = post_or_get('n'); // echo 'nonce: '.$nonce."\n";
+$domain    = post_or_get('d'); // echo 'domain: '.$domain."\n";
+$request   = post_or_get('r'); // echo 'request: '.$request."\n";
+$nonce     = post_or_get('n'); // echo 'nonce: '.$nonce."\n";
+$timestamp = post_or_get('t'); // echo 'nonce: '.$nonce."\n";
 
-$command = '/' . $domains[$domain] . '/' . $requests[$domains[$domain]][$request]; echo 'command: '.$command."\n";
-
-if ( ft_nonce_is_valid( $nonce , $command ) )
-    die("OK: $nonce");  // go on!!!
-else
-    die("NO: $nonce");  // if nonce is not valid, regenerate a new one ?????????
+$command = '/' . $domains[$domain] . '/' . $requests[$domains[$domain]][$request];
 
 
 
@@ -86,6 +88,15 @@ $SMAN->start_session('', false);                        // starting session
 
 
 
+
+$nonce_check = check_nonce( $command, 0, session_id(), $timestamp, $config['SALT'], $config['HASH_ALG'], $nonce, NONCE_EXPIRE, $DBH);
+if ( !($nonce_check === true) ) {
+    // if nonce is not valid, reload the page
+    $retval['err_msg'] = 'Nonce not accepted';
+    $retval['dbg_msg'] = 'Something in nonce check failed';
+    $retval['usr_msg'] = 'Request too old. Please <a href="'.$_SERVER['HTTP_REFERER'].'">reload page</a>.';
+    json_output_and_die($retval);
+}
 
 
 

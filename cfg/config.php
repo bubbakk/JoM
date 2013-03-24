@@ -3,11 +3,12 @@
 define('JOM_DEBUG',     true);
 define('JOM_LOG',       true);
 define('JOM_MILESTONE', '0.2');                                         // LOGIN version (refer to MILESTONES.md for versioning progression)
-define('JOM_RELEASE',   '8');
+define('JOM_RELEASE',   '10');
 define('JOM_VERSION',   JOM_MILESTONE.'.'.JOM_RELEASE);                 // milestone.release
 define('JOM_DESC_VER',  'v. '.JOM_MILESTONE.'.x: login procedures');    // milestone version description
 
-define('SESSION_EXPIRE', 6 * 60 * 60 * 1000 );                          // session expires in 6 hours
+define('SESSION_EXPIRE', 6 * 60 * 60 );                                 // session expires in 6 hours
+define('NONCE_EXPIRE',   1 * 60 * 60 );                                 // nonce expires in 1 hour
 
 
 // directories definition
@@ -36,4 +37,5 @@ define('TBL_CATEGORIES_1',        TABLES_PREFIX.'Categories_1');
 define('TBL_CATEGORIES_2',        TABLES_PREFIX.'Categories_2');
 define('TBL_LOGIN_ATTEMPTS',      TABLES_PREFIX.'Login_attempts');
 define('TBL_SESSIONS',            TABLES_PREFIX.'Sessions');
+define('TBL_NONCES',              TABLES_PREFIX.'Nonces');
 define('TBL_LOGGER',              TABLES_PREFIX.'Log');

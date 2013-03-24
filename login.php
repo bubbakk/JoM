@@ -3,7 +3,7 @@ define('DIR_BASE', './');
 require_once(DIR_BASE.'cfg/user_config.php');
 require_once(DIR_BASE.'cfg/config.php');
 require_once(DIR_LIB.'generic_lib.php');
-require_once(DIR_LIB.'ft-nonce-lib.php');
+require_once(DIR_LIB.'nonce_lib.php');
 require_once(DIR_OOL.'bbkk_base_class.php');
 require_once(DIR_OOL.'bbkk_pdo.php');
 require_once(DIR_OOL.'bbkk_session_manager.php');
@@ -91,13 +91,14 @@ $SMAN->start_session('', false);                        // starting session
         var hashedpass = pidCrypt.SHA512($('#pass').val());
         var username   = $('#user').val();
         var nonce      = $("input[name='_nonce']").val();
+        var timestamp  = $("input[name='_timestamp']").val();
 
         // ajax call to check login and
         $.ajax({
             url : "./ard.php",
             type : "GET",
             dataType : 'json',
-            data : 'd=usr&r=lin&u=' + username + '&p=' + hashedpass + '&n=' + nonce,
+            data : 'd=usr&r=lin&u=' + username + '&p=' + hashedpass + '&n=' + nonce + '&t=' + timestamp,
             success : function(data) {
                 $(el).find('i').attr("class", "icon-info-sign");
                 // if successful
@@ -121,6 +122,13 @@ $SMAN->start_session('', false);                        // starting session
                                            '    <div id="jom_message">' + data.usr_msg + '</div>' +
                                            '</div>');
                     $('#jom_message_container').fadeIn();
+
+                    if ( data.new_timestamp != undefined ) {
+                        $("input[name='_timestamp']").val(data.new_timestamp);
+                    }
+                    if ( data.new_nonce != undefined ) {
+                        $("input[name='_nonce']").val(data.new_nonce);
+                    }
                 }
             },
             error : function(jqxhr, text, error) {
@@ -168,7 +176,7 @@ $SMAN->start_session('', false);                        // starting session
                                 <span class="add-on"><i class="icon-key"></i></span>
                                 <input id="pass" class="input-block-level" type="password" placeholder="enter password" style="font-size: 18px; font-weight: bold;">
                             </div>
-                            <?php ft_nonce_create_form_input( '/users/login' ); ?>
+                            <?php echo generate_html_input_forms( '/users/login', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>
                         </div>
                     </div>
                 </div>

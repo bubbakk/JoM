@@ -6,6 +6,19 @@ TODOS:
   implement a method in bbkk_base_class that checks $pdo variable connection and $tablename variable. Also some general user error messages,
   like prepare statement, connection missing, ....
 
+
+23.03.2013
+----------
+- added NONCE_EXPIRE constant in cfg/config.php
+- nonce functions cutted&pasted in a separated lib file
+- added expiration time
+- added Nonces table (also in tables creation procedure in installation procedure)
+
+22.03.2013
+----------
+- replacing ft-nonce-lib with hand-created functions... still in progress...
+- added check nonce against subsequent regeneration; still to add database coupling for duplication check
+
 21.03.2013
 ----------
 - now login.php page call ajax dispatcher passing user and hashed password parameters

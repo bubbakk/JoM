@@ -17,7 +17,8 @@ $config['SERVER']['domain_path']  = 'JoM';
 $config['SERVER']['install_path'] = '/var/www/JoM/demo/';
 
 // Application salt
-$config['SALT'] = '#APP_SALT#';
+$config['SALT']     = '#APP_SALT#';
+$config['HASH_ALG'] = 'sha256';
 
 // tables definition
 define('TABLES_PREFIX', '#TBLPRFX#');

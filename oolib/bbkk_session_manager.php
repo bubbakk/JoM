@@ -208,6 +208,8 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
 
         $this->log_info('Called read(). session_id: ' . $session_id);
 
+        $session_data = null;
+        $session_key  = null;
 
         // prepare the statement only once
         if( $this->read_stmt === null )
@@ -232,8 +234,11 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
 
             $this->read_stmt->bindParam(":session_id", $session_id, PDO::PARAM_STR);
             $this->read_stmt->execute();
-            $session_data = $this->read_stmt->fetchColumn();        // fetch first column (Session_data)
-            $session_key  = $this->read_stmt->fetchColumn(1);       // fetch second column (Session_key)
+            $row = $this->read_stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+            if ( !($row===false ) ) {
+                if ( isset($row[0]) ) $session_data = $row[0];        // fetch first column (Session_data)
+                if ( isset($row[1]) ) $session_key  = $row[1];        // fetch second column (Session_key)
+            }
         }
         catch (PDOException $e)
         {
@@ -241,6 +246,10 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
                              $e->getMessage(),
                              __LINE__,
                              E_ERROR);
+            return false;
+        }
+
+        if ( $session_key  === null || $session_data === null    ) {
             return false;
         }
 

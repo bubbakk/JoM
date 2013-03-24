@@ -54,7 +54,7 @@ $tables = array(
                         `User_trashed`                  tinyint(1) unsigned             NOT NULL DEFAULT '0',
                         PRIMARY KEY (`User_id`),
                         UNIQUE  KEY `USERNAME` (`User_username`),
-                        UNIQUE  KEY `USERNAME` (`User_contacts_email`)
+                        UNIQUE  KEY `USEREMAIL` (`User_contacts_email`)
                  ) ENGINE=MyISAM DEFAULT CHARSET=utf8",
     'sqlite'  => "CREATE TABLE IF NOT EXISTS ".TBL_USERS." (
                         User_id                       INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE,
@@ -81,7 +81,7 @@ $tables = array(
                         User_external_id_join         INTEGER               NOT NULL DEFAULT 0,
                         User_trashed                  BOOL                  NOT NULL DEFAULT 0);
                 CREATE UNIQUE INDEX \"main\".\"Users_username_idx\" ON \"".TBL_USERS."\" (\"User_username\" ASC);
-                CREATE UNIQUE INDEX \"main\".\"Users_username_idx\" ON \"".TBL_USERS."\" (\"User_contacts_email\" ASC);"
+                CREATE UNIQUE INDEX \"main\".\"Users_contacts_email_idx\" ON \"".TBL_USERS."\" (\"User_contacts_email\" ASC);"
   ),
   'Jobs' => array(
     'mysql'  => "CREATE TABLE IF NOT EXISTS `".TBL_JOBS."` (
@@ -188,5 +188,17 @@ $tables = array(
                           `Session_set_time`         INT       NOT NULL DEFAULT '0',
                           `Session_data`             TEXT      NOT NULL DEFAULT '',
                           `Session_key`              CHAR(128) NOT NULL DEFAULT '');"
+  ),
+  'Nonces'   => array(
+    'mysql'  => "CREATE TABLE IF NOT EXISTS `".TBL_NONCES."` (
+                          `Nonce_id`                 INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+                          `Nonce_timestamp`          INTEGER UNSIGNED NOT NULL ,
+                          `Nonce_nonce`              CHAR(64)         NOT NULL ,
+                          PRIMARY KEY ( `Nonce_id` )
+                        ) ENGINE = MYISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;",
+    'sqlite' => "CREATE TABLE IF NOT EXISTS `".TBL_NONCES."` (
+                          `Nonce_id`                 INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE,
+                          `Nonce_timestamp`          INTEGER                             NOT NULL ,
+                          `Nonce_nonce               CHAR(64)   NOT NULL)"
   )
 );

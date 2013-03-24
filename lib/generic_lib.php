@@ -39,8 +39,21 @@ function post_or_get($name) {
 }
 
 
+/*
+ * Function: post_or_get
+ * Shortcut to open database PDO database according to type. Manages also errors
+ *
+ * Returns:
+ *   PDO object pointer or doen not return at all
+ *
+ * Parameters:
+ *   $type - database type (sqlite, mysql and other in the future)
+ *   $DB_cfg - configuration array for database connection
+ *
+ */
 function open_database($type, $DB_cfg)
 {
+    // create class instance
     $PDO = new BBKK_PDO($type);
 
     $PDO->dbname = $DB_cfg['dbname'];
@@ -54,6 +67,7 @@ function open_database($type, $DB_cfg)
     else {
         $PDO->dbname   = DIR_DBSQLT.$DB_cfg['dbname'];
     }
+
     if ( !$PDO->open_database() ) {
         $retval['err_msg'] = 'Could not open '.$type.' database';
         $retval['dbg_msg'] = 'PDO database open failed';
@@ -74,3 +88,4 @@ function generate_random_string($length = 10, $only_strings = true) {
     }
     return $randomString;
 }
+

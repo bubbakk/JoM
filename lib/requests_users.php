@@ -10,7 +10,8 @@ function dispatch_request($request)
     {
         case 'login':
 
-            global $DBH, $retval;
+            global $DBH, $retval, $config;
+            global $command;
 
             // impose that user is not logged in
             $_SESSION['user']['is_logged_in'] = false;
@@ -21,6 +22,10 @@ function dispatch_request($request)
             if ( !$user_auth ) {
                 $retval['success'] = false;
                 $retval['usr_msg'] = 'Wrong username/e-mail and password combination';
+                // if user is not valid, have to create a new nonce
+                $json_nonce = generate_json_values($command, 0, session_id(), $config['SALT'], $config['HASH_ALG']);
+                $retval['new_timestamp'] = $json_nonce['timestamp'];
+                $retval['new_nonce']     = $json_nonce['nonce'];
                 return;
             }
             // authenticated successfully
