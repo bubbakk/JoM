@@ -3,9 +3,18 @@ Version 0.2
 ===========
 
 TODOS:
-  implement a method in bbkk_base_class that checks $pdo variable connection and $tablename variable. Also some general user error messages,
-  like prepare statement, connection missing, ....
+  .implement a method in bbkk_base_class that checks $pdo variable connection and $tablename variable. Also some general user error messages,
+   like prepare statement, connection missing, ....
+  .fix login fields resize
+  .add checks and documentation comments to nonce library
 
+
+24.03.2013
+----------
+- nonce library completed
+- if login fails, a new nonce is generated and sent back via Ajax
+- if nonce expired, a reload message is sent back
+- fixed Session Manager issue
 
 23.03.2013
 ----------
@@ -13,6 +22,8 @@ TODOS:
 - nonce functions cutted&pasted in a separated lib file
 - added expiration time
 - added Nonces table (also in tables creation procedure in installation procedure)
+- added nonce check
+- if login nonce expires, a new one will be generated and sent back via Ajax
 
 22.03.2013
 ----------
