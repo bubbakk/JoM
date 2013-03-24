@@ -35,7 +35,6 @@ $requests = array('categories' => array(),                      // categories
 
 
 
-// if nonce does not match..... go out!
 // read NONCE
 if ( post_or_get('n')===false) {
     $retval['err_msg'] = 'Missing parameter';
@@ -88,7 +87,7 @@ $SMAN->start_session('', false);                        // starting session
 
 
 
-
+// check nonce
 $nonce_check = check_nonce( $command, 0, session_id(), $timestamp, $config['SALT'], $config['HASH_ALG'], $nonce, NONCE_EXPIRE, $DBH);
 if ( !($nonce_check === true) ) {
     // if nonce is not valid, reload the page
