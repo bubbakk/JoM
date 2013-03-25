@@ -13,8 +13,9 @@
 
 # TECHNOLOGY COLOPHON
 
-Last update: 2013/02/28
+Last update: 2013/03/25
 Standards: HTML5, CSS3
+Languages: PHP5, Javascript
 Components: jQuery, Bootstrap, Normalize, pidCrypt, FontAwesome
 Software: Geany, Chromium Inspector, NaturalDocs
 

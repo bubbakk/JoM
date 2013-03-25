@@ -12,12 +12,19 @@ Main development steps:
     For the final release want to use/test also PostgreSQL.
     Create functions to insert sample data for test purposes.
     A configuration file should be created, starting from a template config file
-    -- completed at 05.03.2013 --
+    -- completed March 10, 2013 --
 
 0.2 Login
     Implement login features and some security mechanisms
+    Encrypted and secure session management
+    Use of nonce
+    Login page
+    -- completed March 24, 2013
 
 0.3 Ticket creation
+    Create basic application layout
+    Create ticket creation form
+    Implement basic ticket creation and assignment
 
 0.4 Ticket listing
 

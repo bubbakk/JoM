@@ -1,6 +1,12 @@
+Version 0.3
+===========
+
+
 
 Version 0.2
 ===========
+
+Completed.
 
 TODOS:
   .implement a method in bbkk_base_class that checks $pdo variable connection and $tablename variable. Also some general user error messages,
