@@ -53,18 +53,18 @@ if ( $res===false ) die(__LINE__ . " - ".print_r($DBH->errorInfo(), true));
 //
 $query_categories_1_mysql   = 'INSERT INTO '.TBL_CATEGORIES_1.' '.
                       '            (Category_1_id, Category_1_name, Category_1_description, Category_1_trashed) '.
-                      '     VALUES (1, "SPES - Assistenza informatica", "Problematiche con PC, rete, sistema operativo, stampanti, configurazioni, telefonia, server, ecc...", 0), '.
-                      '            (2, "Sviluppo software", "Lavori di architettura e creazione codice", 0), '.
-                      '            (0, "-- nessuna --", "", 0);';
+                      '     VALUES (0, "-- nessuna --", "", 0), '.
+                      '            (1, "SPES - Assistenza informatica", "Problematiche con PC, rete, sistema operativo, stampanti, configurazioni, telefonia, server, ecc...", 0), '.
+                      '            (2, "Sviluppo software", "Lavori di architettura e creazione codice", 0); ';
 $query_categories_1_sqlite  = 'INSERT INTO '.TBL_CATEGORIES_1.' '.
                       '            (Category_1_id, Category_1_name, Category_1_description, Category_1_trashed) '.
-                      '     VALUES (1, "SPES - Assistenza informatica", "Problematiche con PC, rete, sistema operativo, stampanti, configurazioni, telefonia, server, ecc...", 0); '.
+                      '     VALUES (0, "-- nessuna --", "", 0); '.
                       '        INSERT INTO '.TBL_CATEGORIES_1.' '.
                       '            (Category_1_id, Category_1_name, Category_1_description, Category_1_trashed) '.
                       '     VALUES (2, "Sviluppo software", "Lavori di architettura e creazione codice", 0); '.
                       '        INSERT INTO '.TBL_CATEGORIES_1.' '.
                       '            (Category_1_id, Category_1_name, Category_1_description, Category_1_trashed) '.
-                      '     VALUES (0, "-- nessuna --", "", 0);';
+                      '     VALUES (1, "SPES - Assistenza informatica", "Problematiche con PC, rete, sistema operativo, stampanti, configurazioni, telefonia, server, ecc...", 0);';
 if ( $config['DB']['type']==='mysql' ) $query_categories_1 = $query_categories_1_mysql;
 else                                   $query_categories_1 = $query_categories_1_sqlite;
 $res = $DBH->exec($query_categories_1);                                      // insert Categories_A data

@@ -9,6 +9,9 @@ function New_Job_GUI() {
     this.$assign_to_me  = undefined;
     this.$open_details  = undefined;
 
+    this.categories     = undefined;
+    this.issues         = undefined;
+
     this.clear_form_data = function() {
         this.$subject.val('');
         this.$description.val('');
@@ -18,6 +21,16 @@ function New_Job_GUI() {
         this.$issue.val(0);
 
         return false;
+    }
+
+    this.save_data = function() {
+    }
+
+    this.get_categories = function() {
+        this.categories.load();
+    }
+
+    this.get_issues = function() {
     }
 
     this.init_events = function() {
@@ -38,6 +51,7 @@ function New_Job_GUI() {
         this.$assign_to_me  = $("#form_new_job [name='assign_to_me']");
         this.$open_details  = $("#form_new_job [name='open_details']");
 
-
+        this.categories = new Categories();
+        this.issues     = new Categories();
     // end constructor
 }

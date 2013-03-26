@@ -13,6 +13,7 @@ require_once(DIR_BASE.'cfg/config.php');
     <script language="javascript" type="text/javascript" src="./js/lib/jquery-1.9.0.min.js"></script>
     <script language="javascript" type="text/javascript" src="./js/generic_lib.js"></script>
     <script language="javascript" type="text/javascript" src="./js/new_job.js"></script>
+    <script language="javascript" type="text/javascript" src="./js/categories.js"></script>
     <title>***</title>
     <script>
     $(document).ready(function() {
@@ -120,11 +121,11 @@ require_once(DIR_BASE.'cfg/config.php');
       <div class="modal-body">
         <form class="form-horizontal" id="form_new_job">
             <p style="border-bottom: 1px solid #EEE; padding-bottom: 9px;">
-              <button class="btn" name="clonelast">Clone last</button>
-              <button class="btn" name="clear">Clear</button>
+              <!-- <a href="#" class="btn" name="clonelast">Clone last</a> -->
+              <a href="#" class="btn" name="clear">Clear</a>
             </p>
           <div class="control-group">
-            <label class="control-label" for="inputEmail">Subject</label>
+            <label class="control-label" for="subject">Subject</label>
             <div class="controls">
               <input class="input-xlarge" type="text" placeholder="What job is about" name="subject">
             </div>
@@ -168,8 +169,8 @@ require_once(DIR_BASE.'cfg/config.php');
         </form>
       </div>
       <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true" name="close">Close</button>
-        <button class="btn btn-primary" name="save">Save</button>
+        <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+        <a href="#" class="btn btn-primary">Save</a>
       </div>
     </div>
 

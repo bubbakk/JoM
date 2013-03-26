@@ -1,21 +1,24 @@
 <?php
 
 /*
-   Class: JOM_User
-   This class implements all user data management
+   Class: JOM_Categorie
+   This class implements all category data management
  */
-class JOM_User extends BBKK_Base_Class {
+class JOM_Cateogry extends BBKK_Base_Class {
 
     private $pdo_dbh    = null;        // PDO database class
     private $table_name = null;        // users table name
 
-    private $stmt_login = null;
+    public $level       = null;         // category level; 1 is the first level, 2 is sublevel and so on...
+    public $parent_id   = null;
 
-    private $user_data  = null;
+
+    private $stmt_load  = null;
+
+    private $category_data  = null;
 
     // ERROR MESSAGES
     private $USR_ERR_MSG__DATABASE_CONNECT    = 'DB connection error: please submit bug';
-
 
     /*
        Function: __construct
@@ -55,19 +58,8 @@ class JOM_User extends BBKK_Base_Class {
 
     }
 
-
-    /*
-       Function: authenticate
-       Test if given user (as username or email) and password hash are right.
-
-       Parameters:
-         $user_or_email - username or user email to check
-         $password_hash - password hash to check
-
-       Returns:
-         true if a user is authenticated, false otherwise
-    */
-    public function authenticate($user_or_email = '', $password_hash = '') {
+    public function load()
+    {
         // check if PDO connection is set
         if ( $this->pdo_dbh == null ) {
             $this->set_error($this->USR_ERR_MSG__DATABASE_CONNECT,
@@ -77,36 +69,48 @@ class JOM_User extends BBKK_Base_Class {
             return false;
         }
 
-        if ( $this->stmt_login == null ) {
-            try {
-                $this->stmt_login = $this->pdo_dbh->prepare('SELECT * '.
-                                                           '  FROM ' . $this->table_name . ' '.
-                                                           ' WHERE (User_username = :user_name OR User_contacts_email = :user_email) '.
-                                                           '   AND User_password_hash = :password '.
-                                                           ' LIMIT 1');
-            }
-            catch (PDOException $e)
-            {
-                $this->set_error($this->USR_ERR_MSG__PREPARE_STATEMENT,
-                                 $e->getMessage(),
-                                 __LINE__,
-                                 E_ERROR);
-                return false;
-            }
+
+        $tbl_name    = $this->table_name . '_' . $this->level;
+        $fld_prepend = 'Category_' . $this->level;
+
+        $where_clause = ' WHERE 1 ';
+        if ( $this->level > 1 && $this->parent_id != null ) {
+            $where_clause = ' WHERE ' . $fld_prepend . '_id_Category_'.($this->level - 1).' = :parent_id ';
         }
+        try {
+
+            $this->stmt_load = $this->pdo_dbh->prepare('SELECT * '.
+                                                       '  FROM ' . $tbl_name .' ' .
+                                                       $where_clause .
+                                                       'AND ' . $fld_prepend . '_trashed != :trashed ');
+        }
+        catch (PDOException $e)
+        {
+            $this->set_error($this->USR_ERR_MSG__PREPARE_STATEMENT,
+                             $e->getMessage(),
+                             __LINE__,
+                             E_ERROR);
+            return false;
+        }
+
 
         try {
             $this->log_info('Binding parameters and executing query.');
 
-            $this->stmt_login->bindParam(':user_name',  $user_or_email, PDO::PARAM_STR);
-            $this->stmt_login->bindParam(':user_email', $user_or_email, PDO::PARAM_STR);
-            $this->stmt_login->bindParam(':password',   $password_hash, PDO::PARAM_STR);
-            $this->stmt_login->execute();
+            if ( $this->level > 1 && $this->parent_id != null ) {
+                $this->stmt_load->bindParam(':parent_id',  $this->parent_id, PDO::PARAM_INT);
+            }
+            $this->stmt_load->bindValue(':trashed', 1, PDO::PARAM_INT);
+            $this->stmt_load->execute();
 
-            $this->user_data = $this->stmt_login->fetch(PDO::FETCH_OBJ );        // fetch first column (Session_data)
-            $this->stmt_login->closeCursor();
+            $this->category_data = $this->stmt_load->fetchAll(PDO::FETCH_OBJ );
+            $this->stmt_load->closeCursor();
 
-            if ( $this->user_data === false ) {
+            echo "<pre>";
+            var_dump($this->category_data);
+            echo "</pre>";
+
+            if ( $this->category_data === false ) {
                 return false;
             }
         }

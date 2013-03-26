@@ -24,7 +24,8 @@ Main development steps:
 0.3 Ticket creation
     Create basic application layout
     Create ticket creation form
-    Implement basic ticket creation and assignment
+    Implement generic categories load/select system
+    Implement basic ticket creation + assignment + save
 
 0.4 Ticket listing
 

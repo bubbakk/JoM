@@ -1,6 +1,13 @@
 Version 0.3
 ===========
 
+26.06.2013
+----------
+- added application HTML page
+- added new_job javascript class for GUI interaction
+- added categories javascript for categories management
+- tested load() method for category, to load 1st level, 2nd level and 2nd level with filter
+
 
 
 Version 0.2
