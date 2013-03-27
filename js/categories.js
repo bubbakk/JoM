@@ -7,6 +7,12 @@ function Categories() {
     this.level          = undefined;
 
     /*
+       Variable: parent_id
+       Needed if want to get parented subcategories
+    */
+    this.parent_id      = undefined;
+
+    /*
        Variable: categories
        JSON data object
     */
@@ -18,15 +24,21 @@ function Categories() {
     */
     this.jq_pointer     = undefined;
 
+    /*
+       Variable: nonce
+       JSON object that contains nonce and timestamp fields
+    */
+    this.nonce          = new Object();
+
     this.load = function(level, parent_id) {
 
-        if ( level     === undefined ) level = 1;
-        if ( parent_id === undefined ) parent_id = ''
-        else                           parent_id = '&p=' + parent_id;
+        if ( this.level     === undefined ) this.level = 1;
+        if ( this.parent_id === undefined ) parent_qs = ''
+        else                                parent_qs = '&p=' + parent_id;
 
         $.ajax({
             url:      'ard.php',
-            data:     'd=categories&r=read&l=' + level + parent_id,
+            data:     'd=cat&r=lod&n=' + this.nonce.nonce + '&t=' + this.nonce.timestamp + '&l=' + this.level + parent_qs,
             type:     'GET',
 			dataType: 'JSON'
         })

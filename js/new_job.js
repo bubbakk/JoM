@@ -12,6 +12,9 @@ function New_Job_GUI() {
     this.categories     = undefined;
     this.issues         = undefined;
 
+    this.nonces            = new Object();
+    this.nonces.categories = undefined;
+
     this.clear_form_data = function() {
         this.$subject.val('');
         this.$description.val('');
@@ -22,6 +25,8 @@ function New_Job_GUI() {
 
         return false;
     }
+
+
 
     this.save_data = function() {
     }
@@ -52,6 +57,7 @@ function New_Job_GUI() {
         this.$open_details  = $("#form_new_job [name='open_details']");
 
         this.categories = new Categories();
+        this.categories.level = 1;
         this.issues     = new Categories();
     // end constructor
 }

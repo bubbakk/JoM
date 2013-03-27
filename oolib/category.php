@@ -69,20 +69,21 @@ class JOM_Cateogry extends BBKK_Base_Class {
             return false;
         }
 
-
         $tbl_name    = $this->table_name . '_' . $this->level;
         $fld_prepend = 'Category_' . $this->level;
 
         $where_clause = ' WHERE 1 ';
-        if ( $this->level > 1 && $this->parent_id != null ) {
+        if ( $this->level > 1 && $this->parent_id != null && !($this->parent_id === false) ) {
             $where_clause = ' WHERE ' . $fld_prepend . '_id_Category_'.($this->level - 1).' = :parent_id ';
         }
-        try {
 
-            $this->stmt_load = $this->pdo_dbh->prepare('SELECT * '.
-                                                       '  FROM ' . $tbl_name .' ' .
-                                                       $where_clause .
-                                                       'AND ' . $fld_prepend . '_trashed != :trashed ');
+        $query = 'SELECT * '.
+                 '  FROM ' . $tbl_name .' ' .
+                 $where_clause .
+                 'AND ' . $fld_prepend . '_trashed != :trashed ';
+
+        try {
+            $this->stmt_load = $this->pdo_dbh->prepare($query);
         }
         catch (PDOException $e)
         {
@@ -97,7 +98,7 @@ class JOM_Cateogry extends BBKK_Base_Class {
         try {
             $this->log_info('Binding parameters and executing query.');
 
-            if ( $this->level > 1 && $this->parent_id != null ) {
+            if ( $this->level > 1 && $this->parent_id != null && !($this->parent_id === false) ) {
                 $this->stmt_load->bindParam(':parent_id',  $this->parent_id, PDO::PARAM_INT);
             }
             $this->stmt_load->bindValue(':trashed', 1, PDO::PARAM_INT);

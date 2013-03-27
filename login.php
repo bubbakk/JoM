@@ -176,7 +176,7 @@ $SMAN->start_session('', false);                        // starting session
                                 <span class="add-on"><i class="icon-key"></i></span>
                                 <input id="pass" class="input-block-level" type="password" placeholder="enter password" style="font-size: 18px; font-weight: bold;">
                             </div>
-                            <?php echo generate_html_input_forms( '/users/login', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>
+                            <?php echo generate_html_input_form_nonces( '/users/login', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>
                         </div>
                     </div>
                 </div>

@@ -23,7 +23,7 @@ $domains = array('cat' => 'categories',                         // categories
                  'usr' => 'users'                               // users
                 );
 // REQUESTS for DOMAINS
-$requests = array('categories' => array('lod' => 'load'),                      // categories
+$requests = array('categories' => array('lod' => 'load'),       // categories
                   'users'      => array('lin' => 'login',       // users
                                         'lot' => 'logout'
                                        )

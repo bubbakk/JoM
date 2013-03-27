@@ -44,7 +44,7 @@ function generate_nonce($action, $itemid, $userid, $timestamp, $salt, $alg) {
     return hash($alg, $action . $itemid . $userid . $timestamp . $salt);
 }
 
-function generate_html_input_forms($action, $itemid, $userid, $salt, $alg) {
+function generate_html_input_form_nonces($action, $itemid, $userid, $salt, $alg) {
     // generate timestamp
     $timestamp       = time();
     // generate input hidden fields
@@ -54,7 +54,7 @@ function generate_html_input_forms($action, $itemid, $userid, $salt, $alg) {
     return $input_nonce . "\n" . $input_timestamp;
 }
 
-function generate_html_get_params($action, $itemid, $userid, $salt, $alg) {
+function generate_html_get_params_nonces($action, $itemid, $userid, $salt, $alg) {
     // generate timestamp
     $timestamp  = time();
     // generate link parameters
@@ -69,6 +69,14 @@ function generate_json_values($action, $itemid, $userid, $salt, $alg) {
     // generate nonce
     $nonce      = generate_nonce($action, $itemid, $userid, $timestamp, $salt, $alg);
     return array('timestamp' => $timestamp, 'nonce' => $nonce);
+}
+
+function generate_json_javascript_values($action, $itemid, $userid, $salt, $alg) {
+    // generate timestamp
+    $timestamp  = time();
+    // generate nonce
+    $nonce      = generate_nonce($action, $itemid, $userid, $timestamp, $salt, $alg);
+    return json_encode( array('timestamp' => $timestamp, 'nonce' => $nonce) );
 }
 
 /*
@@ -95,7 +103,7 @@ function generate_json_values($action, $itemid, $userid, $salt, $alg) {
 */
 function check_nonce($action, $itemid, $userid, $timestamp, $salt, $alg, $original_nonce, $expire_time, $pdo_dbh) {
     // regenerate nonce
-//    echo "$action . $itemid . $userid . $timestamp . $salt . $alg . $original_nonce<br>\n";
+    //echo "$action . $itemid . $userid . $timestamp . ".htmlentities($salt)." . $alg . $original_nonce<br>\n";
     $check_nonce = generate_nonce($action, $itemid, $userid, $timestamp, $salt, $alg );
 
     // check if the regenerated nonce is the same as the one sent by the user

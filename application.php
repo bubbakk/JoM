@@ -1,6 +1,27 @@
 <?php
 define('DIR_BASE', './');
+require_once(DIR_BASE.'cfg/user_config.php');
 require_once(DIR_BASE.'cfg/config.php');
+require_once(DIR_LIB.'generic_lib.php');
+require_once(DIR_LIB.'nonce_lib.php');
+require_once(DIR_OOL.'bbkk_base_class.php');
+require_once(DIR_OOL.'bbkk_pdo.php');
+require_once(DIR_OOL.'bbkk_session_manager.php');
+
+
+//
+// database connection
+//
+$PDO = open_database($config['DB']['type'], $config['DB'][$config['DB']['type']]);  // open DB
+$DBH = $PDO->get_dbh();                                                             // get the handler
+//
+// session manager
+//
+$SMAN = new BBKK_Session_Manager(TBL_SESSIONS, $DBH);   // constructor
+$SMAN->debug_on_screen = false;
+$SMAN->salt = $config['SALT'];                          // explicitly set application salt
+$SMAN->start_session('', false);                        // starting session
+
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -22,6 +43,8 @@ require_once(DIR_BASE.'cfg/config.php');
         JOM = new Object();
         JOM['new_job'] = new New_Job_GUI();
         JOM['new_job'].init_events();
+        JOM['new_job'].categories.nonce = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
+        JOM['new_job'].categories.load();
     });
     </script>
     <style>

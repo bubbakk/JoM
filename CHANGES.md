@@ -1,7 +1,14 @@
 Version 0.3
 ===========
 
-26.06.2013
+27.03.2013
+----------
+- added in application the session initialization
+- added in categories javascript class the nonce parameters passing
+- added generate_json_javascript_values() function in nonce-lib
+- ajax call to categories is successful (application, new_job javascript class, category javascript class, ajax call, dispatcher, category PHP object)
+
+26.03.2013
 ----------
 - added application HTML page
 - added new_job javascript class for GUI interaction
