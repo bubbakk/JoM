@@ -1,7 +1,7 @@
 <?php
 /*
  * Name: NONCE-LIB
- * Created By: Andrea Ferroni (http://bubbakk.ivellezza.it -
+ * Created By: Andrea Ferroni (http://bubbakk.ivellezza.it)
  * Created On: March 2013
  * Version: 0.7
  */
@@ -121,7 +121,7 @@ function check_nonce($action, $itemid, $userid, $timestamp, $salt, $alg, $origin
     // check that the nonce is not used before
     try {
         $check_stmt = $pdo_dbh->prepare('SELECT (COUNT(Nonce_nonce) > 0) AS is_used '.
-                                        '  FROM Nonces '.
+                                        '  FROM ' . TBL_NONCES .' '.
                                         ' WHERE Nonce_nonce     = :nonce '.
                                         '   AND Nonce_timestamp = :timestamp ');
         $check_stmt->bindParam(":nonce",     $check_nonce, PDO::PARAM_STR);
@@ -140,8 +140,10 @@ function check_nonce($action, $itemid, $userid, $timestamp, $salt, $alg, $origin
 
     // insert in the database in the user-nonces table
     try {
-        $insert_stmt = $pdo_dbh->prepare('INSERT INTO Nonces ( Nonce_nonce, Nonce_timestamp) '.
-                                         '      VALUE ( :nonce, :timestamp )');
+        $query = 'INSERT INTO ' . TBL_NONCES .' ( Nonce_nonce, Nonce_timestamp) '.
+                '     VALUES ( :nonce, :timestamp )';
+
+        $insert_stmt = $pdo_dbh->prepare($query);
         $insert_stmt->bindParam(":nonce",     $check_nonce, PDO::PARAM_STR);
         $insert_stmt->bindParam(":timestamp", $timestamp,   PDO::PARAM_INT);
         $insert_stmt->execute();

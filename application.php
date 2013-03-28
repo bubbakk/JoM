@@ -44,7 +44,8 @@ $SMAN->start_session('', false);                        // starting session
         JOM['new_job'] = new New_Job_GUI();
         JOM['new_job'].init_events();
         JOM['new_job'].categories.nonce = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
-        JOM['new_job'].categories.load();
+        JOM['new_job'].get_categories();
+
     });
     </script>
     <style>
@@ -163,8 +164,7 @@ $SMAN->start_session('', false);                        // starting session
             <label class="control-label" for="category">Category</label>
             <div class="controls">
               <select name="category">
-                <option>A</option>
-                <option>B</option>
+                <option value="#value#" title="#title#">#text#</option>
               </select>
             </div>
           </div>

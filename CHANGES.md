@@ -1,6 +1,12 @@
 Version 0.3
 ===========
 
+28.03.2013
+----------
+- completed all involved component to fetch categories via Ajax on application load
+- fixed data creation samples for categories during install procedure
+- fixed a bug in the query for nonces management (error in SQL query statement)
+
 27.03.2013
 ----------
 - added in application the session initialization

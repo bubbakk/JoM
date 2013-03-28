@@ -35,6 +35,18 @@ function New_Job_GUI() {
         this.categories.load();
     }
 
+    this.set_categories_list = function() {
+        var option_el = this.$category.children().eq(0).detach();
+        for ( var i = 0 ; i < this.categories.categories.length ; i++ ) {
+            category = this.categories.categories[i];
+            new_option = $(option_el).clone();
+            $(new_option).val(category.id);
+            new_option.attr("title", category.description);
+            new_option.text(category.name);
+            this.$category.append(new_option);
+        }
+    }
+
     this.get_issues = function() {
     }
 

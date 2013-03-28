@@ -42,8 +42,9 @@ function Categories() {
             type:     'GET',
 			dataType: 'JSON'
         })
-        .done(function(){
-            alert("OK");
+        .done(function(data){
+            JOM['new_job'].categories.categories = data.data;
+            JOM['new_job'].set_categories_list();
         });
     }
 

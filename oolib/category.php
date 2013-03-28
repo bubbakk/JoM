@@ -15,7 +15,7 @@ class JOM_Cateogry extends BBKK_Base_Class {
 
     private $stmt_load  = null;
 
-    private $category_data  = null;
+    public  $category_data  = null;
 
     // ERROR MESSAGES
     private $USR_ERR_MSG__DATABASE_CONNECT    = 'DB connection error: please submit bug';
@@ -104,12 +104,14 @@ class JOM_Cateogry extends BBKK_Base_Class {
             $this->stmt_load->bindValue(':trashed', 1, PDO::PARAM_INT);
             $this->stmt_load->execute();
 
-            $this->category_data = $this->stmt_load->fetchAll(PDO::FETCH_OBJ );
+            $this->category_data = $this->stmt_load->fetchAll();
             $this->stmt_load->closeCursor();
 
+/*
             echo "<pre>";
             var_dump($this->category_data);
             echo "</pre>";
+*/
 
             if ( $this->category_data === false ) {
                 return false;
