@@ -31,20 +31,27 @@ $SMAN->start_session('', false);                        // starting session
     <link href="./css/bootstrap.min.css"     rel="stylesheet" type="text/css" media="screen">
     <link href="./css/font-awesome.min.css"  rel="stylesheet" type="text/css" media="screen">
     <link href="./css/jom_default_style.css" rel="stylesheet" type="text/css" media="screen">
+    <link href="./css/jquery.tagsinput.css"  rel="stylesheet" type="text/css" media="screen">
     <script language="javascript" type="text/javascript" src="./js/lib/jquery-1.9.0.min.js"></script>
+    <script language="javascript" type="text/javascript" src="./js/lib/jquery.tagsinput.min.js"></script>
+    <script language="javascript" type="text/javascript" src="./js/application.js"></script>
     <script language="javascript" type="text/javascript" src="./js/generic_lib.js"></script>
     <script language="javascript" type="text/javascript" src="./js/new_job.js"></script>
     <script language="javascript" type="text/javascript" src="./js/categories.js"></script>
     <title>***</title>
     <script>
     $(document).ready(function() {
+        $("#form_new_job [name='issue']").parent().parent().hide();
         $(".container").fadeIn();
 
         JOM = new Object();
         JOM['new_job'] = new New_Job_GUI();
         JOM['new_job'].init_events();
         JOM['new_job'].categories.nonce = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
+        JOM['new_job'].issues.nonce     = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
         JOM['new_job'].get_categories();
+
+        $("#form_new_job [name='tags']").tagsInput();
 
     });
     </script>
@@ -172,9 +179,24 @@ $SMAN->start_session('', false);                        // starting session
             <label class="control-label" for="issue">Issue</label>
             <div class="controls">
               <select name="issue">
-                <option>A</option>
-                <option>B</option>
+                <option value="#value#" title="#title#">#text#</option>
               </select>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="tags">Tag</label>
+            <div class="controls">
+              <input name="tags" type="text"></input>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="priority">Priority</label>
+            <div class="controls">
+              <div class="btn-group" data-toggle="buttons-radio">
+                <a href="#" class="btn" >Low</a>
+                <a href="#" class="btn">Normal</a>
+                <a href="#" class="btn">High</a>
+              </div>
             </div>
           </div>
           <div class="control-group">
@@ -184,7 +206,7 @@ $SMAN->start_session('', false);                        // starting session
             </div>
           </div>
           <div class="control-group">
-            <label class="control-label" for="open_details">Open details</label>
+            <label class="control-label" for="open_details">Open details after save</label>
             <div class="controls">
               <input type="checkbox" name="open_details">
             </div>

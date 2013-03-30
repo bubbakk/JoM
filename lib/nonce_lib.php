@@ -46,7 +46,7 @@ function generate_nonce($action, $itemid, $userid, $timestamp, $salt, $alg) {
 
 function generate_html_input_form_nonces($action, $itemid, $userid, $salt, $alg) {
     // generate timestamp
-    $timestamp       = time();
+    $timestamp       = time() . generate_random_string(5, true);
     // generate input hidden fields
     $input_nonce     = '<input type="hidden" name="_nonce" value="'.generate_nonce($action, $itemid, $userid, $timestamp, $salt, $alg).'">';
     $input_timestamp = '<input type="hidden" name="_timestamp" value="'.$timestamp.'">';
@@ -56,7 +56,7 @@ function generate_html_input_form_nonces($action, $itemid, $userid, $salt, $alg)
 
 function generate_html_get_params_nonces($action, $itemid, $userid, $salt, $alg) {
     // generate timestamp
-    $timestamp  = time();
+    $timestamp  = time() . generate_random_string(5, true);
     // generate link parameters
     $link_get_parms = 'n='.generate_nonce($action, $itemid, $userid, $timestamp, $salt, $alg).'&t='.$timestamp;
 
@@ -65,7 +65,7 @@ function generate_html_get_params_nonces($action, $itemid, $userid, $salt, $alg)
 
 function generate_json_values($action, $itemid, $userid, $salt, $alg) {
     // generate timestamp
-    $timestamp  = time();
+    $timestamp  = time() . generate_random_string(5, true);
     // generate nonce
     $nonce      = generate_nonce($action, $itemid, $userid, $timestamp, $salt, $alg);
     return array('timestamp' => $timestamp, 'nonce' => $nonce);
@@ -73,7 +73,7 @@ function generate_json_values($action, $itemid, $userid, $salt, $alg) {
 
 function generate_json_javascript_values($action, $itemid, $userid, $salt, $alg) {
     // generate timestamp
-    $timestamp  = time();
+    $timestamp  = time() . generate_random_string(5, true);
     // generate nonce
     $nonce      = generate_nonce($action, $itemid, $userid, $timestamp, $salt, $alg);
     return json_encode( array('timestamp' => $timestamp, 'nonce' => $nonce) );

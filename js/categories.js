@@ -32,9 +32,11 @@ function Categories() {
 
     this.load = function(level, parent_id) {
 
+        var req = '';
         if ( this.level     === undefined ) this.level = 1;
+
         if ( this.parent_id === undefined ) parent_qs = ''
-        else                                parent_qs = '&p=' + parent_id;
+        else                                parent_qs = '&p=' + this.parent_id;
 
         $.ajax({
             url:      'ard.php',
@@ -43,8 +45,7 @@ function Categories() {
 			dataType: 'JSON'
         })
         .done(function(data){
-            JOM['new_job'].categories.categories = data.data;
-            JOM['new_job'].set_categories_list();
+
         });
     }
 

@@ -113,7 +113,9 @@ if ( array_key_exists($domain, $domains) &&
     // update user's last visit datetime
     $_SESSION['user']['last_visit'] = time();
 
-    dispatch_request($requests[$domains[$domain]][$request]);
+    if ( dispatch_request($requests[$domains[$domain]][$request]) ) {
+        $retval['success'] = true;
+    }
 }
 else {
     $retval['err_msg'] = 'Wrong parameter value';

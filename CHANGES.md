@@ -1,9 +1,28 @@
 Version 0.3
 ===========
 
+30.03.2013
+----------
+- added priority field for "Create new Job" form
+- added tags field for "Create new Job" form
+- added XOXCO jQuery tags input plugin to use tags
+
+29.03.2013
+----------
+- fixed category/subcategory issues; now use tha very same class in Javascript too.
+- Ajax callbacks are now centralized as $(document).ajaxComplete() function
+- created application.js that contains $(document).ajaxComplete() callback that can manage Ajax return values in a centralized way
+- added generate_json_javascript_values() function to nonce library
+
 28.03.2013
 ----------
-- completed all involved component to fetch categories via Ajax on application load
+- now nonce timestamp have 5 more characters to have more randomness... is not so unfrequent that one can generate 2 nonces in the ver
+  same Unix timestamp second
+- fixed ajax calls for categories without have to distinguish between parenting level but the p GET parameter
+
+28.03.2013
+----------
+- completed all component inveolved in fetching categories via Ajax
 - fixed data creation samples for categories during install procedure
 - fixed a bug in the query for nonces management (error in SQL query statement)
 

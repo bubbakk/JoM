@@ -31,7 +31,7 @@ function dispatch_request($request)
             $retval['new_timestamp'] = $json_nonce['timestamp'];
             $retval['new_nonce']     = $json_nonce['nonce'];
 
-            return;
+            return true;
 
             break;
         default:
