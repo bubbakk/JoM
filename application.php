@@ -41,17 +41,34 @@ $SMAN->start_session('', false);                        // starting session
     <title>***</title>
     <script>
     $(document).ready(function() {
-        $("#form_new_job [name='issue']").parent().parent().hide();
-        $(".container").fadeIn();
+
+        // set GUI start status
+        $(".container").fadeIn();       // fadeIn GUI
 
         JOM = new Object();
         JOM['new_job'] = new New_Job_GUI();
         JOM['new_job'].init_events();
+        JOM['new_job'].set_issues_status('disabled');
+
         JOM['new_job'].categories.nonce = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
         JOM['new_job'].issues.nonce     = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
         JOM['new_job'].get_categories();
 
-        $("#form_new_job [name='tags']").tagsInput();
+        $("#form_new_job [name='tags']").tagsInput({
+            /*'autocomplete_url': url_to_autocomplete_api,*/
+            /*'autocomplete': { option: value, option: value},*/
+            'height':'50px',
+            'width':'300px',
+            'interactive':true,
+            'defaultText':'add a tag',
+            /*'onAddTag':callback_function,
+            'onRemoveTag':callback_function,
+            'onChange' : callback_function,*/
+            'removeWithBackspace' : true,
+            'minChars' : 0,
+            'maxChars' : 0, //if not provided there is no limit,
+            'placeholderColor' : '#666666'
+        });
 
     });
     </script>
@@ -151,10 +168,6 @@ $SMAN->start_session('', false);                        // starting session
       </div>
       <div class="modal-body">
         <form class="form-horizontal" id="form_new_job">
-            <p style="border-bottom: 1px solid #EEE; padding-bottom: 9px;">
-              <!-- <a href="#" class="btn" name="clonelast">Clone last</a> -->
-              <a href="#" class="btn" name="clear">Clear</a>
-            </p>
           <div class="control-group">
             <label class="control-label" for="subject">Subject</label>
             <div class="controls">
@@ -171,7 +184,7 @@ $SMAN->start_session('', false);                        // starting session
             <label class="control-label" for="category">Category</label>
             <div class="controls">
               <select name="category">
-                <option value="#value#" title="#title#">#text#</option>
+                <option value="" title=""></option>
               </select>
             </div>
           </div>
@@ -179,8 +192,9 @@ $SMAN->start_session('', false);                        // starting session
             <label class="control-label" for="issue">Issue</label>
             <div class="controls">
               <select name="issue">
-                <option value="#value#" title="#title#">#text#</option>
+                <option value="" title=""></option>
               </select>
+              <i class="icon-spinner icon-spin"></i>
             </div>
           </div>
           <div class="control-group">
@@ -214,6 +228,7 @@ $SMAN->start_session('', false);                        // starting session
         </form>
       </div>
       <div class="modal-footer">
+        <a href="#" class="btn" name="clear">Clear</a>
         <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
         <a href="#" class="btn btn-primary">Save</a>
       </div>

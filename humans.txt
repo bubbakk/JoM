@@ -16,7 +16,7 @@
 Last update: 2013/03/25
 Standards: HTML5, CSS3
 Languages: PHP5, Javascript
-Components: jQuery, Bootstrap, Normalize, pidCrypt, FontAwesome
+Components: jQuery, Bootstrap, Normalize, pidCrypt, FontAwesome, XOXCO jQuery tag plugin
 Software: Geany, Chromium Inspector, NaturalDocs
 
 Library: jQuery
@@ -38,3 +38,7 @@ Homepage: https://www.pidder.com/pidcrypt/
 Library: FontAwesome
 License:
 Homepage:
+
+Library: XOXCO jQuery tag plugin
+License:
+Homepage: http://xoxco.com/projects/code/tagsinput/

@@ -1,6 +1,12 @@
 Version 0.3
 ===========
 
+02.04.2013
+----------
+- changed issues GUI interaction from hidden/shown to disabled/enabled
+- added load icon during issues load
+- in new_job javascript class added function that manages issues list status
+
 30.03.2013
 ----------
 - added priority field for "Create new Job" form
