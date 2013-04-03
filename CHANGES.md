@@ -1,6 +1,13 @@
 Version 0.3
 ===========
 
+03.04.2013
+----------
+- CSS patch for tags
+- removed tag field in ticket creation fieldset
+- added data field in ticket creation fieldset
+- added Datepicker for Bootstrap plugin
+
 02.04.2013
 ----------
 - changed issues GUI interaction from hidden/shown to disabled/enabled

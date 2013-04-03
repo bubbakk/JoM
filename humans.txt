@@ -16,7 +16,8 @@
 Last update: 2013/03/25
 Standards: HTML5, CSS3
 Languages: PHP5, Javascript
-Components: jQuery, Bootstrap, Normalize, pidCrypt, FontAwesome, XOXCO jQuery tag plugin
+Components: jQuery, Bootstrap, Normalize, pidCrypt, FontAwesome,
+            XOXCO jQuery tag plugin, Datepicker for Bootstrap
 Software: Geany, Chromium Inspector, NaturalDocs
 
 Library: jQuery
@@ -42,3 +43,7 @@ Homepage:
 Library: XOXCO jQuery tag plugin
 License:
 Homepage: http://xoxco.com/projects/code/tagsinput/
+
+Library: Stefan Petre's Datepicker for Bootstrap
+License:
+Homepage: http://www.eyecon.ro/bootstrap-datepicker/

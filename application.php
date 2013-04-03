@@ -31,9 +31,9 @@ $SMAN->start_session('', false);                        // starting session
     <link href="./css/bootstrap.min.css"     rel="stylesheet" type="text/css" media="screen">
     <link href="./css/font-awesome.min.css"  rel="stylesheet" type="text/css" media="screen">
     <link href="./css/jom_default_style.css" rel="stylesheet" type="text/css" media="screen">
-    <link href="./css/jquery.tagsinput.css"  rel="stylesheet" type="text/css" media="screen">
+    <link href="./css/datepicker.css"        rel="stylesheet" type="text/css" media="screen">
     <script language="javascript" type="text/javascript" src="./js/lib/jquery-1.9.0.min.js"></script>
-    <script language="javascript" type="text/javascript" src="./js/lib/jquery.tagsinput.min.js"></script>
+    <script language="javascript" type="text/javascript" src="./js/lib/bootstrap-datepicker.js"></script>
     <script language="javascript" type="text/javascript" src="./js/application.js"></script>
     <script language="javascript" type="text/javascript" src="./js/generic_lib.js"></script>
     <script language="javascript" type="text/javascript" src="./js/new_job.js"></script>
@@ -54,21 +54,7 @@ $SMAN->start_session('', false);                        // starting session
         JOM['new_job'].issues.nonce     = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
         JOM['new_job'].get_categories();
 
-        $("#form_new_job [name='tags']").tagsInput({
-            /*'autocomplete_url': url_to_autocomplete_api,*/
-            /*'autocomplete': { option: value, option: value},*/
-            'height':'50px',
-            'width':'300px',
-            'interactive':true,
-            'defaultText':'add a tag',
-            /*'onAddTag':callback_function,
-            'onRemoveTag':callback_function,
-            'onChange' : callback_function,*/
-            'removeWithBackspace' : true,
-            'minChars' : 0,
-            'maxChars' : 0, //if not provided there is no limit,
-            'placeholderColor' : '#666666'
-        });
+        $("#form_new_job [name='creation_date']").datepicker();
 
     });
     </script>
@@ -198,9 +184,10 @@ $SMAN->start_session('', false);                        // starting session
             </div>
           </div>
           <div class="control-group">
-            <label class="control-label" for="tags">Tag</label>
+            <label class="control-label" for="tags">Date</label>
             <div class="controls">
-              <input name="tags" type="text"></input>
+              <input name="creation_date" type="text"></input>
+              <span class="add-on"><i class="icon-calendar"></i></span>
             </div>
           </div>
           <div class="control-group">
