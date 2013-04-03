@@ -8,64 +8,64 @@ function go_to_step(step)
     {
         case 0:
             // make unneeded elements disappear and, as a callback, make all next appear
-            animate_opacity( $("#jom_rowback"), 0);
-            animate_opacity( $("#jom_rowgoon"), 0);
-            animate_opacity( $("#fieldset_1"), 0, function(){
+            jsJOMlib__animate_opacity( $("#jom_rowback"), 0);
+            jsJOMlib__animate_opacity( $("#jom_rowgoon"), 0);
+            jsJOMlib__animate_opacity( $("#fieldset_1"), 0, function(){
                 // buttons back/proceed
-                animate_opacity( $("#jom_rowgoon"), 1);
+                jsJOMlib__animate_opacity( $("#jom_rowgoon"), 1);
                 $("#jom_rowgoon").children('div').eq(0).attr("class", "span6 offset3 text-center");
                 $("#jom_rowgoon").find('a').contents().first()[0].textContent = 'Proceed';
                 $("#jom_rowgoon").find('a').removeClass("btn-success").addClass("btn-primary");
                 $("#jom_rowgoon").find('i').attr('class','icon-chevron-right');
 
                 // show fieldset 1
-                animate_opacity( $("#fieldset_0"), 1);
+                jsJOMlib__animate_opacity( $("#fieldset_0"), 1);
             });
-            animate_opacity( $("#fieldset_2"), 0, function(){
+            jsJOMlib__animate_opacity( $("#fieldset_2"), 0, function(){
                 // buttons back/proceed
-                animate_opacity( $("#jom_rowgoon"), 1);
+                jsJOMlib__animate_opacity( $("#jom_rowgoon"), 1);
                 $("#jom_rowgoon").children('div').eq(0).attr("class", "span6 offset3 text-center");
 
                 // show fieldset 1
-                animate_opacity( $("#fieldset_0"), 1);
+                jsJOMlib__animate_opacity( $("#fieldset_0"), 1);
             });
 
             break;
         case 1:
-            animate_opacity( $("#jom_rowback"), 0);
-            animate_opacity( $("#jom_rowgoon"), 0);
-            animate_opacity( $("#fieldset_0"), 0, function(){
+            jsJOMlib__animate_opacity( $("#jom_rowback"), 0);
+            jsJOMlib__animate_opacity( $("#jom_rowgoon"), 0);
+            jsJOMlib__animate_opacity( $("#fieldset_0"), 0, function(){
                 // buttons back/proceed
-                animate_opacity( $("#jom_rowback"), 1);
-                animate_opacity( $("#jom_rowgoon"), 1);
+                jsJOMlib__animate_opacity( $("#jom_rowback"), 1);
+                jsJOMlib__animate_opacity( $("#jom_rowgoon"), 1);
                 $("#jom_rowgoon").find('a').contents().first()[0].textContent = 'Install ';
                 $("#jom_rowgoon").find('a').removeClass("btn-primary").addClass("btn-success");
                 $("#jom_rowgoon").find('i').attr('class','icon-ok-circle');
 
                 if ( $("#inst_db_type").val() === "MySQL" ) {
                     // show fieldset 1
-                    animate_opacity( $("#fieldset_1"), 1);
+                    jsJOMlib__animate_opacity( $("#fieldset_1"), 1);
                     $("#jom_rowgoon").children('div').eq(0).attr("class", "span12 text-center");
                 }
                 else
                 if ( $("#inst_db_type").val() === "SQLite" ) {
                     // show fieldset 2
-                    animate_opacity( $("#fieldset_2"), 1);
+                    jsJOMlib__animate_opacity( $("#fieldset_2"), 1);
                 }
             });
             break;
         case 2:
-            animate_opacity( $("#jom_rowback"), 0);
-            animate_opacity( $("#jom_rowgoon"), 0);
-            animate_opacity( $("#fieldset_1"), 0, function(){
-                animate_opacity( $("#jom_install_feedback_bar"), 1, function(){
+            jsJOMlib__animate_opacity( $("#jom_rowback"), 0);
+            jsJOMlib__animate_opacity( $("#jom_rowgoon"), 0);
+            jsJOMlib__animate_opacity( $("#fieldset_1"), 0, function(){
+                jsJOMlib__animate_opacity( $("#jom_install_feedback_bar"), 1, function(){
                     // setting progress bar to 5%
                     $(".progress > .bar").attr("style","width: 5%");
                     $(".progress > .bar").html("5%");
                     var dummy = setTimeout("run_install_step()", 1000);
                 });
             });
-            animate_opacity( $("#fieldset_2"), 0);
+            jsJOMlib__animate_opacity( $("#fieldset_2"), 0);
 
         default:
             // if this state does not exist, set the step back
@@ -77,23 +77,23 @@ function go_to_step(step)
 function create_new_database_toggled(check)
 {
     if (check) {
-        animate_opacity($("#fieldset_1_b"), 1, function() {
+        jsJOMlib__animate_opacity($("#fieldset_1_b"), 1, function() {
             $("#inst_db_superuser").removeAttr('readonly', true);
             $("#inst_db_superpass").removeAttr('readonly', true);
 
             $("#inst_db_deliftbl_mysql").attr('readonly', true);
         });
-        animate_opacity($("#inst_db_deliftbl_mysql").parent().parent(), 0.1);
+        jsJOMlib__animate_opacity($("#inst_db_deliftbl_mysql").parent().parent(), 0.1);
 
     }
     else {
-        animate_opacity($("#fieldset_1_b"), 0.1, function() {
+        jsJOMlib__animate_opacity($("#fieldset_1_b"), 0.1, function() {
             $("#inst_db_superuser").attr('readonly', true);
             $("#inst_db_superpass").attr('readonly', true);
 
             $("#inst_db_deliftbl_mysql").removeAttr('readonly');
         });
-        animate_opacity($("#inst_db_deliftbl_mysql").parent().parent(), 1);
+        jsJOMlib__animate_opacity($("#inst_db_deliftbl_mysql").parent().parent(), 1);
     }
 }
 
@@ -101,11 +101,11 @@ function delete_existing_file_toggled(check)
 {
     if (check) {
         $("#inst_db_removeifanyfile").attr('readonly', true);
-        animate_opacity($("#inst_db_removeifanyfile").parent().parent(), 0.1);
+        jsJOMlib__animate_opacity($("#inst_db_removeifanyfile").parent().parent(), 0.1);
     }
     else {
         $("#inst_db_removeifanyfile").removeAttr('readonly');
-        animate_opacity($("#inst_db_removeifanyfile").parent().parent(), 1);
+        jsJOMlib__animate_opacity($("#inst_db_removeifanyfile").parent().parent(), 1);
     }
 }
 
@@ -143,7 +143,7 @@ function run_install_step() {
 
     var $prog_bar = $('#jom_install_feedback_bar').find('[class="bar"]');
 
-//animate_opacity( $("#jom_install_feedback_messages"), 1 );
+//jsJOMlib__animate_opacity( $("#jom_install_feedback_messages"), 1 );
 
     $new_blk = $("#jom_install_feedback_messages").clone();
     $new_blk.attr('id', '#jom_install_feedback_messages_step' + STEP );
@@ -176,8 +176,8 @@ function run_install_step() {
             // setting message feedback
             $msg_blk.html('<strong>Configuring</strong> configuration file');
             $("#jom_msgs_container").append($new_blk);
-            animate_opacity($new_blk, 1);
-            animate_opacity($msg_blk, 1);
+            jsJOMlib__animate_opacity($new_blk, 1);
+            jsJOMlib__animate_opacity($msg_blk, 1);
 
             text_ok  = '<i class="icon-check"></i> <strong>done</strong>';
             text_err = '<i class="icon-warning-sign" title="#REPLACE_ME#"></i> <strong>error</strong>';
@@ -215,8 +215,8 @@ function run_install_step() {
             // setting message feedback
             $msg_blk.html('<strong>Setting</strong> SQLite database');
             $("#jom_msgs_container").append($new_blk);
-            animate_opacity($new_blk, 1);
-            animate_opacity($msg_blk, 1);
+            jsJOMlib__animate_opacity($new_blk, 1);
+            jsJOMlib__animate_opacity($msg_blk, 1);
 
             text_ok  = '<i class="icon-check"></i> <strong>done</strong>';
             text_err = '<i class="icon-warning-sign" title="#REPLACE_ME#"></i> <strong>error</strong>';
@@ -238,8 +238,8 @@ function run_install_step() {
             // setting message feedback
             $msg_blk.html('<strong>Preparing</strong> MySQL database');
             $("#jom_msgs_container").append($new_blk);
-            animate_opacity($new_blk, 1);
-            animate_opacity($msg_blk, 1);
+            jsJOMlib__animate_opacity($new_blk, 1);
+            jsJOMlib__animate_opacity($msg_blk, 1);
 
             text_ok  = '<i class="icon-check"></i> <strong>done</strong>';
             text_err = '<i class="icon-warning-sign" title="#REPLACE_ME#"></i> <strong>error</strong>';
@@ -260,8 +260,8 @@ function run_install_step() {
             // setting message feedback
             $msg_blk.html('<strong>Creating</strong> tables');
             $("#jom_msgs_container").append($new_blk);
-            animate_opacity($new_blk, 1);
-            animate_opacity($msg_blk, 1);
+            jsJOMlib__animate_opacity($new_blk, 1);
+            jsJOMlib__animate_opacity($msg_blk, 1);
 
             text_ok  = '<i class="icon-check"></i> <strong>done</strong>';
             text_err = '<i class="icon-warning-sign" title="#REPLACE_ME#"></i> <strong>error</strong>';
@@ -283,8 +283,8 @@ function run_install_step() {
             // setting message feedback
             $msg_blk.html('<strong>Creating</strong> sample data');
             $("#jom_msgs_container").append($new_blk);
-            animate_opacity($new_blk, 1);
-            animate_opacity($msg_blk, 1);
+            jsJOMlib__animate_opacity($new_blk, 1);
+            jsJOMlib__animate_opacity($msg_blk, 1);
 
             text_ok  = '<i class="icon-check"></i> <strong>done</strong>';
             text_err = '<i class="icon-warning-sign" title="#REPLACE_ME#"></i> <strong>error</strong>';
@@ -321,7 +321,7 @@ function call_ajax(ajx_url, ajx_data, ajx_text_ok, ajx_text_err, callback) {
             if ( r.success ) {
                 // print result
                 $res_blk.html(ajx_text_ok);                             // set result block text...
-                animate_opacity($res_blk.parent(), 1);                  // ..and show it
+                jsJOMlib__animate_opacity($res_blk.parent(), 1);                  // ..and show it
 
                 var dummy = setTimeout(function(){callback();}, 1000);
                 return true;                // this is the final return TRUE if everything goes right!
@@ -331,7 +331,7 @@ function call_ajax(ajx_url, ajx_data, ajx_text_ok, ajx_text_err, callback) {
                 ajx_text_err = ajx_text_err.replace("#REPLACE_ME#", r.err_msg);
                 $res_blk.html(ajx_text_err);                            // set result block text...
                 $res_blk.removeClass("alert-success", "alert-error");   // ..and show it
-                animate_opacity($res_blk.parent(), 1);
+                jsJOMlib__animate_opacity($res_blk.parent(), 1);
 
                 return false;
             }
@@ -340,7 +340,7 @@ function call_ajax(ajx_url, ajx_data, ajx_text_ok, ajx_text_err, callback) {
             ajx_text_err = ajx_text_err.replace("#REPLACE_ME#", "server reply error");
             $res_blk.html(ajx_text_err);
             $res_blk.removeClass("alert-success", "alert-error");
-            animate_opacity($res_blk.parent(), 1);
+            jsJOMlib__animate_opacity($res_blk.parent(), 1);
 
             return false;
         }

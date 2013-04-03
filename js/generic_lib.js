@@ -1,11 +1,11 @@
 /*
- * Function: get__e_commerce_bullshit
+ * Function: jsJOMlib__get_e_commerce_bullshit
  * Useful sentence generator
  *
  * Thank you:
  *   <http://www.dack.com/web/bullshit.html>
  */
-function get__e_commerce_bullshit() {
+function jsJOMlib__get_e_commerce_bullshit() {
 
     var max1 = 59;
     var max2 = 64;
@@ -49,7 +49,7 @@ function get__e_commerce_bullshit() {
 
 
 /*
-   Function: animate_opacity
+   Function: jsJOMlib__animate_opacity
    Animate opacity transitions with useful addictions such as show/hide and callbacks
 
    Parameters:
@@ -57,7 +57,7 @@ function get__e_commerce_bullshit() {
      opacity_val - opacity to be applied
      callback - optional callback
  */
-function animate_opacity(target, opacity_val, callback)
+function jsJOMlib__animate_opacity(target, opacity_val, callback)
 {
     if ( opacity_val > 0 ) target.show();
 
@@ -79,7 +79,18 @@ function animate_opacity(target, opacity_val, callback)
 }
 
 
-function getParameterByName(url, name)
+/*
+   Function: jsJOMlib__getParameterByName
+   Extract from an URL a parameter value if present in GET querystring format
+
+   Parameters:
+     url - complete URL
+     name - parameter's name the value is searched
+
+   Returns:
+     the value searched if found, empty string otherwise
+*/
+function jsJOMlib__getParameterByName(url, name)
 {
     url = url.split("?");
     url = "?" + url[1];
@@ -91,4 +102,19 @@ function getParameterByName(url, name)
         return "";
     else
         return decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+
+/*
+   Function: jsJOMlib__isNumber
+   Check whether the given parameter is numeric or not
+
+   Parameters:
+     n - variable to check
+
+   Returns:
+     true if the parameter is a number, false otherwise
+*/
+function jsJOMlib__isNumber(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
 }

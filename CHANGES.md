@@ -7,6 +7,9 @@ Version 0.3
 - removed tag field in ticket creation fieldset
 - added data field in ticket creation fieldset
 - added Datepicker for Bootstrap plugin
+- refactored functions name in JS library in lib/generic_lib.js: added namespacing
+- added documentation to jsJOMlib__getParameterByName() JS function
+- now datepicker opens on date input field in the "new job" fieldset
 
 02.04.2013
 ----------

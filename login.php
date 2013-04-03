@@ -41,8 +41,8 @@ $SMAN->start_session('', false);                        // starting session
     $(document).ready(function() {
         $('#jom_logo').css('opacity', 0);
         $('#jom_loginpanel').css('opacity', 0);
-        animate_opacity($("#jom_logo"), 1, function(){
-            animate_opacity($("#jom_loginpanel"), 1, function(){
+        jsJOMlib__animate_opacity($("#jom_logo"), 1, function(){
+            jsJOMlib__animate_opacity($("#jom_loginpanel"), 1, function(){
                 // set focus to username field after page is appeared
                 $('#user').focus();
             });
@@ -106,8 +106,8 @@ $SMAN->start_session('', false);                        // starting session
                 {
                     // redirect to application page
                     $('#jom_message_container').hide();
-                    animate_opacity($("#jom_loginpanel"), 0, function(){
-                        animate_opacity($("#jom_logo"), 0, function(){
+                    jsJOMlib__animate_opacity($("#jom_loginpanel"), 0, function(){
+                        jsJOMlib__animate_opacity($("#jom_logo"), 0, function(){
                             // redirect to application
                             window.location.href = "./application.php";
                         });
@@ -210,7 +210,7 @@ $SMAN->start_session('', false);                        // starting session
 
     <div id="jom_version_ribbon">
         <div class="jom_label">ver.</div>
-        <div class="jom_version" title="<?php print(JOM_DESC_VER);?>" onclick="javascript: $(this).next().text(get__e_commerce_bullshit()); animate_opacity($(this).next(), 1);"><?php print(JOM_VERSION);?></div>
+        <div class="jom_version" title="<?php print(JOM_DESC_VER);?>" onclick="javascript: $(this).next().text(jsJOMlib__get_e_commerce_bullshit()); jsJOMlib__animate_opacity($(this).next(), 1);"><?php print(JOM_VERSION);?></div>
         <div class="jom_useful_sentence"></div>
     </div>
 

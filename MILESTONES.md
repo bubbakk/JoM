@@ -28,6 +28,8 @@ Main development steps:
     Implement basic ticket creation + assignment + save
 
 0.4 Ticket listing
+    Enable/disable filters
+    Show/hide details
 
 0.5 Ticket editing
 
@@ -41,6 +43,6 @@ Main development steps:
 
 0.9 ACL implementation
 
-0.10 Strengthen security
+0.10 Check and strengthen security
 
 1.0 First release

@@ -186,8 +186,10 @@ $SMAN->start_session('', false);                        // starting session
           <div class="control-group">
             <label class="control-label" for="tags">Date</label>
             <div class="controls">
-              <input name="creation_date" type="text"></input>
-              <span class="add-on"><i class="icon-calendar"></i></span>
+              <div class="input-append date" data-date-format="dd-mm-yyyy">
+                <input class="span2" name="creation_date" type="text" size="12"></input>
+                <span class="add-on"><i class="icon-calendar"></i></span>
+              </div>
             </div>
           </div>
           <div class="control-group">

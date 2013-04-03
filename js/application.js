@@ -1,8 +1,8 @@
     $(document).ajaxComplete(function(event, xhr, settings)
     {
         // get request parameters
-        var domain  = getParameterByName(settings.url, 'd');
-        var request = getParameterByName(settings.url, 'r');
+        var domain  = jsJOMlib__getParameterByName(settings.url, 'd');
+        var request = jsJOMlib__getParameterByName(settings.url, 'r');
         // JSON object data
         JSON_response = JSON.parse(xhr.responseText);
 
@@ -11,7 +11,7 @@
             case 'cat/lod':
                 {
                     // parse the level
-                    var level = getParameterByName(settings.url, 'l');
+                    var level = jsJOMlib__getParameterByName(settings.url, 'l');
                     if ( parseInt(level, 10) === 1 ) {
                         JOM['new_job'].categories.categories      = JSON_response.data;
                         JOM['new_job'].set_categories_list();
