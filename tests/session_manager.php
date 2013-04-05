@@ -6,6 +6,8 @@ require_once(DIR_BASE.'cfg/config.php');
 require_once(DIR_LIB.'generic_lib.php');
 require_once(DIR_OOL.'bbkk_base_class.php');
 require_once(DIR_OOL.'bbkk_pdo.php');
+
+
 require_once(DIR_OOL.'bbkk_session_manager.php');
 
 ?>
@@ -32,12 +34,16 @@ require_once(DIR_OOL.'bbkk_session_manager.php');
 <body>
     <h1><?php echo "Will test BBKK_SESSION_MANAGER<br>\n";?></h1>
 <?php
+
 echo "<strong>Opening DB</strong><br>";
 $PDO = open_database($config['DB']['type'], $config['DB'][$config['DB']['type']]);  // open DB
 $DBH = $PDO->get_dbh();
 
 echo "<strong>Session object instancing</strong><br>";
 $ses_man = new BBKK_Session_Manager(TBL_SESSIONS, $DBH);    // constructor
+
+echo "<strong>Enabled on screen debug messages</strong><br>";
+$ses_man->debug_on_screen = true;
 
 echo "<strong>Setting salt</strong><br>";
 $ses_man->salt = $config['SALT'];                           // explicitly set application salt
@@ -61,13 +67,17 @@ echo "<pre>".print_r($DEC)."</pre><br>";
  *
  */
 
-//echo "<strong>Store value into session</strong><br>";
-//$_SESSION['something'] = 'A value.';
+/*
+echo "<strong>Store value into session</strong><br>";
+$_SESSION['something'] = 'A value.';
+*/
 
-echo "<strong>Read stored value from session: </strong><br>";
-echo "<strong>" . $_SESSION['something'] . "</strong>";
+
+echo "<strong>Read stored value from session: </strong>";
+echo "<strong> " . $_SESSION['something'] . "</strong><br>";
 
 $_SESSION['something'] = 'ZUZUZUZUZUZ';
+
 
 ?>
 </body>

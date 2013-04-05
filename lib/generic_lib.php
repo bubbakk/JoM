@@ -40,7 +40,7 @@ function post_or_get($name) {
 
 
 /*
- * Function: post_or_get
+ * Function: open_database
  * Shortcut to open database PDO database according to type. Manages also errors
  *
  * Returns:
@@ -89,3 +89,9 @@ function generate_random_string($length = 10, $only_strings = true) {
     return $randomString;
 }
 
+
+function check_session_variables() {
+    if ( !isset($_SESSION['user']['settings']['i18n']['dateformat']) ) {
+        $_SESSION['user']['settings']['i18n']['dateformat'] = I18N_DATEFORMAT;
+    }
+}

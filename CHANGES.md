@@ -1,6 +1,14 @@
 Version 0.3
 ===========
 
+05.04.2013
+----------
+- rebuild naturaldocs documentation: naturaldocs -i /var/www/jom_git/JoM/ -o HTML /var/www/jom_git/JoM/docs/ -p /var/www/jom_git/JoM/docs_proj/ -r
+- fixed serious bug in bbkk_session_manager class, read() method: could not read stored values!
+- created variable $query in bbkk_session_manager class to debug/log. Added also log information for every parameter binding.
+- now date field in new-job modal is set correctly by default width current date
+- datepicker boostrap plugin calendar now works correctly in new-job modal
+
 03.04.2013
 ----------
 - CSS patch for tags

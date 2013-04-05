@@ -21,6 +21,7 @@ $SMAN = new BBKK_Session_Manager(TBL_SESSIONS, $DBH);   // constructor
 $SMAN->debug_on_screen = false;
 $SMAN->salt = $config['SALT'];                          // explicitly set application salt
 $SMAN->start_session('', false);                        // starting session
+check_session_variables();                              // check session variables existance and set default values if not found
 
 ?>
 <!DOCTYPE HTML>
@@ -54,7 +55,13 @@ $SMAN->start_session('', false);                        // starting session
         JOM['new_job'].issues.nonce     = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
         JOM['new_job'].get_categories();
 
-        $("#form_new_job [name='creation_date']").datepicker();
+        // date and datepicker component in job creation form
+        var now_text = jsJOMlib__date_formatted('<?php echo $_SESSION['user']['settings']['i18n']['dateformat']; ?>', '/');
+        $("#form_new_job [name='creation_date']").val(now_text);
+        $("#form_new_job [name='creation_date']").datepicker({
+            format: '<?php echo $_SESSION['user']['settings']['i18n']['dateformat']; ?>',
+            weekStart: 0
+        });
 
     });
     </script>
@@ -184,10 +191,10 @@ $SMAN->start_session('', false);                        // starting session
             </div>
           </div>
           <div class="control-group">
-            <label class="control-label" for="tags">Date</label>
+            <label class="control-label" for="tags">Started</label>
             <div class="controls">
               <div class="input-append date" data-date-format="dd-mm-yyyy">
-                <input class="span2" name="creation_date" type="text" size="12"></input>
+                <input class="input-small" name="creation_date" type="text" size="12"></input>
                 <span class="add-on"><i class="icon-calendar"></i></span>
               </div>
             </div>

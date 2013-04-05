@@ -20,13 +20,15 @@ Components: jQuery, Bootstrap, Normalize, pidCrypt, FontAwesome,
             XOXCO jQuery tag plugin, Datepicker for Bootstrap
 Software: Geany, Chromium Inspector, NaturalDocs
 
-Library: jQuery
-License: MIT-LICENSE.txt
-Homepage: http://jquery.com/
+Library:      jQuery
+License type: MIT License
+License URL:  http://github.com/jquery/jquery/blob/master/MIT-LICENSE.txt
+Homepage:     http://jquery.com/
 
-Library: Bootstrap
-License:
-Homepage:
+Library:      Bootstrap
+License type: Apache License Version 2.0
+License URL:  https://raw.github.com/twitter/bootstrap/master/LICENSE
+Homepage:     http://twitter.github.com/bootstrap/
 
 Library: Normalize
 License:
@@ -44,6 +46,7 @@ Library: XOXCO jQuery tag plugin
 License:
 Homepage: http://xoxco.com/projects/code/tagsinput/
 
-Library: Stefan Petre's Datepicker for Bootstrap
-License:
-Homepage: http://www.eyecon.ro/bootstrap-datepicker/
+Library:      Stefan Petre's Datepicker for Bootstrap
+License type: ? (similar project is "Dual licensed under the MIT and GPL licenses." at http://www.eyecon.ro/datepicker/#about )
+License URL:  ?
+Homepage:     http://www.eyecon.ro/bootstrap-datepicker/

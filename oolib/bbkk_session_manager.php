@@ -2,7 +2,14 @@
 
 /*
    Class: BBKK_SESSION_MANAGER
-   This class implements all facilities to manage sessions
+   This class implements all facilities to manage sessions. This class is based on implementation example found
+   <here at http://www.wikihow.com/Create-a-Secure-Session-Managment-System-in-PHP-and-MySQL>
+
+   TODOs:
+     - PDO class check should be automatic and/or implemented in base or imported class/functions
+     - $_table_name checks should be like the one above
+     - convert session_set_save_handler() with the version that uses object's
+       interface version: session_set_save_handler ( SessionHandlerInterface $sessionhandler [, bool $register_shutdown = true ] )
  */
 class BBKK_Session_Manager extends BBKK_Base_Class {
 
@@ -114,7 +121,7 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
        Returns:
          boolean value according to method success
     */
-    public function start_session($session_name = '', $secure = '', $_pdo_dbh = '') {
+    public function start_session($session_name = '', $secure = '') {
 
         // set actual method's name
         $this->method = __METHOD__;
@@ -163,8 +170,10 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
         // Set the parameters
         session_set_cookie_params($cookieParams["lifetime"], $cookieParams["path"], $cookieParams["domain"], $secure, $this->httponly);
         // Change the session name
+        $this->log_info('Session name set: ' . $session_name);
         session_name($session_name);
         // Now we cat start the session
+        $this->log_info('Session starts now!');
         session_start();
         $this->log_info('Session started');
         // This line regenerates the session and delete the old one.
@@ -176,7 +185,6 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
     }
 
     function open() {
-
         // set actual method's name
         $this->method = __METHOD__;
 
@@ -189,7 +197,7 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
         // set actual method's name
         $this->method = __METHOD__;
 
-        $this->log_info('Called open().');
+        $this->log_info('Called close().');
 
         return true;       // won't close database connection: is used by other scripts
     }
@@ -214,10 +222,14 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
         // prepare the statement only once
         if( $this->read_stmt === null )
         {
+            $query = 'SELECT Session_data, Session_key ' .
+                     '  FROM ' . $this->table_name . ' ' .
+                     ' WHERE Session_id = :session_id ' .
+                     ' LIMIT 1';
             $this->log_info('Statement does not exist: creating new one.');
             try {
-                $this->read_stmt = $this->pdo_dbh->prepare('SELECT Session_data, Session_key FROM ' . $this->table_name . ' WHERE Session_id = :session_id LIMIT 1');
-                $this->log_info('SELECT Session_data, Session_key FROM ' . $this->table_name . ' WHERE Session_id = :session_id LIMIT 1');
+                $this->read_stmt = $this->pdo_dbh->prepare($query);
+                $this->log_info('The query: '.$query);
             }
             catch (PDOException $e)
             {
@@ -232,12 +244,13 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
         try {
             $this->log_info('Binding parameters and executing query.');
 
-            $this->read_stmt->bindParam(":session_id", $session_id, PDO::PARAM_STR);
+            $this->log_info('binding parameter :session_id - '.$session_id);
+            $this->read_stmt->bindParam(':session_id', $session_id, PDO::PARAM_STR);
             $this->read_stmt->execute();
-            $row = $this->read_stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+            $row = $this->read_stmt->fetchAll(PDO::FETCH_BOTH);
             if ( !($row===false ) ) {
-                if ( isset($row[0]) ) $session_data = $row[0];        // fetch first column (Session_data)
-                if ( isset($row[1]) ) $session_key  = $row[1];        // fetch second column (Session_key)
+                if ( isset($row[0][0]) ) $session_data = $row[0]['Session_data'];       // fetch first column (Session_data)
+                if ( isset($row[0][1]) ) $session_key  = $row[0]['Session_key'];        // fetch second column (Session_key)
             }
         }
         catch (PDOException $e)
@@ -249,7 +262,8 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
             return false;
         }
 
-        if ( $session_key  === null || $session_data === null    ) {
+        if ( !isset($session_key)   || !isset($session_data)  ||
+             $session_key  === null || $session_data === null    ) {
             return false;
         }
 
@@ -284,7 +298,6 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
             $data = $this->encrypt($session_data, $session_key);
         }
         else {
-            //$data = serialize($session_data);
             $data = $session_data;
         }
         $this->method = __METHOD__;                 // annoying manual method property reset after method call
@@ -294,9 +307,14 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
         // Try first to UPDATE.
         if( $this->write_stmt === null )
         {
+            $query = 'REPLACE INTO ' . $this->table_name . ' '.
+                     '             (Session_id,  Session_set_time, Session_data,  Session_key) '.
+                     '      VALUES (:session_id, :set_time,        :session_data, :session_key)';
+
             $this->log_info('Statement does not exist: creating new one.');
             try {
-                $this->write_stmt = $this->pdo_dbh->prepare('REPLACE INTO ' . $this->table_name . ' (Session_id, Session_set_time, Session_data, Session_key) VALUES (:session_id, :set_time, :data, :session_key)');
+                $this->write_stmt = $this->pdo_dbh->prepare($query);
+                $this->log_info('The query: '.$query);
             }
             catch (PDOException $e)
             {
@@ -311,10 +329,15 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
         try {
             $this->log_info('Binding parameters and executing query.');
 
-            $this->write_stmt->bindParam(':session_id', $session_id,    PDO::PARAM_STR);
-            $this->write_stmt->bindParam(':set_time',   $time,          PDO::PARAM_INT);
-            $this->write_stmt->bindParam(':data',       $data,          PDO::PARAM_STR);
-            $this->write_stmt->bindParam(':session_key',$session_key,   PDO::PARAM_STR);
+            $this->write_stmt->bindParam(':session_id',     $session_id,    PDO::PARAM_STR);
+            $this->log_info(':session_id: ' . $session_id);
+            $this->write_stmt->bindParam(':set_time',       $time,          PDO::PARAM_INT);
+            $this->log_info(':set_time: ' . $time);
+            $this->write_stmt->bindParam(':session_data',   $data,          PDO::PARAM_STR);
+            $this->log_info(':session_data: ' . $data);
+            $this->write_stmt->bindParam(':session_key',    $session_key,   PDO::PARAM_STR);
+            $this->log_info(':session_key: ' . $session_key);
+
             $this->write_stmt->execute();
 
             $this->log_info('Affected ' . $this->write_stmt->rowCount() . ' rows');
@@ -350,10 +373,15 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
 
         if( $this->delete_stmt === null )
         {
+            $query ='DELETE '.
+                    '  FROM ' . $this->table_name . ' '.
+                    ' WHERE id = :session_id';
+
             $this->log_info('Statement does not exist: creating new one.');
 
             try {
-                $this->delete_stmt = $this->pdo_dbh->prepare('DELETE FROM ' . $this->table_name . ' WHERE id = :session_id');
+                $this->delete_stmt = $this->pdo_dbh->prepare($query);
+                $this->log_info('The query: '.$query);
             }
             catch (PDOException $e)
             {
@@ -369,6 +397,8 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
             $this->log_info('Binding parameters and executing query.');
 
             $this->delete_stmt->bindParam(':session_id', $session_id, PDO::PARAM_STR);
+            $this->log_info(':session_id: ' . $session_id);
+
             $this->delete_stmt->execute();
         }
         catch (PDOException $e)
@@ -390,10 +420,14 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
 
         $this->log_info('Called the garbage collector.');
 
-
-        if( $this->gc_stmt === null ) {
+        if( $this->gc_stmt === null )
+        {
+            $query = 'DELETE '.
+                     '  FROM ' . $this->table_name . ' '.
+                     ' WHERE set_time < :exipration_time';
             try {
-                $this->gc_stmt = $this->pdo_dbh->prepare('DELETE FROM ' . $this->table_name . ' WHERE set_time < :exipration_time');
+                $this->gc_stmt = $this->pdo_dbh->prepare($query);
+                $this->log_info('The query: '.$query);
             }
             catch (PDOException $e)
             {
@@ -409,7 +443,10 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
 
         try {
             $this->log_info('Deleting garbage.');
+
             $this->gc_stmt->bindParam(':exipration_time', $old, PDO::PARAM_INT);
+            $this->log_info(':exipration_time: '.$old);
+
             $this->gc_stmt->execute();
         }
         catch (PDOException $e)
@@ -465,10 +502,18 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
                 return false;
             }
 
+
             // if does not exist, prepare the statement for selecting session_key in the table
-            if( $this->key_stmt === null ) {
+            if( $this->key_stmt === null )
+            {
+                $query = 'SELECT Session_key '.
+                         '  FROM ' . $this->table_name . ' '.
+                         ' WHERE Session_id = :session_id '.
+                         'LIMIT 1';
+
                 try {
-                    $this->key_stmt = $this->pdo_dbh->prepare('SELECT Session_key FROM ' . $this->table_name . ' WHERE Session_id = :session_id LIMIT 1');
+                    $this->key_stmt = $this->pdo_dbh->prepare($query);
+                    $this->log_info('The query: '.$query);
                 }
                 catch (PDOException $e)
                 {
@@ -484,6 +529,8 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
                 $this->log_info('Querying the database: searching key.');
 
                 $this->key_stmt->bindParam(':session_id', $session_id, PDO::PARAM_STR);
+                $this->log_info(':session_id: '.$session_id);
+
                 $this->key_stmt->execute();
                 $row = $this->key_stmt->fetchColumn();                      // fetches first column (Session_key: the only one requested)
             }

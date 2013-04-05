@@ -69,9 +69,10 @@ class BBKK_Base_Class {
          <log_info>
     */
     public $debug_on_screen    = false;
+
     /*
        Variable: $error_type
-       Values are the same as PHP constants (see http://php.net/manual/en/errorfunc.constants.php)
+       Values are the same as PHP constants (see <documentation page at http://php.net/manual/en/errorfunc.constants.php>)
     */
     protected $error_type  = 0;
 
@@ -211,7 +212,7 @@ class BBKK_Base_Class {
 
     protected function log_info($msg) {
         if ( defined('JOM_DEBUG') && JOM_DEBUG && $this->debug_on_screen) {
-            echo $this->class. '.' . $this->method . ' - ' . $msg . '<br>';
+            echo $this->class. '.' . $this->method . ' - ' . $msg . "<br>\n";
         }
     }
 

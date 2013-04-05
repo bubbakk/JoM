@@ -84,6 +84,7 @@ $SMAN = new BBKK_Session_Manager(TBL_SESSIONS, $DBH);   // constructor
 $SMAN->debug_on_screen = false;
 $SMAN->salt = $config['SALT'];                          // explicitly set application salt
 $SMAN->start_session('', false);                        // starting session
+check_session_variables();                              // check session variables existance and set default values if not found
 
 
 
