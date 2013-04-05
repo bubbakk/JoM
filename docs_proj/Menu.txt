@@ -46,9 +46,18 @@ Format: 1.51
 # --------------------------------------------------------------------------
 
 
-File: BBKK_Base_Class  (oolib/bbkk_base_class.php)
+File: js/categories.js  (js/categories.js)
+File: js/generic_lib.js  (js/generic_lib.js)
 File: lib/generic_lib.php  (lib/generic_lib.php)
-File: oolib/bbkk_pdo.php  (oolib/bbkk_pdo.php)
+
+Group: Oolib  {
+
+   File: BBKK_Base_Class  (oolib/bbkk_base_class.php)
+   File: bbkk_pdo.php  (oolib/bbkk_pdo.php)
+   File: BBKK_SESSION_MANAGER  (oolib/bbkk_session_manager.php)
+   File: JOM_Categorie  (oolib/category.php)
+   File: JOM_User  (oolib/user.php)
+   }  # Group: Oolib
 
 Group: Index  {
 
