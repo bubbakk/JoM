@@ -1,6 +1,16 @@
 Version 0.3
 ===========
 
+09.04.2013
+----------
+- continues datepicker bootstrap plugin integration... some stupid problems make me waste time....
+- ...now fixed!
+
+08.04.2013
+----------
+- in login page, fixed the login button icon change
+
+
 05.04.2013
 ----------
 - rebuild naturaldocs documentation: naturaldocs -i /var/www/jom_git/JoM/ -o HTML /var/www/jom_git/JoM/docs/ -p /var/www/jom_git/JoM/docs_proj/ -r

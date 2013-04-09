@@ -100,7 +100,7 @@ $SMAN->start_session('', false);                        // starting session
             dataType : 'json',
             data : 'd=usr&r=lin&u=' + username + '&p=' + hashedpass + '&n=' + nonce + '&t=' + timestamp,
             success : function(data) {
-                $(el).find('i').attr("class", "icon-info-sign");
+                $(el).find('i').attr("class", "icon-signin");
                 // if successful
                 if ( data.success )
                 {
@@ -132,7 +132,7 @@ $SMAN->start_session('', false);                        // starting session
                 }
             },
             error : function(jqxhr, text, error) {
-                $(el).find('i').attr("class", "icon-info-sign");
+                $(el).find('i').attr("class", "icon-signin");
                 alert("errore");
             }
         });

@@ -57,10 +57,16 @@ check_session_variables();                              // check session variabl
 
         // date and datepicker component in job creation form
         var now_text = jsJOMlib__date_formatted('<?php echo $_SESSION['user']['settings']['i18n']['dateformat']; ?>', '/');
-        $("#form_new_job [name='creation_date']").val(now_text);
-        $("#form_new_job [name='creation_date']").datepicker({
-            format: '<?php echo $_SESSION['user']['settings']['i18n']['dateformat']; ?>',
+        var $input_date = $("#form_new_job [name='creation_date']");
+        $input_date.val(now_text);
+        $input_date.parent().attr("data-date", now_text);
+        $input_date.parent().attr("data-date-format", "<?php echo $_SESSION['user']['settings']['i18n']['dateformat']; ?>");
+        // call datepicker object creation
+        $input_date.parent().datepicker({
             weekStart: 0
+        })
+        .on('changeDate', function(){
+               $("#form_new_job [name='creation_date']").parent ().datepicker('hide');
         });
 
     });
@@ -193,8 +199,8 @@ check_session_variables();                              // check session variabl
           <div class="control-group">
             <label class="control-label" for="tags">Started</label>
             <div class="controls">
-              <div class="input-append date" data-date-format="dd-mm-yyyy">
-                <input class="input-small" name="creation_date" type="text" size="12"></input>
+              <div class="input-append date" id="dp3">
+                <input class="input-small" name="creation_date" type="text" size="12" value=""></input>
                 <span class="add-on"><i class="icon-calendar"></i></span>
               </div>
             </div>
