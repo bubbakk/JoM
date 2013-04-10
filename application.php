@@ -68,13 +68,15 @@ check_session_variables();                              // check session variabl
         $(".container").fadeIn();       // fadeIn GUI
 
         JOM = new Object();
-        JOM['new_job'] = new New_Job_GUI();
-        JOM['new_job'].init_events();
-        JOM['new_job'].set_issues_status('disabled');
+        JOM.new_job = new New_Job_GUI();
+        JOM.new_job.dateformat      = '<?php echo $_SESSION['user']['settings']['i18n']['dateformat']; ?>';
+        JOM.new_job.dateseparator   = '<?php echo $_SESSION['user']['settings']['i18n']['dateseparator']; ?>';
+        JOM.new_job.init_events();
+        JOM.new_job.set_issues_status('disabled');
 
-        JOM['new_job'].categories.nonce = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
-        JOM['new_job'].issues.nonce     = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
-        JOM['new_job'].get_categories();
+        JOM.new_job.categories.nonce = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
+        JOM.new_job.issues.nonce     = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
+        JOM.new_job.get_categories();
 
         jom_init('<?php echo $_SESSION['user']['settings']['i18n']['dateformat']; ?>');
 

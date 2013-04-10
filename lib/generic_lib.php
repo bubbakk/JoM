@@ -94,4 +94,7 @@ function check_session_variables() {
     if ( !isset($_SESSION['user']['settings']['i18n']['dateformat']) ) {
         $_SESSION['user']['settings']['i18n']['dateformat'] = I18N_DATEFORMAT;
     }
+    if ( !isset($_SESSION['user']['settings']['i18n']['dateseparator']) ) {
+        $_SESSION['user']['settings']['i18n']['dateseparator'] = I18N_DATESEPARATOR;
+    }
 }

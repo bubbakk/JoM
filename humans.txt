@@ -17,7 +17,8 @@ Last update: 2013/03/25
 Standards: HTML5, CSS3
 Languages: PHP5, Javascript
 Components: jQuery, Bootstrap, Normalize, pidCrypt, FontAwesome,
-            XOXCO jQuery tag plugin, Datepicker for Bootstrap
+            XOXCO jQuery tag plugin, Datepicker for Bootstrap, some functions
+            from php.js project
 Software: Geany, Chromium Inspector, NaturalDocs
 
 Library:      jQuery
@@ -50,3 +51,8 @@ Library:      Stefan Petre's Datepicker for Bootstrap
 License type: ? (similar project is "Dual licensed under the MIT and GPL licenses." at http://www.eyecon.ro/datepicker/#about )
 License URL:  ?
 Homepage:     http://www.eyecon.ro/bootstrap-datepicker/
+
+Library:      some functions from php-js
+License type: ?
+License URL:  ?
+Homepage:     http://phpjs.org/

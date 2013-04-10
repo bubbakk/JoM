@@ -150,6 +150,118 @@ function jsJOMlib__date_formatted(format, splitter, date)
 }
 
 
+/*
+   Function: jsJOMlib__check_date_string
+   Check DATE against formats dd/mm/yyyy , d/mm/yyyy , dd/m/yyyy , d/m/yyyy. Also allowed day and month inverse (american) position. Default separator
+   between day, month and year is "/", but can be custom.
+
+   Parameters:
+     date - string date to parse/check
+     format - string containing one of the allowed date format: dd/mm/yyyy or mm/dd/yyyy
+     separator - (*optional*) day-month-year inbetween character. Must be the same as the format
+
+   Depends on:
+     - <jsSPESlib_math__is_number> function in jsSPESlib_math.js library file
+
+   Returns:
+     - *false* if any check is not passed. Some debug can be sent to console
+     - *true* if all checks are passed
+ *
+ */
+function jsJOMlib__check_date_string(date, format, separator)
+{
+    var DEFAULT_SEPARATOR  = '/';
+    var date_splitted       = undefined;
+    var format_splitted     = undefined;
+
+    // check dependecy
+    if ( !typeof(jsJOMlib__isNumber)==="function" ) {
+        console.error("[JOM Debug] - This function depends on jsJOMlib__isNumber() function. Please include it." );
+        return false;
+    }
+
+    if ( format === undefined || format == '' )
+    {
+        console.error("[JOM Debug] - format parameter missing");
+        return false;
+    }
+
+    // set default separator if not passed. Can be ANY string or character
+    if ( separator === undefined || separator==='' ) separator = DEFAULT_SEPARATOR;
+    if ( toString.call(separator) != "[object String]" ) {
+        return false;       // separator passed is not a string
+    }
+    // must be one and one only character
+    if ( separator.length != 1 ) {
+        return false;
+    }
+
+    // date must be a string
+    if ( toString.call(date) != "[object String]" ) {
+        return false;       // date passed is not a string
+    }
+
+    // not less than 8 chars and no more than 10
+    if ( date.length < 8 || date.length > 10 ) {
+        return false;       // too many or not not enough characters
+    }
+
+    // splitting date and format
+    date_splitted   = date.split(separator);
+    format_splitted = format.split(separator);
+
+    // separator check
+    if ( date_splitted.length < 3 ) {
+        return false;       // separator do not match or not present
+    }
+    if ( format_splitted.length < 3 ) {
+        console.error("[JOM Debug] - Format parameter error");
+        return false;       // separator do not match or not present
+    }
+
+
+    // check three parts
+    var d = undefined;
+    var m = undefined;
+    var y = undefined;
+    for ( var i = 0 ; i < 3 ; i++ ) {
+        if ( !jsJOMlib__isNumber( date_splitted[i] ) ) {
+            return false;       // day/month/year part must be numeric
+        }
+        switch(format_splitted[i]) {
+            case "dd":
+                d = parseInt( date_splitted[i], 10 );
+                if ( d < 1 || d > 31 ) {
+                    return false;       // day number must be included into 1-31 interval
+                }
+                break;
+            case "mm":
+                m = parseInt( date_splitted[i], 10 );
+                if ( m < 1 || m > 12 ) {
+                    return false;       // month number must be included into 1-12 interval
+                }
+                break;
+            case "yyyy":
+                y = parseInt( date_splitted[i], 10 );
+                if ( y < 2000 ) {
+                    console.warn("[JoM Debug] - Sorry, but years before 2000 are not useable.");
+                    return false;       // year at least 2000
+                }
+                break;
+        }
+    }
+
+
+    // check if the day exists
+    var date_obj = new Date(y, (m - 1), d);
+    if ( date_obj.getDate() != d || date_obj.getMonth()  != (m - 1) || date_obj.getFullYear() != y ) {
+        return false;      // date format is goot, but the date is not valid (does not exist)
+    }
+
+    return true;
+}
+
+
 function PHPjs_str_pad (input, pad_length, pad_string, pad_type) {
   // http://kevin.vanzonneveld.net
   // +   original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
@@ -194,4 +306,54 @@ function PHPjs_str_pad (input, pad_length, pad_string, pad_type) {
   }
 
   return input;
+}
+
+
+function trim (str, charlist) {
+  // http://kevin.vanzonneveld.net
+  // +   original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+  // +   improved by: mdsjack (http://www.mdsjack.bo.it)
+  // +   improved by: Alexander Ermolaev (http://snippets.dzone.com/user/AlexanderErmolaev)
+  // +      input by: Erkekjetter
+  // +   improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+  // +      input by: DxGx
+  // +   improved by: Steven Levithan (http://blog.stevenlevithan.com)
+  // +    tweaked by: Jack
+  // +   bugfixed by: Onno Marsman
+  // *     example 1: trim('    Kevin van Zonneveld    ');
+  // *     returns 1: 'Kevin van Zonneveld'
+  // *     example 2: trim('Hello World', 'Hdle');
+  // *     returns 2: 'o Wor'
+  // *     example 3: trim(16, 1);
+  // *     returns 3: 6
+  var whitespace, l = 0,
+    i = 0;
+  str += '';
+
+  if (!charlist) {
+    // default list
+    whitespace = " \n\r\t\f\x0b\xa0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000";
+  } else {
+    // preg_quote custom list
+    charlist += '';
+    whitespace = charlist.replace(/([\[\]\(\)\.\?\/\*\{\}\+\$\^\:])/g, '$1');
+  }
+
+  l = str.length;
+  for (i = 0; i < l; i++) {
+    if (whitespace.indexOf(str.charAt(i)) === -1) {
+      str = str.substring(i);
+      break;
+    }
+  }
+
+  l = str.length;
+  for (i = l - 1; i >= 0; i--) {
+    if (whitespace.indexOf(str.charAt(i)) === -1) {
+      str = str.substring(0, i + 1);
+      break;
+    }
+  }
+
+  return whitespace.indexOf(str.charAt(0)) === -1 ? str : '';
 }

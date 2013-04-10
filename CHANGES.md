@@ -12,8 +12,14 @@ TODOS:
   - stripped some space (20px!) from the form margin bottom
   - fixed jQuery clear button object pointer caching (bad selector)
 - creted jom_init() function and copied inside init GUI opations (such as datepicker initializazion, ...)
-- cambiata licenza da GPLv3 a AGPLv3 (eliminato file LICENSE.md e creato file LICENSE.txt)
-- aggiunta intestazione di licenza in tutti i file della root... da inserire in tutti gli altri file...
+- changed license from GPLv3 to AGPLv3 (deleted LICENSE.md file and created LICENSE.txt file in place)
+- added license headers in root files... todo all the remaining...
+- added default date separator character in config.php as I18N default parm and corresponsing session (with default) parameter
+- added in new_job javascript class, methods for read and check data
+- added javasctipt library for date check against format and separator
+- in new_job javascript class assigned this to var THAT (can prevent javascript scope tipical issues)
+- added trim javascirpt function from php.js
+- completed implementation for read data and check before save; this includes highlight the field containing error
 
 09.04.2013
 ----------

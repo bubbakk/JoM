@@ -1,57 +1,136 @@
 function New_Job_GUI() {
 
-    // fields
-    this.$subject       = undefined;
-    this.$description   = undefined;
-    this.$category      = undefined;
-    this.$issue         = undefined;
-    this.$start_date    = undefined;
-    this.$priority      = undefined;
-    this.$assign_to_me  = undefined;
-    this.$open_details  = undefined;
-    // buttons
-    this.$clone_last    = undefined;
-    this.$clear         = undefined;
-    this.$save          = undefined;
-    // objects
-    this.categories     = undefined;
-    this.issues         = undefined;
+    var THAT = this;
+
+    // class useful data
+        THAT.dateformat     = undefined;
+        THAT.dateseparator  = undefined;
+
+    // jQuery fields pointers
+        THAT.$subject       = undefined;
+        THAT.$description   = undefined;
+        THAT.$category      = undefined;
+        THAT.$issue         = undefined;
+        THAT.$start_date    = undefined;
+        THAT.$priority      = undefined;
+        THAT.$assign_to_me  = undefined;
+        THAT.$open_details  = undefined;
+        // buttons
+        THAT.$clone_last    = undefined;
+        THAT.$clear         = undefined;
+        THAT.$save          = undefined;
+        // objects
+        THAT.categories     = undefined;
+        THAT.issues         = undefined;
     // data
-    this.nonces            = new Object();
-    this.nonces.categories = undefined;
-    this.category_selected = undefined;
+    THAT.nonces            = new Object();
+    THAT.nonces.categories = undefined;
+    THAT.category_selected = undefined;
+
+    // form data
+    var form_data = new Object();
+    form_data = {
+        subject:        undefined,
+        description:    undefined,
+        category:       undefined,
+        issue:          undefined,
+        start_date:     undefined,
+        priority:       undefined,
+        assign_to_me:   undefined,
+        open_details:   undefined
+    }
 
 
 
-    this.clear_form_data = function() {
-        this.$subject.val('');
-        this.$description.val('');
-        this.$assign_to_me.prop('checked', false);
-        this.$open_details.prop('checked', false);
-        this.$category.val(0);
-        this.$category.trigger('change');
-        this.$issue.val(0);
+    THAT.clear_form_data = function() {
+        THAT.$subject.val('');
+        THAT.$description.val('');
+        THAT.$category.val(0);
+        THAT.$category.trigger('change');
+        THAT.$issue.val(0);
+        THAT.$priority.find('a[class~="active"]').removeClass("active");
+        THAT.$assign_to_me.prop('checked', false);
+        THAT.$open_details.prop('checked', false);
 
         return false;
     }
 
-    this.save_data = function() {
+    THAT.read_and_check_data = function() {
+
+        var is_all_right = true;
+
+        // subject
+        form_data.subject      = THAT.$subject.val();
+        // can't be empty; can't be only made of spaces
+        if ( form_data.subject == '' || trim(form_data.subject) == '' ) {
+            THAT.set_field_alert(THAT.$subject.parent().parent());
+            is_all_right = false;
+        }
+
+        // description, category selected, issue selected
+        form_data.description  = THAT.$description.val();
+        form_data.category     = THAT.$category.val();
+        form_data.issue        = THAT.$issue.val();
+
+        // date start
+        form_data.start_date   = THAT.$start_date.val();
+        // check date correctness also against format
+        if ( !jsJOMlib__check_date_string(form_data.start_date, THAT.dateformat, THAT.dateseparator) ) {
+            THAT.set_field_alert(THAT.$start_date.parent().parent());
+            is_all_right = false;
+        }
+
+        // priority
+        form_data.priority     = THAT.$priority.find('a[class~="active"]').data("val");
+        if ( form_data.priority === null || form_data.priority === undefined ) {
+            THAT.set_field_alert(THAT.$priority.parent().parent());
+            is_all_right = false;
+        }
+
+        // assign to me, open details
+        form_data.assign_to_me = THAT.$assign_to_me.prop('checked');
+        form_data.open_details = THAT.$open_details.prop('checked');
+
+        return is_all_right;
     }
 
-    this.get_categories = function() {
-        this.categories.load();
+    THAT.set_field_alert = function($el) {
+        $el.addClass("error");
+
+        // if INPUT...
+        if ( $el.find('input').length > 0 ) {
+            // ...remove error status on keypress
+            $el.unbind('keypress').on('keypress', function(){
+                $(this).removeClass("error");
+            });
+        }
+        else
+        // if GROUP BUTTON...
+        if ( $el.find('a[class="btn"]').length > 0 ) {
+            // ...remove error status on keypress
+            $el.unbind('click').on('click', function(){
+                $(this).removeClass("error");
+            });
+        }
+    }
+
+    THAT.save_data = function() {
+    }
+
+    THAT.get_categories = function() {
+        THAT.categories.load();
     }
 
 /////// CATEGORIES
-    this.set_categories_list = function() {
-        var option_el = this.$category.children().eq(0).detach();
-        for ( var i = 0 ; i < this.categories.categories.length ; i++ ) {
-            category = this.categories.categories[i];
+    THAT.set_categories_list = function() {
+        var option_el = THAT.$category.children().eq(0).detach();
+        for ( var i = 0 ; i < THAT.categories.categories.length ; i++ ) {
+            category = THAT.categories.categories[i];
             new_option = $(option_el).clone();
             $(new_option).val(category.id);
             new_option.attr("title", category.description);
             new_option.text(category.name);
-            this.$category.append(new_option);
+            THAT.$category.append(new_option);
         }
     }
 ////// end CATEGORIES
@@ -59,112 +138,109 @@ function New_Job_GUI() {
 
 
 // ISSUES
-    this.set_issues_list = function() {
-        var option_el = this.$issue.children().eq(0).detach();
+    THAT.set_issues_list = function() {
+        var option_el = THAT.$issue.children().eq(0).detach();
 
-        if ( this.issues.categories == undefined ) {
-            this.$issue.children().remove();
+        if ( THAT.issues.categories == undefined ) {
+            THAT.$issue.children().remove();
             new_option = $(option_el).clone();
             $(new_option).attr("value", " ");
             $(new_option).attr("title", " ");
             $(new_option).text("");
-            this.$issue.append(new_option);
-            this.set_issues_status('disabled');
+            THAT.$issue.append(new_option);
+            THAT.set_issues_status('disabled');
             return;
         };
 
-        this.set_issues_status('enabled');
-        this.$issue.children().remove();
-        for ( var i = 0 ; i < this.issues.categories.length ; i++ ) {
-            issue = this.issues.categories[i];
+        THAT.set_issues_status('enabled');
+        THAT.$issue.children().remove();
+        for ( var i = 0 ; i < THAT.issues.categories.length ; i++ ) {
+            issue = THAT.issues.categories[i];
             new_option = $(option_el).clone();
             $(new_option).attr("value", issue.id);
             $(new_option).attr("title", issue.description);
             $(new_option).text(issue.name);
-            this.$issue.append(new_option);
+            THAT.$issue.append(new_option);
         }
     }
 
-    this.update_issues = function() {
-        this.set_issues_status("load");
-        this.issues.parent_id = this.$category.val();
-        this.issues.load();
+    THAT.update_issues = function() {
+        THAT.set_issues_status("load");
+        THAT.issues.parent_id = THAT.$category.val();
+        THAT.issues.load();
     }
 
-    this.set_issues_status = function(status) {
+    THAT.set_issues_status = function(status) {
         if ( status === 'disabled' ) {
-            if ( this.$issue.attr("disabled") == undefined )
-                this.$issue.attr("disabled", "disabled");
-            this.$issue_load.fadeOut();
+            if ( THAT.$issue.attr("disabled") == undefined )
+                THAT.$issue.attr("disabled", "disabled");
+            THAT.$issue_load.fadeOut();
         }
         else
         if ( status === 'enabled' ) {
-            if ( this.$issue.attr("disabled") == "disabled" )
-                this.$issue.removeAttr("disabled");
+            if ( THAT.$issue.attr("disabled") == "disabled" )
+                THAT.$issue.removeAttr("disabled");
             JOM['new_job'].$issue_load.fadeOut();
         }
         else
         if ( status === 'start' ) {
-            this.$issue.attr("disabled", "disabled");
-            this.$issue_load.hide();
+            THAT.$issue.attr("disabled", "disabled");
+            THAT.$issue_load.hide();
         }
         else
         if ( status === 'load' ) {
-             if ( this.$issue.attr("disabled") == undefined )
-                this.$issue.attr("disabled", "disabled");
-            this.$issue_load.fadeIn();
+             if ( THAT.$issue.attr("disabled") == undefined )
+                THAT.$issue.attr("disabled", "disabled");
+            THAT.$issue_load.fadeIn();
         }
     }
 ////// end ISSUES
 
 
-    this.init_events = function() {
+    THAT.init_events = function() {
         // CLEAR BUTTON
-        this.$clear.unbind().on('click', function(){
+        THAT.$clear.unbind().on('click', function(){
             JOM['new_job'].clear_form_data();
         });
         // SELECT CATEGORY
-        this.$category.unbind().on('change', function(){
+        THAT.$category.unbind().on('change', function(){
             if ( JOM['new_job'].issues.categories != JOM['new_job'].$category.val() ) {
                 JOM['new_job'].update_issues();
             }
         });
-        this.$save.unbind().on('click', {new_job_obj: this}, function(e){
+        THAT.$save.unbind().on('click', {new_job_obj: THAT}, function(e){
            // get form data
-           THAT = e.data.new_job_obj;
-           var subject      = THAT.$subject.val();
-           var description  = THAT.$description.val();
-           var category     = THAT.$category.val();
-           var issue        = THAT.$issue.val();
-           var start_date   = THAT.$start_date.val();
-           var assign_to_me = THAT.$start_date.prop('checked');
-           var open_details = THAT.$open_details.prop('checked');
-           // check data
-           // send data to server
+           if ( JOM.new_job.read_and_check_data() ) {
+               JOM.new_job.save_data();
+           }
         });
     }
 
 
     // constructor
-        this.$clone_last    = $("#form_new_job [name='clonelast']");
-        this.$subject       = $("#form_new_job [name='subject']");
-        this.$description   = $("#form_new_job [name='description']");
-        this.$category      = $("#form_new_job [name='category']");
-        this.$issue         = $("#form_new_job [name='issue']");
-        this.$start_date    = $("#form_new_job [name='creation_date']");
-        this.$priority      = $("#form_new_job [name='priority']");
-        this.$assign_to_me  = $("#form_new_job [name='assign_to_me']");
-        this.$open_details  = $("#form_new_job [name='open_details']");
-        this.$issue_load    = $("#form_new_job [name='issue']").next();
+        THAT.$clone_last    = $("#form_new_job [name='clonelast']");
+        THAT.$subject       = $("#form_new_job [name='subject']");
+        THAT.$description   = $("#form_new_job [name='description']");
+        THAT.$category      = $("#form_new_job [name='category']");
+        THAT.$issue         = $("#form_new_job [name='issue']");
+        THAT.$start_date    = $("#form_new_job [name='creation_date']");
+        THAT.$priority      = $("#form_new_job [name='priority']");
+        THAT.$assign_to_me  = $("#form_new_job [name='assign_to_me']");
+        THAT.$open_details  = $("#form_new_job [name='open_details']");
+        THAT.$issue_load    = $("#form_new_job [name='issue']").next();
 
-        this.$clear         = $("#jom_create_job_modal").find('.modal-footer').find("[name='clear']");
-        this.$save          = $("#jom_create_job_modal").find('.modal-footer').find("[name='save']");
+        THAT.$priority.find('a').eq(0).data("val", "5");
+        THAT.$priority.find('a').eq(1).data("val", "10");
+        THAT.$priority.find('a').eq(2).data("val", "15");
 
-        this.categories       = new Categories();
-        this.categories.level = 1;
+        THAT.$clear         = $("#jom_create_job_modal").find('.modal-footer').find("[name='clear']");
+        THAT.$save          = $("#jom_create_job_modal").find('.modal-footer').find("[name='save']");
 
-        this.issues           = new Categories();
-        this.issues.level     = 2;
+        THAT.categories       = new Categories();
+        THAT.categories.level = 1;
+
+        THAT.issues           = new Categories();
+        THAT.issues.level     = 2;
     // end constructor
 
 }
