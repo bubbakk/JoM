@@ -1,3 +1,5 @@
+
+    // Ajax callbacks dispatcher
     $(document).ajaxComplete(function(event, xhr, settings)
     {
         // get request parameters
@@ -32,3 +34,28 @@
 
 
     });
+
+function jom_init(dateformat) {
+
+    var date_spearator = '/';
+
+    // date and datepicker component in job creation form
+    var now_text = jsJOMlib__date_formatted(dateformat, date_spearator);
+    var $input_date = $("#form_new_job [name='creation_date']");
+    $input_date.val(now_text);
+    $input_date.parent().attr("data-date", now_text);
+    $input_date.parent().attr("data-date-format", dateformat);
+    // call datepicker object creation
+    $input_date.parent().datepicker({
+        weekStart: 0
+    })
+    .on('changeDate', function(){
+           $("#form_new_job [name='creation_date']").parent ().datepicker('hide');
+           $("#jom_create_job_modal .modal-body .alert").show();
+           $("#jom_create_job_modal .modal-body .alert").slideDown();
+    });
+
+    $alert = $("#jom_create_job_modal .modal-body .alert").hide();
+
+    $("#form_new_job").css("margin-bottom", "0");
+}

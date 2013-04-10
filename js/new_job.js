@@ -1,21 +1,25 @@
 function New_Job_GUI() {
 
-    this.$clone_last    = undefined;
-    this.$clear         = undefined;
+    // fields
     this.$subject       = undefined;
     this.$description   = undefined;
     this.$category      = undefined;
     this.$issue         = undefined;
+    this.$start_date    = undefined;
+    this.$priority      = undefined;
     this.$assign_to_me  = undefined;
     this.$open_details  = undefined;
-
-    this.category_selected = undefined;
-
+    // buttons
+    this.$clone_last    = undefined;
+    this.$clear         = undefined;
+    this.$save          = undefined;
+    // objects
     this.categories     = undefined;
     this.issues         = undefined;
-
+    // data
     this.nonces            = new Object();
     this.nonces.categories = undefined;
+    this.category_selected = undefined;
 
 
 
@@ -125,19 +129,36 @@ function New_Job_GUI() {
                 JOM['new_job'].update_issues();
             }
         });
+        this.$save.unbind().on('click', {new_job_obj: this}, function(e){
+           // get form data
+           THAT = e.data.new_job_obj;
+           var subject      = THAT.$subject.val();
+           var description  = THAT.$description.val();
+           var category     = THAT.$category.val();
+           var issue        = THAT.$issue.val();
+           var start_date   = THAT.$start_date.val();
+           var assign_to_me = THAT.$start_date.prop('checked');
+           var open_details = THAT.$open_details.prop('checked');
+           // check data
+           // send data to server
+        });
     }
 
 
     // constructor
         this.$clone_last    = $("#form_new_job [name='clonelast']");
-        this.$clear         = $("#form_new_job [name='clear']");
         this.$subject       = $("#form_new_job [name='subject']");
         this.$description   = $("#form_new_job [name='description']");
         this.$category      = $("#form_new_job [name='category']");
         this.$issue         = $("#form_new_job [name='issue']");
+        this.$start_date    = $("#form_new_job [name='creation_date']");
+        this.$priority      = $("#form_new_job [name='priority']");
         this.$assign_to_me  = $("#form_new_job [name='assign_to_me']");
         this.$open_details  = $("#form_new_job [name='open_details']");
         this.$issue_load    = $("#form_new_job [name='issue']").next();
+
+        this.$clear         = $("#jom_create_job_modal").find('.modal-footer').find("[name='clear']");
+        this.$save          = $("#jom_create_job_modal").find('.modal-footer').find("[name='save']");
 
         this.categories       = new Categories();
         this.categories.level = 1;

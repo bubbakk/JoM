@@ -1,6 +1,15 @@
 Version 0.3
 ===========
 
+
+10.04.2013
+----------
+- in new-job form
+  - added save button event
+  - added read values on save
+  - stripped some space (20px!) from the form margin bottom
+- creted jom_init() function and copied inside init GUI opations (such as datepicker initializazion, ...)
+
 09.04.2013
 ----------
 - continues datepicker bootstrap plugin integration... some stupid problems make me waste time....

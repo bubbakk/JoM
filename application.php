@@ -55,19 +55,7 @@ check_session_variables();                              // check session variabl
         JOM['new_job'].issues.nonce     = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
         JOM['new_job'].get_categories();
 
-        // date and datepicker component in job creation form
-        var now_text = jsJOMlib__date_formatted('<?php echo $_SESSION['user']['settings']['i18n']['dateformat']; ?>', '/');
-        var $input_date = $("#form_new_job [name='creation_date']");
-        $input_date.val(now_text);
-        $input_date.parent().attr("data-date", now_text);
-        $input_date.parent().attr("data-date-format", "<?php echo $_SESSION['user']['settings']['i18n']['dateformat']; ?>");
-        // call datepicker object creation
-        $input_date.parent().datepicker({
-            weekStart: 0
-        })
-        .on('changeDate', function(){
-               $("#form_new_job [name='creation_date']").parent ().datepicker('hide');
-        });
+        jom_init('<?php echo $_SESSION['user']['settings']['i18n']['dateformat']; ?>');
 
     });
     </script>
@@ -166,6 +154,10 @@ check_session_variables();                              // check session variabl
         <h3 id="myModalLabel">Create new Job</h3>
       </div>
       <div class="modal-body">
+        <div class="alert">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <strong>Warning!</strong> Best check yo self, you're not looking too good.
+        </div>
         <form class="form-horizontal" id="form_new_job">
           <div class="control-group">
             <label class="control-label" for="subject">Subject</label>
@@ -208,7 +200,7 @@ check_session_variables();                              // check session variabl
           <div class="control-group">
             <label class="control-label" for="priority">Priority</label>
             <div class="controls">
-              <div class="btn-group" data-toggle="buttons-radio">
+              <div class="btn-group" data-toggle="buttons-radio" name="priority">
                 <a href="#" class="btn" >Low</a>
                 <a href="#" class="btn">Normal</a>
                 <a href="#" class="btn">High</a>
@@ -232,7 +224,7 @@ check_session_variables();                              // check session variabl
       <div class="modal-footer">
         <a href="#" class="btn" name="clear">Clear</a>
         <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
-        <a href="#" class="btn btn-primary">Save</a>
+        <a href="#" class="btn btn-primary" name="save">Save</a>
       </div>
     </div>
 
