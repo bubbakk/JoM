@@ -84,6 +84,7 @@ check_session_variables();                              // check session variabl
     </script>
     <style>
         #jom_create_job_modal .control-group { margin-bottom: 5px; }
+        #jom_create_job_modal .jom_message { display: none; }
     </style>
 </head>
 <body>
@@ -182,6 +183,7 @@ check_session_variables();                              // check session variabl
           <strong>Warning!</strong> Best check yo self, you're not looking too good.
         </div>
         <form class="form-horizontal" id="form_new_job">
+        <fieldset>
           <div class="control-group">
             <label class="control-label" for="subject">Subject</label>
             <div class="controls">
@@ -242,11 +244,17 @@ check_session_variables();                              // check session variabl
               <input type="checkbox" name="open_details">
             </div>
           </div>
+        </fieldset>
         </form>
+        <div class="jom_message">
+          <div class="text-center lead" style="margin-bottom: 0">
+            <i class="icon-spinner icon-spin icon-2x"></i> Saving data ...
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
         <a href="#" class="btn" name="clear">Clear</a>
-        <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+        <a href="#" class="btn" data-dismiss="modal" aria-hidden="true" name="close">Close</a>
         <a href="#" class="btn btn-primary" name="save">Save</a>
       </div>
     </div>

@@ -7,6 +7,7 @@ function New_Job_GUI() {
         THAT.dateseparator  = undefined;
 
     // jQuery fields pointers
+        THAT.$form          = undefined;
         THAT.$subject       = undefined;
         THAT.$description   = undefined;
         THAT.$category      = undefined;
@@ -121,6 +122,15 @@ function New_Job_GUI() {
         THAT.categories.load();
     }
 
+    THAT.hide_buttons = function() {
+        THAT.$form.fadeOut('normal', function(){
+            JOM.new_job.$form.next(".jom_message").fadeIn();
+        });
+        //~ THAT.$clear.addClass("disabled");
+        //~ THAT.$close.addClass("disabled");
+        //~ THAT.$save.addClass("disabled");
+    }
+
 /////// CATEGORIES
     THAT.set_categories_list = function() {
         var option_el = THAT.$category.children().eq(0).detach();
@@ -200,24 +210,31 @@ function New_Job_GUI() {
     THAT.init_events = function() {
         // CLEAR BUTTON
         THAT.$clear.unbind().on('click', function(){
+            if ( $(this).hasClass("disabled") ) return;
             JOM['new_job'].clear_form_data();
         });
         // SELECT CATEGORY
         THAT.$category.unbind().on('change', function(){
+            if ( $(this).hasClass("disabled") ) return;
             if ( JOM['new_job'].issues.categories != JOM['new_job'].$category.val() ) {
                 JOM['new_job'].update_issues();
             }
         });
+        // SAVE BUTTON
         THAT.$save.unbind().on('click', {new_job_obj: THAT}, function(e){
-           // get form data
-           if ( JOM.new_job.read_and_check_data() ) {
-               JOM.new_job.save_data();
-           }
+            if ( $(this).hasClass("disabled") ) return;
+            // read form data and check
+            if ( JOM.new_job.read_and_check_data() ) {
+                // save if allright
+                JOM.new_job.hide_buttons();
+                JOM.new_job.save_data();
+            }
         });
     }
 
 
     // constructor
+        THAT.$form          = $("#form_new_job");
         THAT.$clone_last    = $("#form_new_job [name='clonelast']");
         THAT.$subject       = $("#form_new_job [name='subject']");
         THAT.$description   = $("#form_new_job [name='description']");
@@ -234,6 +251,7 @@ function New_Job_GUI() {
         THAT.$priority.find('a').eq(2).data("val", "15");
 
         THAT.$clear         = $("#jom_create_job_modal").find('.modal-footer').find("[name='clear']");
+        THAT.$close         = $("#jom_create_job_modal").find('.modal-footer').find("[name='close']");
         THAT.$save          = $("#jom_create_job_modal").find('.modal-footer').find("[name='save']");
 
         THAT.categories       = new Categories();
