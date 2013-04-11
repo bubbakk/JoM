@@ -4,6 +4,10 @@ Version 0.3
 TODOS:
 - better implement datepicker (changing date in the input fields does not replect datepicker widget)
 
+11.04.2013
+----------
+- fixed new-economy message position: now is readable
+
 10.04.2013
 ----------
 - in new-job form

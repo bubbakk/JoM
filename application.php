@@ -254,8 +254,8 @@ check_session_variables();                              // check session variabl
 <!-- RIBBON -->
     <div id="jom_version_ribbon">
         <div class="jom_label">ver.</div>
-        <div class="jom_version" title="<?php print(JOM_DESC_VER);?>" onclick="javascript: $(this).next().text(get__e_commerce_bullshit()); animate_opacity($(this).next(), 1);"><?php print(JOM_VERSION);?></div>
-        <div class="jom_useful_sentence"></div>
+        <div class="jom_version" title="<?php print(JOM_DESC_VER);?>" onclick="javascript: $(this).next().text(jsJOMlib__get_e_commerce_bullshit()); jsJOMlib__animate_opacity($(this).next(), 1);"><?php print(JOM_VERSION);?></div>
+        <div class="jom_useful_sentence" style="z-index: 999; margin-top: 44px;"></div>
     </div>
 
     <script src="./js/lib/bootstrap.min.js"></script>
