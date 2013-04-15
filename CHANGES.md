@@ -8,12 +8,15 @@ TODOS:
 15.04.2013
 ----------
 - in JOM_Job class, added reset_to_defaults() method
+- fixed animate_opacity() function rename in jsJOMlib__animate_opacity() in install.php
+
 
 14.04.2013
 ----------
 - created structures to make the request work in Ajax Request Dispatcher
 - created requests_job.php file to manage the job requests
 - added constructor to JOM_Job class
+- fixed tables name in tables creation during install procedure
 
 13.04.2013
 ----------
