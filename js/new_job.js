@@ -20,17 +20,18 @@ function New_Job_GUI() {
         THAT.$clone_last    = undefined;
         THAT.$clear         = undefined;
         THAT.$save          = undefined;
-        // objects
-        THAT.categories     = undefined;
-        THAT.issues         = undefined;
-    // data
-    THAT.nonces            = new Object();
-    THAT.nonces.categories = undefined;
+
+    // Objects
+    THAT.categories     = undefined;
+    THAT.issues         = undefined;
+
+    // Data
+    THAT.nonce          = new Object();
     THAT.category_selected = undefined;
 
-    // form data
-    var form_data = new Object();
-    form_data = {
+    // Form data
+    THAT.form_data = new Object();
+    THAT.form_data = {
         subject:        undefined,
         description:    undefined,
         category:       undefined,
@@ -61,36 +62,36 @@ function New_Job_GUI() {
         var is_all_right = true;
 
         // subject
-        form_data.subject      = THAT.$subject.val();
+        THAT.form_data.subject      = THAT.$subject.val();
         // can't be empty; can't be only made of spaces
-        if ( form_data.subject == '' || trim(form_data.subject) == '' ) {
+        if ( THAT.form_data.subject == '' || trim(THAT.form_data.subject) == '' ) {
             THAT.set_field_alert(THAT.$subject.parent().parent());
             is_all_right = false;
         }
 
         // description, category selected, issue selected
-        form_data.description  = THAT.$description.val();
-        form_data.category     = THAT.$category.val();
-        form_data.issue        = THAT.$issue.val();
+        THAT.form_data.description  = THAT.$description.val();
+        THAT.form_data.category     = THAT.$category.val();
+        THAT.form_data.issue        = THAT.$issue.val();
 
         // date start
-        form_data.start_date   = THAT.$start_date.val();
+        THAT.form_data.start_date   = THAT.$start_date.val();
         // check date correctness also against format
-        if ( !jsJOMlib__check_date_string(form_data.start_date, THAT.dateformat, THAT.dateseparator) ) {
+        if ( !jsJOMlib__check_date_string(THAT.form_data.start_date, THAT.dateformat, THAT.dateseparator) ) {
             THAT.set_field_alert(THAT.$start_date.parent().parent());
             is_all_right = false;
         }
 
         // priority
-        form_data.priority     = THAT.$priority.find('a[class~="active"]').data("val");
-        if ( form_data.priority === null || form_data.priority === undefined ) {
+        THAT.form_data.priority     = THAT.$priority.find('a[class~="active"]').data("val");
+        if ( THAT.form_data.priority === null || THAT.form_data.priority === undefined ) {
             THAT.set_field_alert(THAT.$priority.parent().parent());
             is_all_right = false;
         }
 
         // assign to me, open details
-        form_data.assign_to_me = THAT.$assign_to_me.prop('checked');
-        form_data.open_details = THAT.$open_details.prop('checked');
+        THAT.form_data.assign_to_me = THAT.$assign_to_me.prop('checked');
+        THAT.form_data.open_details = THAT.$open_details.prop('checked');
 
         return is_all_right;
     }
@@ -116,6 +117,20 @@ function New_Job_GUI() {
     }
 
     THAT.save_data = function() {
+        var fd = JOM.new_job.form_data;
+        $.ajax({
+            url:      'ard.php',
+            data:     'd=job&r=new&n=' + THAT.nonce.nonce + '&t=' + THAT.nonce.timestamp     +
+                      '&s=' + fd.subject + '&ds=' + fd.description + '&c=' + fd.category     +
+                      '&i=' + fd.issue + '&sd=' + fd.start_date + '&p=' + fd.priority        +
+                      '&a=' + (fd.assign_to_me ? 1 : 0) + '&o=' + (fd.open_details ? 1 : 0),
+            type:     'GET',
+			dataType: 'JSON'
+        })
+        .done(function(data){
+            ;   // nothing to do here...
+        });
+
     }
 
     THAT.get_categories = function() {
@@ -126,9 +141,9 @@ function New_Job_GUI() {
         THAT.$form.fadeOut('normal', function(){
             JOM.new_job.$form.next(".jom_message").fadeIn();
         });
-        //~ THAT.$clear.addClass("disabled");
-        //~ THAT.$close.addClass("disabled");
-        //~ THAT.$save.addClass("disabled");
+        THAT.$clear.addClass("disabled");
+        THAT.$close.addClass("disabled");
+        THAT.$save.addClass("disabled");
     }
 
 /////// CATEGORIES

@@ -5,12 +5,24 @@ TODOS:
 - better implement datepicker (changing date in the input fields does not replect datepicker widget)
 
 
+15.04.2013
+----------
+- in JOM_Job class, added reset_to_defaults() method
 
+14.04.2013
+----------
+- created structures to make the request work in Ajax Request Dispatcher
+- created requests_job.php file to manage the job requests
+- added constructor to JOM_Job class
+
+13.04.2013
+----------
+- now values are correctly sent to server
 
 11.04.2013
 ----------
 - fixed new-economy message position: now is readable
-- befor sending new job data to server, modal form buttons are disabled, fields disappear, and a "saving" message appears
+- before sending new job data to server, modal form buttons are disabled, fields disappear, and a "saving" message appears
 
 10.04.2013
 ----------
@@ -37,7 +49,6 @@ TODOS:
 08.04.2013
 ----------
 - in login page, fixed the login button icon change
-
 
 05.04.2013
 ----------

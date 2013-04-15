@@ -42,13 +42,15 @@ $retval['success'] = false;
 
 // DOMAINS
 $domains = array('cat' => 'categories',                         // categories
-                 'usr' => 'users'                               // users
+                 'usr' => 'users',                              // users
+                 'job' => 'job'                                 // job
                 );
 // REQUESTS for DOMAINS
 $requests = array('categories' => array('lod' => 'load'),       // categories
                   'users'      => array('lin' => 'login',       // users
                                         'lot' => 'logout'
-                                       )
+                                       ),
+                  'job'        => array('new' => 'new')         // job
                  );
 
 
@@ -81,10 +83,10 @@ if ( post_or_get('r')===false) {
     $retval['dbg_msg'] = 'Missing r parameter';
     json_output_and_die($retval);
 }
-$domain    = post_or_get('d'); // echo 'domain: '.$domain."\n";
+$domain    = post_or_get('d'); // echo 'domain:  '.$domain."\n";
 $request   = post_or_get('r'); // echo 'request: '.$request."\n";
-$nonce     = post_or_get('n'); // echo 'nonce: '.$nonce."\n";
-$timestamp = post_or_get('t'); // echo 'nonce: '.$nonce."\n";
+$nonce     = post_or_get('n'); // echo 'nonce:   '.$nonce."\n";
+$timestamp = post_or_get('t'); // echo 'nonce:   '.$nonce."\n";
 
 $command = '/' . $domains[$domain] . '/' . $requests[$domains[$domain]][$request];
 
