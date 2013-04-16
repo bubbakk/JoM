@@ -11,7 +11,10 @@ class JOM_Job extends BBKK_Base_Class {
 
 
     // Job data
-    public $job_data            = null;
+    public $job_data    = null;
+
+
+    private $stmt_save  = null;
 
     /*
        Function: __construct
@@ -58,16 +61,53 @@ class JOM_Job extends BBKK_Base_Class {
     public function save() {
 
         // INSERT
-        if ( $this.id == null ) {
-            $query = 'INSERT INTO ' . $this->$table_name . ' ' .
-                     '            ($subject,          $description, $category_level1, $category_level2, $category_level3, $tags, '             .
-                                  '$priority,         $creation_datetime, $percent_completed, $attachment_1, $attachment_2, $deadline_datetime,' .
-                                  '$assigned_to_user, $assigned_to_cg_A, $assigned_to_cg_B, $assigned_to_cg_C, '                        .
-                                  '$assigned_to_cg_D, $assigned_to_fg_A, $assigned_to_fg_B, $assigned_to_fg_C, $assigned_to_fg_D, '      .
-                                  '$trashed) '.
-                     '     VALUES ( :subject,         :description, :cat1,            :cat2,            :cat3,            :tags) ';
+        if ( $this.id == null )
+        {
+            if ( $this->stmt_save === null )
+            {
+                $query = 'INSERT INTO ' . $this->$table_name . ' ' .
+                         '            (subject,           description,        category_level1,    category_level2,   category_level3,  tags, '              .
+                                      'priority,          creation_datetime,  start_datetime,     deadline_datetime, percent_completed, '                   .
+                                      'attachment_1,      attachment_2, '                                                                                   .
+                                      'assigned_to_user,  assigned_to_cg_A,   assigned_to_cg_B,   assigned_to_cg_C,  assigned_to_cg_D, '                    .
+                                      'assigned_to_fg_A,  assigned_to_fg_B,   assigned_to_fg_C,   assigned_to_fg_D,  trashed) '                             .
+                         '     VALUES (:subject,          :description,       :category_level1,   :category_level2,  :category_level3, :tags, '             .
+                                      ':priority,         :creation_datetime, :percent_completed, :attachment_1,     :attachment_2,    :deadline_datetime,' .
+                                      ':assigned_to_user, :assigned_to_cg_A,  :assigned_to_cg_B,  :assigned_to_cg_C, :assigned_to_cg_D, '                   .
+                                      ':assigned_to_fg_A, :assigned_to_fg_B,  :assigned_to_fg_C,  :assigned_to_fg_D, :trashed) ';
 
-            $stmt_save = $this->pdo_dbh->prepare($query);
+                $this->stmt_save = $this->pdo_dbh->prepare($query);
+            }
+
+            $this->bind_param_or_null( 'subject',           $this->stmt_save, PDO::PARAM_STR);  // can't be bull
+            $this->bind_param_or_null( 'description',       $this->stmt_save, PDO::PARAM_STR);
+            $this->bind_param_or_null( 'category_level1',   $this->stmt_save, PDO::PARAM_INT);
+            $this->bind_param_or_null( 'category_level2',   $this->stmt_save, PDO::PARAM_INT);
+            $this->bind_param_or_null( 'category_level3',   $this->stmt_save, PDO::PARAM_INT);
+            $this->bind_param_or_null( 'tags',              $this->stmt_save, PDO::PARAM_STR);
+
+            $this->bind_param_or_null( 'priority',          $this->stmt_save, PDO::PARAM_INT);
+            $this->bind_param_or_null( 'creation_datetime', time(),           PDO::PARAM_INT);  // set automatically
+            $this->bind_param_or_null( 'start_datetime',    $this->stmt_save, PDO::PARAM_INT);
+            $this->bind_param_or_null( 'deadline_datetime', $this->stmt_save, PDO::PARAM_INT);
+            $this->bind_param_or_null( 'percent_completed', $this->stmt_save, PDO::PARAM_INT);
+
+            $this->bind_param_or_null( 'attachment_1',      $this->stmt_save, PDO::PARAM_LOB);
+            $this->bind_param_or_null( 'attachment_2',      $this->stmt_save, PDO::PARAM_LOB);
+
+            $this->bind_param_or_null( 'assigned_to_user',  $this->stmt_save, PDO::PARAM_INT);
+            $this->bind_param_or_null( 'assigned_to_cg_A',  $this->stmt_save, PDO::PARAM_INT);
+            $this->bind_param_or_null( 'assigned_to_cg_B',  $this->stmt_save, PDO::PARAM_INT);
+            $this->bind_param_or_null( 'assigned_to_cg_C',  $this->stmt_save, PDO::PARAM_INT);
+            $this->bind_param_or_null( 'assigned_to_cg_D',  $this->stmt_save, PDO::PARAM_INT);
+
+            $this->bind_param_or_null( 'assigned_to_fg_A',  $this->stmt_save, PDO::PARAM_INT);
+            $this->bind_param_or_null( 'assigned_to_fg_B',  $this->stmt_save, PDO::PARAM_INT);
+            $this->bind_param_or_null( 'assigned_to_fg_C',  $this->stmt_save, PDO::PARAM_INT);
+            $this->bind_param_or_null( 'assigned_to_fg_D',  $this->stmt_save, PDO::PARAM_INT);
+            $this->bind_param_or_null( 'trashed',           $this->stmt_save, PDO::PARAM_INT);  // can't be null: 0|1
+
+
         }
         // UPDATE
         else {
@@ -77,33 +117,48 @@ class JOM_Job extends BBKK_Base_Class {
     }
 
     /*
-       Function: reset_to_defaults
-       reset job fields to default values
+       Function: reset_job_data_to_nulls
+       Reset all job fields/properties to null values
     */
-    public function reset_to_defaults() {
+    public function reset_job_data_to_nulls() {
 
         $this->job_data('id')                   = null;
-        $this->job_data('subject')              = '';
-        $this->job_data('description')          = '';
-        $this->job_data('category_level1')      = 0;
-        $this->job_data('category_level2')      = 0;
-        $this->job_data('category_level3')      = 0;
-        $this->job_data('tags')                 = '';
-        $this->job_data('priority')             = 0;
-        $this->job_data('creation_datetime')    = 0;
-        $this->job_data('percent_completed')    = 0;
+        $this->job_data('subject')              = null;
+        $this->job_data('description')          = null;
+        $this->job_data('category_level1')      = null;
+        $this->job_data('category_level2')      = null;
+        $this->job_data('category_level3')      = null;
+        $this->job_data('tags')                 = null;
+        $this->job_data('priority')             = null;
+        $this->job_data('creation_datetime')    = null;
+        $this->job_data('start_datetime')       = null;
+        $this->job_data('deadline_datetime')    = null;
+        $this->job_data('percent_completed')    = null;
         $this->job_data('attachment_1')         = null;
         $this->job_data('attachment_2')         = null;
-        $this->job_data('deadline_datetime')    = 0;
-        $this->job_data('assigned_to_user')     = 0;
-        $this->job_data('assigned_to_cg_A')     = 0;
-        $this->job_data('assigned_to_cg_B')     = 0;
-        $this->job_data('assigned_to_cg_C')     = 0;
-        $this->job_data('assigned_to_cg_D')     = 0;
-        $this->job_data('assigned_to_fg_A')     = 0;
-        $this->job_data('assigned_to_fg_B')     = 0;
-        $this->job_data('assigned_to_fg_C')     = 0;
-        $this->job_data('assigned_to_fg_D')     = 0;
-        $this->job_data('trashed')              = 0;
+        $this->job_data('assigned_to_user')     = null;
+        $this->job_data('assigned_to_cg_A')     = null;
+        $this->job_data('assigned_to_cg_B')     = null;
+        $this->job_data('assigned_to_cg_C')     = null;
+        $this->job_data('assigned_to_cg_D')     = null;
+        $this->job_data('assigned_to_fg_A')     = null;
+        $this->job_data('assigned_to_fg_B')     = null;
+        $this->job_data('assigned_to_fg_C')     = null;
+        $this->job_data('assigned_to_fg_D')     = null;
+        $this->job_data('trashed')              = null;
+    }
+
+
+    /*
+       Function: bind_param_or_bind_null
+
+    */
+    private function bind_param_or_bind_null($prm_name, &$stmt, $pdo_prm_type) {
+        if ( $this->job_data('description') === null )
+            $stmt->bindValue(':' . $prm_name, null, PDO::PARAM_NULL);
+        else
+            $stmt->bindValue(':' . $prm_name, $this->job_data($prn_name), $pdo_prm_type);
+
+        return $stmt;
     }
 }
