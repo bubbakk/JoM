@@ -66,15 +66,20 @@ class JOM_Job extends BBKK_Base_Class {
             if ( $this->stmt_save === null )
             {
                 $query = 'INSERT INTO ' . $this->$table_name . ' ' .
-                         '            (subject,           description,        category_level1,    category_level2,   category_level3,  tags, '              .
-                                      'priority,          creation_datetime,  start_datetime,     deadline_datetime, percent_completed, '                   .
-                                      'attachment_1,      attachment_2, '                                                                                   .
-                                      'assigned_to_user,  assigned_to_cg_A,   assigned_to_cg_B,   assigned_to_cg_C,  assigned_to_cg_D, '                    .
-                                      'assigned_to_fg_A,  assigned_to_fg_B,   assigned_to_fg_C,   assigned_to_fg_D,  trashed) '                             .
-                         '     VALUES (:subject,          :description,       :category_level1,   :category_level2,  :category_level3, :tags, '             .
-                                      ':priority,         :creation_datetime, :percent_completed, :attachment_1,     :attachment_2,    :deadline_datetime,' .
-                                      ':assigned_to_user, :assigned_to_cg_A,  :assigned_to_cg_B,  :assigned_to_cg_C, :assigned_to_cg_D, '                   .
-                                      ':assigned_to_fg_A, :assigned_to_fg_B,  :assigned_to_fg_C,  :assigned_to_fg_D, :trashed) ';
+                         '            (Job_subject,           Job_description, '                                                    .
+                         '             Job_category_level1,   Job_category_level2,   Job_category_level3,  Job_tags, '              .
+                         '             Job_priority,          Job_creation_datetime, Job_start_datetime,   Job_deadline_datetime, ' .
+                         '             Job_percent_completed, Job_attachment_1,      Job_attachment_2,     Job_assigned_to_user, '  .                         .                                                                                 .
+                         '             Job_assigned_to_cg_A,  Job_assigned_to_cg_B,  Job_assigned_to_cg_C, Job_assigned_to_cg_D, '  .
+                         '             Job_assigned_to_fg_A,  Job_assigned_to_fg_B,  Job_assigned_to_fg_C, Job_assigned_to_fg_D, '  .
+                         '             Job_trashed) '                                                                               .
+                         '     VALUES (:subject,              :description, '                                                       .
+                         '             :category_level1,      :category_level2,      :category_level3,     :tags, '                 .
+                         '             :priority,             :creation_datetime,    :start_datetime,      :deadline_datetime, '    .
+                         '             :percent_completed,    :attachment_1,         :attachment_2,        :assigned_to_user, '     .
+                         '             :assigned_to_cg_A,     :assigned_to_cg_B,     :assigned_to_cg_C,    :assigned_to_cg_D, '     .
+                         '             :assigned_to_fg_A,     :assigned_to_fg_B,     :assigned_to_fg_C,    :assigned_to_fg_D, '     .
+                         '             :trashed) ';
 
                 $this->stmt_save = $this->pdo_dbh->prepare($query);
             }

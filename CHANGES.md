@@ -5,12 +5,13 @@ TODOS:
 - better implement datepicker (changing date in the input fields does not replect datepicker widget)
 
 
+
 16.04.2013
 ----------
 - in JOM_Job class, renamed reset_to_defaults() to reset_job_data_to_nulls() and chanded behaviour according to its name
 - removed all "NOT NULL" in fields for JoB table creation SQL query in tables_specifications.php
 - created new field in jobs table: start_datetime; changed fields order (all *_datetime are now in sequence)
-
+- documented some New_Job_GUI javascript class properties and methods; started creating namespacing for methods
 
 
 15.04.2013

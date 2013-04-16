@@ -29,7 +29,10 @@ function New_Job_GUI() {
     THAT.nonce          = new Object();
     THAT.category_selected = undefined;
 
-    // Form data
+    /*
+       Variable: form_data
+       JSON object aimed to store the form job data
+    */
     THAT.form_data = new Object();
     THAT.form_data = {
         subject:        undefined,
@@ -44,7 +47,16 @@ function New_Job_GUI() {
 
 
 
-    THAT.clear_form_data = function() {
+/////////////////
+// GUI Methods //
+/////////////////
+{
+    /*
+       Function: GUI__clear_form_data
+       Erase/reset form in a default state
+    */
+    THAT.GUI__clear_form_data = function()
+    {
         THAT.$subject.val('');
         THAT.$description.val('');
         THAT.$category.val(0);
@@ -57,46 +69,17 @@ function New_Job_GUI() {
         return false;
     }
 
-    THAT.read_and_check_data = function() {
 
-        var is_all_right = true;
+    /*
+       Function: GUI__set_field_alert
+       Change the state of the field to inform about an error. Set also an action-callback
+       that makes the signal disappear
 
-        // subject
-        THAT.form_data.subject      = THAT.$subject.val();
-        // can't be empty; can't be only made of spaces
-        if ( THAT.form_data.subject == '' || trim(THAT.form_data.subject) == '' ) {
-            THAT.set_field_alert(THAT.$subject.parent().parent());
-            is_all_right = false;
-        }
-
-        // description, category selected, issue selected
-        THAT.form_data.description  = THAT.$description.val();
-        THAT.form_data.category     = THAT.$category.val();
-        THAT.form_data.issue        = THAT.$issue.val();
-
-        // date start
-        THAT.form_data.start_date   = THAT.$start_date.val();
-        // check date correctness also against format
-        if ( !jsJOMlib__check_date_string(THAT.form_data.start_date, THAT.dateformat, THAT.dateseparator) ) {
-            THAT.set_field_alert(THAT.$start_date.parent().parent());
-            is_all_right = false;
-        }
-
-        // priority
-        THAT.form_data.priority     = THAT.$priority.find('a[class~="active"]').data("val");
-        if ( THAT.form_data.priority === null || THAT.form_data.priority === undefined ) {
-            THAT.set_field_alert(THAT.$priority.parent().parent());
-            is_all_right = false;
-        }
-
-        // assign to me, open details
-        THAT.form_data.assign_to_me = THAT.$assign_to_me.prop('checked');
-        THAT.form_data.open_details = THAT.$open_details.prop('checked');
-
-        return is_all_right;
-    }
-
-    THAT.set_field_alert = function($el) {
+       Parameters:
+         $el - jQuery form element that should change status
+    */
+    THAT.GUI__set_field_alert = function($el)
+    {
         $el.addClass("error");
 
         // if INPUT...
@@ -115,6 +98,77 @@ function New_Job_GUI() {
             });
         }
     }
+
+
+    /*
+       Function: GUI__fields_to_saving_msg
+       Fadeout form fields and fadein "saving" message; disable also modal buttons
+    */
+    THAT.GUI__fields_to_saving_msg = function() {
+        THAT.$form.fadeOut('normal', function(){
+            JOM.new_job.$form.next(".jom_message").fadeIn();
+        });
+        THAT.$clear.addClass("disabled");
+        THAT.$close.addClass("disabled");
+        THAT.$save.addClass("disabled");
+    }
+}
+
+
+
+
+//////////////////
+// DATA Methods //
+//////////////////
+{
+    /*
+       Function: DATA_read_and_check_data
+       Validate data contained in form fields and assign to <THAT.form_data> property
+
+       Returns:
+         true if all checks are ok, false if one fails
+    */
+    THAT.DATA_read_and_check_data = function()
+    {
+        var is_all_right = true;
+
+        // SUBJECT
+        // can't be empty; can't be only made of spaces
+        THAT.form_data.subject      = THAT.$subject.val();
+        if ( THAT.form_data.subject == '' || trim(THAT.form_data.subject) == '' ) {
+            THAT.GUI__set_field_alert(THAT.$subject.parent().parent());
+            is_all_right = false;
+        }
+
+        // DESCRIPTION, CATEGORY and ISSUE
+        THAT.form_data.description  = THAT.$description.val();
+        THAT.form_data.category     = THAT.$category.val();
+        THAT.form_data.issue        = THAT.$issue.val();
+
+        // DATE START
+        // check date correctness also against format
+        THAT.form_data.start_date   = THAT.$start_date.val();
+        if ( !jsJOMlib__check_date_string(THAT.form_data.start_date, THAT.dateformat, THAT.dateseparator) ) {
+            THAT.GUI__set_field_alert(THAT.$start_date.parent().parent());
+            is_all_right = false;
+        }
+
+        // PRIORITY
+        // one must be selected
+        THAT.form_data.priority     = THAT.$priority.find('a[class~="active"]').data("val");
+        if ( THAT.form_data.priority === null || THAT.form_data.priority === undefined ) {
+            THAT.GUI__set_field_alert(THAT.$priority.parent().parent());
+            is_all_right = false;
+        }
+
+        // ASSIGN and OPEN
+        THAT.form_data.assign_to_me = THAT.$assign_to_me.prop('checked');
+        THAT.form_data.open_details = THAT.$open_details.prop('checked');
+
+        return is_all_right;
+    }
+}
+
 
     THAT.save_data = function() {
         var fd = JOM.new_job.form_data;
@@ -135,15 +189,6 @@ function New_Job_GUI() {
 
     THAT.get_categories = function() {
         THAT.categories.load();
-    }
-
-    THAT.hide_buttons = function() {
-        THAT.$form.fadeOut('normal', function(){
-            JOM.new_job.$form.next(".jom_message").fadeIn();
-        });
-        THAT.$clear.addClass("disabled");
-        THAT.$close.addClass("disabled");
-        THAT.$save.addClass("disabled");
     }
 
 /////// CATEGORIES
@@ -226,7 +271,7 @@ function New_Job_GUI() {
         // CLEAR BUTTON
         THAT.$clear.unbind().on('click', function(){
             if ( $(this).hasClass("disabled") ) return;
-            JOM['new_job'].clear_form_data();
+            JOM['new_job'].GUI__clear_form_data();
         });
         // SELECT CATEGORY
         THAT.$category.unbind().on('change', function(){
@@ -239,9 +284,9 @@ function New_Job_GUI() {
         THAT.$save.unbind().on('click', {new_job_obj: THAT}, function(e){
             if ( $(this).hasClass("disabled") ) return;
             // read form data and check
-            if ( JOM.new_job.read_and_check_data() ) {
+            if ( JOM.new_job.DATA_read_and_check_data() ) {
                 // save if allright
-                JOM.new_job.hide_buttons();
+                JOM.new_job.GUI__fields_to_saving_msg();
                 JOM.new_job.save_data();
             }
         });
