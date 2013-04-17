@@ -170,14 +170,21 @@ function New_Job_GUI() {
 }
 
 
-    THAT.save_data = function() {
+    THAT.save_data = function()
+    {
         var fd = JOM.new_job.form_data;
+
+        // convert date in javascript Date object
+        var start_date_obj            = jsJOMlib__string_date_to_object(THAT.dateformat, THAT.dateseparator, fd.start_date);
+        var start_date_unix_timestamp = Math.floor(start_date_obj.getTime() / 1000) -
+                                        start_date_obj.getTimezoneOffset() * 60;        // timezone drift
+
         $.ajax({
             url:      'ard.php',
-            data:     'd=job&r=new&n=' + THAT.nonce.nonce + '&t=' + THAT.nonce.timestamp     +
-                      '&s=' + fd.subject + '&ds=' + fd.description + '&c=' + fd.category     +
-                      '&i=' + fd.issue + '&sd=' + fd.start_date + '&p=' + fd.priority        +
-                      '&a=' + (fd.assign_to_me ? 1 : 0) + '&o=' + (fd.open_details ? 1 : 0),
+            data:     'd=job&r=new&n=' + THAT.nonce.nonce                     + '&t=' + THAT.nonce.timestamp +
+                      '&s=' + fd.subject + '&ds=' + fd.description            + '&c=' + fd.category          +
+                      '&i=' + fd.issue   + '&sd=' + start_date_unix_timestamp + '&p=' + fd.priority          +
+                      '&a=' + (fd.assign_to_me ? 1 : 0)                       + '&o=' + (fd.open_details ? 1 : 0),
             type:     'GET',
 			dataType: 'JSON'
         })

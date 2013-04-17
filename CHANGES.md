@@ -4,7 +4,10 @@ Version 0.3
 TODOS:
 - better implement datepicker (changing date in the input fields does not replect datepicker widget)
 
-
+17.04.2013
+----------
+- added jsJOMlib__string_date_to_object() function to generic_lib.js
+- now the ajax save job call sends a unix timestamp as start date parameter
 
 16.04.2013
 ----------

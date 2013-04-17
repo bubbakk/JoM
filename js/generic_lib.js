@@ -120,11 +120,25 @@ function jsJOMlib__isNumber(n) {
 }
 
 
+/*
+   Function: jsJOMlib__date_formatted
+   Convert a Javascript Date object into a formatted string.
 
+   Parameters:
+     format - string format made of a combination of "dd", "mm" and "yyyy", separated by a splitter character or string
+     splitter - day month and year separator. Must be the same as the format given string
+     date - optional parameter, must be a javascript Date object
+
+   Returns:
+     string formatted date, with leading zeros, according to given format; false if something goes wrong
+*/
 function jsJOMlib__date_formatted(format, splitter, date)
 {
     if ( date==undefined ) date = new Date();
-    if ( toString.call(date) != "[object Date]" ) return false;
+    if ( toString.call(date) != "[object Date]" ) {
+        console.error("Passed date is not a javascript Date object");
+        return false;
+    }
 
     var day   = PHPjs_str_pad( date.getDate(),     2, '0', 'STR_PAD_LEFT' );
     var month = PHPjs_str_pad( (date.getMonth() + 1),    2, '0', 'STR_PAD_LEFT' );
@@ -147,6 +161,37 @@ function jsJOMlib__date_formatted(format, splitter, date)
     }
 
     return retval;
+}
+
+
+function jsJOMlib__string_date_to_object(format, splitter, string_date)
+{
+    if ( toString.call(string_date) != "[object String]" ) {
+        console.error("Passed date wrong type: must be a string");
+        return false;
+    }
+
+    var format_splitted      = format.split(splitter);
+    var string_date_splitted = string_date.split(splitter);
+
+    if ( format_splitted.length != 3 || string_date_splitted.length != 3 ) {
+        console.error("Format and/or date string passed have wrong format");
+        return false;
+    }
+
+    var day   = undefined;
+    var month = undefined;
+    var year  = undefined;
+
+    for ( var i = 0 ; i < 3 ; i++ ) {
+        if ( format_splitted[i]=='dd' )   day   = parseInt(string_date_splitted[i], 10);
+        else
+        if ( format_splitted[i]=='mm' )   month = parseInt(string_date_splitted[i], 10) - 1;
+        else
+        if ( format_splitted[i]=='yyyy' ) year  = parseInt(string_date_splitted[i], 10);
+    }
+
+    return new Date(year, month, day);
 }
 
 
@@ -309,7 +354,7 @@ function PHPjs_str_pad (input, pad_length, pad_string, pad_type) {
 }
 
 
-function trim (str, charlist) {
+function trim(str, charlist) {
   // http://kevin.vanzonneveld.net
   // +   original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
   // +   improved by: mdsjack (http://www.mdsjack.bo.it)
