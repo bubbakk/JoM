@@ -1,7 +1,7 @@
 <?php
 
 // echo __FILE__." loaded\n";
-require_once(DIR_OOL.'user.php');
+require_once(DIR_OOL.'job.php');
 
 function dispatch_request($request)
 {
@@ -13,18 +13,20 @@ function dispatch_request($request)
             global $command;
 
             $JOB = new JOM_Job(TBL_JOBS, $DBH);  // constructor
+            $JOB->reset_job_data_to_defaults();
 
             // check and set all passed parameters
-            $JOB->subject           = post_or_get('s');
-            $JOB->description       = post_or_get('ds');
-            $JOB->category_level1   = post_or_get('c');
-            $JOB->category_level2   = post_or_get('i');
-            $JOB->start_datetime    = post_or_get('sd');
-            $JOB->priority          = post_or_get('p');
+            $JOB->job_data["subject"]           = post_or_get('s');  echo var_dump($JOB->job_data["subject"]);
+            $JOB->job_data["description"]       = post_or_get('ds') ;echo var_dump($JOB->job_data["description"]);
+            $JOB->job_data["category_level_1"]  = post_or_get('c');
+            $JOB->job_data["category_level_2"]  = post_or_get('i');
+            $JOB->job_data["start_datetime"]    = post_or_get('sd');
+            $JOB->job_data["priority"]          = post_or_get('p');
 
+            $JOB->job_data["assigned_to_user"]  = ( post_or_get('a') == 1 ? $_SESSION['user']['id'] : 0 );
 
             // save new job
-            $JOB->save();
+            $retval['success'] = $JOB->save();
 
             break;
         default:

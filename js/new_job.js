@@ -178,14 +178,17 @@ function New_Job_GUI() {
         var start_date_obj            = jsJOMlib__string_date_to_object(THAT.dateformat, THAT.dateseparator, fd.start_date);
         var start_date_unix_timestamp = Math.floor(start_date_obj.getTime() / 1000) -
                                         start_date_obj.getTimezoneOffset() * 60;        // timezone drift
+        var data_field = 'd=job&r=new&n=' + THAT.nonce.nonce                     + '&t='  + THAT.nonce.timestamp               +
+                         '&s=' + encodeURIComponent(fd.subject)                  + '&ds=' + encodeURIComponent(fd.description) +
+                         '&c=' + fd.category                                     + '&i=' + fd.issue                            +
+                         '&sd=' + start_date_unix_timestamp                      + '&p=' + fd.priority                         +
+                         '&a=' + (fd.assign_to_me ? 1 : 0)                       + '&o=' + (fd.open_details ? 1 : 0);
 
         $.ajax({
             url:      'ard.php',
-            data:     'd=job&r=new&n=' + THAT.nonce.nonce                     + '&t=' + THAT.nonce.timestamp +
-                      '&s=' + fd.subject + '&ds=' + fd.description            + '&c=' + fd.category          +
-                      '&i=' + fd.issue   + '&sd=' + start_date_unix_timestamp + '&p=' + fd.priority          +
-                      '&a=' + (fd.assign_to_me ? 1 : 0)                       + '&o=' + (fd.open_details ? 1 : 0),
+            data:     data_field,
             type:     'GET',
+            contentType: "application/x-www-form-urlencoded;charset=UTF-8",
 			dataType: 'JSON'
         })
         .done(function(data){

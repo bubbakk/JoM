@@ -11,7 +11,7 @@ class JOM_User extends BBKK_Base_Class {
 
     private $stmt_login = null;
 
-    private $user_data  = null;
+    public  $user_data  = null;
 
     // ERROR MESSAGES
     private $USR_ERR_MSG__DATABASE_CONNECT    = 'DB connection error: please submit bug';
@@ -103,7 +103,7 @@ class JOM_User extends BBKK_Base_Class {
             $this->stmt_login->bindParam(':password',   $password_hash, PDO::PARAM_STR);
             $this->stmt_login->execute();
 
-            $this->user_data = $this->stmt_login->fetch(PDO::FETCH_OBJ );        // fetch first column (Session_data)
+            $this->user_data = $this->stmt_login->fetch();
             $this->stmt_login->closeCursor();
 
             if ( $this->user_data === false ) {

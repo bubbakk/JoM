@@ -113,15 +113,16 @@ check_session_variables();                              // check session variabl
 
 
 // check nonce
-$nonce_check = check_nonce( $command, 0, session_id(), $timestamp, $config['SALT'], $config['HASH_ALG'], $nonce, NONCE_EXPIRE, $DBH);
-if ( !($nonce_check === true) ) {
-    // if nonce is not valid, reload the page
-    $retval['err_msg'] = 'Nonce not accepted';
-    $retval['dbg_msg'] = 'Something in nonce check failed';
-    $retval['usr_msg'] = 'Request too old. Please <a href="'.$_SERVER['HTTP_REFERER'].'">reload page</a>.';
-    json_output_and_die($retval);
+if ( !JOM_DEBUG ) {
+    $nonce_check = check_nonce( $command, 0, session_id(), $timestamp, $config['SALT'], $config['HASH_ALG'], $nonce, NONCE_EXPIRE, $DBH);
+    if ( !($nonce_check === true) ) {
+        // if nonce is not valid, reload the page
+        $retval['err_msg'] = 'Nonce not accepted';
+        $retval['dbg_msg'] = 'Something in nonce check failed';
+        $retval['usr_msg'] = 'Request too old. Please <a href="'.$_SERVER['HTTP_REFERER'].'">reload page</a>.';
+        json_output_and_die($retval);
+    }
 }
-
 
 
 

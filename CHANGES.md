@@ -3,6 +3,27 @@ Version 0.3
 
 TODOS:
 - better implement datepicker (changing date in the input fields does not replect datepicker widget)
+- check UTF-8 encoding on POST sending data method in Ajax call
+
+
+26.04.2013
+----------
+- now text parameters passed using GET methods are correctly URLencoded/decoded
+- now the login operation sets in SESSION also user's id and full name (first name and last name)
+- job saves correctly using GET method
+
+24.04.2013
+----------
+- added utf8_decode in GET PHP parameter to correctly convert charset in generic_lib.php function get_or_post()
+
+22.04.2013
+----------
+- changed method name from reset_job_data_to_nulls to reset_job_data_to_defaults
+
+19.04.2013
+----------
+- removed attachment fields in the Job table
+- coding and testing save job methods
 
 17.04.2013
 ----------

@@ -28,8 +28,13 @@ function dispatch_request($request)
                 $retval['new_nonce']     = $json_nonce['nonce'];
                 return;
             }
+
             // authenticated successfully
-            $_SESSION['user']['is_logged_in'] = true;
+                // set some session variables
+                $_SESSION['user']['is_logged_in']   = true;
+                $_SESSION['user']['id']             = $USR->user_data['User_id'];
+                $_SESSION['user']['full_name']      = $USR->user_data['User_firstname'].' '.$USR->user_data['User_lastname'];
+
             $retval['success'] = true;
             $retval['usr_msg'] = 'Authenticated';
 

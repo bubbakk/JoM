@@ -28,7 +28,7 @@ function json_output_and_die($data) {
  */
 function post_or_get($name) {
     if ( isset($_GET[$name]) ) {
-        return $_GET[$name];
+        return utf8_decode($_GET[$name]);
     }
 
     if ( isset($_POST[$name]) ) {
