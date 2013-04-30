@@ -8,6 +8,19 @@
         // JSON object data
         JSON_response = JSON.parse(xhr.responseText);
 
+        // special responses
+        if ( JSON_response.cmd !== undefined ) {
+            switch ( JSON_response.cmd ) {
+                case "redirect":
+                    window.location = JSON_response.url + '?' + JSON_response.querystring;
+                    break;
+                default:
+                    alert("Command " + JSON_response.cmd + " not yet implemented");
+                    break;
+            }
+            return;
+        }
+
         switch ( domain + '/' + request )
         {
             case 'cat/lod':
@@ -50,6 +63,7 @@
 
 
     });
+
 
 function jom_init(dateformat) {
 

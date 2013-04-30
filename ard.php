@@ -88,7 +88,10 @@ $request   = post_or_get('r'); // echo 'request: '.$request."\n";
 $nonce     = post_or_get('n'); // echo 'nonce:   '.$nonce."\n";
 $timestamp = post_or_get('t'); // echo 'nonce:   '.$nonce."\n";
 
-$command = '/' . $domains[$domain] . '/' . $requests[$domains[$domain]][$request];
+$full_domain  = $domains[$domain];
+$full_request = $requests[$domains[$domain]][$request];
+
+$command = '/' . $full_domain . '/' . $full_request;
 
 
 
@@ -110,12 +113,17 @@ $SMAN->salt = $config['SALT'];                          // explicitly set applic
 $SMAN->start_session('', false);                        // starting session
 // check session variables existance and set default values if not found
 $session_vars_check = check_session_variables();
-if ( $session_vars_check === -1 || $session_vars_check === -2    )
-{
-    $retval['cmd']       = 'redirect';
-    $retval['cmd_prm_1'] = './login.php';
-    $retval['cmd_prm_2'] = '?r=exp';
-    json_output_and_die($retval);
+
+// if loggin in, do not have to check session
+if ( $full_domain != 'users' && $full_request != 'login' ) {
+    if ( $session_vars_check === -1 || $session_vars_check === -2    )
+    {
+        $retval['cmd']         =  'redirect';
+        $retval['url']         =  './login.php';
+        $retval['querystring'] =  'r=exp';                                  // redirect reason: session expired
+        $retval['querystring'] .= '&redirect='.$_SERVER['HTTP_REFERER'];    // redirect to page after login
+        json_output_and_die($retval);
+    }
 }
 
 

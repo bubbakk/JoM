@@ -13,6 +13,8 @@ TODOS:
 - added check code in check_session_variables() in lib/generic_lib.php file
 - added 2 other messages in the new job modal for OK and KO
 - now, if job save is successful, a message is printed; refine the code using new_job class methods!
+- redirect on session expire works in application.php script
+- if loggin in, do not have to check if session expired
 
 26.04.2013
 ----------
