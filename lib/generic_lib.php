@@ -78,6 +78,10 @@ function open_database($type, $DB_cfg)
 }
 
 
+/*
+ * Function: generate_random_string
+ * Insert description here
+ */
 function generate_random_string($length = 10, $only_strings = true) {
 
     $characters = ( $only_strings ? '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' :
@@ -90,6 +94,10 @@ function generate_random_string($length = 10, $only_strings = true) {
 }
 
 
+/*
+ * Function: check_session_variables
+ * Insert description here
+ */
 function check_session_variables() {
     if ( !isset($_SESSION['user']['settings']['i18n']['dateformat']) ) {
         $_SESSION['user']['settings']['i18n']['dateformat'] = I18N_DATEFORMAT;
@@ -97,4 +105,10 @@ function check_session_variables() {
     if ( !isset($_SESSION['user']['settings']['i18n']['dateseparator']) ) {
         $_SESSION['user']['settings']['i18n']['dateseparator'] = I18N_DATESEPARATOR;
     }
+
+    // check visit_time and, if time expired, redirect to login page
+    if ( !isset($_SESSION['user']['last_visit']) )                   return -1;     // no last_visit information
+    if ( time() - $_SESSION['user']['last_visit'] > SESSION_EXPIRE ) return -2;     // session expired (see config.php)
+
+    return true;
 }

@@ -27,6 +27,22 @@
                         JOM['new_job'].issues.nonce.nonce     = JSON_response.new_nonce;
                         JOM['new_job'].issues.nonce.timestamp = JSON_response.new_timestamp;
                     }
+
+                    break;
+                }
+            case 'job/new':
+                {
+                    if ( JSON_response.success == true ) {
+                        $(".jom_message_saving").fadeOut('normal', function(){
+                            $(".jom_message_save_ok").fadeIn();
+                        });
+                    }
+                    else {
+                        $(".jom_message_saving").fadeOut('normal', function(){
+                            $(".jom_message_save_ko").fadeIn();
+                        });
+                    }
+
                     break;
                 }
         }

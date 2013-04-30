@@ -106,7 +106,7 @@ function New_Job_GUI() {
     */
     THAT.GUI__fields_to_saving_msg = function() {
         THAT.$form.fadeOut('normal', function(){
-            JOM.new_job.$form.next(".jom_message").fadeIn();
+            JOM.new_job.$form.next(".jom_message_saving").fadeIn();
         });
         THAT.$clear.addClass("disabled");
         THAT.$close.addClass("disabled");
@@ -297,7 +297,7 @@ function New_Job_GUI() {
             if ( JOM.new_job.DATA_read_and_check_data() ) {
                 // save if allright
                 JOM.new_job.GUI__fields_to_saving_msg();
-                JOM.new_job.save_data();
+                dummy = setTimeout(function(){JOM.new_job.save_data()}, 2000);      // THIS IS PURE SHIT!
             }
         });
     }

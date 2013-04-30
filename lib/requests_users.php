@@ -18,7 +18,7 @@ function dispatch_request($request)
             $USR = new JOM_User(TBL_USERS, $DBH);                                   // constructor
             $user_auth = $USR->authenticate(post_or_get('u'), post_or_get('p'));    // try to authenticate
 
-            // not authenticated
+            // if not authenticated
             if ( !$user_auth ) {
                 $retval['success'] = false;
                 $retval['usr_msg'] = 'Wrong username/e-mail and password combination';
@@ -29,11 +29,11 @@ function dispatch_request($request)
                 return;
             }
 
-            // authenticated successfully
-                // set some session variables
-                $_SESSION['user']['is_logged_in']   = true;
-                $_SESSION['user']['id']             = $USR->user_data['User_id'];
-                $_SESSION['user']['full_name']      = $USR->user_data['User_firstname'].' '.$USR->user_data['User_lastname'];
+            // if authenticated successfully
+            // set some session variables
+            $_SESSION['user']['is_logged_in']   = true;
+            $_SESSION['user']['id']             = $USR->user_data['User_id'];
+            $_SESSION['user']['full_name']      = $USR->user_data['User_firstname'].' '.$USR->user_data['User_lastname'];
 
             $retval['success'] = true;
             $retval['usr_msg'] = 'Authenticated';

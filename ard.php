@@ -108,7 +108,15 @@ $SMAN = new BBKK_Session_Manager(TBL_SESSIONS, $DBH);   // constructor
 $SMAN->debug_on_screen = false;
 $SMAN->salt = $config['SALT'];                          // explicitly set application salt
 $SMAN->start_session('', false);                        // starting session
-check_session_variables();                              // check session variables existance and set default values if not found
+// check session variables existance and set default values if not found
+$session_vars_check = check_session_variables();
+if ( $session_vars_check === -1 || $session_vars_check === -2    )
+{
+    $retval['cmd']       = 'redirect';
+    $retval['cmd_prm_1'] = './login.php';
+    $retval['cmd_prm_2'] = '?r=exp';
+    json_output_and_die($retval);
+}
 
 
 
@@ -135,6 +143,7 @@ if ( array_key_exists($domain, $domains) &&
     require_once(DIR_LIB . 'requests_' . $domains[$domain] . '.php');
 
     // check if user is logged in
+    // ?????????????
 
     // update user's last visit datetime
     $_SESSION['user']['last_visit'] = time();

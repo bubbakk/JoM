@@ -16,8 +16,8 @@ function dispatch_request($request)
             $JOB->reset_job_data_to_defaults();
 
             // check and set all passed parameters
-            $JOB->job_data["subject"]           = post_or_get('s');  echo var_dump($JOB->job_data["subject"]);
-            $JOB->job_data["description"]       = post_or_get('ds') ;echo var_dump($JOB->job_data["description"]);
+            $JOB->job_data["subject"]           = post_or_get('s');
+            $JOB->job_data["description"]       = post_or_get('ds');
             $JOB->job_data["category_level_1"]  = post_or_get('c');
             $JOB->job_data["category_level_2"]  = post_or_get('i');
             $JOB->job_data["start_datetime"]    = post_or_get('sd');

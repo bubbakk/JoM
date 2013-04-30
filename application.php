@@ -85,7 +85,9 @@ check_session_variables();                              // check session variabl
     </script>
     <style>
         #jom_create_job_modal .control-group { margin-bottom: 5px; }
-        #jom_create_job_modal .jom_message { display: none; }
+        #jom_create_job_modal .jom_message_saving  { display: none; }
+        #jom_create_job_modal .jom_message_save_ok { display: none; }
+        #jom_create_job_modal .jom_message_save_ko { display: none; }
     </style>
 </head>
 <body>
@@ -247,9 +249,19 @@ check_session_variables();                              // check session variabl
           </div>
         </fieldset>
         </form>
-        <div class="jom_message">
+        <div class="jom_message_saving">
           <div class="text-center lead" style="margin-bottom: 0">
             <i class="icon-spinner icon-spin icon-2x"></i> Saving data ...
+          </div>
+        </div>
+        <div class="jom_message_save_ok">
+          <div class="text-center lead" style="margin-bottom: 0">
+            <i class="icon-ok icon-2x"></i> Job successfully created.
+          </div>
+        </div>
+        <div class="jom_message_save_ko">
+          <div class="text-center lead" style="margin-bottom: 0">
+            <i class="icon-warning-sign icon-2x"></i> Sorry: error occurred.
           </div>
         </div>
       </div>

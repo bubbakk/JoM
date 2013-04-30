@@ -6,11 +6,20 @@ TODOS:
 - check UTF-8 encoding on POST sending data method in Ajax call
 
 
+30.04.2013
+----------
+- added in session the last_visit value for user after login (requests_users.php - login)
+- added checks and renew for the last_visit session user variable in the ard.php. If session expired, return some ajax redirect infos
+- added check code in check_session_variables() in lib/generic_lib.php file
+- added 2 other messages in the new job modal for OK and KO
+- now, if job save is successful, a message is printed; refine the code using new_job class methods!
+
 26.04.2013
 ----------
 - now text parameters passed using GET methods are correctly URLencoded/decoded
 - now the login operation sets in SESSION also user's id and full name (first name and last name)
-- job saves correctly using GET method
+- JOB SAVE DATA completed using GET method
+- minor fixes
 
 24.04.2013
 ----------
