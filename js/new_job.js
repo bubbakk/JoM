@@ -53,7 +53,7 @@ function New_Job_GUI() {
 {
     /*
        Function: GUI__clear_form_data
-       Erase/reset form in a default state
+       Erase/reset form data in the empty/blank data original state
     */
     THAT.GUI__clear_form_data = function()
     {
@@ -101,16 +101,57 @@ function New_Job_GUI() {
 
 
     /*
-       Function: GUI__fields_to_saving_msg
+       Function: GUI__set_mode
        Fadeout form fields and fadein "saving" message; disable also modal buttons
     */
-    THAT.GUI__fields_to_saving_msg = function() {
-        THAT.$form.fadeOut('normal', function(){
-            JOM.new_job.$form.next(".jom_message_saving").fadeIn();
-        });
-        THAT.$clear.addClass("disabled");
-        THAT.$close.addClass("disabled");
-        THAT.$save.addClass("disabled");
+    THAT.GUI__set_mode = function(mode) {
+        if ( mode==undefined ) mode = "input";
+
+        switch(mode)
+        {
+            // default data input status
+            case "input":
+                // hide messages
+                THAT.$msg_saving.hide();
+                THAT.$msg_save_ok.hide();
+                THAT.$msg_save_ko.hide();
+
+                // show the form
+                THAT.$form.show();
+
+                // set buttons state
+                THAT.$close.hide();
+                THAT.$clear.show();
+                THAT.$save.show();
+                break;
+            // saving message (cames always after input)
+            case "saving":
+                // fade out the form
+                THAT.$form.fadeOut('normal', function(){
+                    JOM.new_job.$msg_saving.fadeIn();
+                });
+                // disable buttons
+                THAT.$clear.fadeOut();
+                THAT.$save.fadeOut();
+                break;
+            // job successfully saved (cames always after saving)
+            case "save_success":
+                JOM.new_job.$form.next(".jom_message_saving").fadeOut('normal', function(){
+                    JOM.new_job.$msg_save_ok.fadeIn();
+                    THAT.$close.fadeIn();
+                    THAT.$clear.hide();
+                    THAT.$save.hide();
+                });
+                break;
+            // job saving error (cames always after saving)
+            case "save_error":
+                break;
+        // INPUT
+        // SAVE
+        // COMPLETED
+        // ERROR
+
+        }
     }
 }
 
@@ -296,7 +337,7 @@ function New_Job_GUI() {
             // read form data and check
             if ( JOM.new_job.DATA_read_and_check_data() ) {
                 // save if allright
-                JOM.new_job.GUI__fields_to_saving_msg();
+                JOM.new_job.GUI__set_mode("saving");
                 dummy = setTimeout(function(){JOM.new_job.save_data()}, 2000);      // THIS IS PURE SHIT!
             }
         });
@@ -323,6 +364,10 @@ function New_Job_GUI() {
         THAT.$clear         = $("#jom_create_job_modal").find('.modal-footer').find("[name='clear']");
         THAT.$close         = $("#jom_create_job_modal").find('.modal-footer').find("[name='close']");
         THAT.$save          = $("#jom_create_job_modal").find('.modal-footer').find("[name='save']");
+
+        THAT.$msg_saving    = THAT.$form.parent().find(".jom_message_saving");
+        THAT.$msg_save_ok   = THAT.$form.parent().find(".jom_message_save_ok");
+        THAT.$msg_save_ko   = THAT.$form.parent().find(".jom_message_save_ko");
 
         THAT.categories       = new Categories();
         THAT.categories.level = 1;

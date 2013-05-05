@@ -46,9 +46,7 @@
             case 'job/new':
                 {
                     if ( JSON_response.success == true ) {
-                        $(".jom_message_saving").fadeOut('normal', function(){
-                            $(".jom_message_save_ok").fadeIn();
-                        });
+                        JOM.new_job.GUI__set_mode("save_success");
                     }
                     else {
                         $(".jom_message_saving").fadeOut('normal', function(){

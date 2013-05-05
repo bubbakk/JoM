@@ -113,7 +113,7 @@ check_session_variables();                              // check session variabl
         <div class="row">
 <!-- COLUMN SX -->
             <div class="span2 text-center">
-                <a href="#jom_create_job_modal" role="button" class="btn btn-large btn-primary" data-toggle="modal" data-target="#jom_create_job_modal"><i class="icon-plus-sign icon-white"></i> New Job</a>
+                <a href="#jom_create_job_modal" role="button" class="btn btn-large btn-primary" data-toggle="modal" data-target="#jom_create_job_modal" onclick="javascript: JOM.new_job.GUI__set_mode('input');"><i class="icon-plus-sign icon-white"></i> New Job</a>
             </div>
             <div class="span3">
                 Filter by user:
@@ -266,8 +266,8 @@ check_session_variables();                              // check session variabl
         </div>
       </div>
       <div class="modal-footer">
-        <a href="#" class="btn" name="clear">Clear</a>
         <a href="#" class="btn" data-dismiss="modal" aria-hidden="true" name="close">Close</a>
+        <a href="#" class="btn" name="clear">Clear</a>
         <a href="#" class="btn btn-primary" name="save">Save</a>
       </div>
     </div>

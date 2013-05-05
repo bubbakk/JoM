@@ -6,6 +6,12 @@ TODOS:
 - check UTF-8 encoding on POST sending data method in Ajax call
 
 
+04.05.2013
+----------
+- formalized new job form states in a class
+- set form messages (saving, ok, ko) as form elements
+- refactored and fixed code
+
 30.04.2013
 ----------
 - added in session the last_visit value for user after login (requests_users.php - login)
@@ -14,7 +20,7 @@ TODOS:
 - added 2 other messages in the new job modal for OK and KO
 - now, if job save is successful, a message is printed; refine the code using new_job class methods!
 - redirect on session expire works in application.php script
-- if loggin in, do not have to check if session expired
+- BUG FIX: if loggin in, do not have to check if session expired
 
 26.04.2013
 ----------
