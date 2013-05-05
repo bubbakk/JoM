@@ -1,9 +1,17 @@
+Version 0.4
+===========
+
+
+
+
 Version 0.3
 ===========
 
+Completed.
 TODOS:
 - better implement datepicker (changing date in the input fields does not replect datepicker widget)
 - check UTF-8 encoding on POST sending data method in Ajax call
+- check save ko possible error messages
 
 
 04.05.2013
@@ -168,16 +176,16 @@ TODOS:
 
 
 
+
 Version 0.2
 ===========
 
 Completed.
 
 TODOS:
-  .implement a method in bbkk_base_class that checks $pdo variable connection and $tablename variable. Also some general user error messages,
-   like prepare statement, connection missing, ....
-  .fix login fields resize
-  .add checks and documentation comments to nonce library
+- implement a method in bbkk_base_class that checks $pdo variable connection and $tablename variable. Also some general user error messages, like prepare statement, connection missing, ....
+- fix login fields resize
+- add checks and documentation comments to nonce library
 
 
 24.03.2013

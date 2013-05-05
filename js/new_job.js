@@ -17,9 +17,11 @@ function New_Job_GUI() {
         THAT.$assign_to_me  = undefined;
         THAT.$open_details  = undefined;
         // buttons
-        THAT.$clone_last    = undefined;
+        THAT.$close         = undefined;
         THAT.$clear         = undefined;
         THAT.$save          = undefined;
+
+    THAT.status         = undefined;
 
     // Objects
     THAT.categories     = undefined;
@@ -106,6 +108,7 @@ function New_Job_GUI() {
     */
     THAT.GUI__set_mode = function(mode) {
         if ( mode==undefined ) mode = "input";
+        THAT.status = mode;
 
         switch(mode)
         {
@@ -123,6 +126,7 @@ function New_Job_GUI() {
                 THAT.$close.hide();
                 THAT.$clear.show();
                 THAT.$save.show();
+
                 break;
             // saving message (cames always after input)
             case "saving":
@@ -146,11 +150,9 @@ function New_Job_GUI() {
             // job saving error (cames always after saving)
             case "save_error":
                 break;
-        // INPUT
-        // SAVE
-        // COMPLETED
-        // ERROR
-
+            default:
+                THAT.status = undefined;
+                break;
         }
     }
 }
