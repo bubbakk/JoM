@@ -88,6 +88,8 @@ check_session_variables();                              // check session variabl
         #jom_create_job_modal .jom_message_saving  { display: none; }
         #jom_create_job_modal .jom_message_save_ok { display: none; }
         #jom_create_job_modal .jom_message_save_ko { display: none; }
+        .table th, .table td { border-top-color: #AAA; }
+        .table .details { display: none; }
     </style>
 </head>
 <body>
@@ -130,7 +132,7 @@ check_session_variables();                              // check session variabl
 
             </div>
             <div class="span10">
-                <table class="table table-striped">
+                <table class="table table-hover">
                     <caption style="border-bottom: 1px solid gray;">Elenco lavori</caption>
                     <thead>
                         <tr>
@@ -150,6 +152,15 @@ check_session_variables();                              // check session variabl
                             <td>
                                 <button class="btn btn-mini btn-primary" type="button"><i class="icon-pencil icon-white"></i></button>
                                 <button class="btn btn-mini btn-primary" type="button"><i class="icon-trash icon-white"></i></button>
+                            </td>
+                        </tr>
+                        <tr class="details">
+                            <td colspan="5">
+                                <dl class="dl-horizontal">
+                                    <dt>created: </dt> <dd>20/04/2013</dd>
+                                    <dt>category: </dt> <dd>sample category</dd>
+                                    <dt>issue: </dt> <dd>sample issue</dd>
+                                </dl>
                             </td>
                         </tr>
                         <tr>

@@ -29,6 +29,7 @@ Main development steps:
 -- completed May 5, 2013
 
 0.4 Ticket listing
+    List Jobs
     Enable/disable filters
     Show/hide details
 

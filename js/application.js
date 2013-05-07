@@ -73,6 +73,7 @@ function jom_init(dateformat) {
     $input_date.val(now_text);
     $input_date.parent().attr("data-date", now_text);
     $input_date.parent().attr("data-date-format", dateformat);
+
     // call datepicker object creation
     $input_date.parent().datepicker({
         weekStart: 0
@@ -81,6 +82,20 @@ function jom_init(dateformat) {
            $("#form_new_job [name='creation_date']").parent ().datepicker('hide');
            $("#jom_create_job_modal .modal-body .alert").show();
            $("#jom_create_job_modal .modal-body .alert").slideDown();
+    });
+
+    // details open
+    $(".icon-info-sign").parent().on("click", function(){
+        var $tr_infos = $(this).parent().parent().next();
+
+        if ( $tr_infos.is(':hidden') ) {
+            $(this).parent().parent().css("background-color", "rgba(240, 240, 240, 0.9)");
+        }
+        else {
+            $(this).parent().parent().css("background-color", "");
+        }
+
+        $(this).parent().parent().next().fadeToggle("slow");
     });
 
     $alert = $("#jom_create_job_modal .modal-body .alert").hide();

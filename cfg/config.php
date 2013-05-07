@@ -2,10 +2,10 @@
 
 define('JOM_DEBUG',         true);
 define('JOM_LOG',           true);
-define('JOM_MILESTONE',     '0.3');                                         // TICKET CREATION version (refer to MILESTONES.md for versioning progression)
-define('JOM_RELEASE',       '18');
+define('JOM_MILESTONE',     '0.4');                                         // TICKET LISTING version (refer to MILESTONES.md for versioning progression)
+define('JOM_RELEASE',       '1');
 define('JOM_VERSION',       JOM_MILESTONE.'.'.JOM_RELEASE);                 // milestone.release
-define('JOM_DESC_VER',      'v. '.JOM_MILESTONE.'.x: ticket creation');     // milestone version description
+define('JOM_DESC_VER',      'v. '.JOM_MILESTONE.'.x: ticket listing');      // milestone version description
 
 define('SESSION_EXPIRE',    6 * 60 * 60 );                                 // session expires in 6 hours
 define('NONCE_EXPIRE',      1 * 60 * 60 );                                 // nonce expires in 1 hour

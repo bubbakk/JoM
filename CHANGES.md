@@ -2,6 +2,9 @@ Version 0.4
 ===========
 
 
+08.05.2013
+----------
+- fixed open/close job info row
 
 
 Version 0.3
@@ -11,7 +14,9 @@ Completed.
 TODOS:
 - better implement datepicker (changing date in the input fields does not replect datepicker widget)
 - check UTF-8 encoding on POST sending data method in Ajax call
-- check save ko possible error messages
+- check new job bad answer "save ko" possible error messages
+- implement a message in the login page (for example to inform about session timeout)
+- implement also redirect in the login page
 
 
 04.05.2013
