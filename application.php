@@ -132,7 +132,7 @@ check_session_variables();                              // check session variabl
 
             </div>
             <div class="span10">
-                <table class="table table-hover">
+                <table class="table">
                     <caption style="border-bottom: 1px solid gray;">Elenco lavori</caption>
                     <thead>
                         <tr>
@@ -155,12 +155,24 @@ check_session_variables();                              // check session variabl
                             </td>
                         </tr>
                         <tr class="details">
-                            <td colspan="5">
-                                <dl class="dl-horizontal">
-                                    <dt>created: </dt> <dd>20/04/2013</dd>
-                                    <dt>category: </dt> <dd>sample category</dd>
-                                    <dt>issue: </dt> <dd>sample issue</dd>
-                                </dl>
+                            <td colspan="3">
+                                <div class="media">
+                                  <a class="pull-left" href="#">
+                                    <img class="media-object" src="./img/user_info.png" width="64" height="64">
+                                    <small>Andrea Ferroni</small>
+                                  </a>
+                                  <div class="media-body">
+                                    <dl class="dl-horizontal">
+                                        <dt>description: </dt> <dd>bla bla bla ...<br>e ancora bla bla bla</dd><br>
+                                        <dt>created: </dt> <dd>20/04/2013</dd>
+                                        <dt>category: </dt> <dd>sample category</dd>
+                                        <dt>issue: </dt> <dd>sample issue</dd>
+                                    </dl>
+                                  </div>
+                                </div>
+                            </td>
+                            <td colspan="2" style="background-color: rgba(240, 240, 240, 0.4); border-left: 1px solid rgba(80, 80, 80, 0.1); border-right: 1px solid rgba(80, 80, 80, 0.1);">
+                                <img class="media-object" src="./img/star_disabled.png" onclick="javascript: $(this).attr('src', './img/star.png');">
                             </td>
                         </tr>
                         <tr>

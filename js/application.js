@@ -95,7 +95,7 @@ function jom_init(dateformat) {
             $(this).parent().parent().css("background-color", "");
         }
 
-        $(this).parent().parent().next().fadeToggle("slow");
+        $(this).parent().parent().next().fadeToggle();
     });
 
     $alert = $("#jom_create_job_modal .modal-body .alert").hide();

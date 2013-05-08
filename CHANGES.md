@@ -5,6 +5,7 @@ Version 0.4
 08.05.2013
 ----------
 - fixed open/close job info row
+- enhanched job info
 
 
 Version 0.3
