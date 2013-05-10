@@ -88,8 +88,13 @@ check_session_variables();                              // check session variabl
         #jom_create_job_modal .jom_message_saving  { display: none; }
         #jom_create_job_modal .jom_message_save_ok { display: none; }
         #jom_create_job_modal .jom_message_save_ko { display: none; }
+        .table caption { font-size: 19px; font-weight: bold; font-variant: small-caps; background-color: rgba(220, 220, 220, 0.3); padding: 5px 0; }
         .table th, .table td { border-top-color: #AAA; }
         .table .details { display: none; }
+        .table .details dl.dl-horizontal { padding-top: 0; margin-top: 0; padding-bottom: 0; margin-bottom: 10px; }
+        .table .details .dl-horizontal dt { width: 110px; padding-top: 0; margin-top: 0; }
+        .table .details .dl-horizontal dd { margin-left: 125px; }
+        .table .details dl.dl-horizontal hr  { height: 5px; visibility:hidden; margin: 0; padding: 0; }
     </style>
 </head>
 <body>
@@ -112,28 +117,37 @@ check_session_variables();                              // check session variabl
 
         </br>
 
-        <div class="row">
+<!-- button NEW JOB and filters -->
+        <div class="row" style="margin-bottom: 10px;margin-top: 20px;">
 <!-- COLUMN SX -->
             <div class="span2 text-center">
                 <a href="#jom_create_job_modal" role="button" class="btn btn-large btn-primary" data-toggle="modal" data-target="#jom_create_job_modal" onclick="javascript: JOM.new_job.GUI__set_mode('input');"><i class="icon-plus-sign icon-white"></i> New Job</a>
             </div>
-            <div class="span3">
-                Filter by user:
+            <div class="span1 text-right">
+                <i class="icon-arrow-right icon-2x"></i>
             </div>
             <div class="span3">
-                Filter by date:
+                Filter by status: <a>open</a><br/>
+                Filter by user: <a>Andrea Ferroni</a><br/>
             </div>
             <div class="span3">
-                Filter by sto cavolo:
+                Filter by date: <a>last week</a><br/>
+                Filter by sto cavolo: <a>cippalippa</a>
+            </div>
+            <div class="span3">
+                Filter by date: <a>last week</a><br/>
+                Filter by sto cavolo: <a>cippalippa</a>
             </div>
         </div>
+
+<!-- JOB LIST VALUES -->
         <div class="row">
             <div class="span2">
 
             </div>
             <div class="span10">
                 <table class="table">
-                    <caption style="border-bottom: 1px solid gray;">Elenco lavori</caption>
+                    <caption>Elenco lavori</caption>
                     <thead>
                         <tr>
                             <th></th>
@@ -155,24 +169,19 @@ check_session_variables();                              // check session variabl
                             </td>
                         </tr>
                         <tr class="details">
-                            <td colspan="3">
-                                <div class="media">
-                                  <a class="pull-left" href="#">
-                                    <img class="media-object" src="./img/user_info.png" width="64" height="64">
-                                    <small>Andrea Ferroni</small>
-                                  </a>
-                                  <div class="media-body">
-                                    <dl class="dl-horizontal">
-                                        <dt>description: </dt> <dd>bla bla bla ...<br>e ancora bla bla bla</dd><br>
-                                        <dt>created: </dt> <dd>20/04/2013</dd>
-                                        <dt>category: </dt> <dd>sample category</dd>
-                                        <dt>issue: </dt> <dd>sample issue</dd>
-                                    </dl>
-                                  </div>
-                                </div>
+                            <td colspan="1" style="background-color: rgba(240, 240, 240, 0.4); text-align: center;">
+                                <img src="./img/star_disabled.png" onclick="javascript: $(this).attr('src', './img/star.png');">
                             </td>
-                            <td colspan="2" style="background-color: rgba(240, 240, 240, 0.4); border-left: 1px solid rgba(80, 80, 80, 0.1); border-right: 1px solid rgba(80, 80, 80, 0.1);">
-                                <img class="media-object" src="./img/star_disabled.png" onclick="javascript: $(this).attr('src', './img/star.png');">
+                            <td colspan="4">
+                                <dl class="dl-horizontal">
+                                    <dt>Assigned to: </dt> <dd>me</dd>
+                                    <hr/>
+                                    <dt>description: </dt> <dd>bla bla bla ...<br>e ancora bla bla bla</dd>
+                                    <hr/>
+                                    <dt>created: </dt> <dd>20/04/2013</dd>
+                                    <dt>category: </dt> <dd>sample category</dd>
+                                    <dt>issue: </dt> <dd>sample issue</dd>
+                                </dl>
                             </td>
                         </tr>
                         <tr>

@@ -2,6 +2,10 @@ Version 0.4
 ===========
 
 
+09-10.05.2013
+-------------
+- created gui layout for job infos
+
 08.05.2013
 ----------
 - fixed open/close job info row
