@@ -5,6 +5,7 @@ Version 0.4
 09-10.05.2013
 -------------
 - created gui layout for job infos
+- added Statuses table (contains job possible statuses) and sample data
 
 08.05.2013
 ----------

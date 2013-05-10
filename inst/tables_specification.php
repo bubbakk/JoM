@@ -195,7 +195,23 @@ $tables = array(
                         ) ENGINE = MYISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;",
     'sqlite' => "CREATE TABLE IF NOT EXISTS ".TBL_NONCES." (
                           Nonce_id                  INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE,
-                          Nonce_timestamp           INTEGER                             NOT NULL ,
-                          Nonce_nonce               CHAR(64)   NOT NULL)"
+                          Nonce_timestamp           INTEGER                             NOT NULL,
+                          Nonce_nonce               CHAR(64)                            NOT NULL);"
+  ),
+  'Statuses' => array(
+    'mysql'  => "CREATE TABLE IF NOT EXISTS ".TBL_STATUSES." (
+                         `Status_id`       INT           NOT NULL UNSIGNED AUTO_INCREMENT PRIMARY KEY ,
+                         `Status_name`     VARCHAR( 50 ) NOT NULL DEFAULT  '',
+                         `Status_is_final` TINYINT( 1 )  NOT NULL UNSIGNED DEFAULT  '0',
+                         `Status_order`    INT UNSIGNED  NOT NULL DEFAULT  '1',
+                         `Status_trashed`  TINYINT( 1 )  NOT NULL UNSIGNED DEFAULT  '0'
+                        ) ENGINE = MYISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;",
+    'sqlite' => "CREATE TABLE IF NOT EXISTS ".TBL_STATUSES." (
+                         Status_id       INTEGER UNSIGNED NOT NULL AUTOINCREMENT PRIMARY KEY UNIQUE,
+                         Status_name     VARCHAR( 50 )    NOT NULL DEFAULT  '',
+                         Status_is_final INTEGER          NOT NULL DEFAULT  '0',
+                         Status_order    INTEGER UNSIGNED NOT NULL DEFAULT  '1',
+                         Status_trashed  INTEGER          NOT NULL UNSIGNED DEFAULT  '0'
+                        );"
   )
 );

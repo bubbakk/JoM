@@ -28,7 +28,7 @@ $DBH = $PDO->get_dbh();
 // when is complete, replace with specific company object methods
 $query_company_data = 'INSERT INTO '.TBL_COMPANIES.' '.
                       '            (Company_name, Company_address, Company_geo_location, Company_main_telephone_number, Company_piva) '.
-                      '     VALUES ("Spes s.c.p.a.", "Via L. Corsi, 43", "43.351818,12.925394", "0732 25291", "01475280424")';
+                      '     VALUES ("My Company", "St. Magic, n. 5/F", "43.351818,12.925394", "Phone number", "P.IVA")';
 $res = $DBH->exec($query_company_data);                                      // insert Company data
 if ( $res===false ) die(__LINE__ . " - ".print_r($DBH->errorInfo(), true));
 
@@ -101,6 +101,25 @@ else                                   $query_categories_2 = $query_categories_2
 $res= $DBH->exec($query_categories_2);                                      // insert Categories_B data
 if ( $res===false ) die(__LINE__ . " - ".print_r($DBH->errorInfo(), true));
 
+
+//
+// STATUSES
+//
+
+$query_statuses_data = 'INSERT INTO '.TBL_STATUSES.' '.
+                      '            (Status_name, Status_is_final, Status_order) '.
+                      '     VALUES ("Just created", 0, 1); '.
+                      'INSERT INTO '.TBL_STATUSES.' '.
+                      '            (Status_name, Status_is_final, Status_order) '.
+                      '     VALUES ("in progress", 0, 1); '.
+                      'INSERT INTO '.TBL_STATUSES.' '.
+                      '            (Status_name, Status_is_final, Status_order) '.
+                      '     VALUES ("waiting for something", 0, 1); '.
+                      'INSERT INTO '.TBL_STATUSES.' '.
+                      '            (Status_name, Status_is_final, Status_order) '.
+                      '     VALUES ("Closed", 0, 1); ';
+$res = $DBH->exec($query_statuses_data);                                      // insert statuses data
+if ( $res===false ) die(__LINE__ . " - ".print_r($DBH->errorInfo(), true));
 
 
 $retval['success'] = true;

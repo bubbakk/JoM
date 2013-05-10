@@ -34,7 +34,9 @@ $res = $DBH->exec($tables['Login_attempts'][$config['DB']['type']]);            
 if ( $res===false ) die(__LINE__ . " - ".print_r($DBH->errorInfo(), true));
 $res = $DBH->exec($tables['Sessions'][$config['DB']['type']]);                      // execute query for Sessions
 if ( $res===false ) die(__LINE__ . " - ".print_r($DBH->errorInfo(), true));
-$res = $DBH->exec($tables['Nonces'][$config['DB']['type']]);                        // execute query for Sessions
+$res = $DBH->exec($tables['Nonces'][$config['DB']['type']]);                        // execute query for Nonces
+if ( $res===false ) die(__LINE__ . " - ".print_r($DBH->errorInfo(), true));
+$res = $DBH->exec($tables['Statuses'][$config['DB']['type']]);                      // execute query for Statuses
 if ( $res===false ) die(__LINE__ . " - ".print_r($DBH->errorInfo(), true));
 
 $retval['success'] = true;
