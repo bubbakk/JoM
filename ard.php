@@ -50,7 +50,9 @@ $requests = array('categories' => array('lod' => 'load'),       // categories
                   'users'      => array('lin' => 'login',       // users
                                         'lot' => 'logout'
                                        ),
-                  'job'        => array('new' => 'new')         // job
+                  'job'        => array('new' => 'new',         // job
+                                        'lst' => 'list'
+                                       )
                  );
 
 
@@ -89,7 +91,7 @@ $nonce     = post_or_get('n'); // echo 'nonce:   '.$nonce."\n";
 $timestamp = post_or_get('t'); // echo 'nonce:   '.$nonce."\n";
 
 $full_domain  = $domains[$domain];
-$full_request = $requests[$domains[$domain]][$request];
+$full_request = $requests[$full_domain][$request];
 
 $command = '/' . $full_domain . '/' . $full_request;
 
@@ -146,9 +148,9 @@ if ( !JOM_DEBUG ) {
 
 // dispatch_request
 if ( array_key_exists($domain, $domains) &&
-     array_key_exists($request, $requests[$domains[$domain]])
+     array_key_exists($request, $requests[$full_domain])
    ) {
-    require_once(DIR_LIB . 'requests_' . $domains[$domain] . '.php');
+    require_once(DIR_LIB . 'requests_' . $full_domain . '.php');
 
     // check if user is logged in
     // ?????????????
@@ -156,7 +158,7 @@ if ( array_key_exists($domain, $domains) &&
     // update user's last visit datetime
     $_SESSION['user']['last_visit'] = time();
 
-    if ( dispatch_request($requests[$domains[$domain]][$request]) ) {
+    if ( dispatch_request($full_request) ) {
         $retval['success'] = true;
     }
 }

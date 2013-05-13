@@ -29,6 +29,12 @@ function dispatch_request($request)
             $retval['success'] = $JOB->save();
 
             break;
+        case 'list':
+            global $DBH, $retval, $config;
+
+            echo "Calling list function...";
+
+            break;
         default:
             echo "CANT'T BE HERE!!!!\n";
             break;

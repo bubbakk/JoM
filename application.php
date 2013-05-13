@@ -59,6 +59,7 @@ check_session_variables();                              // check session variabl
     <script language="javascript" type="text/javascript" src="./js/application.js"></script>
     <script language="javascript" type="text/javascript" src="./js/generic_lib.js"></script>
     <script language="javascript" type="text/javascript" src="./js/new_job.js"></script>
+    <script language="javascript" type="text/javascript" src="./js/job_list.js"></script>
     <script language="javascript" type="text/javascript" src="./js/categories.js"></script>
     <title>***</title>
     <script>
@@ -78,6 +79,10 @@ check_session_variables();                              // check session variabl
         JOM.new_job.issues.nonce     = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
         JOM.new_job.nonce            = <?php echo generate_json_javascript_values( '/job/new',         0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
         JOM.new_job.get_categories();
+
+        JOM.job_list = new Job_List_GUI();
+        JOM.job_list.nonce           = <?php echo generate_json_javascript_values( '/job/list',        0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
+        JOM.job_list.load_job_list();
 
         jom_init('<?php echo $_SESSION['user']['settings']['i18n']['dateformat']; ?>');
 

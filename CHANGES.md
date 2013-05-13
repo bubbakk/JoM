@@ -1,6 +1,11 @@
 Version 0.4
 ===========
 
+13.05.2013
+----------
+- created Job_List_GUI javascript class with minimal ajax load method call
+- created Job_List_GUI object instance and load method call in application
+- created backend structures, file and functions for server side request dispatch
 
 09-10.05.2013
 -------------
