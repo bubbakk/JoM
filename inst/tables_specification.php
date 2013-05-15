@@ -88,9 +88,9 @@ $tables = array(
                         `Job_id`                      INTEGER unsigned      NOT NULL AUTO_INCREMENT,
                         `Job_subject`                 varchar(255)          NOT NULL DEFAULT '',
                         `Job_description`             text,
-                        `Job_category_level_1`        INTEGER unsigned      DEFAULT '0',
-                        `Job_category_level_2`        INTEGER unsigned      DEFAULT '0',
-                        `Job_category_level_3`        INTEGER unsigned      DEFAULT '0',
+                        `Job_category_level_1`        INTEGER unsigned      DEFAULT '1',
+                        `Job_category_level_2`        INTEGER unsigned      DEFAULT '1',
+                        `Job_category_level_3`        INTEGER unsigned      DEFAULT '1',
                         `Job_tags`                    text                  DEFAULT '',
                         `Job_priority`                tinyint(4) unsigned   DEFAULT '1',
                         `Job_creation_datetime`       INTEGER unsigned      DEFAULT '0',
@@ -113,9 +113,9 @@ $tables = array(
                         Job_id                      INTEGER       PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE,
                         Job_subject                 VARCHAR       NOT NULL DEFAULT '',
                         Job_description             TEXT          NOT NULL,
-                        Job_category_level_1        INTEGER       NOT NULL DEFAULT 0,
-                        Job_category_level_2        INTEGER       NOT NULL DEFAULT 0,
-                        Job_category_level_3        INTEGER       NOT NULL DEFAULT 0,
+                        Job_category_level_1        INTEGER       NOT NULL DEFAULT 1,
+                        Job_category_level_2        INTEGER       NOT NULL DEFAULT 1,
+                        Job_category_level_3        INTEGER       NOT NULL DEFAULT 1,
                         Job_tags                    TEXT          NOT NULL DEFAULT '',
                         Job_priority                INTEGER       NOT NULL DEFAULT 1,
                         Job_creation_datetime       INTEGER       NOT NULL DEFAULT 0,
@@ -200,18 +200,18 @@ $tables = array(
   ),
   'Statuses' => array(
     'mysql'  => "CREATE TABLE IF NOT EXISTS ".TBL_STATUSES." (
-                         `Status_id`       INT           NOT NULL UNSIGNED AUTO_INCREMENT PRIMARY KEY ,
+                         `Status_id`       INT           UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
                          `Status_name`     VARCHAR( 50 ) NOT NULL DEFAULT  '',
-                         `Status_is_final` TINYINT( 1 )  NOT NULL UNSIGNED DEFAULT  '0',
-                         `Status_order`    INT UNSIGNED  NOT NULL DEFAULT  '1',
-                         `Status_trashed`  TINYINT( 1 )  NOT NULL UNSIGNED DEFAULT  '0'
-                        ) ENGINE = MYISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;",
+                         `Status_is_final` TINYINT( 1 )  UNSIGNED NOT NULL DEFAULT  '0',
+                         `Status_order`    INT           UNSIGNED NOT NULL DEFAULT  '1',
+                         `Status_trashed`  TINYINT( 1 )  UNSIGNED NOT NULL  DEFAULT  '0'
+                        ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci;",
     'sqlite' => "CREATE TABLE IF NOT EXISTS ".TBL_STATUSES." (
-                         Status_id       INTEGER UNSIGNED NOT NULL AUTOINCREMENT PRIMARY KEY UNIQUE,
+                         Status_id       INTEGER          PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE,
                          Status_name     VARCHAR( 50 )    NOT NULL DEFAULT  '',
                          Status_is_final INTEGER          NOT NULL DEFAULT  '0',
                          Status_order    INTEGER UNSIGNED NOT NULL DEFAULT  '1',
-                         Status_trashed  INTEGER          NOT NULL UNSIGNED DEFAULT  '0'
+                         Status_trashed  INTEGER          NOT NULL DEFAULT  '0'
                         );"
   )
 );

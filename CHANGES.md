@@ -1,6 +1,11 @@
 Version 0.4
 ===========
 
+
+15.05.2013
+----------
+- tested and fixed install procedure (most of all, db creation) after Statuses table add
+
 13.05.2013
 ----------
 - created Job_List_GUI javascript class with minimal ajax load method call

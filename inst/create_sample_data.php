@@ -76,26 +76,26 @@ if ( $res===false ) die(__LINE__ . " - ".print_r($DBH->errorInfo(), true));
 //
 $query_categories_2_mysql  = 'INSERT INTO '.TBL_CATEGORIES_2.' '.
                       '            (Category_2_id_Category_1, Category_2_name, Category_2_description, Category_2_trashed) '.
-                    //'     VALUES (1, "-- nessuna --", "", 0), '.
-                      '     VALUES (2, "Disco o memoria danneggiata", "Problematiche di varia natura su disco fisso o altro sistema di memorizzazione", 0), '.
+                      '     VALUES (1, "-- nessuna --", "", 0), '.
+                      '            (2, "Disco o memoria danneggiata", "Problematiche di varia natura su disco fisso o altro sistema di memorizzazione", 0), '.
                       '            (2, "Configurazione/verifica gateway/DNS/NATP", "Configurazione di apparati di rete per accessi e controlli", 0), '.
                       '            (3, "Sviluppo GUI", "Architettura e sviluppo interfaccia utente", 0), '.
                       '            (3, "Sviluppo logiche server-side", "Architettura e sviluppo di software per interazione remota con il server", 0);';
 $query_categories_2_sqlite = 'INSERT INTO '.TBL_CATEGORIES_2.' '.
-                  //  '                   (Category_2_id_Category_1, Category_2_name, Category_2_description, Category_2_trashed) '.
-                  //  '            VALUES (1, "-- nessuna --", "", 0 ); '.
-                  //  '       INSERT INTO '.TBL_CATEGORIES_2.' '.
                       '                   (Category_2_id_Category_1, Category_2_name, Category_2_description, Category_2_trashed) '.
-                      '            VALUES (2, "Configurazione/verifica gateway/DNS/NATP", "Configurazione di apparati di rete per accessi e controlli", 0); '.
+                      '            VALUES (0, "-- nessuna --", "", 0 ); '.
                       '       INSERT INTO '.TBL_CATEGORIES_2.' '.
                       '                   (Category_2_id_Category_1, Category_2_name, Category_2_description, Category_2_trashed) '.
-                      '            VALUES (2, "Sviluppo GUI", "Architettura e sviluppo interfaccia utente", 0); ' .
+                      '            VALUES (1, "Configurazione/verifica gateway/DNS/NATP", "Configurazione di apparati di rete per accessi e controlli", 0); '.
                       '       INSERT INTO '.TBL_CATEGORIES_2.' '.
                       '                   (Category_2_id_Category_1, Category_2_name, Category_2_description, Category_2_trashed) '.
-                      '            VALUES (4, "Sviluppo logiche server-side", "Architettura e sviluppo di software per interazione remota con il server", 0); '.
+                      '            VALUES (1, "Sviluppo GUI", "Architettura e sviluppo interfaccia utente", 0); ' .
                       '       INSERT INTO '.TBL_CATEGORIES_2.' '.
                       '                   (Category_2_id_Category_1, Category_2_name, Category_2_description, Category_2_trashed) '.
-                      '            VALUES (3, "Disco o memoria danneggiata", "Problematiche di varia natura su disco fisso o altro sistema di memorizzazione", 0); ';
+                      '            VALUES (2, "Sviluppo logiche server-side", "Architettura e sviluppo di software per interazione remota con il server", 0); '.
+                      '       INSERT INTO '.TBL_CATEGORIES_2.' '.
+                      '                   (Category_2_id_Category_1, Category_2_name, Category_2_description, Category_2_trashed) '.
+                      '            VALUES (2, "Disco o memoria danneggiata", "Problematiche di varia natura su disco fisso o altro sistema di memorizzazione", 0); ';
 if ( $config['DB']['type']==='mysql' ) $query_categories_2 = $query_categories_2_mysql;
 else                                   $query_categories_2 = $query_categories_2_sqlite;
 $res= $DBH->exec($query_categories_2);                                      // insert Categories_B data
