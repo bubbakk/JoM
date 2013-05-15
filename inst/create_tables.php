@@ -38,6 +38,8 @@ $res = $DBH->exec($tables['Nonces'][$config['DB']['type']]);                    
 if ( $res===false ) die(__LINE__ . " - ".print_r($DBH->errorInfo(), true));
 $res = $DBH->exec($tables['Statuses'][$config['DB']['type']]);                      // execute query for Statuses
 if ( $res===false ) die(__LINE__ . " - ".print_r($DBH->errorInfo(), true));
+$res = $DBH->exec($tables['Logger'][$config['DB']['type']]);                        // execute query for Logger
+if ( $res===false ) die(__LINE__ . " - ".print_r($DBH->errorInfo(), true));
 
 $retval['success'] = true;
 json_output_and_die($retval);

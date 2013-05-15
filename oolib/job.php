@@ -152,9 +152,9 @@ class JOM_Job extends BBKK_Base_Class {
                         'id'                    => null,        // if id is null, means that want to create a new job and not update an existing one
                         'subject'               => '',
                         'description'           => null,
-                        'category_level_1'      => null,
-                        'category_level_2'      => null,
-                        'category_level_3'      => null,
+                        'category_level_1'      => 1,
+                        'category_level_2'      => 1,
+                        'category_level_3'      => 1,
                         'tags'                  => null,
                         'priority'              => null,
                         'creation_datetime'     => null,

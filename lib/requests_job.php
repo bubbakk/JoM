@@ -32,7 +32,17 @@ function dispatch_request($request)
         case 'list':
             global $DBH, $retval, $config;
 
-            echo "Calling list function...";
+            require_once(DIR_OOL.'job_list.php');
+
+            $job_list_data = jobs_list_retrieve($DBH);
+
+            if ( count($job_list_data) == 0 ) {
+                $retval['success'] = false;
+            }
+            else {
+                $retval['success'] = true;
+                $retval['data']    = jobs_list_data_format($job_list_data);
+            }
 
             break;
         default:

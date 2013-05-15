@@ -116,9 +116,10 @@ $SMAN->start_session('', false);                        // starting session
 // check session variables existance and set default values if not found
 $session_vars_check = check_session_variables();
 
+
 // if loggin in, do not have to check session
 if ( $full_domain != 'users' && $full_request != 'login' ) {
-    if ( $session_vars_check === -1 || $session_vars_check === -2    )
+    if ( $session_vars_check === -1 || $session_vars_check === -2 )
     {
         $retval['cmd']         =  'redirect';
         $retval['url']         =  './login.php';
@@ -141,8 +142,6 @@ if ( !JOM_DEBUG ) {
         json_output_and_die($retval);
     }
 }
-
-
 
 
 

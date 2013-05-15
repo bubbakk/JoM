@@ -96,6 +96,7 @@ $tables = array(
                         `Job_creation_datetime`       INTEGER unsigned      DEFAULT '0',
                         `Job_start_datetime`          INTEGER unsigned      DEFAULT '0',
                         `Job_deadline_datetime`       INTEGER unsigned      DEFAULT '0',
+                        `Job_status`                  INTEGER unsigned      DEFAULT '1',
                         `Job_percent_completed`       tinyint(1) unsigned   DEFAULT '0',
                         `Job_assigned_to_User`        INTEGER unsigned      DEFAULT '0',
                         `Job_assigned_to_chainedgroup_A` INTEGER unsigned DEFAULT '0',
@@ -121,6 +122,7 @@ $tables = array(
                         Job_creation_datetime       INTEGER       NOT NULL DEFAULT 0,
                         Job_percent_completed       INTEGER       NOT NULL DEFAULT 0,
                         Job_deadline_datetime       INTEGER       NOT NULL DEFAULT 0,
+                        Job_status                  INTEGER       NOT NULL DEFAULT 1,
                         Job_assigned_to_User        INTEGER       NOT NULL DEFAULT 0,
                         Job_assigned_to_chainedgroup_A INTEGER    NOT NULL DEFAULT 0,
                         Job_assigned_to_chainedgroup_B INTEGER    NOT NULL DEFAULT 0,
@@ -212,6 +214,28 @@ $tables = array(
                          Status_is_final INTEGER          NOT NULL DEFAULT  '0',
                          Status_order    INTEGER UNSIGNED NOT NULL DEFAULT  '1',
                          Status_trashed  INTEGER          NOT NULL DEFAULT  '0'
+                        );"
+  ),
+  'Logger' => array(
+    'mysql' => "CREATE TABLE IF NOT EXISTS ".TBL_LOGGER." (
+                        `Logger_id`                 INT UNSIGNED   NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+                        `Logger_type`               INT UNSIGNED   NOT NULL DEFAULT  '0',
+                        `Logger_datetime`           INT UNSIGNED   NOT NULL DEFAULT  '0',
+                        `Logger_text`               TEXT           NOT NULL DEFAULT  '',
+                        `Logger_file`               VARCHAR( 255 ) NOT NULL DEFAULT  '',
+                        `Logger_class`              VARCHAR( 255 ) NOT NULL DEFAULT  '',
+                        `Logger_method_function`    VARCHAR( 255 ) NOT NULL DEFAULT  '',
+                        `Logger_session_id`         CHAR ( 128 )   NOT NULL
+                        ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci;",
+   'sqlite' => "CREATE TABLE IF NOT EXISTS ".TBL_LOGGER." (
+                         Logger_id                  INTEGER        PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE,
+                         Logger_type                INTEGER        NOT NULL DEFAULT  0,
+                         Logger_datetime            INTEGER        NOT NULL DEFAULT  0,
+                         Logger_text                TEXT           NOT NULL DEFAULT  '',
+                         Logger_file                VARCHAR( 255 ) NOT NULL DEFAULT  '',
+                         Logger_class               VARCHAR( 255 ) NOT NULL DEFAULT  '',
+                         Logger_method_function     VARCHAR( 255 ) NOT NULL DEFAULT  '',
+                         Logger_session_id          CHAR ( 128 )   NOT NULL
                         );"
   )
 );

@@ -3,7 +3,7 @@
 define('JOM_DEBUG',         true);
 define('JOM_LOG',           true);
 define('JOM_MILESTONE',     '0.4');                                         // TICKET LISTING version (refer to MILESTONES.md for versioning progression)
-define('JOM_RELEASE',       '6');
+define('JOM_RELEASE',       '7');
 define('JOM_VERSION',       JOM_MILESTONE.'.'.JOM_RELEASE);                 // milestone.release
 define('JOM_DESC_VER',      'v. '.JOM_MILESTONE.'.x: ticket listing');      // milestone version description
 
@@ -44,4 +44,4 @@ define('TBL_CATEGORIES_2',        TABLES_PREFIX.'Categories_2');
 define('TBL_LOGIN_ATTEMPTS',      TABLES_PREFIX.'Login_attempts');
 define('TBL_SESSIONS',            TABLES_PREFIX.'Sessions');
 define('TBL_NONCES',              TABLES_PREFIX.'Nonces');
-define('TBL_LOGGER',              TABLES_PREFIX.'Log');
+define('TBL_LOGGER',              TABLES_PREFIX.'Logger');
