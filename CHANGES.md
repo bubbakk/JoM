@@ -3,6 +3,10 @@ Version 0.4
 TODOS:
 - using sqlite database, is not possible to have correct authentication
 
+17.05.2013
+----------
+- job row element adds correctly
+- now live event on info icon press fires correctly
 
 16.05.2013
 ----------

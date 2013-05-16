@@ -49,17 +49,23 @@ function Job_List_GUI() {
             $summary_els.eq(3).text(job_list[i].owner);
 
             $new_summary = THAT.$job_row_summary.clone();
-            $new_details = THAT.$job_row_details.clone();
-
+            $new_summary.attr("id", "sum_row_" + i);
             THAT.$job_table_list.append($new_summary);
+
+            // setting details
+
+            $new_details = THAT.$job_row_details.clone();
+            $new_summary.attr("id", "det_row_" + i);
             THAT.$job_table_list.append($new_details);
+
+
         }
     }
 }
 
 
     // constructor
-        THAT.$job_table_list  = $("#jom_job_list_table");
+        THAT.$job_table_list  = $("#jom_job_list_table > tbody");
         THAT.$job_row_summary = $("#jom_job_row_summary").detach();
         THAT.$job_row_details = $("#jom_job_row_details").detach();
 
