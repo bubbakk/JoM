@@ -4,13 +4,17 @@ TODOS:
 - using sqlite database, is not possible to have correct authentication
 
 
+16.05.2013
+----------
+- job summary row in the job list is correctly filles with data
+
 15.05.2013
 ----------
 - tested and fixed install procedure (most of all, db creation) after Statuses table add
 - added Logger table and install table creation code too
 - reset default values in save job routines for categories_is to 1 (instead of null)
 - job query created successfully: data are returned
-- job lost data are now returned in JSON format
+- job list data are now returned in JSON format
 
 
 13.05.2013

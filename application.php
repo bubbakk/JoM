@@ -82,7 +82,7 @@ check_session_variables();                              // check session variabl
 
         JOM.job_list = new Job_List_GUI();
         JOM.job_list.nonce           = <?php echo generate_json_javascript_values( '/job/list',        0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
-        JOM.job_list.load_job_list();
+        JOM.job_list.DATA__load_job_list();
 
         jom_init('<?php echo $_SESSION['user']['settings']['i18n']['dateformat']; ?>');
 
@@ -151,7 +151,7 @@ check_session_variables();                              // check session variabl
 
             </div>
             <div class="span10">
-                <table class="table">
+                <table class="table" id="jom_job_list_table">
                     <caption>Elenco lavori</caption>
                     <thead>
                         <tr>
@@ -163,7 +163,7 @@ check_session_variables();                              // check session variabl
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr id="jom_job_row_summary">
                             <td><button class="btn btn-mini btn-success" type="button"><i class="icon-info-sign icon-white"></i></button></td>
                             <td>#1</td>
                             <td>primo job</td>
@@ -173,13 +173,13 @@ check_session_variables();                              // check session variabl
                                 <button class="btn btn-mini btn-primary" type="button"><i class="icon-trash icon-white"></i></button>
                             </td>
                         </tr>
-                        <tr class="details">
+                        <tr id="jom_job_row_details" class="details">
                             <td colspan="1" style="background-color: rgba(240, 240, 240, 0.4); text-align: center;">
                                 <img src="./img/star_disabled.png" onclick="javascript: $(this).attr('src', './img/star.png');">
                             </td>
                             <td colspan="4">
                                 <dl class="dl-horizontal">
-                                    <dt>Assigned to: </dt> <dd>me</dd>
+                                    <dt>Status: </dt> <dd>in progress</dd>
                                     <hr/>
                                     <dt>description: </dt> <dd>bla bla bla ...<br>e ancora bla bla bla</dd>
                                     <hr/>

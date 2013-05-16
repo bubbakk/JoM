@@ -56,6 +56,12 @@
 
                     break;
                 }
+            case 'job/lst':
+                {
+                    JOM.job_list.GUI__replace_job_list(JSON_response.data);
+                    break;
+                }
+
         }
 
 
