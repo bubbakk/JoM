@@ -91,17 +91,40 @@ function jom_init(dateformat) {
     });
 
     // details open
-    $(".icon-info-sign").parent().on("click", function(){
-        var $tr_infos = $(this).parent().parent().next();
+    $("#jom_job_list_table tbody").on("click", "tr td button", function( )
+    {
+        // catch buttons click inside table
+        if ( $(this).children().eq(0).hasClass("icon-info-sign") )
+        {
+            var $tr_infos = $(this).parent().parent().next();
 
-        if ( $tr_infos.is(':hidden') ) {
-            $(this).parent().parent().css("background-color", "rgba(240, 240, 240, 0.9)");
-        }
-        else {
-            $(this).parent().parent().css("background-color", "");
-        }
+            if ( $tr_infos.is(':hidden') ) {
+                $(this).parent().parent().css("background-color", "rgba(240, 240, 240, 0.9)");
+            }
+            else {
+                $(this).parent().parent().css("background-color", "");
+            }
 
-        $(this).parent().parent().next().fadeToggle();
+            $(this).parent().parent().next().fadeToggle();
+        }
+        else
+        if ( $(this).children().eq(0).hasClass("icon-pencil") ) {
+            alert("Edit implementation in Version 0.5");
+        }
+        else
+        if ( $(this).children().eq(0).hasClass("icon-trash") ) {
+            alert("Remove job still not implemented");
+        }
+    });
+
+    // catch img click inside table
+    $("#jom_job_list_table tbody").on("click", "tr td img", function()
+    {
+        if ( $(this).hasClass("jom_favourite") ) {
+            if ( $(this).attr('src') == './img/star_disabled.png' ) $(this).attr('src', './img/star.png');
+            else
+            if ( $(this).attr('src') == './img/star.png' )          $(this).attr('src', './img/star_disabled.png');
+        }
     });
 
     $alert = $("#jom_create_job_modal .modal-body .alert").hide();

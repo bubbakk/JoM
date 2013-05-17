@@ -2,11 +2,16 @@ Version 0.4
 ===========
 TODOS:
 - using sqlite database, is not possible to have correct authentication
+- create time format (I18N) (hh:mm.ss) and insert in job list details
 
 17.05.2013
 ----------
 - job row element adds correctly
 - now live event on info icon press fires correctly
+- created global JOM.conf object containing dateformat and dateseparator; changed classes accordingly.
+- now details are correctly inserted (the date is converted according i18n format)
+- "favourite" star correctly toggles
+- click events on buttons are correctly managed
 
 16.05.2013
 ----------

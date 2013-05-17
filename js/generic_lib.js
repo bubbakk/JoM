@@ -1,3 +1,13 @@
+jsJOM_data__months_names = new Array( "it", "en" );
+jsJOM_data__months_names["it"] = new Array("Gennaio", "Febbraio", "Marzo",
+                                           "Aprile",  "Maggio",   "Giugno",
+                                           "Luglio",  "Agosto",   "Settembre",
+                                           "Ottobre", "Novembre", "Dicembre");
+jsJOM_data__months_names["en"] = new Array("January", "February", "March",
+                                           "April",   "May",      "June",
+                                           "July",    "August",   "September",
+                                           "October", "November", "Dicember");
+
 /*
  * Function: jsJOMlib__get_e_commerce_bullshit
  * Useful sentence generator
@@ -139,10 +149,14 @@ function jsJOMlib__date_formatted(format, splitter, date)
         console.error("Passed date is not a javascript Date object");
         return false;
     }
+    if ( toString.call(format) != "[object String]" ) {
+        console.error("Passed format is not a javascript a string");
+        return false;
+    }
 
-    var day   = PHPjs_str_pad( date.getDate(),     2, '0', 'STR_PAD_LEFT' );
-    var month = PHPjs_str_pad( (date.getMonth() + 1),    2, '0', 'STR_PAD_LEFT' );
-    var year  = PHPjs_str_pad( date.getFullYear(), 4, '0', 'STR_PAD_LEFT' );
+    var day   = PHPjs_str_pad( date.getDate(),        2, '0', 'STR_PAD_LEFT' );
+    var month = PHPjs_str_pad( (date.getMonth() + 1), 2, '0', 'STR_PAD_LEFT' );
+    var year  = PHPjs_str_pad( date.getFullYear(),    4, '0', 'STR_PAD_LEFT' );
 
     var retval = "";
 
@@ -154,6 +168,8 @@ function jsJOMlib__date_formatted(format, splitter, date)
         if ( split[i]=='dd' )   retval += day;
         else
         if ( split[i]=='mm' )   retval += month;
+        else
+        if ( split[i]=='MM' )   retval += jsJOM_data__months_names[JOM.conf.lang][parseInt(month, 10)];
         else
         if ( split[i]=='yyyy' ) retval += year;
 

@@ -53,6 +53,17 @@ function Job_List_GUI() {
             THAT.$job_table_list.append($new_summary);
 
             // setting details
+            $details_els.eq(0).text(job_list[i].status);
+            $details_els.eq(1).text(job_list[i].description);
+            $details_els.eq(2).text(
+                jsJOMlib__date_formatted(
+                    JOM.conf.dateformat,
+                    JOM.conf.dateseparator,
+                    new Date( job_list[i].started * 1000 )
+                    )
+                );
+            $details_els.eq(3).text(job_list[i].category);
+            $details_els.eq(4).text(job_list[i].issue);
 
             $new_details = THAT.$job_row_details.clone();
             $new_summary.attr("id", "det_row_" + i);

@@ -99,6 +99,9 @@ function generate_random_string($length = 10, $only_strings = true) {
  * Insert description here
  */
 function check_session_variables() {
+    if ( !isset($_SESSION['user']['settings']['i18n']['language']) ) {
+        $_SESSION['user']['settings']['i18n']['language'] = I18N_LANGUAGE;
+    }
     if ( !isset($_SESSION['user']['settings']['i18n']['dateformat']) ) {
         $_SESSION['user']['settings']['i18n']['dateformat'] = I18N_DATEFORMAT;
     }

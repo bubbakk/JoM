@@ -68,10 +68,16 @@ check_session_variables();                              // check session variabl
         // set GUI start status
         $(".container").fadeIn();       // fadeIn GUI
 
+
         JOM = new Object();
+
+        JOM.conf = {
+            lang: '<?php echo $_SESSION['user']['settings']['i18n']['language']; ?>',
+            dateformat: '<?php echo $_SESSION['user']['settings']['i18n']['dateformat']; ?>',
+            dateseparator: '<?php echo $_SESSION['user']['settings']['i18n']['dateseparator']; ?>'
+        }
+
         JOM.new_job = new New_Job_GUI();
-        JOM.new_job.dateformat      = '<?php echo $_SESSION['user']['settings']['i18n']['dateformat']; ?>';
-        JOM.new_job.dateseparator   = '<?php echo $_SESSION['user']['settings']['i18n']['dateseparator']; ?>';
         JOM.new_job.init_events();
         JOM.new_job.set_issues_status('disabled');
 
@@ -175,7 +181,7 @@ check_session_variables();                              // check session variabl
                         </tr>
                         <tr id="jom_job_row_details" class="details">
                             <td colspan="1" style="background-color: rgba(240, 240, 240, 0.4); text-align: center;">
-                                <img src="./img/star_disabled.png" onclick="javascript: $(this).attr('src', './img/star.png');">
+                                <img class="jom_favourite" src="./img/star_disabled.png">
                             </td>
                             <td colspan="4">
                                 <dl class="dl-horizontal">

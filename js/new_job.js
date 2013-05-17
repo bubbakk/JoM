@@ -2,10 +2,6 @@ function New_Job_GUI() {
 
     var THAT = this;
 
-    // class useful data
-        THAT.dateformat     = undefined;
-        THAT.dateseparator  = undefined;
-
     // jQuery fields pointers
         THAT.$form          = undefined;
         THAT.$subject       = undefined;
@@ -191,7 +187,7 @@ function New_Job_GUI() {
         // DATE START
         // check date correctness also against format
         THAT.form_data.start_date   = THAT.$start_date.val();
-        if ( !jsJOMlib__check_date_string(THAT.form_data.start_date, THAT.dateformat, THAT.dateseparator) ) {
+        if ( !jsJOMlib__check_date_string(THAT.form_data.start_date, JOM.conf.dateformat, JOM.conf.dateseparator) ) {
             THAT.GUI__set_field_alert(THAT.$start_date.parent().parent());
             is_all_right = false;
         }
@@ -218,7 +214,7 @@ function New_Job_GUI() {
         var fd = JOM.new_job.form_data;
 
         // convert date in javascript Date object
-        var start_date_obj            = jsJOMlib__string_date_to_object(THAT.dateformat, THAT.dateseparator, fd.start_date);
+        var start_date_obj            = jsJOMlib__string_date_to_object(JOM.conf.dateformat, JOM.conf.dateseparator, fd.start_date);
         var start_date_unix_timestamp = Math.floor(start_date_obj.getTime() / 1000) -
                                         start_date_obj.getTimezoneOffset() * 60;        // timezone drift
         var data_field = 'd=job&r=new&n=' + THAT.nonce.nonce                     + '&t='  + THAT.nonce.timestamp               +

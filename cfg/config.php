@@ -11,8 +11,9 @@ define('SESSION_EXPIRE',    6 * 60 * 60 );                                 // se
 define('NONCE_EXPIRE',      1 * 60 * 60 );                                 // nonce expires in 1 hour
 
 // Default application localization
-define('I18N_DATEFORMAT',   'dd/mm/yyyy');
-define('I18N_DATESEPARATOR','/');
+define('I18N_LANGUAGE',   'it');
+define('I18N_DATEFORMAT',   'dd MM yyyy');
+define('I18N_DATESEPARATOR',' ');
 
 
 // directories definition
