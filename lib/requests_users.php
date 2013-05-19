@@ -26,7 +26,7 @@ function dispatch_request($request)
                 $json_nonce = generate_json_values($command, 0, session_id(), $config['SALT'], $config['HASH_ALG']);
                 $retval['new_timestamp'] = $json_nonce['timestamp'];
                 $retval['new_nonce']     = $json_nonce['nonce'];
-                return;
+                return true;
             }
 
             // if authenticated successfully
@@ -37,6 +37,8 @@ function dispatch_request($request)
 
             $retval['success'] = true;
             $retval['usr_msg'] = 'Authenticated';
+
+            return true;
 
             break;
         case 'logout':

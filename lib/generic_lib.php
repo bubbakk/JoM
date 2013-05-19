@@ -2,7 +2,7 @@
 
 /*
  * Function: json_output_and_die
- * Print the passed argument in JSON format and die the script
+ *   Print the passed argument in JSON format and die the script
  *
  * Parameters:
  *   $data - data to output in JSON format. Better if is an associative array
@@ -16,11 +16,35 @@ function json_output_and_die($data) {
 }
 
 /*
- * Function: post_or_get
- * Try to return GET or POST value of the passed name variable.
+ * Function: recursive_utf8_encode
+ * Walk recursively into passed argument and UTF8 encode every string found
  *
  * Returns:
- *   the value of the passed name variable. If not defined, return false
+ *   passed data structure with UTF8 encoded strings
+ *
+ * Parameters:
+ *   $data - string or array containing any kind of data type
+ *
+ */
+function recursive_utf8_encode($data) {
+
+    if ( is_string($data) ) return utf8_encode($data);
+
+    if ( is_array($data) ) {
+        foreach ( $data as $key => $value ) {
+            $data[$key] = recursive_utf8_encode($data[$key]);
+        }
+    }
+
+    return $data;
+}
+
+/*
+ * Function: post_or_get
+ *   Try to return GET or POST value of the passed name variable.
+ *
+ * Returns:
+ *   The value of the passed name variable. If not defined, return false
  *
  * Parameters:
  *   $data - data variable to read in GET or POST
@@ -107,6 +131,12 @@ function check_session_variables() {
     }
     if ( !isset($_SESSION['user']['settings']['i18n']['dateseparator']) ) {
         $_SESSION['user']['settings']['i18n']['dateseparator'] = I18N_DATESEPARATOR;
+    }
+    if ( !isset($_SESSION['user']['settings']['i18n']['dateformat_human']) ) {
+        $_SESSION['user']['settings']['i18n']['dateformat_human'] = I18N_DATEFORMAT_HUMAN;
+    }
+    if ( !isset($_SESSION['user']['settings']['i18n']['dateseparator_human']) ) {
+        $_SESSION['user']['settings']['i18n']['dateseparator_human'] = I18N_DATESEPARATOR_HUMAN;
     }
 
     // check visit_time and, if time expired, redirect to login page

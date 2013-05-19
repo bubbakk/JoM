@@ -176,4 +176,5 @@ if ( !isset($_SESSION['user']['last_visit']) )      $_SESSION['user']['last_visi
 
 
 
+$retval['data'] = recursive_utf8_encode($retval['data']);
 json_output_and_die($retval);

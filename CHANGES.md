@@ -4,6 +4,11 @@ TODOS:
 - using sqlite database, is not possible to have correct authentication
 - create time format (I18N) (hh:mm.ss) and insert in job list details
 
+20.05.2013
+----------
+- fixed problem in JSON data return (was UTF8 encoding): added recursive_utf8_encode() in generic_lib.php to have recursive UTF8 encoding of all
+  returned strings contained in the JSON data field
+
 17.05.2013
 ----------
 - job row element adds correctly

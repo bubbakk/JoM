@@ -72,9 +72,11 @@ check_session_variables();                              // check session variabl
         JOM = new Object();
 
         JOM.conf = {
-            lang: '<?php echo $_SESSION['user']['settings']['i18n']['language']; ?>',
-            dateformat: '<?php echo $_SESSION['user']['settings']['i18n']['dateformat']; ?>',
-            dateseparator: '<?php echo $_SESSION['user']['settings']['i18n']['dateseparator']; ?>'
+            lang:                '<?php echo $_SESSION['user']['settings']['i18n']['language']; ?>',
+            dateformat:          '<?php echo $_SESSION['user']['settings']['i18n']['dateformat']; ?>',
+            dateseparator:       '<?php echo $_SESSION['user']['settings']['i18n']['dateseparator']; ?>',
+            dateformat_human:    '<?php echo $_SESSION['user']['settings']['i18n']['dateformat_human']; ?>',
+            dateseparator_human: '<?php echo $_SESSION['user']['settings']['i18n']['dateseparator_human']; ?>'
         }
 
         JOM.new_job = new New_Job_GUI();
@@ -90,7 +92,7 @@ check_session_variables();                              // check session variabl
         JOM.job_list.nonce           = <?php echo generate_json_javascript_values( '/job/list',        0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
         JOM.job_list.DATA__load_job_list();
 
-        jom_init('<?php echo $_SESSION['user']['settings']['i18n']['dateformat']; ?>');
+        jom_init('dd/mm/yyyy');
 
     });
     </script>

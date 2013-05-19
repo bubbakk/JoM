@@ -28,6 +28,8 @@ function dispatch_request($request)
             // save new job
             $retval['success'] = $JOB->save();
 
+            return true;
+
             break;
         case 'list':
             global $DBH, $retval, $config;
@@ -43,6 +45,8 @@ function dispatch_request($request)
                 $retval['success'] = true;
                 $retval['data']    = jobs_list_data_format($job_list_data);
             }
+
+            return true;
 
             break;
         default:

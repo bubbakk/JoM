@@ -57,8 +57,8 @@ function Job_List_GUI() {
             $details_els.eq(1).text(job_list[i].description);
             $details_els.eq(2).text(
                 jsJOMlib__date_formatted(
-                    JOM.conf.dateformat,
-                    JOM.conf.dateseparator,
+                    JOM.conf.dateformat_human,
+                    JOM.conf.dateseparator_human,
                     new Date( job_list[i].started * 1000 )
                     )
                 );
