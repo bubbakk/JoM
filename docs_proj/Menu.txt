@@ -48,7 +48,6 @@ Format: 1.51
 
 File: js/categories.js  (js/categories.js)
 File: js/generic_lib.js  (js/generic_lib.js)
-File: lib/generic_lib.php  (lib/generic_lib.php)
 
 Group: Oolib  {
 
@@ -56,8 +55,12 @@ Group: Oolib  {
    File: bbkk_pdo.php  (oolib/bbkk_pdo.php)
    File: BBKK_SESSION_MANAGER  (oolib/bbkk_session_manager.php)
    File: JOM_Categorie  (oolib/category.php)
+   File: JOM_Job  (oolib/job.php)
    File: JOM_User  (oolib/user.php)
    }  # Group: Oolib
+
+File: js/new_job.js  (js/new_job.js)
+File: lib/generic_lib.php  (lib/generic_lib.php)
 
 Group: Index  {
 

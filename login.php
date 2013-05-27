@@ -119,7 +119,7 @@ $SMAN->start_session('', false);                        // starting session
             url : "./ard.php",
             type : "GET",
             dataType : 'json',
-            data : 'd=usr&r=lin&u=' + username + '&p=' + hashedpass + '&n=' + nonce + '&t=' + timestamp,
+            data : 'd=usr&r=lin&u=' + username + '&p=' + hashedpass + '&n=' + nonce + '&t=' + timestamp + '&c=login',
             success : function(data) {
                 $(el).find('i').attr("class", "icon-signin");
                 // if successful

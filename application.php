@@ -49,14 +49,17 @@ check_session_variables();                              // check session variabl
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link href="./humans.txt"                rel="author" type="text/plain">
-    <link href="./css/bootstrap.min.css"     rel="stylesheet" type="text/css" media="screen">
-    <link href="./css/font-awesome.min.css"  rel="stylesheet" type="text/css" media="screen">
-    <link href="./css/jom_default_style.css" rel="stylesheet" type="text/css" media="screen">
-    <link href="./css/datepicker.css"        rel="stylesheet" type="text/css" media="screen">
+    <link href="./humans.txt"                       rel="author"     type="text/plain">
+    <link href="./css/bootstrap.min.css"            rel="stylesheet" type="text/css" media="screen">
+    <link href="./css/font-awesome.min.css"         rel="stylesheet" type="text/css" media="screen">
+    <link href="./css/jom_default_style.css"        rel="stylesheet" type="text/css" media="screen">
+    <link href="./css/datepicker.css"               rel="stylesheet" type="text/css" media="screen">
+    <link href="./css/bootstrap-select.min.css"     rel="stylesheet" type="text/css" media="screen">
     <script language="javascript" type="text/javascript" src="./js/lib/jquery-1.9.0.min.js"></script>
     <script language="javascript" type="text/javascript" src="./js/lib/bootstrap-datepicker.js"></script>
+    <script language="javascript" type="text/javascript" src="./js/lib/bootstrap-select.min.js"></script>
     <script language="javascript" type="text/javascript" src="./js/application.js"></script>
+    <script language="javascript" type="text/javascript" src="./js/search_filters.js"></script>
     <script language="javascript" type="text/javascript" src="./js/generic_lib.js"></script>
     <script language="javascript" type="text/javascript" src="./js/new_job.js"></script>
     <script language="javascript" type="text/javascript" src="./js/job_list.js"></script>
@@ -83,17 +86,24 @@ check_session_variables();                              // check session variabl
         JOM.new_job.init_events();
         JOM.new_job.set_issues_status('disabled');
 
-        JOM.new_job.categories.nonce = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
-        JOM.new_job.issues.nonce     = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
-        JOM.new_job.nonce            = <?php echo generate_json_javascript_values( '/job/new',         0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
+        JOM.new_job.categories.nonce    = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
+        JOM.new_job.categories.context  = 'new_job';
+        JOM.new_job.issues.nonce        = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
+        JOM.new_job.issues.context      = 'new_job';
+        JOM.new_job.nonce               = <?php echo generate_json_javascript_values( '/job/new',         0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
         JOM.new_job.get_categories();
 
         JOM.job_list = new Job_List_GUI();
-        JOM.job_list.nonce           = <?php echo generate_json_javascript_values( '/job/list',        0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
+        JOM.job_list.nonce      = <?php echo generate_json_javascript_values( '/job/list',        0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
+        JOM.job_list.context    = 'job_list';
         JOM.job_list.DATA__load_job_list();
+
+        JOM.search_filters = new Search_Filters_GUI();
+        JOM.search_filters.create_filters(new Array('filter by status'));
 
         jom_init('dd/mm/yyyy');
 
+        $('.selectpicker').selectpicker();
     });
     </script>
     <style>
@@ -131,25 +141,39 @@ check_session_variables();                              // check session variabl
         </br>
 
 <!-- button NEW JOB and filters -->
-        <div class="row" style="margin-bottom: 10px;margin-top: 20px;">
+        <div class="row" style="margin-bottom: 10px; margin-top: 20px;">
 <!-- COLUMN SX -->
             <div class="span2 text-center">
                 <a href="#jom_create_job_modal" role="button" class="btn btn-large btn-primary" data-toggle="modal" data-target="#jom_create_job_modal" onclick="javascript: JOM.new_job.GUI__set_mode('input');"><i class="icon-plus-sign icon-white"></i> New Job</a>
             </div>
-            <div class="span1 text-right">
-                <i class="icon-arrow-right icon-2x"></i>
+            <div class="span1">
+                ciao
+            </div>
+            <div class="span2">
+                <dl style="margin-top: 0;">
+                    <dt>Filter by status: </dt>
+                    <dd>
+                        <select id="jom_filter_by_status" class="selectpicker show-menu-arrow" data-width="100px">
+                            <option>Mustard</option>
+                            <option>Ketchup</option>
+                            <option>Relish</option>
+                        </select>
+                    </dd>
+                </dl>
+            </div>
+            <div class="span2">
+                <dl style="margin-top: 0;">
+                    <dt>Filter by category: </dt> <dd><select id="jom_filter_by_category" class="selectpicker show-menu-arrow" data-width="100px"></select></dd>
+                    <dt>Filter by issue: </dt> <dd><select id="jom_filter_by_issue" class="selectpicker show-menu-arrow" data-width="100px"></select></dd>
+                </dl>
+            </div>
+            <div class="span2">
+                <dl style="margin-top: 0;">
+                    <dt>Filter by date: </dt> <dd><input type="text" style="width: 100px"></dd>
+                </dl>
             </div>
             <div class="span3">
-                Filter by status: <a>open</a><br/>
-                Filter by user: <a>Andrea Ferroni</a><br/>
-            </div>
-            <div class="span3">
-                Filter by date: <a>last week</a><br/>
-                Filter by sto cavolo: <a>cippalippa</a>
-            </div>
-            <div class="span3">
-                Filter by date: <a>last week</a><br/>
-                Filter by sto cavolo: <a>cippalippa</a>
+                spazio vuoto
             </div>
         </div>
 
@@ -172,7 +196,7 @@ check_session_variables();                              // check session variabl
                     </thead>
                     <tbody>
                         <tr id="jom_job_row_summary">
-                            <td><button class="btn btn-mini btn-success" type="button"><i class="icon-info-sign icon-white"></i></button></td>
+                            <td><button class="btn btn-mini btn-primary" type="button"><i class="icon-info-sign icon-white"></i></button></td>
                             <td>#1</td>
                             <td>primo job</td>
                             <td>me</td>

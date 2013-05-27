@@ -31,6 +31,16 @@ License type: Apache License Version 2.0
 License URL:  https://raw.github.com/twitter/bootstrap/master/LICENSE
 Homepage:     http://twitter.github.com/bootstrap/
 
+Library:      Bootstrap Editable
+License type:
+License URL:
+Homepage:     http://vitalets.github.io/x-editable/index.html
+
+Library:
+License type:
+License URL:
+Homepage:     http://silviomoreto.github.io/bootstrap-select/
+
 Library: Normalize
 License:
 Homepage:

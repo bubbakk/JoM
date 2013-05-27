@@ -1,6 +1,7 @@
 function Categories() {
 
     var THAT = this;
+
     /*
        Variable: level
        Needed to select right table, level or sublevel
@@ -31,6 +32,12 @@ function Categories() {
     */
     THAT.nonce          = new Object();
 
+    /*
+     * Variable: context
+     * String value representing object component (is sent via Ajax call and returned back without changes)
+     */
+    THAT.context    = undefined;
+
     THAT.load = function(level, parent_id) {
 
         var req = '';
@@ -41,7 +48,8 @@ function Categories() {
 
         $.ajax({
             url:      'ard.php',
-            data:     'd=cat&r=lod&n=' + THAT.nonce.nonce + '&t=' + THAT.nonce.timestamp + '&l=' + THAT.level + parent_qs,
+            data:     'd=cat&r=lod&n=' + THAT.nonce.nonce + '&t=' + THAT.nonce.timestamp + '&c=' + THAT.context +
+                      '&l=' + THAT.level + parent_qs,
             type:     'GET',
 			dataType: 'JSON'
         })

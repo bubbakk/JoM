@@ -7,13 +7,15 @@ function Job_List_GUI() {
 
     THAT.nonce              = new Object();
 
+    THAT.context            = undefined;
+
 //////////////////
 // DATA Methods //
 //////////////////
 {
     THAT.DATA__load_job_list = function() {
 
-        var data_field = 'd=job&r=lst&n=' + THAT.nonce.nonce + '&t='  + THAT.nonce.timestamp;
+        var data_field = 'd=job&r=lst&n=' + THAT.nonce.nonce + '&t='  + THAT.nonce.timestamp + '&c=' + THAT.context;
 
         $.ajax({
             url:      'ard.php',

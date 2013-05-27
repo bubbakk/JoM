@@ -4,6 +4,17 @@ TODOS:
 - using sqlite database, is not possible to have correct authentication
 - create time format (I18N) (hh:mm.ss) and insert in job list details
 
+26.05.2013
+----------
+- created search_filter javascript object
+- created statuses javascript object
+- added parameter 'c' for each ajax call: the call context
+- added in ard.php code to read and send back the context (variable 'c')
+
+24.05.2013
+----------
+- added bootstrap select javascript plugin (see humans.txt)
+
 20.05.2013
 ----------
 - fixed problem in JSON data return (was UTF8 encoding): added recursive_utf8_encode() in generic_lib.php to have recursive UTF8 encoding of all
@@ -17,6 +28,8 @@ TODOS:
 - now details are correctly inserted (the date is converted according i18n format)
 - "favourite" star correctly toggles
 - click events on buttons are correctly managed
+- splitted session variable (as user setting) for data format and separator. Added dateformat_human and separator_human (for example, datepicker
+  plugin does not support custom formats)
 
 16.05.2013
 ----------

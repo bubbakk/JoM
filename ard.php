@@ -59,8 +59,18 @@ $requests = array('categories' => array('lod' => 'load'),       // categories
 
 
 
-
-
+/*
+ * Reading variables
+ *
+ * Some names are reserved for the application, and can't be used for custom
+ * uses. That are:
+ *  - n: the nonce
+ *  - t: timestanp (associated to nonce)
+ *  - d: request domanin
+ *  - r: request code
+ *  - c: context. Is returned to client: important to make the client application aware about the
+ *       context the data applies
+ */
 // read NONCE
 if ( post_or_get('n')===false) {
     $retval['err_msg'] = 'Missing parameter';
@@ -85,10 +95,17 @@ if ( post_or_get('r')===false) {
     $retval['dbg_msg'] = 'Missing r parameter';
     json_output_and_die($retval);
 }
+// read CONTEXT
+if ( post_or_get('c')===false) {
+    $retval['err_msg'] = 'Missing parameter';
+    $retval['dbg_msg'] = 'Missing r parameter';
+    json_output_and_die($retval);
+}
 $domain    = post_or_get('d'); // echo 'domain:  '.$domain."\n";
 $request   = post_or_get('r'); // echo 'request: '.$request."\n";
 $nonce     = post_or_get('n'); // echo 'nonce:   '.$nonce."\n";
 $timestamp = post_or_get('t'); // echo 'nonce:   '.$nonce."\n";
+$context   = post_or_get('c'); // echo 'context: '.$context."\n";
 
 $full_domain  = $domains[$domain];
 $full_request = $requests[$full_domain][$request];
@@ -175,6 +192,10 @@ if ( !isset($_SESSION['user']['is_logged_in']) )    $_SESSION['user']['is_logged
 if ( !isset($_SESSION['user']['last_visit']) )      $_SESSION['user']['last_visit']     = time();
 
 
+// UTF-8 encode (if any data exist)
+if ( isset($retval['data']) ) {
+    $retval['data'] = recursive_utf8_encode($retval['data']);
+}
+$retval['ctx'] = $context;
 
-$retval['data'] = recursive_utf8_encode($retval['data']);
 json_output_and_die($retval);
