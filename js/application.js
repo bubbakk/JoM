@@ -61,6 +61,11 @@
                     JOM.job_list.GUI__replace_job_list(JSON_response.data);
                     break;
                 }
+            case 'sta/lod':
+                {
+                    JOM.search_filters.filters['filter by status'].GUI__set_statuses_data(JSON_response.data);
+                    break;
+                }
 
         }
 

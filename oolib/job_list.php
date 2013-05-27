@@ -2,7 +2,6 @@
 
 function jobs_list_retrieve($DBH)
 {
-
     $query = 'SELECT Job_id, Job_subject, Job_description, Job_start_datetime, Job_priority, '.
              '       Status_name, '.
              '       Category_1_name, Category_2_name, '.

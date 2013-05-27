@@ -64,6 +64,7 @@ check_session_variables();                              // check session variabl
     <script language="javascript" type="text/javascript" src="./js/new_job.js"></script>
     <script language="javascript" type="text/javascript" src="./js/job_list.js"></script>
     <script language="javascript" type="text/javascript" src="./js/categories.js"></script>
+    <script language="javascript" type="text/javascript" src="./js/statuses.js"></script>
     <title>***</title>
     <script>
     $(document).ready(function() {
@@ -82,6 +83,7 @@ check_session_variables();                              // check session variabl
             dateseparator_human: '<?php echo $_SESSION['user']['settings']['i18n']['dateseparator_human']; ?>'
         }
 
+        // init NEW JOB objects
         JOM.new_job = new New_Job_GUI();
         JOM.new_job.init_events();
         JOM.new_job.set_issues_status('disabled');
@@ -93,13 +95,18 @@ check_session_variables();                              // check session variabl
         JOM.new_job.nonce               = <?php echo generate_json_javascript_values( '/job/new',         0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
         JOM.new_job.get_categories();
 
+        // init JOB LIST objects
         JOM.job_list = new Job_List_GUI();
         JOM.job_list.nonce      = <?php echo generate_json_javascript_values( '/job/list',        0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
         JOM.job_list.context    = 'job_list';
         JOM.job_list.DATA__load_job_list();
 
+        // init SEARCH FILTERS objects
         JOM.search_filters = new Search_Filters_GUI();
         JOM.search_filters.create_filters(new Array('filter by status'));
+        JOM.search_filters.filters['filter by status'].nonce        = <?php echo generate_json_javascript_values( '/statuses/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
+        JOM.search_filters.filters['filter by status'].jq_pointer   = $('#jom_filter_by_status');
+        JOM.search_filters.filters['filter by status'].load();
 
         jom_init('dd/mm/yyyy');
 
@@ -153,10 +160,8 @@ check_session_variables();                              // check session variabl
                 <dl style="margin-top: 0;">
                     <dt>Filter by status: </dt>
                     <dd>
-                        <select id="jom_filter_by_status" class="selectpicker show-menu-arrow" data-width="100px">
+                        <select id="jom_filter_by_status" class="selectpicker show-menu-arrow" data-width="auto">
                             <option>Mustard</option>
-                            <option>Ketchup</option>
-                            <option>Relish</option>
                         </select>
                     </dd>
                 </dl>

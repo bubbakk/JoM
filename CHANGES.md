@@ -7,6 +7,7 @@ TODOS:
 27.05.2013
 ----------
 - fixed login fields look
+- now statuses are correctly loaded and select/combo data field populated
 
 26.05.2013
 ----------

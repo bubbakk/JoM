@@ -3,15 +3,15 @@ function Search_Filters_GUI() {
     var THAT = this;
 
     // filter objects set
-    THAT.filters = undefined;
+    THAT.filters = new Array();
 
     THAT.create_filters = function(filters_array)
     {
-        for ( var i = 0 ; i < filters_array.lenght ; i++ )
+        for ( var i = 0 ; i < filters_array.length ; i++ )
         switch (filters_array[i])
         {
             case 'filter by status':
-                THAT.filters['filter by status'] = new Filter_By_Status();
+                THAT.filters['filter by status'] = new Statuses();
                 break;
             default:
                 console.warn('Filter not yet implemented');
@@ -22,8 +22,9 @@ function Search_Filters_GUI() {
 
     THAT.init_filter = function(filter_name, nonce_obj, $jQ_ptr)
     {
-        THAT.filters[filter_name].nonce     = nonce_obj;
-        THAT.filters[filter_name].$jq_ptr   = $jQ_ptr;
+        THAT.filters[filter_name].nonce         = nonce_obj;
+        THAT.filters[filter_name].jq_pointer    = $jQ_ptr;
+        THAT.filters[filter_name].load();
     }
 
 }

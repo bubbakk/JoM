@@ -38,3 +38,21 @@ function Statuses() {
             ;   // nothing to do here...
         });
     }
+
+    THAT.GUI__set_statuses_data = function(statuses)
+    {
+        // detach first option tag
+        var option_to_clone = THAT.jq_pointer.children().eq(0);
+        // clear all options
+        THAT.jq_pointer.children().remove();
+
+        for ( var i = 0 ; i < statuses.length ; i++ ) {
+            new_option = option_to_clone.clone();
+            new_option.val(statuses[i].id);
+            new_option.html(statuses[i].name);
+            THAT.jq_pointer.append(new_option);
+        }
+        THAT.jq_pointer.selectpicker('refresh');
+    }
+
+}

@@ -42,11 +42,13 @@ $retval['success'] = false;
 
 // DOMAINS
 $domains = array('cat' => 'categories',                         // categories
+                 'sta' => 'statuses',                           // statuses
                  'usr' => 'users',                              // users
                  'job' => 'job'                                 // job
                 );
 // REQUESTS for DOMAINS
 $requests = array('categories' => array('lod' => 'load'),       // categories
+                  'statuses'   => array('lod' => 'load'),       // statuses
                   'users'      => array('lin' => 'login',       // users
                                         'lot' => 'logout'
                                        ),
