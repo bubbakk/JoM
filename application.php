@@ -51,7 +51,11 @@ check_session_variables();                              // check session variabl
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link href="./humans.txt"                       rel="author"     type="text/plain">
     <link href="./css/bootstrap.min.css"            rel="stylesheet" type="text/css" media="screen">
-    <link href="./css/font-awesome.min.css"         rel="stylesheet" type="text/css" media="screen">
+
+<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">
+
+    <!-- <link href="./css/font-awesome.min.css"         rel="stylesheet" type="text/css" media="screen"> -->
     <link href="./css/jom_default_style.css"        rel="stylesheet" type="text/css" media="screen">
     <link href="./css/datepicker.css"               rel="stylesheet" type="text/css" media="screen">
     <link href="./css/bootstrap-select.min.css"     rel="stylesheet" type="text/css" media="screen">
@@ -154,7 +158,8 @@ check_session_variables();                              // check session variabl
                 <a href="#jom_create_job_modal" role="button" class="btn btn-large btn-primary" data-toggle="modal" data-target="#jom_create_job_modal" onclick="javascript: JOM.new_job.GUI__set_mode('input');"><i class="icon-plus-sign icon-white"></i> New Job</a>
             </div>
             <div class="span1">
-                ciao
+                <a class="btn btn-small" href="#">
+                <i class="icon-expand-alt"></i></a>
             </div>
             <div class="span2">
                 <dl style="margin-top: 0;">

@@ -8,6 +8,7 @@ TODOS:
 ----------
 - fixed login fields look
 - now statuses are correctly loaded and select/combo data field populated
+- added remote load for Font-awesome 3.1.1
 
 26.05.2013
 ----------
