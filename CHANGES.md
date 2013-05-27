@@ -4,6 +4,10 @@ TODOS:
 - using sqlite database, is not possible to have correct authentication
 - create time format (I18N) (hh:mm.ss) and insert in job list details
 
+27.05.2013
+----------
+- fixed login fields look
+
 26.05.2013
 ----------
 - created search_filter javascript object

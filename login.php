@@ -186,16 +186,16 @@ $SMAN->start_session('', false);                        // starting session
                 <div class="row">
                     <div class="span4">
                         <legend style="margin-bottom: 5px"></legend>
-                        <div style="padding: 0px 15px 0 35px;">
+                        <div style="padding: 0px 15px 0 55px;">
                             <label style="padding-top: 15px;">User name or email</label>
                             <div class="input-prepend">
                                 <span class="add-on"><i class="icon-user"></i></span>
-                                <input id="user" class="input-block-level" type="text" placeholder="enter user name or email" style="font-size: 18px; font-weight: bold;">
+                                <input id="user" type="text" style="font-size: 18px; font-weight: bold;">
                             </div>
                             <label>Password</label>
                             <div class="input-prepend">
                                 <span class="add-on"><i class="icon-key"></i></span>
-                                <input id="pass" class="input-block-level" type="password" placeholder="enter password" style="font-size: 18px; font-weight: bold;">
+                                <input id="pass" type="password" style="font-size: 18px; font-weight: bold;">
                             </div>
                             <?php echo generate_html_input_form_nonces( '/users/login', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>
                         </div>
