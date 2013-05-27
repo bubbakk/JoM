@@ -8,7 +8,7 @@ TODOS:
 ----------
 - created search_filter javascript object
 - created statuses javascript object
-- added parameter 'c' for each ajax call: the call context
+- added parameter 'c' sent by each ajax call: is the call context (needed in centralized callback dispatcher)
 - added in ard.php code to read and send back the context (variable 'c')
 
 24.05.2013
