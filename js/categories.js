@@ -22,7 +22,7 @@ function Categories() {
 
     /*
        Variable: level
-       Element container of the categories (starting with SELECT tag
+       Element container of the categories (starting with SELECT tag)
     */
     THAT.jq_pointer     = undefined;
 

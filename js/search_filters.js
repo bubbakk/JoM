@@ -13,6 +13,14 @@ function Search_Filters_GUI() {
             case 'filter by status':
                 THAT.filters['filter by status'] = new Statuses();
                 break;
+            case 'filter by category':
+                THAT.filters['filter by category'] = new Categories();
+                THAT.filters['filter by category'].level = 1;
+                break;
+            case 'filter by issue':
+                THAT.filters['filter by issue'] = new Categories();
+                THAT.filters['filter by issue'].level = 2;
+                break;
             default:
                 console.warn('Filter not yet implemented');
                 break;

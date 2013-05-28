@@ -107,14 +107,39 @@ check_session_variables();                              // check session variabl
 
         // init SEARCH FILTERS objects
         JOM.search_filters = new Search_Filters_GUI();
-        JOM.search_filters.create_filters(new Array('filter by status'));
+        JOM.search_filters.create_filters(new Array('filter by status', 'filter by category', 'filter by issue'));
         JOM.search_filters.filters['filter by status'].nonce        = <?php echo generate_json_javascript_values( '/statuses/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
         JOM.search_filters.filters['filter by status'].jq_pointer   = $('#jom_filter_by_status');
+        JOM.search_filters.filters['filter by status'].context      = 'search_filter';
         JOM.search_filters.filters['filter by status'].load();
+        JOM.search_filters.filters['filter by category'].nonce      = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
+        JOM.search_filters.filters['filter by category'].jq_pointer = $('#jom_filter_by_category');
+        JOM.search_filters.filters['filter by category'].context    = 'search_filter';
+        JOM.search_filters.filters['filter by category'].load();
+        JOM.search_filters.filters['filter by issue'].nonce      = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
+        JOM.search_filters.filters['filter by issue'].jq_pointer = $('#jom_filter_by_issue');
+        JOM.search_filters.filters['filter by issue'].context    = 'search_filter';
+        JOM.search_filters.filters['filter by issue'].load();
 
         jom_init('dd/mm/yyyy');
 
         $('.selectpicker').selectpicker();
+
+        // collapse/expand filters button
+        $("#jom_showhide_filters").on('click', function(){
+            if ( $(this).children().eq(0).hasClass("icon-expand-alt") )
+            {
+                $(this).children().eq(0).removeClass("icon-expand-alt").addClass("icon-collapse-alt");
+                $(this).children().eq(1).text("filters collapse");
+                $(".jom_filter").slideDown();
+            }
+            else {
+                $(this).children().eq(0).removeClass("icon-collapse-alt").addClass("icon-expand-alt");
+                $(this).children().eq(1).text("filters expand");
+                $(".jom_filter").slideUp();
+            }
+        });
+        $("#jom_showhide_filters").trigger('click');
     });
     </script>
     <style>
@@ -157,11 +182,13 @@ check_session_variables();                              // check session variabl
             <div class="span2 text-center">
                 <a href="#jom_create_job_modal" role="button" class="btn btn-large btn-primary" data-toggle="modal" data-target="#jom_create_job_modal" onclick="javascript: JOM.new_job.GUI__set_mode('input');"><i class="icon-plus-sign icon-white"></i> New Job</a>
             </div>
-            <div class="span1">
-                <a class="btn btn-small" href="#">
-                <i class="icon-expand-alt"></i></a>
-            </div>
+<!-- COLUMN DX -->
             <div class="span2">
+                <a class="btn btn-mini" href="#" id="jom_showhide_filters">
+                    <i class="icon-collapse-alt"></i> <span>filters collapse</span>
+                </a>
+            </div>
+            <div class="span2 jom_filter">
                 <dl style="margin-top: 0;">
                     <dt>Filter by status: </dt>
                     <dd>
@@ -171,18 +198,18 @@ check_session_variables();                              // check session variabl
                     </dd>
                 </dl>
             </div>
-            <div class="span2">
+            <div class="span2 jom_filter">
                 <dl style="margin-top: 0;">
                     <dt>Filter by category: </dt> <dd><select id="jom_filter_by_category" class="selectpicker show-menu-arrow" data-width="100px"></select></dd>
                     <dt>Filter by issue: </dt> <dd><select id="jom_filter_by_issue" class="selectpicker show-menu-arrow" data-width="100px"></select></dd>
                 </dl>
             </div>
-            <div class="span2">
+            <div class="span2 jom_filter">
                 <dl style="margin-top: 0;">
                     <dt>Filter by date: </dt> <dd><input type="text" style="width: 100px"></dd>
                 </dl>
             </div>
-            <div class="span3">
+            <div class="span2 jom_filter">
                 spazio vuoto
             </div>
         </div>

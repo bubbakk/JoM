@@ -52,7 +52,10 @@ function Statuses() {
             new_option.html(statuses[i].name);
             THAT.jq_pointer.append(new_option);
         }
-        THAT.jq_pointer.selectpicker('refresh');
+
+        if ( THAT.jq_pointer.hasClass("selectpicker") ) {
+            THAT.jq_pointer.selectpicker('refresh');
+        }
     }
 
 }
