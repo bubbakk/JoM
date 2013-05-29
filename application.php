@@ -69,6 +69,7 @@ check_session_variables();                              // check session variabl
     <script language="javascript" type="text/javascript" src="./js/job_list.js"></script>
     <script language="javascript" type="text/javascript" src="./js/categories.js"></script>
     <script language="javascript" type="text/javascript" src="./js/statuses.js"></script>
+    <script language="javascript" type="text/javascript" src="./js/gui_select.js"></script>
     <title>***</title>
     <script>
     $(document).ready(function() {
@@ -109,8 +110,8 @@ check_session_variables();                              // check session variabl
         JOM.search_filters = new Search_Filters_GUI();
         JOM.search_filters.create_filters(new Array('filter by status', 'filter by category', 'filter by issue'));
         JOM.search_filters.filters['filter by status'].nonce        = <?php echo generate_json_javascript_values( '/statuses/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
-        JOM.search_filters.filters['filter by status'].jq_pointer   = $('#jom_filter_by_status');
         JOM.search_filters.filters['filter by status'].context      = 'search_filter';
+        JOM.search_filters.filters['filter by status'].gui_widget   = new gui_select_standard( $('#jom_filter_by_status') );
         JOM.search_filters.filters['filter by status'].load();
         JOM.search_filters.filters['filter by category'].nonce      = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
         JOM.search_filters.filters['filter by category'].jq_pointer = $('#jom_filter_by_category');

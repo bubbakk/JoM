@@ -9,10 +9,10 @@ function Statuses() {
     THAT.statuses   = undefined;
 
     /*
-       Variable: level
-       Element container of the categories (starting with SELECT tag)
+       Variable: gui_widget
+       If set, is used in <GUI__update> to call its update_data() method.
     */
-    THAT.jq_pointer = undefined;
+    THAT.gui_widget = undefined;
 
     /*
        Variable: nonce
@@ -39,22 +39,12 @@ function Statuses() {
         });
     }
 
-    THAT.GUI__set_statuses_data = function(statuses)
+    THAT.GUI__update = function(statuses)
     {
-        // detach first option tag
-        var option_to_clone = THAT.jq_pointer.children().eq(0);
-        // clear all options
-        THAT.jq_pointer.children().remove();
+        if ( statuses != undefined ) THAT.statuses = statuses;
 
-        for ( var i = 0 ; i < statuses.length ; i++ ) {
-            new_option = option_to_clone.clone();
-            new_option.val(statuses[i].id);
-            new_option.html(statuses[i].name);
-            THAT.jq_pointer.append(new_option);
-        }
-
-        if ( THAT.jq_pointer.hasClass("selectpicker") ) {
-            THAT.jq_pointer.selectpicker('refresh');
+        if ( THAT.gui_widget !== undefined ) {
+            THAT.gui_widget.update_data(statuses, 'id', 'name');
         }
     }
 

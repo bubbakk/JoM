@@ -70,7 +70,7 @@
                 }
             case 'sta/lod':
                 {
-                    JOM.search_filters.filters['filter by status'].GUI__set_statuses_data(JSON_response.data);
+                    JOM.search_filters.filters['filter by status'].GUI__update(JSON_response.data);
                     JOM.search_filters.filters['filter by status'].nonce.nonce      = JSON_response.new_nonce;
                     JOM.search_filters.filters['filter by status'].nonce.timestap   = JSON_response.new_timestamp;
                     break;
