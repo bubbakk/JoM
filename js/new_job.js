@@ -6,7 +6,6 @@ function New_Job_GUI() {
         THAT.$form          = undefined;
         THAT.$subject       = undefined;
         THAT.$description   = undefined;
-        THAT.$category      = undefined;
         THAT.$issue         = undefined;
         THAT.$start_date    = undefined;
         THAT.$priority      = undefined;
@@ -57,8 +56,7 @@ function New_Job_GUI() {
     {
         THAT.$subject.val('');
         THAT.$description.val('');
-        THAT.$category.val(0);
-        THAT.$category.trigger('change');
+        THAT.categories.gui_widget.default_status(true);
         THAT.$issue.val(0);
         THAT.$priority.find('a[class~="active"]').removeClass("active");
         THAT.$assign_to_me.prop('checked', false);
@@ -181,7 +179,7 @@ function New_Job_GUI() {
 
         // DESCRIPTION, CATEGORY and ISSUE
         THAT.form_data.description  = THAT.$description.val();
-        THAT.form_data.category     = THAT.$category.val();
+        THAT.form_data.category     = THAT.categories.gui_widget.jq_pointer.val();
         THAT.form_data.issue        = THAT.$issue.val();
 
         // DATE START
@@ -241,17 +239,17 @@ function New_Job_GUI() {
     }
 
 /////// CATEGORIES
-    THAT.set_categories_list = function() {
-        var option_el = THAT.$category.children().eq(0).detach();
-        for ( var i = 0 ; i < THAT.categories.categories.length ; i++ ) {
-            category = THAT.categories.categories[i];
-            new_option = $(option_el).clone();
-            $(new_option).val(category.id);
-            new_option.attr("title", category.description);
-            new_option.text(category.name);
-            THAT.$category.append(new_option);
-        }
-    }
+    //~ THAT.set_categories_list = function() {
+        //~ var option_el = THAT.$category.children().eq(0).detach();
+        //~ for ( var i = 0 ; i < THAT.categories.categories.length ; i++ ) {
+            //~ category = THAT.categories.categories[i];
+            //~ new_option = $(option_el).clone();
+            //~ $(new_option).val(category.id);
+            //~ new_option.attr("title", category.description);
+            //~ new_option.text(category.name);
+            //~ THAT.$category.append(new_option);
+        //~ }
+    //~ }
 ////// end CATEGORIES
 
 
@@ -285,7 +283,7 @@ function New_Job_GUI() {
 
     THAT.update_issues = function() {
         THAT.set_issues_status("load");
-        THAT.issues.parent_id = THAT.$category.val();
+        THAT.issues.parent_id = THAT.categories.gui_widget.jq_pointer.val();
         THAT.issues.load();
     }
 
@@ -323,11 +321,9 @@ function New_Job_GUI() {
             JOM['new_job'].GUI__clear_form_data();
         });
         // SELECT CATEGORY
-        THAT.$category.unbind().on('change', function(){
+        THAT.categories.gui_widget.jq_pointer.unbind().on('change', function(){
             if ( $(this).hasClass("disabled") ) return;
-            if ( JOM['new_job'].issues.categories != JOM['new_job'].$category.val() ) {
-                JOM['new_job'].update_issues();
-            }
+            JOM['new_job'].update_issues();
         });
         // SAVE BUTTON
         THAT.$save.unbind().on('click', {new_job_obj: THAT}, function(e){
@@ -347,10 +343,13 @@ function New_Job_GUI() {
         THAT.$clone_last    = $("#form_new_job [name='clonelast']");
         THAT.$subject       = $("#form_new_job [name='subject']");
         THAT.$description   = $("#form_new_job [name='description']");
-        THAT.$category      = $("#form_new_job [name='category']");
+
         THAT.$issue         = $("#form_new_job [name='issue']");
+
         THAT.$start_date    = $("#form_new_job [name='creation_date']");
+
         THAT.$priority      = $("#form_new_job [name='priority']");
+
         THAT.$assign_to_me  = $("#form_new_job [name='assign_to_me']");
         THAT.$open_details  = $("#form_new_job [name='open_details']");
         THAT.$issue_load    = $("#form_new_job [name='issue']").next();
@@ -367,8 +366,9 @@ function New_Job_GUI() {
         THAT.$msg_save_ok   = THAT.$form.parent().find(".jom_message_save_ok");
         THAT.$msg_save_ko   = THAT.$form.parent().find(".jom_message_save_ko");
 
-        THAT.categories       = new Categories();
-        THAT.categories.level = 1;
+        THAT.categories             = new Categories();
+        THAT.categories.level       = 1;
+        THAT.categories.gui_widget  = new gui_select_standard( $("#form_new_job [name='category']") );
 
         THAT.issues           = new Categories();
         THAT.issues.level     = 2;

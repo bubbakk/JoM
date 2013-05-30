@@ -21,10 +21,10 @@ function Categories() {
     THAT.categories     = undefined;
 
     /*
-       Variable: level
-       Element container of the categories (starting with SELECT tag)
+       Variable: gui_widget
+       If set, is used in <GUI__update> to call its update_data() method.
     */
-    THAT.jq_pointer     = undefined;
+    THAT.gui_widget = undefined;
 
     /*
        Variable: nonce
@@ -36,7 +36,7 @@ function Categories() {
      * Variable: context
      * String value representing object component (is sent via Ajax call and returned back without changes)
      */
-    THAT.context    = undefined;
+    THAT.context        = undefined;
 
     THAT.load = function(level, parent_id) {
 

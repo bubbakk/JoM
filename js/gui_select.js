@@ -35,7 +35,7 @@ function gui_select_standard(jQ_ptr)
     THAT.update_data = function(data, valuefieldname, textfieldname)
     {
         // clear old data
-        THAT.jq_pointer.children().remove();
+        THAT.clear_data();
 
         // se new data
         for ( var i = 0 ; i < data.length ; i++ )
@@ -55,6 +55,30 @@ function gui_select_standard(jQ_ptr)
         // update, if needed, selectpicker bootstrap object
         if ( THAT.jq_pointer.hasClass('selectpicker') ) {
             THAT.jq_pointer.selectpicker('refresh');
+        }
+    }
+
+    /*
+     * Function: clear_data
+     * Clear contained values/texts
+     */
+    THAT.clear_data  = function() {
+        THAT.jq_pointer.children().remove();
+    }
+
+    /*
+     * Function: default_status
+     * Select first option and eventually trigger event
+     *
+     * Parameters:
+     *   trigger_change - boolean value: can trigger 'change' event
+     */
+    THAT.default_status = function(trigger_change) {
+        // set the value
+        THAT.jq_pointer.val(0);
+        // trigger change event
+        if ( trigger_change!== undefined && trigger_change === true ) {
+            THAT.jq_pointer.trigger('change');
         }
     }
 

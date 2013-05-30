@@ -36,6 +36,14 @@ function gui_widgetname(jQ_ptr)
         alert("Implement me");
     }
 
+    /*
+     * Function: clear_data
+     * Clear contained values/texts
+     */
+    THAT.clear_data  = function() {
+        THAT.jq_pointer.children().remove();
+    }
+
     // constructor
         // setting jquery DOM object HTML pointer
         THAT.jq_pointer = jQ_ptr;

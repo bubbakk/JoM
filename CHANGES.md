@@ -4,6 +4,10 @@ TODOS:
 - using sqlite database, is not possible to have correct authentication
 - create time format (I18N) (hh:mm.ss) and insert in job list details
 
+30.05.2013
+----------
+- refactored new_job -> categories object: now it works using gui_select_standard class
+
 29.05.2013
 ----------
 - created gui_select_standard javascript object: the aim is to have one only interface to populate widget values
