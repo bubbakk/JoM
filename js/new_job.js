@@ -6,7 +6,6 @@ function New_Job_GUI() {
         THAT.$form          = undefined;
         THAT.$subject       = undefined;
         THAT.$description   = undefined;
-        THAT.$issue         = undefined;
         THAT.$start_date    = undefined;
         THAT.$priority      = undefined;
         THAT.$assign_to_me  = undefined;
@@ -57,7 +56,7 @@ function New_Job_GUI() {
         THAT.$subject.val('');
         THAT.$description.val('');
         THAT.categories.gui_widget.default_status(true);
-        THAT.$issue.val(0);
+        THAT.issues.gui_widget.default_status(true);
         THAT.$priority.find('a[class~="active"]').removeClass("active");
         THAT.$assign_to_me.prop('checked', false);
         THAT.$open_details.prop('checked', false);
@@ -180,7 +179,7 @@ function New_Job_GUI() {
         // DESCRIPTION, CATEGORY and ISSUE
         THAT.form_data.description  = THAT.$description.val();
         THAT.form_data.category     = THAT.categories.gui_widget.jq_pointer.val();
-        THAT.form_data.issue        = THAT.$issue.val();
+        THAT.form_data.issue        = THAT.issues.gui_widget.jq_pointer.val();
 
         // DATE START
         // check date correctness also against format
@@ -289,25 +288,22 @@ function New_Job_GUI() {
 
     THAT.set_issues_status = function(status) {
         if ( status === 'disabled' ) {
-            if ( THAT.$issue.attr("disabled") == undefined )
-                THAT.$issue.attr("disabled", "disabled");
+            THAT.issues.gui_widget.enable(false);
             THAT.$issue_load.fadeOut();
         }
         else
         if ( status === 'enabled' ) {
-            if ( THAT.$issue.attr("disabled") == "disabled" )
-                THAT.$issue.removeAttr("disabled");
+            THAT.issues.gui_widget.enable();
             JOM['new_job'].$issue_load.fadeOut();
         }
         else
         if ( status === 'start' ) {
-            THAT.$issue.attr("disabled", "disabled");
+            THAT.issues.gui_widget.enable(false);
             THAT.$issue_load.hide();
         }
         else
         if ( status === 'load' ) {
-             if ( THAT.$issue.attr("disabled") == undefined )
-                THAT.$issue.attr("disabled", "disabled");
+            THAT.issues.gui_widget.enable(false);
             THAT.$issue_load.fadeIn();
         }
     }
@@ -344,8 +340,6 @@ function New_Job_GUI() {
         THAT.$subject       = $("#form_new_job [name='subject']");
         THAT.$description   = $("#form_new_job [name='description']");
 
-        THAT.$issue         = $("#form_new_job [name='issue']");
-
         THAT.$start_date    = $("#form_new_job [name='creation_date']");
 
         THAT.$priority      = $("#form_new_job [name='priority']");
@@ -366,12 +360,15 @@ function New_Job_GUI() {
         THAT.$msg_save_ok   = THAT.$form.parent().find(".jom_message_save_ok");
         THAT.$msg_save_ko   = THAT.$form.parent().find(".jom_message_save_ko");
 
+        // Categories widget
         THAT.categories             = new Categories();
         THAT.categories.level       = 1;
         THAT.categories.gui_widget  = new gui_select_standard( $("#form_new_job [name='category']") );
 
+        // Issues widget
         THAT.issues           = new Categories();
         THAT.issues.level     = 2;
+        THAT.issues.gui_widget  = new gui_select_standard( $("#form_new_job [name='issue']") );
     // end constructor
 
 }

@@ -82,6 +82,26 @@ function gui_select_standard(jQ_ptr)
         }
     }
 
+    /*
+     * Function: enable
+     * Set the field enabled/disabled
+     *
+     * Parameters:
+     *   status - if undefined or true field will be enabled, else disabled
+     */
+    THAT.enable = function(status) {
+        if ( status === undefined || status ) {
+            if ( THAT.jq_pointer.attr("disabled") == "disabled" ) {
+                THAT.jq_pointer.removeAttr("disabled");
+            }
+        }
+        else {
+            if ( THAT.jq_pointer.attr("disabled") == undefined ) {
+                THAT.jq_pointer.attr("disabled", "disabled");
+            }
+        }
+    }
+
     // constructor
         // setting jquery DOM object HTML pointer
         THAT.jq_pointer = jQ_ptr;
