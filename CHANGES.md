@@ -5,6 +5,10 @@ TODOS:
 - create time format (I18N) (hh:mm.ss) and insert in job list details
 
 
+02.05.2013
+----------
+- continues refactoring new_job -> issues object (like categories)
+
 01.05.2013
 ----------
 - refactoring new_job -> issues object (like categories)

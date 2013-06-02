@@ -46,7 +46,9 @@
                     else
                     if ( JSON_response.ctx == 'search_filter' )
                     {
-
+                        JOM.search_filters.filters.filter_by_category.gui_widget.GUI__update(JSON_response.data);
+                        JOM.search_filters.filters.filter_by_category.nonce.nonce      = JSON_response.new_nonce;
+                        JOM.search_filters.filters.filter_by_category.nonce.timestap   = JSON_response.new_timestamp;
                     }
                     break;
                 }
@@ -70,9 +72,9 @@
                 }
             case 'sta/lod':
                 {
-                    JOM.search_filters.filters['filter by status'].GUI__update(JSON_response.data);
-                    JOM.search_filters.filters['filter by status'].nonce.nonce      = JSON_response.new_nonce;
-                    JOM.search_filters.filters['filter by status'].nonce.timestap   = JSON_response.new_timestamp;
+                    JOM.search_filters.filters.filter_by_status.gui_widget.GUI__update(JSON_response.data);
+                    JOM.search_filters.filters.filter_by_status.nonce.nonce      = JSON_response.new_nonce;
+                    JOM.search_filters.filters.filter_by_status.nonce.timestap   = JSON_response.new_timestamp;
                     break;
                 }
 

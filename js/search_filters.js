@@ -3,23 +3,23 @@ function Search_Filters_GUI() {
     var THAT = this;
 
     // filter objects set
-    THAT.filters = new Array();
+    THAT.filters = new Object();
 
     THAT.create_filters = function(filters_array)
     {
         for ( var i = 0 ; i < filters_array.length ; i++ )
         switch (filters_array[i])
         {
-            case 'filter by status':
-                THAT.filters['filter by status'] = new Statuses();
+            case 'filter_by_status':
+                THAT.filters.filter_by_status = new Statuses();
                 break;
-            case 'filter by category':
-                THAT.filters['filter by category'] = new Categories();
-                THAT.filters['filter by category'].level = 1;
+            case 'filter_by_category':
+                THAT.filters.filter_by_category = new Categories();
+                THAT.filters.filter_by_category.level = 1;
                 break;
-            case 'filter by issue':
-                THAT.filters['filter by issue'] = new Categories();
-                THAT.filters['filter by issue'].level = 2;
+            case 'filter_by_issue':
+                THAT.filters.filter_by_issue = new Categories();
+                THAT.filters.filter_by_issue.level = 2;
                 break;
             default:
                 console.warn('Filter not yet implemented');

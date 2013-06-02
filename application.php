@@ -108,19 +108,19 @@ check_session_variables();                              // check session variabl
 
         // init SEARCH FILTERS objects
         JOM.search_filters = new Search_Filters_GUI();
-        JOM.search_filters.create_filters(new Array('filter by status', 'filter by category', 'filter by issue'));
-        JOM.search_filters.filters['filter by status'].nonce        = <?php echo generate_json_javascript_values( '/statuses/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
-        JOM.search_filters.filters['filter by status'].context      = 'search_filter';
-        JOM.search_filters.filters['filter by status'].gui_widget   = new gui_select_standard( $('#jom_filter_by_status') );
-        JOM.search_filters.filters['filter by status'].load();
-        JOM.search_filters.filters['filter by category'].nonce      = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
-        JOM.search_filters.filters['filter by category'].jq_pointer = $('#jom_filter_by_category');
-        JOM.search_filters.filters['filter by category'].context    = 'search_filter';
-        JOM.search_filters.filters['filter by category'].load();
-        JOM.search_filters.filters['filter by issue'].nonce      = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
-        JOM.search_filters.filters['filter by issue'].jq_pointer = $('#jom_filter_by_issue');
-        JOM.search_filters.filters['filter by issue'].context    = 'search_filter';
-        JOM.search_filters.filters['filter by issue'].load();
+        JOM.search_filters.create_filters(new Array('filter_by_status', 'filter_by_category', 'filter_by_issue'));
+        JOM.search_filters.filters.filter_by_status.nonce        = <?php echo generate_json_javascript_values( '/statuses/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
+        JOM.search_filters.filters.filter_by_status.context      = 'search_filter';
+        JOM.search_filters.filters.filter_by_status.gui_widget   = new gui_select_standard( $('#jom_filter_by_status') );
+        JOM.search_filters.filters.filter_by_status.load();
+        JOM.search_filters.filters.filter_by_category.nonce      = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
+        JOM.search_filters.filters.filter_by_category.jq_pointer = $('#jom_filter_by_category');
+        JOM.search_filters.filters.filter_by_category.context    = 'search_filter';
+        JOM.search_filters.filters.filter_by_category.load();
+        JOM.search_filters.filters.filter_by_issue.nonce      = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
+        JOM.search_filters.filters.filter_by_issue.jq_pointer = $('#jom_filter_by_issue');
+        JOM.search_filters.filters.filter_by_issue.context    = 'search_filter';
+        JOM.search_filters.filters.filter_by_issue.load();
 
         jom_init('dd/mm/yyyy');
 
@@ -309,7 +309,7 @@ check_session_variables();                              // check session variabl
           <div class="control-group">
             <label class="control-label" for="category">Category</label>
             <div class="controls">
-              <select name="category">
+              <select name="category" class="selectpicker">
                 <option value="" title=""></option>
               </select>
             </div>
