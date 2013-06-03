@@ -31,7 +31,7 @@
                         var level = jsJOMlib__getParameterByName(settings.url, 'l');
                         if ( parseInt(level, 10) === 1 ) {
                             JOM['new_job'].categories.categories      = JSON_response.data;
-                            JOM['new_job'].categories.gui_widget.update_data(JSON_response.data, "id", "name");
+                            JOM['new_job'].categories.GUI__update(JSON_response.data, "id", "name");
                             JOM['new_job'].categories.nonce.nonce     = JSON_response.new_nonce;
                             JOM['new_job'].categories.nonce.timestamp = JSON_response.new_timestamp;
                         }
@@ -46,7 +46,9 @@
                     else
                     if ( JSON_response.ctx == 'search_filter' )
                     {
-                        JOM.search_filters.filters.filter_by_category.gui_widget.GUI__update(JSON_response.data);
+                        // update object data and form field too
+                        JOM.search_filters.filters.filter_by_category.GUI__update(JSON_response.data);
+                        // update nonce
                         JOM.search_filters.filters.filter_by_category.nonce.nonce      = JSON_response.new_nonce;
                         JOM.search_filters.filters.filter_by_category.nonce.timestap   = JSON_response.new_timestamp;
                     }
@@ -72,7 +74,9 @@
                 }
             case 'sta/lod':
                 {
-                    JOM.search_filters.filters.filter_by_status.gui_widget.GUI__update(JSON_response.data);
+                    // update object data and form field too
+                    JOM.search_filters.filters.filter_by_status.GUI__update(JSON_response.data);
+                    // update nonce
                     JOM.search_filters.filters.filter_by_status.nonce.nonce      = JSON_response.new_nonce;
                     JOM.search_filters.filters.filter_by_status.nonce.timestap   = JSON_response.new_timestamp;
                     break;

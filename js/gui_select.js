@@ -44,7 +44,7 @@ function gui_select_standard(jQ_ptr)
             text  = data[i][textfieldname];
 
             // set new block data
-            cloned_option = this.option_block.clone();  // clone base <option> block
+            cloned_option = option_block.clone();  // clone base <option> block
             cloned_option.val(value);                   // set value
             cloned_option.html(text);                   // set text
 
@@ -106,7 +106,7 @@ function gui_select_standard(jQ_ptr)
         // setting jquery DOM object HTML pointer
         THAT.jq_pointer = jQ_ptr;
         // detaching and clearing options
-        this.option_block = THAT.jq_pointer.children().eq(0).detach();
+        option_block = THAT.jq_pointer.children().eq(0).detach();
         THAT.jq_pointer.children().remove();
     // end constructory
 }

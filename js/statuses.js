@@ -10,7 +10,7 @@ function Statuses() {
 
     /*
        Variable: gui_widget
-       If set, is used in <GUI__update> to call its update_data() method.
+       The form field associated
     */
     THAT.gui_widget = undefined;
 
@@ -26,7 +26,16 @@ function Statuses() {
      */
     THAT.context    = undefined;
 
-    THAT.load = function(level, parent_id) {
+
+/****************
+ * DATA METHODS *
+ ***************/
+{
+    /*
+     * Function: load
+     * Load statuses data
+     */
+    THAT.load = function() {
 
         $.ajax({
             url:      'ard.php',
@@ -38,14 +47,32 @@ function Statuses() {
             ;   // nothing to do here...
         });
     }
+}
+///////////////// END DATA METHODS
 
+
+
+/***************
+ * GUI METHODS *
+ **************/
+{
+    /*
+     * Function: GUI__update
+     * If exists, set the associated widget (generally form field) data
+     *
+     * Parameters:
+     *  statuses - Contain JSON data array. Passing this parameter is a shortcut to set property and call this method. If
+     *             not passed, the property <THAT.statuses> is used.
+     */
     THAT.GUI__update = function(statuses)
     {
         if ( statuses != undefined ) THAT.statuses = statuses;
 
         if ( THAT.gui_widget !== undefined ) {
-            THAT.gui_widget.update_data(statuses, 'id', 'name');
+            THAT.gui_widget.update_data(THAT.statuses, 'id', 'name');
         }
     }
+}
+///////////////// END GUI METHODS
 
 }

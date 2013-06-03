@@ -22,7 +22,7 @@ function Categories() {
 
     /*
        Variable: gui_widget
-       If set, is used in <GUI__update> to call its update_data() method.
+       The form field associated
     */
     THAT.gui_widget = undefined;
 
@@ -38,6 +38,20 @@ function Categories() {
      */
     THAT.context        = undefined;
 
+
+
+/****************
+ * DATA METHODS *
+ ***************/
+{
+    /*
+     * Function: load
+     * Load categories data
+     *
+     * Parameters:
+     *   level - category level filter. If not passed or undefined, is set to 1 (is the category table to query)
+     *   parent_id - if specified, and query level > 1, specifies the id filter (needed for sub-categories)
+     */
     THAT.load = function(level, parent_id) {
 
         var req = '';
@@ -66,7 +80,32 @@ function Categories() {
 
     THAT.apply_changes_to_server = function(level, id) {
     }
+}
+///////////////// END DATA METHODS
 
-    THAT.get_list = function(level) {
+
+
+/***************
+ * GUI METHODS *
+ **************/
+{
+    /*
+     * Function: GUI__update
+     * If exists, set the associated widget (generally form field) data
+     *
+     * Parameters:
+     *  statuses - Contain JSON data array. Passing this parameter is a shortcut to set property and call this method. If
+     *             not passed, the property <THAT.statuses> is used.
+     */
+    THAT.GUI__update = function(categories)
+    {
+        if ( categories != undefined ) THAT.categories = categories;
+
+        if ( THAT.gui_widget !== undefined ) {
+            THAT.gui_widget.update_data(THAT.categories, 'id', 'name');
+        }
     }
+}
+///////////////// END GUI METHODS
+
 }

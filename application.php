@@ -109,17 +109,20 @@ check_session_variables();                              // check session variabl
         // init SEARCH FILTERS objects
         JOM.search_filters = new Search_Filters_GUI();
         JOM.search_filters.create_filters(new Array('filter_by_status', 'filter_by_category', 'filter_by_issue'));
-        JOM.search_filters.filters.filter_by_status.nonce        = <?php echo generate_json_javascript_values( '/statuses/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
-        JOM.search_filters.filters.filter_by_status.context      = 'search_filter';
-        JOM.search_filters.filters.filter_by_status.gui_widget   = new gui_select_standard( $('#jom_filter_by_status') );
+        // status filter
+        JOM.search_filters.filters.filter_by_status.nonce       = <?php echo generate_json_javascript_values( '/statuses/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
+        JOM.search_filters.filters.filter_by_status.context     = 'search_filter';
+        JOM.search_filters.filters.filter_by_status.gui_widget  = new gui_select_standard( $('#jom_filter_by_status') );
         JOM.search_filters.filters.filter_by_status.load();
-        JOM.search_filters.filters.filter_by_category.nonce      = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
-        JOM.search_filters.filters.filter_by_category.jq_pointer = $('#jom_filter_by_category');
-        JOM.search_filters.filters.filter_by_category.context    = 'search_filter';
+        // category filter
+        JOM.search_filters.filters.filter_by_category.nonce     = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
+        JOM.search_filters.filters.filter_by_category.context   = 'search_filter';
+        JOM.search_filters.filters.filter_by_category.gui_widget  = new gui_select_standard( $('#jom_filter_by_category') );
         JOM.search_filters.filters.filter_by_category.load();
-        JOM.search_filters.filters.filter_by_issue.nonce      = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
-        JOM.search_filters.filters.filter_by_issue.jq_pointer = $('#jom_filter_by_issue');
-        JOM.search_filters.filters.filter_by_issue.context    = 'search_filter';
+        // issue filter
+        JOM.search_filters.filters.filter_by_issue.nonce        = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
+        JOM.search_filters.filters.filter_by_issue.context      = 'search_filter';
+        JOM.search_filters.filters.filter_by_issue.gui_widget   = new gui_select_standard( $('#jom_filter_by_issue') );
         JOM.search_filters.filters.filter_by_issue.load();
 
         jom_init('dd/mm/yyyy');
@@ -194,15 +197,25 @@ check_session_variables();                              // check session variabl
                     <dt>Filter by status: </dt>
                     <dd>
                         <select id="jom_filter_by_status" class="selectpicker show-menu-arrow" data-width="auto">
-                            <option>Mustard</option>
+                            <option></option>
                         </select>
                     </dd>
                 </dl>
             </div>
             <div class="span2 jom_filter">
                 <dl style="margin-top: 0;">
-                    <dt>Filter by category: </dt> <dd><select id="jom_filter_by_category" class="selectpicker show-menu-arrow" data-width="100px"></select></dd>
-                    <dt>Filter by issue: </dt> <dd><select id="jom_filter_by_issue" class="selectpicker show-menu-arrow" data-width="100px"></select></dd>
+                    <dt>Filter by category: </dt>
+                    <dd>
+                        <select id="jom_filter_by_category" class="selectpicker show-menu-arrow" data-width="auto">
+                            <option></option>
+                        </select>
+                    </dd>
+                    <dt>Filter by issue: </dt>
+                    <dd>
+                        <select id="jom_filter_by_issue" class="selectpicker show-menu-arrow" data-width="auto">
+                            <option></option>
+                        </select>
+                    </dd>
                 </dl>
             </div>
             <div class="span2 jom_filter">

@@ -8,6 +8,7 @@ TODOS:
 02.05.2013
 ----------
 - continues refactoring new_job -> issues object (like categories)
+- fixed
 
 01.05.2013
 ----------
