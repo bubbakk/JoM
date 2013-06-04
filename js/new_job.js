@@ -254,31 +254,6 @@ function New_Job_GUI() {
 
 
 // ISSUES
-    THAT.set_issues_list = function() {
-        var option_el = THAT.$issue.children().eq(0).detach();
-
-        if ( THAT.issues.categories == undefined ) {
-            THAT.$issue.children().remove();
-            new_option = $(option_el).clone();
-            $(new_option).attr("value", " ");
-            $(new_option).attr("title", " ");
-            $(new_option).text("");
-            THAT.$issue.append(new_option);
-            THAT.set_issues_status('disabled');
-            return;
-        };
-
-        THAT.set_issues_status('enabled');
-        THAT.$issue.children().remove();
-        for ( var i = 0 ; i < THAT.issues.categories.length ; i++ ) {
-            issue = THAT.issues.categories[i];
-            new_option = $(option_el).clone();
-            $(new_option).attr("value", issue.id);
-            $(new_option).attr("title", issue.description);
-            $(new_option).text(issue.name);
-            THAT.$issue.append(new_option);
-        }
-    }
 
     THAT.update_issues = function() {
         THAT.set_issues_status("load");

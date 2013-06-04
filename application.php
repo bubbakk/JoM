@@ -330,7 +330,7 @@ check_session_variables();                              // check session variabl
           <div class="control-group">
             <label class="control-label" for="issue">Issue</label>
             <div class="controls">
-              <select name="issue">
+              <select name="issue" class="selectpicker">
                 <option value="" title=""></option>
               </select>
               <i class="icon-spinner icon-spin"></i>

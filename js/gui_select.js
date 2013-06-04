@@ -18,8 +18,15 @@ function gui_select_standard(jQ_ptr)
     THAT.jq_pointer = undefined;
 
     /*
+     * Variable: auto_enable_switch
+     * If true, set the field enabled where there is at least one option to select, to disabled there is no one
+     */
+
+    THAT.auto_enable_switch = true;
+
+    /*
      * Variable: NAME_block
-     * Block used to populate widget
+     * Block used to populate field
      */
     var option_block = undefined
 
@@ -37,6 +44,8 @@ function gui_select_standard(jQ_ptr)
         // clear old data
         THAT.clear_data();
 
+        if ( data === undefined ) data = new Array();
+
         // se new data
         for ( var i = 0 ; i < data.length ; i++ )
         {
@@ -52,6 +61,14 @@ function gui_select_standard(jQ_ptr)
             THAT.jq_pointer.append(cloned_option);      // append to list
         }
 
+        // if auto_enable_switch is true, auto enable/disable field
+        if ( THAT.auto_enable_switch ) {
+            if ( i == 0 )
+                THAT.enable();
+            else
+                THAT.enable(false);
+        }
+
         // update, if needed, selectpicker bootstrap object
         if ( THAT.jq_pointer.hasClass('selectpicker') ) {
             THAT.jq_pointer.selectpicker('refresh');
@@ -64,6 +81,11 @@ function gui_select_standard(jQ_ptr)
      */
     THAT.clear_data  = function() {
         THAT.jq_pointer.children().remove();
+
+        // if auto_enable_switch is true, auto enable/disable field
+        if ( THAT.auto_enable_switch ) {
+            THAT.enable(false);
+        }
     }
 
     /*
@@ -93,11 +115,13 @@ function gui_select_standard(jQ_ptr)
         if ( status === undefined || status ) {
             if ( THAT.jq_pointer.attr("disabled") == "disabled" ) {
                 THAT.jq_pointer.removeAttr("disabled");
+                THAT.jq_pointer.removeClass("disabled");
             }
         }
         else {
             if ( THAT.jq_pointer.attr("disabled") == undefined ) {
                 THAT.jq_pointer.attr("disabled", "disabled");
+                THAT.jq_pointer.addClass("disabled");
             }
         }
     }

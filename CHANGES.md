@@ -8,7 +8,7 @@ TODOS:
 02.05.2013
 ----------
 - continues refactoring new_job -> issues object (like categories)
-- fixed
+- fixed some issues on avascript gui objects and form field component
 
 01.05.2013
 ----------
@@ -277,6 +277,7 @@ TODOS:
 - implement a method in bbkk_base_class that checks $pdo variable connection and $tablename variable. Also some general user error messages, like prepare statement, connection missing, ....
 - fix login fields resize
 - add checks and documentation comments to nonce library
+- do not check session expirement only in ajax call, but as one of the first steps of each application file
 
 
 24.03.2013

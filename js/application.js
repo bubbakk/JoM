@@ -38,7 +38,7 @@
                         else
                         if ( parseInt(level, 10) === 2 ) {
                             JOM['new_job'].issues.categories      = JSON_response.data;
-                            JOM['new_job'].set_issues_list();
+                            JOM['new_job'].issues.GUI__update(JSON_response.data, "id", "name");
                             JOM['new_job'].issues.nonce.nonce     = JSON_response.new_nonce;
                             JOM['new_job'].issues.nonce.timestamp = JSON_response.new_timestamp;
                         }
