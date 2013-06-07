@@ -4,6 +4,13 @@ TODOS:
 - using sqlite database, is not possible to have correct authentication
 - create time format (I18N) (hh:mm.ss) and insert in job list details
 
+07.05.2013
+----------
+- implemented issues dynamic load on category change in search filters
+
+05.05.2013
+----------
+- reverted font-awesome to local and updated to latest version
 
 02.05.2013
 ----------
@@ -13,7 +20,7 @@ TODOS:
 - modified update_data() method in javascript gui_select_standard class
 - modified clear_data() method in javascript gui_select_standard class
 - modified enable() method in javascript gui_select_standard class
-- made font-awesome locally installed (and pathed the ttf font file path search)
+- made font-awesome locally installed (and pathed the various font formats file path search)
 
 01.05.2013
 ----------

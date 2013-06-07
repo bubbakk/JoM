@@ -98,9 +98,6 @@ check_session_variables();                              // check session variabl
         JOM.new_job.issues.context      = 'new_job';
         JOM.new_job.nonce               = <?php echo generate_json_javascript_values( '/job/new',         0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
         JOM.new_job.get_categories();
-        dummy = setTimeout(function() {
-            JOM.new_job.categories.gui_widget.jq_pointer.trigger('change')
-        }, 1000);
 
         // init JOB LIST objects
         JOM.job_list = new Job_List_GUI();
@@ -125,7 +122,9 @@ check_session_variables();                              // check session variabl
         JOM.search_filters.filters.filter_by_issue.nonce        = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
         JOM.search_filters.filters.filter_by_issue.context      = 'search_filter';
         JOM.search_filters.filters.filter_by_issue.gui_widget   = new gui_select_standard( $('#jom_filter_by_issue') );
-        JOM.search_filters.filters.filter_by_category.load();
+        JOM.search_filters.filters.filter_by_issue.load();
+
+        JOM.search_filters.init_category_events();
 
         jom_init('dd/mm/yyyy');
 
@@ -145,6 +144,14 @@ check_session_variables();                              // check session variabl
                 $(".jom_filter").slideUp();
             }
         });
+
+        // trigger base events
+        dummy = setTimeout(function() {
+            JOM.new_job.categories.gui_widget.jq_pointer.trigger('change')
+        }, 1000);
+        dummy = setTimeout(function() {
+            JOM.search_filters.filters.filter_by_category.gui_widget.jq_pointer.trigger('change')
+        }, 1000);
         $("#jom_showhide_filters").trigger('click');
     });
     </script>
@@ -206,6 +213,11 @@ check_session_variables();                              // check session variabl
             </div>
             <div class="span2 jom_filter">
                 <dl style="margin-top: 0;">
+                    <dt>Filter by date: </dt> <dd><input type="text" style="width: 100px"></dd>
+                </dl>
+            </div>
+            <div class="span2 jom_filter">
+                <dl style="margin-top: 0;">
                     <dt>Filter by category: </dt>
                     <dd>
                         <select id="jom_filter_by_category" class="selectpicker show-menu-arrow" data-width="auto">
@@ -217,12 +229,8 @@ check_session_variables();                              // check session variabl
                         <select id="jom_filter_by_issue" class="selectpicker show-menu-arrow" data-width="auto">
                             <option></option>
                         </select>
+                        <i class="icon-spinner icon-spin"></i>
                     </dd>
-                </dl>
-            </div>
-            <div class="span2 jom_filter">
-                <dl style="margin-top: 0;">
-                    <dt>Filter by date: </dt> <dd><input type="text" style="width: 100px"></dd>
                 </dl>
             </div>
             <div class="span2 jom_filter">

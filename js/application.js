@@ -25,10 +25,11 @@
         {
             case 'cat/lod':
                 {
+                    // parse the level
+                    var level = jsJOMlib__getParameterByName(settings.url, 'l');
+
                     if ( JSON_response.ctx == 'new_job' )
                     {
-                        // parse the level
-                        var level = jsJOMlib__getParameterByName(settings.url, 'l');
                         if ( parseInt(level, 10) === 1 ) {
                             JOM['new_job'].categories.categories      = JSON_response.data;
                             JOM['new_job'].categories.GUI__update(JSON_response.data, "id", "name");
@@ -47,11 +48,22 @@
                     else
                     if ( JSON_response.ctx == 'search_filter' )
                     {
-                        // update object data and form field too
-                        JOM.search_filters.filters.filter_by_category.GUI__update(JSON_response.data);
-                        // update nonce
-                        JOM.search_filters.filters.filter_by_category.nonce.nonce      = JSON_response.new_nonce;
-                        JOM.search_filters.filters.filter_by_category.nonce.timestap   = JSON_response.new_timestamp;
+                        if ( parseInt(level, 10) === 1 ) {
+                            // update object data and form field too
+                            JOM.search_filters.filters.filter_by_category.GUI__update(JSON_response.data);
+                            // update nonce
+                            JOM.search_filters.filters.filter_by_category.nonce.nonce      = JSON_response.new_nonce;
+                            JOM.search_filters.filters.filter_by_category.nonce.timestap   = JSON_response.new_timestamp;
+                        }
+                        else
+                        if ( parseInt(level, 10) === 2 ) {
+                            JOM.search_filters.$issue_load.fadeOut();
+                            // update object data and form field too
+                            JOM.search_filters.filters.filter_by_issue.GUI__update(JSON_response.data);
+                            // update nonce
+                            JOM.search_filters.filters.filter_by_issue.nonce.nonce          = JSON_response.new_nonce;
+                            JOM.search_filters.filters.filter_by_issue.nonce.timestap       = JSON_response.new_timestamp;
+                        }
                     }
                     break;
                 }
