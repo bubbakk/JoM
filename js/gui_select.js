@@ -64,9 +64,9 @@ function gui_select_standard(jQ_ptr)
         // if auto_enable_switch is true, auto enable/disable field
         if ( THAT.auto_enable_switch ) {
             if ( i == 0 )
-                THAT.enable();
-            else
                 THAT.enable(false);
+            else
+                THAT.enable();
         }
 
         // update, if needed, selectpicker bootstrap object

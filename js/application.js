@@ -37,6 +37,7 @@
                         }
                         else
                         if ( parseInt(level, 10) === 2 ) {
+                            JOM['new_job'].$issue_load.fadeOut();
                             JOM['new_job'].issues.categories      = JSON_response.data;
                             JOM['new_job'].issues.GUI__update(JSON_response.data, "id", "name");
                             JOM['new_job'].issues.nonce.nonce     = JSON_response.new_nonce;

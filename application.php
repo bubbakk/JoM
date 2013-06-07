@@ -52,10 +52,9 @@ check_session_variables();                              // check session variabl
     <link href="./humans.txt"                       rel="author"     type="text/plain">
     <link href="./css/bootstrap.min.css"            rel="stylesheet" type="text/css" media="screen">
 
-<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
-<link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">
+    <!-- <link href="./css/bootstrap-combined.no-icons.min.css" rel="stylesheet" type="text/css" media="screen"> -->
+    <link href="./css/font-awesome.min.css" rel="stylesheet" type="text/css" media="screen">
 
-    <!-- <link href="./css/font-awesome.min.css"         rel="stylesheet" type="text/css" media="screen"> -->
     <link href="./css/jom_default_style.css"        rel="stylesheet" type="text/css" media="screen">
     <link href="./css/datepicker.css"               rel="stylesheet" type="text/css" media="screen">
     <link href="./css/bootstrap-select.min.css"     rel="stylesheet" type="text/css" media="screen">
@@ -99,6 +98,9 @@ check_session_variables();                              // check session variabl
         JOM.new_job.issues.context      = 'new_job';
         JOM.new_job.nonce               = <?php echo generate_json_javascript_values( '/job/new',         0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
         JOM.new_job.get_categories();
+        dummy = setTimeout(function() {
+            JOM.new_job.categories.gui_widget.jq_pointer.trigger('change')
+        }, 1000);
 
         // init JOB LIST objects
         JOM.job_list = new Job_List_GUI();
@@ -123,7 +125,7 @@ check_session_variables();                              // check session variabl
         JOM.search_filters.filters.filter_by_issue.nonce        = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
         JOM.search_filters.filters.filter_by_issue.context      = 'search_filter';
         JOM.search_filters.filters.filter_by_issue.gui_widget   = new gui_select_standard( $('#jom_filter_by_issue') );
-        JOM.search_filters.filters.filter_by_issue.load();
+        JOM.search_filters.filters.filter_by_category.load();
 
         jom_init('dd/mm/yyyy');
 
@@ -189,7 +191,7 @@ check_session_variables();                              // check session variabl
 <!-- COLUMN DX -->
             <div class="span2">
                 <a class="btn btn-mini" href="#" id="jom_showhide_filters">
-                    <i class="icon-collapse-alt"></i> <span>filters collapse</span>
+                    <i class="icon-expand-alt"></i> <span>filters collapse</span>
                 </a>
             </div>
             <div class="span2 jom_filter">
@@ -323,7 +325,7 @@ check_session_variables();                              // check session variabl
             <label class="control-label" for="category">Category</label>
             <div class="controls">
               <select name="category" class="selectpicker">
-                <option value="" title=""></option>
+                <option></option>
               </select>
             </div>
           </div>
@@ -331,7 +333,7 @@ check_session_variables();                              // check session variabl
             <label class="control-label" for="issue">Issue</label>
             <div class="controls">
               <select name="issue" class="selectpicker">
-                <option value="" title=""></option>
+                <option></option>
               </select>
               <i class="icon-spinner icon-spin"></i>
             </div>

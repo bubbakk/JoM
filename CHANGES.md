@@ -9,6 +9,11 @@ TODOS:
 ----------
 - continues refactoring new_job -> issues object (like categories)
 - fixed some issues on avascript gui objects and form field component
+- added auto_enable_switch property in javascript gui_select_standard class: now when update_data() and/or clear_data() are called, the enable() method is called
+- modified update_data() method in javascript gui_select_standard class
+- modified clear_data() method in javascript gui_select_standard class
+- modified enable() method in javascript gui_select_standard class
+- made font-awesome locally installed (and pathed the ttf font file path search)
 
 01.05.2013
 ----------
