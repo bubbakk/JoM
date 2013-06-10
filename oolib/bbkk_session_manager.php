@@ -375,7 +375,7 @@ class BBKK_Session_Manager extends BBKK_Base_Class {
         {
             $query ='DELETE '.
                     '  FROM ' . $this->table_name . ' '.
-                    ' WHERE id = :session_id';
+                    ' WHERE Session_id = :session_id';
 
             $this->log_info('Statement does not exist: creating new one.');
 
