@@ -32,8 +32,8 @@ $config['DB']['type'] = '#DBTYPE#';   // [mysql|sqlite]
     // SQLite
     $config['DB']['sqlite']['dbname']  = '#DBNAME_SQLITE#';    // sqlite database name
 
-$config['SERVER']['domain']       = 'http:\/\/localhost';
-$config['SERVER']['domain_path']  = 'JoM';
+$config['SERVER']['domain']       = 'localhost';
+$config['SERVER']['domain_path']  = 'jom_git/JoM';
 $config['SERVER']['install_path'] = '/var/www/JoM/demo/';
 
 // Application salt

@@ -10,10 +10,39 @@
  */
 function json_output_and_die($data) {
     header('Content-Type: application/json');
-    if ( !JOM_DEBUG ) { echo "ciao"; unset($data['dbg_msg']); }
+    if ( !JOM_DEBUG ) { echo "JOM_DEBUG is on"; unset($data['dbg_msg']); }
     echo json_encode($data);
     die();
 }
+
+
+/*
+ * Function: jom_immediate_redirect
+ *   Output immediately an header 'Location' to force browser redirection. Warning: if successful this script terminates PHP script execution.
+ *   The output Location will be: http://$domain/$path/$page (see parameters)
+ *
+ * Parameters:
+ *  $domain - non-empty string
+ *  $path - sub-domain relative path; if empty string, will not be considered
+ *  $page - destination page; non-empty string
+ *  $params - if non-empty, represents url-formatted parameters to pass as GET (without prepending '?')
+ *
+ * Returns:
+ *  nothing if succesful (browser redirect will be immediate if the output is not buffered). Return 1 on wrong parameter(s) passing
+ */
+function jom_immediate_redirect($domain, $path, $page, $params = '') {
+    if ( empty($domain) || !is_string($domain) ) return 1;
+    if ( empty($page)   || !is_string($page) )   return 1;
+
+    // building location
+    $new_location = 'http://'.$domain;                      // domain
+    if ( !empty($path) ) $new_location .= '/'.$path;        // path
+    $new_location .= '/' . $page;                           // page
+    if ( !empty($params) ) $new_location .= '?'.$params;    // parameters
+
+    header('Location: '.$new_location);
+}
+
 
 /*
  * Function: recursive_utf8_encode

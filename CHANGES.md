@@ -4,6 +4,10 @@ TODOS:
 - using sqlite database, is not possible to have correct authentication
 - create time format (I18N) (hh:mm.ss) and insert in job list details
 
+11.05.2013
+----------
+- fixed session destroy method: query was wrong
+
 07.05.2013
 ----------
 - implemented issues dynamic load on category change in search filters
@@ -290,6 +294,7 @@ TODOS:
 - fix login fields resize
 - add checks and documentation comments to nonce library
 - do not check session expirement only in ajax call, but as one of the first steps of each application file
+- login page is also a redirect destination for common problems such as session expiration: should add a warning message to explain the reason of redirection (parameter passed 'r')
 
 
 24.03.2013

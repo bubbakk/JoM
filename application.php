@@ -42,7 +42,20 @@ $SMAN = new BBKK_Session_Manager(TBL_SESSIONS, $DBH);   // constructor
 $SMAN->debug_on_screen = false;
 $SMAN->salt = $config['SALT'];                          // explicitly set application salt
 $SMAN->start_session('', false);                        // starting session
-check_session_variables();                              // check session variables existance and set default values if not found
+$session_vars_check = check_session_variables();        // check session variables existance and set default values if not found
+
+
+// check that the session is active
+if ( $session_vars_check === -1 || $session_vars_check === -2 )
+{
+    // destroy the session
+    session_destroy();
+    // immediate redirect
+    jom_immediate_redirect($config['SERVER']['domain'],
+                           $config['SERVER']['domain_path'],
+                           'login.php',
+                           'r=exp');
+}
 
 ?>
 <!DOCTYPE HTML>
