@@ -138,12 +138,15 @@ $session_vars_check = check_session_variables();
 
 // if loggin in, do not have to check session
 if ( $full_domain != 'users' && $full_request != 'login' ) {
+    // else, check that the session is active
     if ( $session_vars_check === -1 || $session_vars_check === -2 )
     {
+        // destroy the session
+        session_destroy();
+        // prepare and output JSON data for redirect
         $retval['cmd']         =  'redirect';
         $retval['url']         =  './login.php';
-        $retval['querystring'] =  'r=exp';                                  // redirect reason: session expired
-        $retval['querystring'] .= '&redirect='.$_SERVER['HTTP_REFERER'];    // redirect to page after login
+        $retval['querystring'] =  'r=exp';          // redirect reason: session expired
         json_output_and_die($retval);
     }
 }
