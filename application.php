@@ -135,7 +135,7 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
         JOM.search_filters.filters.filter_by_issue.nonce        = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
         JOM.search_filters.filters.filter_by_issue.context      = 'search_filter';
         JOM.search_filters.filters.filter_by_issue.gui_widget   = new gui_select_standard( $('#jom_filter_by_issue') );
-        JOM.search_filters.filters.filter_by_issue.load();
+        // JOM.search_filters.filters.filter_by_issue.load();
 
         JOM.search_filters.init_category_events();
 
@@ -160,11 +160,12 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
 
         // trigger base events
         dummy = setTimeout(function() {
-            JOM.new_job.categories.gui_widget.jq_pointer.trigger('change')
+            JOM.new_job.categories.gui_widget.jq_pointer.trigger('change');
         }, 1000);
         dummy = setTimeout(function() {
-            JOM.search_filters.filters.filter_by_category.gui_widget.jq_pointer.trigger('change')
+            JOM.search_filters.filters.filter_by_category.gui_widget.jq_pointer.trigger('change');
         }, 1000);
+
         $("#jom_showhide_filters").trigger('click');
     });
     </script>
@@ -190,17 +191,52 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
           <div class="navbar-inner">
             <a class="brand" href="#"><strong>JoM|</strong><small>The Job Manager</small></a>
             <ul class="nav">
-              <li class="active"><a href="#"><i class="icon-list-ol"></i> Job List</a></li>
-              <li><a href="#">Link</a></li>
+              <li class="active"><a href="application.php"><i class="icon-list-ol"></i> Jobs List</a></li>
               <li class="text-right"><a href="#"><i class="icon-cog"></i> Settings</a></li>
             </ul>
-            <form class="navbar-search pull-left">
-              <input type="text" class="search-query" placeholder="Search job">
-            </form>
           </div>
         </div>
 
         </br>
+
+<!-- JOB LIST FILTERS -->
+        <div class="row jom_filter">
+                <div class="span3 offset2">
+                    <dl style="margin-top: 0;">
+                        <dt>Filter by status: </dt>
+                        <dd>
+                            <select id="jom_filter_by_status" class="selectpicker show-menu-arrow" data-width="auto">
+                                <option></option>
+                            </select>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="span2">
+                    <dl style="margin-top: 0;">
+                        <dt>Filter by date: </dt> <dd><input type="text" style="width: 100px"></dd>
+                    </dl>
+                </div>
+                <div class="span3">
+                    <dl style="margin-top: 0;">
+                        <dt>Filter by category: </dt>
+                        <dd>
+                            <select id="jom_filter_by_category" class="selectpicker show-menu-arrow">
+                                <option></option>
+                            </select>
+                        </dd>
+                        <dt>Filter by issue: </dt>
+                        <dd>
+                            <select id="jom_filter_by_issue" class="selectpicker show-menu-arrow">
+                                <option></option>
+                            </select>
+                            <i class="icon-spinner icon-spin"></i>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="span2" style="padding-top: 80px">
+                    <a href="#" class="btn btn-info"><i class="icon-search icon-white"></i> search</a>
+                </div>
+        </div>
 
 <!-- button NEW JOB and filters -->
         <div class="row" style="margin-bottom: 10px; margin-top: 20px;">
@@ -211,40 +247,8 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
 <!-- COLUMN DX -->
             <div class="span2">
                 <a class="btn btn-mini" href="#" id="jom_showhide_filters">
-                    <i class="icon-expand-alt"></i> <span>filters collapse</span>
+                    <i class="icon-collapse-alt"></i> <span>filters collapse</span>
                 </a>
-            </div>
-            <div class="span2 jom_filter">
-                <dl style="margin-top: 0;">
-                    <dt>Filter by status: </dt>
-                    <dd>
-                        <select id="jom_filter_by_status" class="selectpicker show-menu-arrow" data-width="auto">
-                            <option></option>
-                        </select>
-                    </dd>
-                </dl>
-            </div>
-            <div class="span2 jom_filter">
-                <dl style="margin-top: 0;">
-                    <dt>Filter by date: </dt> <dd><input type="text" style="width: 100px"></dd>
-                </dl>
-            </div>
-            <div class="span2 jom_filter">
-                <dl style="margin-top: 0;">
-                    <dt>Filter by category: </dt>
-                    <dd>
-                        <select id="jom_filter_by_category" class="selectpicker show-menu-arrow" data-width="auto">
-                            <option></option>
-                        </select>
-                    </dd>
-                    <dt>Filter by issue: </dt>
-                    <dd>
-                        <select id="jom_filter_by_issue" class="selectpicker show-menu-arrow" data-width="auto">
-                            <option></option>
-                        </select>
-                        <i class="icon-spinner icon-spin"></i>
-                    </dd>
-                </dl>
             </div>
             <div class="span2 jom_filter">
                 spazio vuoto
@@ -345,7 +349,7 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
           <div class="control-group">
             <label class="control-label" for="category">Category</label>
             <div class="controls">
-              <select name="category" class="selectpicker">
+              <select name="category" class="selectpicker show-menu-arrow">
                 <option></option>
               </select>
             </div>
@@ -353,7 +357,7 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
           <div class="control-group">
             <label class="control-label" for="issue">Issue</label>
             <div class="controls">
-              <select name="issue" class="selectpicker">
+              <select name="issue" class="selectpicker show-menu-arrow">
                 <option></option>
               </select>
               <i class="icon-spinner icon-spin"></i>

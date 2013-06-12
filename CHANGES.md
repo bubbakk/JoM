@@ -4,9 +4,18 @@ TODOS:
 - using sqlite database, is not possible to have correct authentication
 - create time format (I18N) (hh:mm.ss) and insert in job list details
 
+12.05.2013
+----------
+- theme tests for search filters
+- added "search" button in application page
+
 11.05.2013
 ----------
 - fixed session destroy method: query was wrong
+- now also the application.php script have its own session expiration check with redirection to login page
+- implemented jom_immediate_redirect() parametric function for redirection
+- fixed constants in user_config.template: removed protocol specification in URI constant
+- removed redirect parameter within JSON reply from ard.php: was the deprecated HTTP_REFERER
 
 07.05.2013
 ----------
