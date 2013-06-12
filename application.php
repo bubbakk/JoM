@@ -213,7 +213,15 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
                 </div>
                 <div class="span2">
                     <dl style="margin-top: 0;">
-                        <dt>Filter by date: </dt> <dd><input type="text" style="width: 100px"></dd>
+                        <dt>Filter by date: </dt>
+                        <dd>
+                            <div class="controls">
+                                <div class="input-append date">
+                                    <input id="jom_filter_by_date" class="input-small" type="text" size="12" value="">
+                                    <span class="add-on"><i class="icon-calendar"></i></span>
+                                </div>
+                            </div>
+                        </dd>
                     </dl>
                 </div>
                 <div class="span3">

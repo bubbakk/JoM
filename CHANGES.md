@@ -4,6 +4,10 @@ TODOS:
 - using sqlite database, is not possible to have correct authentication
 - create time format (I18N) (hh:mm.ss) and insert in job list details
 
+13.05.2013
+----------
+- plugged datepicker into its field in search filters blocks... fixes needed
+
 12.05.2013
 ----------
 - theme tests for search filters

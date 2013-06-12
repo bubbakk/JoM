@@ -106,61 +106,82 @@ function jom_init(dateformat) {
 
     var date_spearator = '/';
 
-    // date and datepicker component in job creation form
-    var now_text = jsJOMlib__date_formatted(dateformat, date_spearator);
-    var $input_date = $("#form_new_job [name='creation_date']");
-    $input_date.val(now_text);
-    $input_date.parent().attr("data-date", now_text);
-    $input_date.parent().attr("data-date-format", dateformat);
+    // NEW JOB FORM ELEMENTS
+        // date and datepicker component in job creation form
+        var now_text = jsJOMlib__date_formatted(dateformat, date_spearator);
+        var $input_date = $("#form_new_job [name='creation_date']");
+        $input_date.val(now_text);
+        $input_date.parent().attr("data-date", now_text);
+        $input_date.parent().attr("data-date-format", dateformat);
 
-    // call datepicker object creation
-    $input_date.parent().datepicker({
-        weekStart: 0
-    })
-    .on('changeDate', function(){
-           $("#form_new_job [name='creation_date']").parent ().datepicker('hide');
+        // call datepicker object creation
+        $input_date.parent().datepicker({
+            weekStart: 0
+        })
+        .on('changeDate', function(){
+           $("#form_new_job [name='creation_date']").parent().datepicker('hide');
            $("#jom_create_job_modal .modal-body .alert").show();
            $("#jom_create_job_modal .modal-body .alert").slideDown();
-    });
+        });
 
-    // details open
-    $("#jom_job_list_table tbody").on("click", "tr td button", function( )
-    {
-        // catch buttons click inside table
-        if ( $(this).children().eq(0).hasClass("icon-info-sign") )
+        $alert = $("#jom_create_job_modal .modal-body .alert").hide();
+
+        $("#form_new_job").css("margin-bottom", "0");
+    // END new job form elements
+
+
+    // SEARCH FILTERS
+        // date picker
+        var $input_date_filter = $("#jom_filter_by_date");
+        $input_date_filter.val(now_text);
+        $input_date_filter.parent().attr("data-date", now_text);
+        $input_date_filter.parent().attr("data-date-format", dateformat);
+
+        $input_date_filter.datepicker({
+            weekStart: 0
+        })
+        .on('changeDate', function(){
+            $("#jom_filter_by_date").parent().datepicker('hide');
+        });
+
+    // END search filters
+
+    // JOBS LIST ELEMENTS
+        // job details open
+        $("#jom_job_list_table tbody").on("click", "tr td button", function( )
         {
-            var $tr_infos = $(this).parent().parent().next();
+            // catch buttons click inside table
+            if ( $(this).children().eq(0).hasClass("icon-info-sign") )
+            {
+                var $tr_infos = $(this).parent().parent().next();
 
-            if ( $tr_infos.is(':hidden') ) {
-                $(this).parent().parent().css("background-color", "rgba(240, 240, 240, 0.9)");
+                if ( $tr_infos.is(':hidden') ) {
+                    $(this).parent().parent().css("background-color", "rgba(240, 240, 240, 0.9)");
+                }
+                else {
+                    $(this).parent().parent().css("background-color", "");
+                }
+
+                $(this).parent().parent().next().fadeToggle();
             }
-            else {
-                $(this).parent().parent().css("background-color", "");
-            }
-
-            $(this).parent().parent().next().fadeToggle();
-        }
-        else
-        if ( $(this).children().eq(0).hasClass("icon-pencil") ) {
-            alert("Edit implementation in Version 0.5");
-        }
-        else
-        if ( $(this).children().eq(0).hasClass("icon-trash") ) {
-            alert("Remove job still not implemented");
-        }
-    });
-
-    // catch img click inside table
-    $("#jom_job_list_table tbody").on("click", "tr td img", function()
-    {
-        if ( $(this).hasClass("jom_favourite") ) {
-            if ( $(this).attr('src') == './img/star_disabled.png' ) $(this).attr('src', './img/star.png');
             else
-            if ( $(this).attr('src') == './img/star.png' )          $(this).attr('src', './img/star_disabled.png');
-        }
-    });
+            if ( $(this).children().eq(0).hasClass("icon-pencil") ) {
+                alert("Edit implementation in Version 0.5");
+            }
+            else
+            if ( $(this).children().eq(0).hasClass("icon-trash") ) {
+                alert("Remove job still not implemented");
+            }
+        });
 
-    $alert = $("#jom_create_job_modal .modal-body .alert").hide();
-
-    $("#form_new_job").css("margin-bottom", "0");
+        // catch start img (favourite) click inside table
+        $("#jom_job_list_table tbody").on("click", "tr td img", function()
+        {
+            if ( $(this).hasClass("jom_favourite") ) {
+                if ( $(this).attr('src') == './img/star_disabled.png' ) $(this).attr('src', './img/star.png');
+                else
+                if ( $(this).attr('src') == './img/star.png' )          $(this).attr('src', './img/star_disabled.png');
+            }
+        });
+    // END jobs list elements
 }
