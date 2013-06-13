@@ -14,7 +14,7 @@ Main development steps:
     A configuration file should be created, starting from a template config file
 -- completed March 10, 2013 --
 
-0.2 Login
+0.2 Login and security
     Implement login features and some security mechanisms
     Encrypted and secure session management
     Use of nonce
@@ -32,6 +32,7 @@ Main development steps:
     List Jobs
     Enable/disable filters
     Show/hide details
+-> Under development
 
 0.5 Ticket editing
 

@@ -1,12 +1,14 @@
-Version 0.4
-===========
+Version 0.4: Ticket listing
+===========================
+Under development.
+
 TODOS:
-- using sqlite database, is not possible to have correct authentication
 - create time format (I18N) (hh:mm.ss) and insert in job list details
 
 13.05.2013
 ----------
 - plugged datepicker into its field in search filters blocks... fixes needed
+- datepicker fixed
 
 12.05.2013
 ----------
@@ -122,16 +124,20 @@ TODOS:
 - enhanched job info
 
 
-Version 0.3
-===========
 
+
+
+Version 0.3: Ticket creation
+============================
 Completed.
+
 TODOS:
 - better implement datepicker (changing date in the input fields does not replect datepicker widget)
 - check UTF-8 encoding on POST sending data method in Ajax call
 - check new job bad answer "save ko" possible error messages
 - implement a message in the login page (for example to inform about session timeout)
 - implement also redirect in the login page
+- in the new job form, an alert appears when the first date is picked
 
 
 04.05.2013
@@ -297,9 +303,9 @@ TODOS:
 
 
 
-Version 0.2
-===========
 
+Version 0.2: Login and security
+===============================
 Completed.
 
 TODOS:
@@ -308,6 +314,7 @@ TODOS:
 - add checks and documentation comments to nonce library
 - do not check session expirement only in ajax call, but as one of the first steps of each application file
 - login page is also a redirect destination for common problems such as session expiration: should add a warning message to explain the reason of redirection (parameter passed 'r')
+- using sqlite database, is not possible to have correct authentication
 
 
 24.03.2013
@@ -421,9 +428,9 @@ TODOS:
 
 
 
-Version 0.1
-===========
 
+Version 0.1: Installation procedure / database main tables
+==========================================================
 Completed.
 
 TODOS:
@@ -549,7 +556,10 @@ TODOS:
 - minor fix in install.php file
 - some install.php page graphic remake
 
-Version 0.0
-===========
 
+
+
+
+Version 0.0: Import some base files
+===================================
 Completed.

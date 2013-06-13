@@ -97,8 +97,6 @@
 
         }
 
-
-
     });
 
 
@@ -137,7 +135,7 @@ function jom_init(dateformat) {
         $input_date_filter.parent().attr("data-date", now_text);
         $input_date_filter.parent().attr("data-date-format", dateformat);
 
-        $input_date_filter.datepicker({
+        $input_date_filter.parent().datepicker({
             weekStart: 0
         })
         .on('changeDate', function(){
