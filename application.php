@@ -253,13 +253,13 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
                 </div>
                 <div class="span3">
                     <dl style="margin-top: 0;">
-                        <dt><input type="checkbox" class="jom_enable_control" data-placement="bottom" title data-original-title="enable filter by category/issue" data-apply-to="jom_filter_by_category jom_filter_by_issue"> Filter by category: </dt>
+                        <dt><input type="checkbox" class="jom_enable_control" data-placement="bottom" title data-original-title="enable filter by category" data-apply-to="jom_filter_by_category"> Filter by category: </dt>
                         <dd>
                             <select id="jom_filter_by_category" class="selectpicker show-menu-arrow">
                                 <option></option>
                             </select>
                         </dd>
-                        <dt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Filter by issue: </dt>
+                        <dt><input type="checkbox" class="jom_enable_control" data-placement="bottom" title data-original-title="enable filter by issue" data-apply-to="jom_filter_by_issue"> Filter by issue: </dt>
                         <dd>
                             <select id="jom_filter_by_issue" class="selectpicker show-menu-arrow">
                                 <option></option>
@@ -269,7 +269,7 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
                     </dl>
                 </div>
                 <div class="span2" style="padding-top: 80px">
-                    <a href="#" class="btn btn-info"><i class="icon-search icon-white"></i> search</a>
+                    <a href="#" class="btn btn-info" id="jom_search_button"><i class="icon-search icon-white"></i> search</a>
                 </div>
         </div>
 

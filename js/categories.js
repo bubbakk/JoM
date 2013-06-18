@@ -94,12 +94,12 @@ function Categories() {
      * If exists, set the associated widget (generally form field) data
      *
      * Parameters:
-     *  statuses - Contain JSON data array. Passing this parameter is a shortcut to set property and call this method. If
-     *             not passed, the property <THAT.statuses> is used.
+     *  categories - Contain JSON data array. Passing this parameter is a shortcut to set property and call this method. If
+     *             not passed, the property <THAT.categories> is used.
      */
     THAT.GUI__update = function(categories)
     {
-        if ( categories != undefined ) THAT.categories = categories;
+        /*if ( categories != undefined ) */ THAT.categories = categories;
 
         if ( THAT.gui_widget !== undefined ) {
             THAT.gui_widget.update_data(THAT.categories, 'id', 'name');

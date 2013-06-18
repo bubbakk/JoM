@@ -113,15 +113,17 @@ function gui_select_standard(jQ_ptr)
      */
     THAT.enable = function(status) {
         if ( status === undefined || status ) {
-            if ( THAT.jq_pointer.attr("disabled") == "disabled" ) {
-                THAT.jq_pointer.removeAttr("disabled");
-                THAT.jq_pointer.removeClass("disabled");
+            if ( THAT.jq_pointer.prop("disabled") ) {
+                THAT.jq_pointer.prop("disabled", false);
+                //THAT.jq_pointer.removeAttr("disabled");
+                //THAT.jq_pointer.removeClass("disabled");
             }
         }
         else {
-            if ( THAT.jq_pointer.attr("disabled") == undefined ) {
-                THAT.jq_pointer.attr("disabled", "disabled");
-                THAT.jq_pointer.addClass("disabled");
+            if ( THAT.jq_pointer.prop("disabled") ) {
+                THAT.jq_pointer.prop("disabled", true);
+                //THAT.jq_pointer.attr("disabled", "disabled");
+                //THAT.jq_pointer.addClass("disabled");
             }
         }
     }

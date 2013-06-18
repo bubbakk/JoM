@@ -5,10 +5,15 @@ Under development.
 TODOS:
 - create time format (I18N) (hh:mm.ss) and insert in job list details
 
+19.05.2013
+----------
+- added search filter enable/disable switch on filter-by-issue too.
+- fixed empty data for issue select: now is correctly se to empty
+
 18.05.2013
 ----------
 - various GUI tests on giving filters a nice placement in the page.... actually is not optimal
-- tried/tested checkbox stylish plugin
+- tried/tested checkbox stylish plugin: prettyCheckable
 - added checkboxes, with tooltips, to enable/disable each filter
 - changed datepicker with a more friendly select to have creation-date filtering
 
