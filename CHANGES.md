@@ -5,13 +5,20 @@ Under development.
 TODOS:
 - create time format (I18N) (hh:mm.ss) and insert in job list details
 
+18.05.2013
+----------
+- various GUI tests on giving filters a nice placement in the page.... actually is not optimal
+- tried/tested checkbox stylish plugin
+- added checkboxes, with tooltips, to enable/disable each filter
+- changed datepicker with a more friendly select to have creation-date filtering
+
 13.05.2013
 ----------
-- plugged datepicker into its field in search filters blocks... fixes needed
 - datepicker fixed
 
 12.05.2013
 ----------
+- plugged datepicker into its field in search filters blocks... fixes needed
 - theme tests for search filters
 - added "search" button in application page
 

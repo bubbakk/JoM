@@ -71,9 +71,11 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
     <link href="./css/jom_default_style.css"        rel="stylesheet" type="text/css" media="screen">
     <link href="./css/datepicker.css"               rel="stylesheet" type="text/css" media="screen">
     <link href="./css/bootstrap-select.min.css"     rel="stylesheet" type="text/css" media="screen">
+    <link href="./css/prettyCheckable.css"     rel="stylesheet" type="text/css" media="screen">
     <script language="javascript" type="text/javascript" src="./js/lib/jquery-1.9.0.min.js"></script>
     <script language="javascript" type="text/javascript" src="./js/lib/bootstrap-datepicker.js"></script>
     <script language="javascript" type="text/javascript" src="./js/lib/bootstrap-select.min.js"></script>
+    <script language="javascript" type="text/javascript" src="./js/lib/prettyCheckable.js"></script>
     <script language="javascript" type="text/javascript" src="./js/application.js"></script>
     <script language="javascript" type="text/javascript" src="./js/search_filters.js"></script>
     <script language="javascript" type="text/javascript" src="./js/generic_lib.js"></script>
@@ -149,12 +151,12 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
             {
                 $(this).children().eq(0).removeClass("icon-expand-alt").addClass("icon-collapse-alt");
                 $(this).children().eq(1).text("filters collapse");
-                $(".jom_filter").slideDown();
+                $(".jom_filters_container").slideDown();
             }
             else {
                 $(this).children().eq(0).removeClass("icon-collapse-alt").addClass("icon-expand-alt");
                 $(this).children().eq(1).text("filters expand");
-                $(".jom_filter").slideUp();
+                $(".jom_filters_container").slideUp();
             }
         });
 
@@ -167,6 +169,28 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
         }, 1000);
 
         $("#jom_showhide_filters").trigger('click');
+
+        $("input.jom_enable_control").on("click", function()
+        {
+            var ctrl_id  = $(this).attr("data-apply-to");
+            var ctrls_id = ctrl_id.split(" ");
+
+            for ( var i = 0 ; i < ctrls_id.length ; i++ ) {
+                ctrl_id = ctrls_id[i];
+                var tag_name = $("#"+ctrl_id).prop("tagName");
+                if ( tag_name == "select" || tag_name == "SELECT" ) {
+                    $("#"+ctrl_id).prop("disabled", !$(this).prop("checked")).selectpicker('refresh');
+                }
+                else {
+                    $("#"+ctrl_id).prop("disabled", !$(this).prop("checked"));
+                }
+            }
+
+
+        });
+        $("input.jom_enable_control").trigger("click");
+
+        $("input.jom_enable_control").tooltip();
     });
     </script>
     <style>
@@ -181,6 +205,7 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
         .table .details .dl-horizontal dt { width: 110px; padding-top: 0; margin-top: 0; }
         .table .details .dl-horizontal dd { margin-left: 125px; }
         .table .details dl.dl-horizontal hr  { height: 5px; visibility:hidden; margin: 0; padding: 0; }
+        dd { margin-left: 20px; }
     </style>
 </head>
 <body>
@@ -200,12 +225,12 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
         </br>
 
 <!-- JOB LIST FILTERS -->
-        <div class="row jom_filter">
+        <div class="row jom_filters_container">
                 <div class="span3 offset2">
                     <dl style="margin-top: 0;">
-                        <dt>Filter by status: </dt>
+                        <dt><input type="checkbox" class="jom_enable_control" data-placement="bottom" title data-original-title="enable status filter" data-apply-to="jom_filter_by_status"> Filter by status: </dt>
                         <dd>
-                            <select id="jom_filter_by_status" class="selectpicker show-menu-arrow" data-width="auto">
+                            <select id="jom_filter_by_status" class="selectpicker show-menu-arrow jom_filter" data-width="auto">
                                 <option></option>
                             </select>
                         </dd>
@@ -213,26 +238,28 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
                 </div>
                 <div class="span2">
                     <dl style="margin-top: 0;">
-                        <dt>Filter by date: </dt>
+                        <dt><input type="checkbox" class="jom_enable_control" data-placement="bottom" title data-original-title="enable date start filter" data-apply-to="jom_filter_by_creation_date"> Filter by job creation: </dt>
                         <dd>
-                            <div class="controls">
-                                <div class="input-append date">
-                                    <input id="jom_filter_by_date" class="input-small" type="text" size="12" value="">
-                                    <span class="add-on"><i class="icon-calendar"></i></span>
-                                </div>
-                            </div>
+                            <select id="jom_filter_by_creation_date" class="selectpicker show-menu-arrow jom_filter" data-width="auto">
+                                <option value="1">yesterday</option>
+                                <option value="7">last week</option>
+                                <option value="14">last two weeks</option>
+                                <option value="30">last month</option>
+                                <option value="90">last three months</option>
+                                <option value="365">last year</option>
+                            </select>
                         </dd>
                     </dl>
                 </div>
                 <div class="span3">
                     <dl style="margin-top: 0;">
-                        <dt>Filter by category: </dt>
+                        <dt><input type="checkbox" class="jom_enable_control" data-placement="bottom" title data-original-title="enable filter by category/issue" data-apply-to="jom_filter_by_category jom_filter_by_issue"> Filter by category: </dt>
                         <dd>
                             <select id="jom_filter_by_category" class="selectpicker show-menu-arrow">
                                 <option></option>
                             </select>
                         </dd>
-                        <dt>Filter by issue: </dt>
+                        <dt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Filter by issue: </dt>
                         <dd>
                             <select id="jom_filter_by_issue" class="selectpicker show-menu-arrow">
                                 <option></option>
@@ -257,9 +284,6 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
                 <a class="btn btn-mini" href="#" id="jom_showhide_filters">
                     <i class="icon-collapse-alt"></i> <span>filters collapse</span>
                 </a>
-            </div>
-            <div class="span2 jom_filter">
-                spazio vuoto
             </div>
         </div>
 

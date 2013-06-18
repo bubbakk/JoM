@@ -62,6 +62,11 @@ License type: ? (similar project is "Dual licensed under the MIT and GPL license
 License URL:  ?
 Homepage:     http://www.eyecon.ro/bootstrap-datepicker/
 
+Library:      pretty checkable (actually not used, but ready to)
+License type: MIT
+License URL:  http://opensource.org/licenses/mit-license.php
+Homepage:     http://arthurgouveia.com/prettyCheckable/
+
 Library:      some functions from php-js
 License type: ?
 License URL:  ?

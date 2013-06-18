@@ -106,31 +106,31 @@ function jom_init(dateformat) {
 
     // NEW JOB FORM ELEMENTS
         // date and datepicker component in job creation form
-        var now_text = jsJOMlib__date_formatted(dateformat, date_spearator);
-        var $input_date = $("#form_new_job [name='creation_date']");
-        $input_date.val(now_text);
-        $input_date.parent().attr("data-date", now_text);
-        $input_date.parent().attr("data-date-format", dateformat);
-
-        // call datepicker object creation
-        $input_date.parent().datepicker({
-            weekStart: 0
-        })
-        .on('changeDate', function(){
-           $("#form_new_job [name='creation_date']").parent().datepicker('hide');
-           $("#jom_create_job_modal .modal-body .alert").show();
-           $("#jom_create_job_modal .modal-body .alert").slideDown();
-        });
-
-        $alert = $("#jom_create_job_modal .modal-body .alert").hide();
-
-        $("#form_new_job").css("margin-bottom", "0");
+        //~ var now_text = jsJOMlib__date_formatted(dateformat, date_spearator);
+        //~ var $input_date = $("#form_new_job [name='creation_date']");
+        //~ $input_date.val(now_text);
+        //~ $input_date.parent().attr("data-date", now_text);
+        //~ $input_date.parent().attr("data-date-format", dateformat);
+//~
+        //~ // call datepicker object creation
+        //~ $input_date.parent().datepicker({
+            //~ weekStart: 0
+        //~ })
+        //~ .on('changeDate', function(){
+           //~ $("#form_new_job [name='creation_date']").parent().datepicker('hide');
+           //~ $("#jom_create_job_modal .modal-body .alert").show();
+           //~ $("#jom_create_job_modal .modal-body .alert").slideDown();
+        //~ });
+//~
+        //~ $alert = $("#jom_create_job_modal .modal-body .alert").hide();
+//~
+        //~ $("#form_new_job").css("margin-bottom", "0");
     // END new job form elements
 
 
     // SEARCH FILTERS
-        // date picker
-        var $input_date_filter = $("#jom_filter_by_date");
+        // date picker: start
+        var $input_date_filter = $("#jom_filter_by_date_start");
         $input_date_filter.val(now_text);
         $input_date_filter.parent().attr("data-date", now_text);
         $input_date_filter.parent().attr("data-date-format", dateformat);
@@ -139,9 +139,21 @@ function jom_init(dateformat) {
             weekStart: 0
         })
         .on('changeDate', function(){
-            $("#jom_filter_by_date").parent().datepicker('hide');
+            $("#jom_filter_by_date_start").parent().datepicker('hide');
         });
 
+        // date picker: end
+        var $input_date_filter = $("#jom_filter_by_date_end");
+        $input_date_filter.val(now_text);
+        $input_date_filter.parent().attr("data-date", now_text);
+        $input_date_filter.parent().attr("data-date-format", dateformat);
+
+        $input_date_filter.parent().datepicker({
+            weekStart: 0
+        })
+        .on('changeDate', function(){
+            $("#jom_filter_by_date_end").parent().datepicker('hide');
+        });
     // END search filters
 
     // JOBS LIST ELEMENTS
