@@ -3,7 +3,7 @@
  *
  *
  */
-function gui_select_standard(jQ_ptr)
+function gui_select_standard(jQ_ptr, clear_data_during_init)
 {
     /*
      * Variable: THAT
@@ -133,6 +133,8 @@ function gui_select_standard(jQ_ptr)
         THAT.jq_pointer = jQ_ptr;
         // detaching and clearing options
         option_block = THAT.jq_pointer.children().eq(0).detach();
-        THAT.jq_pointer.children().remove();
+
+        if ( clear_data_during_init !== undefined && clear_data_during_init === true )
+            THAT.jq_pointer.children().remove();
     // end constructory
 }

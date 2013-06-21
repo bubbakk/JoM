@@ -138,11 +138,6 @@ function jom_init(dateformat) {
 
     // SEARCH FILTERS
     {
-        // search button
-        $("#jom_search_button").on('click', function() {
-            alert("search!");
-        });
-
         // date picker: start
         //~ var $input_date_filter = $("#jom_filter_by_date_start");
         //~ $input_date_filter.val(now_text);

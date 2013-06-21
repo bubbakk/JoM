@@ -5,10 +5,18 @@ Under development.
 TODOS:
 - create time format (I18N) (hh:mm.ss) and insert in job list details
 
+21.05.2013
+----------
+- improvement in gui_select class: added a second parameter in the constructor to set if old options values have to be cleared
+- now also the job_creation_date select form field have its object in job_search class
+- implemented update_filters_values method in search_filters class (should improve it)
+- added a filter_values property in search_filters class
+
 19.05.2013
 ----------
 - added search filter enable/disable switch on filter-by-issue too.
 - fixed empty data for issue select: now is correctly se to empty
+- added first implementation for search button management in search_filters.js
 
 18.05.2013
 ----------

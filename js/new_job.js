@@ -338,12 +338,12 @@ function New_Job_GUI() {
         // Categories widget
         THAT.categories             = new Categories();
         THAT.categories.level       = 1;
-        THAT.categories.gui_widget  = new gui_select_standard( $("#form_new_job [name='category']") );
+        THAT.categories.gui_widget  = new gui_select_standard( $("#form_new_job [name='category']"), true );
 
         // Issues widget
         THAT.issues           = new Categories();
         THAT.issues.level     = 2;
-        THAT.issues.gui_widget  = new gui_select_standard( $("#form_new_job [name='issue']") );
+        THAT.issues.gui_widget  = new gui_select_standard( $("#form_new_job [name='issue']"), true );
     // end constructor
 
 }

@@ -122,22 +122,27 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
 
         // init SEARCH FILTERS objects
         JOM.search_filters = new Search_Filters_GUI();
-        JOM.search_filters.create_filters(new Array('filter_by_status', 'filter_by_category', 'filter_by_issue'));
-        // status filter
+        JOM.search_filters.create_filters(new Array('filter_by_status', 'filter_by_creation_date', 'filter_by_category', 'filter_by_issue'));
+        // STATUS filter
         JOM.search_filters.filters.filter_by_status.nonce       = <?php echo generate_json_javascript_values( '/statuses/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
         JOM.search_filters.filters.filter_by_status.context     = 'search_filter';
-        JOM.search_filters.filters.filter_by_status.gui_widget  = new gui_select_standard( $('#jom_filter_by_status') );
+        JOM.search_filters.filters.filter_by_status.gui_widget  = new gui_select_standard( $('#jom_filter_by_status'), true );
         JOM.search_filters.filters.filter_by_status.load();
-        // category filter
+        // DATE START filter
+        JOM.search_filters.filters.filter_by_creation_date.context      = 'search_filter';
+        JOM.search_filters.filters.filter_by_creation_date.gui_widget   = new gui_select_standard( $('#jom_filter_by_creation_date'), false );
+        // CATEGORY filter
         JOM.search_filters.filters.filter_by_category.nonce     = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
         JOM.search_filters.filters.filter_by_category.context   = 'search_filter';
-        JOM.search_filters.filters.filter_by_category.gui_widget  = new gui_select_standard( $('#jom_filter_by_category') );
+        JOM.search_filters.filters.filter_by_category.gui_widget  = new gui_select_standard( $('#jom_filter_by_category'), true );
         JOM.search_filters.filters.filter_by_category.load();
-        // issue filter
+        // ISSUE filter
         JOM.search_filters.filters.filter_by_issue.nonce        = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
         JOM.search_filters.filters.filter_by_issue.context      = 'search_filter';
-        JOM.search_filters.filters.filter_by_issue.gui_widget   = new gui_select_standard( $('#jom_filter_by_issue') );
-        // JOM.search_filters.filters.filter_by_issue.load();
+        JOM.search_filters.filters.filter_by_issue.gui_widget   = new gui_select_standard( $('#jom_filter_by_issue'), true );
+
+        // search button
+        JOM.search_filters.init_search($("#jom_search_button"));
 
         JOM.search_filters.init_category_events();
 
