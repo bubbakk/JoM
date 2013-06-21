@@ -9,6 +9,7 @@ function dispatch_request($request)
     switch ( $request )
     {
         case 'new':
+        {
             global $DBH, $retval, $config;
             global $command;
 
@@ -31,7 +32,9 @@ function dispatch_request($request)
             return true;
 
             break;
+        }
         case 'list':
+        {
             global $DBH, $retval, $config;
 
             require_once(DIR_OOL.'job_list.php');
@@ -49,6 +52,7 @@ function dispatch_request($request)
             return true;
 
             break;
+        }
         default:
             echo "CANT'T BE HERE!!!!\n";
             break;
