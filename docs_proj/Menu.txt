@@ -46,9 +46,6 @@ Format: 1.51
 # --------------------------------------------------------------------------
 
 
-File: js/categories.js  (js/categories.js)
-File: js/generic_lib.js  (js/generic_lib.js)
-
 Group: Oolib  {
 
    File: BBKK_Base_Class  (oolib/bbkk_base_class.php)
@@ -59,8 +56,18 @@ Group: Oolib  {
    File: JOM_User  (oolib/user.php)
    }  # Group: Oolib
 
-File: js/new_job.js  (js/new_job.js)
-File: lib/generic_lib.php  (lib/generic_lib.php)
+File: generic_lib.php  (lib/generic_lib.php)
+
+Group: Js  {
+
+   File: categories.js  (js/categories.js)
+   File: generic_lib.js  (js/generic_lib.js)
+   File: gui_select.js  (js/gui_select.js)
+   File: gui_WIDGET_TEMPLATE.js  (js/gui_WIDGET_TEMPLATE.js)
+   File: new_job.js  (js/new_job.js)
+   File: search_filters.js  (js/search_filters.js)
+   File: statuses.js  (js/statuses.js)
+   }  # Group: Js
 
 Group: Index  {
 

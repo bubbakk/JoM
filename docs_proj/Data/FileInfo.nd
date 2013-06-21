@@ -1,45 +1,55 @@
 1.51
 JavaScript
+/var/www/jom_git/JoM/lib/requests_statuses.php	1369695446	0	/var/www/jom_git/JoM/lib/requests_statuses.php
+/var/www/jom_git/JoM/js/lib/bootstrap-editable/inputs-ext/wysihtml5/bootstrap-wysihtml5-0.0.2/wysihtml5-0.3.0.js	1367670532	0	/var/www/jom_git/JoM/js/lib/bootstrap-editable/inputs-ext/wysihtml5/bootstrap-wysihtml5-0.0.2/wysihtml5-0.3.0.js
 /var/www/jom_git/JoM/js/lib/pidCrypt/compressed/string_extend_c.js	1267108376	0	/var/www/jom_git/JoM/js/lib/pidCrypt/compressed/string_extend_c.js
+/var/www/jom_git/JoM/js/lib/bootstrap-editable/inputs-ext/address/address.js	1367670532	0	/var/www/jom_git/JoM/js/lib/bootstrap-editable/inputs-ext/address/address.js
 /var/www/jom_git/JoM/inst/create_tables.php	1368648770	0	/var/www/jom_git/JoM/inst/create_tables.php
 /var/www/jom_git/JoM/js/lib/pidCrypt/compressed/jsbn_c.js	1267108376	0	/var/www/jom_git/JoM/js/lib/pidCrypt/compressed/jsbn_c.js
 /var/www/jom_git/JoM/js/lib/pidCrypt/aes_core.js	1257179874	0	/var/www/jom_git/JoM/js/lib/pidCrypt/aes_core.js
+/var/www/jom_git/JoM/js/lib/bootstrap-editable/js/bootstrap-editable.js	1367670532	0	/var/www/jom_git/JoM/js/lib/bootstrap-editable/js/bootstrap-editable.js
 /var/www/jom_git/JoM/oolib/bbkk_base_class.php	1365154681	1	BBKK_Base_Class
 /var/www/jom_git/JoM/tests/categories.php	1364330789	0	/var/www/jom_git/JoM/tests/categories.php
 /var/www/jom_git/JoM/js/lib/pidCrypt/original scripts/sha512.js	1226975718	0	/var/www/jom_git/JoM/js/lib/pidCrypt/original scripts/sha512.js
+/var/www/jom_git/JoM/js/lib/bootstrap-editable/inputs-ext/wysihtml5/bootstrap-wysihtml5-0.0.2/wysihtml5-0.3.0.min.js	1367670532	0	/var/www/jom_git/JoM/js/lib/bootstrap-editable/inputs-ext/wysihtml5/bootstrap-wysihtml5-0.0.2/wysihtml5-0.3.0.min.js
 /var/www/jom_git/JoM/js/generic_lib.js	1368808953	1	/var/www/jom_git/JoM/js/generic_lib.js
 /var/www/jom_git/JoM/oolib/company.php	1361784395	0	/var/www/jom_git/JoM/oolib/company.php
 /var/www/jom_git/JoM/tests/user_login_test.php	1363616991	0	/var/www/jom_git/JoM/tests/user_login_test.php
 /var/www/jom_git/JoM/lib/ft-nonce-lib.php	1363886878	0	/var/www/jom_git/JoM/lib/ft-nonce-lib.php
 /var/www/jom_git/JoM/install.php	1366037086	0	/var/www/jom_git/JoM/install.php
 /var/www/jom_git/JoM/js/lib/pidCrypt/aes_cbc.js	1267108376	0	/var/www/jom_git/JoM/js/lib/pidCrypt/aes_cbc.js
-/var/www/jom_git/JoM/oolib/job_list.php	1369002558	0	/var/www/jom_git/JoM/oolib/job_list.php
+/var/www/jom_git/JoM/js/lib/bootstrap-editable/inputs-ext/wysihtml5/wysihtml5.js	1367670532	0	/var/www/jom_git/JoM/js/lib/bootstrap-editable/inputs-ext/wysihtml5/wysihtml5.js
+/var/www/jom_git/JoM/oolib/job_list.php	1369694973	0	/var/www/jom_git/JoM/oolib/job_list.php
 /var/www/jom_git/JoM/js/lib/pidCrypt/compressed/sha512_c.js	1267108376	0	/var/www/jom_git/JoM/js/lib/pidCrypt/compressed/sha512_c.js
-/var/www/jom_git/JoM/lib/generic_lib.php	1369004594	1	/var/www/jom_git/JoM/lib/generic_lib.php
+/var/www/jom_git/JoM/lib/generic_lib.php	1370903917	1	/var/www/jom_git/JoM/lib/generic_lib.php
 /var/www/jom_git/JoM/js/lib/pidCrypt/original scripts/rsa.js	1236167783	0	/var/www/jom_git/JoM/js/lib/pidCrypt/original scripts/rsa.js
 /var/www/jom_git/JoM/js/lib/pidCrypt/original scripts/sha256.js	1236167783	0	/var/www/jom_git/JoM/js/lib/pidCrypt/original scripts/sha256.js
-/var/www/jom_git/JoM/ard.php	1369003603	0	/var/www/jom_git/JoM/ard.php
+/var/www/jom_git/JoM/ard.php	1370903854	0	/var/www/jom_git/JoM/ard.php
 /var/www/jom_git/JoM/inst/tables_specification.php	1368648402	0	/var/www/jom_git/JoM/inst/tables_specification.php
+/var/www/jom_git/JoM/js/lib/prettyCheckable.js	1368116201	0	/var/www/jom_git/JoM/js/lib/prettyCheckable.js
 /var/www/jom_git/JoM/inst/set_database.php	1362099470	0	/var/www/jom_git/JoM/inst/set_database.php
 /var/www/jom_git/JoM/js/lib/pidCrypt/compressed/md5_c.js	1267108376	0	/var/www/jom_git/JoM/js/lib/pidCrypt/compressed/md5_c.js
 /var/www/jom_git/JoM/js/lib/bootstrap.js	1361917212	0	/var/www/jom_git/JoM/js/lib/bootstrap.js
 /var/www/jom_git/JoM/lib/requests_job.php	1368823466	0	/var/www/jom_git/JoM/lib/requests_job.php
 /var/www/jom_git/JoM/js/lib/pidCrypt/compressed/asn1_c.js	1267108376	0	/var/www/jom_git/JoM/js/lib/pidCrypt/compressed/asn1_c.js
-/var/www/jom_git/JoM/js/application.js	1368811101	0	/var/www/jom_git/JoM/js/application.js
+/var/www/jom_git/JoM/js/application.js	1371708668	0	/var/www/jom_git/JoM/js/application.js
+/var/www/jom_git/JoM/js/statuses.js	1370247663	1	/var/www/jom_git/JoM/js/statuses.js
 /var/www/jom_git/JoM/js/lib/pidCrypt/string_extend.js	1267108376	0	/var/www/jom_git/JoM/js/lib/pidCrypt/string_extend.js
 /var/www/jom_git/JoM/js/lib/pidCrypt/compressed/aes_core_c.js	1267108376	0	/var/www/jom_git/JoM/js/lib/pidCrypt/compressed/aes_core_c.js
 /var/www/jom_git/JoM/js/lib/pidCrypt/sha512.js	1244574621	0	/var/www/jom_git/JoM/js/lib/pidCrypt/sha512.js
 /var/www/jom_git/JoM/inst/save_config.php	1363295429	0	/var/www/jom_git/JoM/inst/save_config.php
 /var/www/jom_git/JoM/oolib/bbkk_pdo.php	1363028403	1	/var/www/jom_git/JoM/oolib/bbkk_pdo.php
 /var/www/jom_git/JoM/oolib/user.php	1367013106	1	JOM_User
+/var/www/jom_git/JoM/js/search_filters.js	1371716627	1	/var/www/jom_git/JoM/js/search_filters.js
 /var/www/jom_git/JoM/js/lib/pidCrypt/compressed/rsa_c.js	1267108376	0	/var/www/jom_git/JoM/js/lib/pidCrypt/compressed/rsa_c.js
-/var/www/jom_git/JoM/cfg/config.php	1369004539	0	/var/www/jom_git/JoM/cfg/config.php
-/var/www/jom_git/JoM/oolib/bbkk_session_manager.php	1365157259	1	BBKK_SESSION_MANAGER
+/var/www/jom_git/JoM/cfg/config.php	1371623682	0	/var/www/jom_git/JoM/cfg/config.php
+/var/www/jom_git/JoM/oolib/bbkk_session_manager.php	1370903635	1	BBKK_SESSION_MANAGER
 /var/www/jom_git/JoM/js/lib/pidCrypt/compressed/aes_cbc_c.js	1267108376	0	/var/www/jom_git/JoM/js/lib/pidCrypt/compressed/aes_cbc_c.js
-/var/www/jom_git/JoM/js/job_list.js	1368822594	0	/var/www/jom_git/JoM/js/job_list.js
-/var/www/jom_git/JoM/user_config.template.php	1365585621	0	/var/www/jom_git/JoM/user_config.template.php
+/var/www/jom_git/JoM/js/job_list.js	1369605695	0	/var/www/jom_git/JoM/js/job_list.js
+/var/www/jom_git/JoM/user_config.template.php	1370902026	0	/var/www/jom_git/JoM/user_config.template.php
 /var/www/jom_git/JoM/js/installation_procedure.js	1365024182	0	/var/www/jom_git/JoM/js/installation_procedure.js
 /var/www/jom_git/JoM/oolib/job.php	1368648970	1	JOM_Job
+/var/www/jom_git/JoM/js/gui_WIDGET_TEMPLATE.js	1369817646	1	/var/www/jom_git/JoM/js/gui_WIDGET_TEMPLATE.js
 /var/www/jom_git/JoM/lib/nonce_lib.php	1364507412	0	/var/www/jom_git/JoM/lib/nonce_lib.php
 /var/www/jom_git/JoM/js/lib/bootstrap-datepicker.js	1363091857	0	/var/www/jom_git/JoM/js/lib/bootstrap-datepicker.js
 /var/www/jom_git/JoM/js/lib/pidCrypt/aes_ctr.js	1267108376	0	/var/www/jom_git/JoM/js/lib/pidCrypt/aes_ctr.js
@@ -47,6 +57,7 @@ JavaScript
 /var/www/jom_git/JoM/js/lib/pidCrypt/gpl-3.0.txt	1257180060	0	/var/www/jom_git/JoM/js/lib/pidCrypt/gpl-3.0.txt
 /var/www/jom_git/JoM/js/lib/pidCrypt/rng.js	1236167783	0	/var/www/jom_git/JoM/js/lib/pidCrypt/rng.js
 /var/www/jom_git/JoM/js/lib/pidCrypt/rsa.js	1267108376	0	/var/www/jom_git/JoM/js/lib/pidCrypt/rsa.js
+/var/www/jom_git/JoM/js/gui_select.js	1371597274	1	/var/www/jom_git/JoM/js/gui_select.js
 /var/www/jom_git/JoM/js/lib/pidCrypt/original scripts/prng4.js	1236167783	0	/var/www/jom_git/JoM/js/lib/pidCrypt/original scripts/prng4.js
 /var/www/jom_git/JoM/js/lib/bootstrap.min.js	1361917212	0	/var/www/jom_git/JoM/js/lib/bootstrap.min.js
 /var/www/jom_git/JoM/js/lib/pidCrypt/history.txt	1267108376	0	/var/www/jom_git/JoM/js/lib/pidCrypt/history.txt
@@ -59,27 +70,34 @@ JavaScript
 /var/www/jom_git/JoM/js/lib/pidCrypt/original scripts/rng.js	1236167783	0	/var/www/jom_git/JoM/js/lib/pidCrypt/original scripts/rng.js
 /var/www/jom_git/JoM/js/lib/pidCrypt/asn1.js	1236167783	0	/var/www/jom_git/JoM/js/lib/pidCrypt/asn1.js
 /var/www/jom_git/JoM/js/lib/pidCrypt/compressed/aes_ctr_c.js	1267108376	0	/var/www/jom_git/JoM/js/lib/pidCrypt/compressed/aes_ctr_c.js
-/var/www/jom_git/JoM/humans.txt	1365628291	0	/var/www/jom_git/JoM/humans.txt
-/var/www/jom_git/JoM/js/new_job.js	1368807563	1	/var/www/jom_git/JoM/js/new_job.js
+/var/www/jom_git/JoM/js/lib/bootstrap-editable/CHANGELOG.txt	1367670532	0	/var/www/jom_git/JoM/js/lib/bootstrap-editable/CHANGELOG.txt
+/var/www/jom_git/JoM/humans.txt	1371543988	0	/var/www/jom_git/JoM/humans.txt
+/var/www/jom_git/JoM/js/new_job.js	1370297126	1	/var/www/jom_git/JoM/js/new_job.js
 /var/www/jom_git/JoM/js/lib/pidCrypt/md5.js	1236167783	0	/var/www/jom_git/JoM/js/lib/pidCrypt/md5.js
 /var/www/jom_git/JoM/js/lib/pidCrypt/original scripts/sha1.js	1236167783	0	/var/www/jom_git/JoM/js/lib/pidCrypt/original scripts/sha1.js
-/var/www/jom_git/JoM/js/categories.js	1365717825	1	/var/www/jom_git/JoM/js/categories.js
+/var/www/jom_git/JoM/js/categories.js	1371598023	1	/var/www/jom_git/JoM/js/categories.js
 /var/www/jom_git/JoM/js/lib/pidCrypt/original scripts/jsbn.js	1236167783	0	/var/www/jom_git/JoM/js/lib/pidCrypt/original scripts/jsbn.js
 /var/www/jom_git/JoM/lib/requests_users.php	1368823467	0	/var/www/jom_git/JoM/lib/requests_users.php
 /var/www/jom_git/JoM/js/lib/pidCrypt/compressed/sha1_c.js	1267108376	0	/var/www/jom_git/JoM/js/lib/pidCrypt/compressed/sha1_c.js
 /var/www/jom_git/JoM/inst/create_sample_data.php	1368576097	0	/var/www/jom_git/JoM/inst/create_sample_data.php
+/var/www/jom_git/JoM/application.php	1371708684	0	/var/www/jom_git/JoM/application.php
 /var/www/jom_git/JoM/js/lib/pidCrypt/prng4.js	1236167783	0	/var/www/jom_git/JoM/js/lib/pidCrypt/prng4.js
-/var/www/jom_git/JoM/application.php	1368822625	0	/var/www/jom_git/JoM/application.php
-/var/www/jom_git/JoM/login.php	1365585625	0	/var/www/jom_git/JoM/login.php
-/var/www/jom_git/JoM/js/lib/pidCrypt/jsbn.js	1236167783	0	/var/www/jom_git/JoM/js/lib/pidCrypt/jsbn.js
 /var/www/jom_git/JoM/lib/requests_categories.php	1364507498	0	/var/www/jom_git/JoM/lib/requests_categories.php
-/var/www/jom_git/JoM/js/lib/jquery.tagsinput.min.js	1364649582	0	/var/www/jom_git/JoM/js/lib/jquery.tagsinput.min.js
-/var/www/jom_git/JoM/js/lib/pidCrypt/compressed/sha256_c.js	1267108376	0	/var/www/jom_git/JoM/js/lib/pidCrypt/compressed/sha256_c.js
+/var/www/jom_git/JoM/login.php	1369668743	0	/var/www/jom_git/JoM/login.php
+/var/www/jom_git/JoM/js/lib/bootstrap-editable/inputs-ext/wysihtml5/bootstrap-wysihtml5-0.0.2/bootstrap-wysihtml5-0.0.2.min.js	1367670532	0	/var/www/jom_git/JoM/js/lib/bootstrap-editable/inputs-ext/wysihtml5/bootstrap-wysihtml5-0.0.2/bootstrap-wysihtml5-0.0.2.min.js
+/var/www/jom_git/JoM/js/lib/pidCrypt/jsbn.js	1236167783	0	/var/www/jom_git/JoM/js/lib/pidCrypt/jsbn.js
 /var/www/jom_git/JoM/js/lib/pidCrypt/compressed/pidcrypt_c.js	1267108376	0	/var/www/jom_git/JoM/js/lib/pidCrypt/compressed/pidcrypt_c.js
+/var/www/jom_git/JoM/js/lib/pidCrypt/compressed/sha256_c.js	1267108376	0	/var/www/jom_git/JoM/js/lib/pidCrypt/compressed/sha256_c.js
+/var/www/jom_git/JoM/js/lib/jquery.tagsinput.min.js	1364649582	0	/var/www/jom_git/JoM/js/lib/jquery.tagsinput.min.js
 /var/www/jom_git/JoM/oolib/category.php	1364459959	1	JOM_Categorie
+/var/www/jom_git/JoM/js/lib/bootstrap-editable/js/bootstrap-editable.min.js	1367670532	0	/var/www/jom_git/JoM/js/lib/bootstrap-editable/js/bootstrap-editable.min.js
 /var/www/jom_git/JoM/js/lib/pidCrypt/original scripts/md5.js	1236167783	0	/var/www/jom_git/JoM/js/lib/pidCrypt/original scripts/md5.js
 /var/www/jom_git/JoM/js/lib/pidCrypt/sha1.js	1267108376	0	/var/www/jom_git/JoM/js/lib/pidCrypt/sha1.js
+/var/www/jom_git/JoM/oolib/status.php	1369697874	0	/var/www/jom_git/JoM/oolib/status.php
 /var/www/jom_git/JoM/js/lib/pidCrypt/compressed/rng_c.js	1267108376	0	/var/www/jom_git/JoM/js/lib/pidCrypt/compressed/rng_c.js
 /var/www/jom_git/JoM/js/lib/pidCrypt/original scripts/asn1.js	1236167783	0	/var/www/jom_git/JoM/js/lib/pidCrypt/original scripts/asn1.js
+/var/www/jom_git/JoM/js/lib/bootstrap-select.min.js	1368165830	0	/var/www/jom_git/JoM/js/lib/bootstrap-select.min.js
+/var/www/jom_git/JoM/js/lib/bootstrap-editable/inputs-ext/wysihtml5/bootstrap-wysihtml5-0.0.2/bootstrap-wysihtml5-0.0.2.js	1367670532	0	/var/www/jom_git/JoM/js/lib/bootstrap-editable/inputs-ext/wysihtml5/bootstrap-wysihtml5-0.0.2/bootstrap-wysihtml5-0.0.2.js
+/var/www/jom_git/JoM/js/lib/css/bootstrap-select.min.js	1368165830	0	/var/www/jom_git/JoM/js/lib/css/bootstrap-select.min.js
 /var/www/jom_git/JoM/js/lib/pidCrypt/compressed/pidcrypt_util_c.js	1267108376	0	/var/www/jom_git/JoM/js/lib/pidCrypt/compressed/pidcrypt_util_c.js
-/var/www/jom_git/JoM/cfg/user_config.php	1368577292	0	/var/www/jom_git/JoM/cfg/user_config.php
+/var/www/jom_git/JoM/cfg/user_config.php	1370902019	0	/var/www/jom_git/JoM/cfg/user_config.php
