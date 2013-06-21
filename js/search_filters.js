@@ -121,22 +121,30 @@ function Search_Filters_GUI() {
     THAT.do_search = function()
     {
         THAT.update_filters_values();
-        /*
-        var data_field = 'd=job&r=new&n=' + THAT.nonce.nonce                     + '&t='  + THAT.nonce.timestamp               +
-                         '&s=' + encodeURIComponent(fd.subject)                  + '&ds=' + encodeURIComponent(fd.description) +
-                         '&c=' + fd.category                                     + '&i=' + fd.issue                            +
 
-        $.ajax({
-            url:      'ard.php',
-            data:     data_field,
-            type:     'GET',
-            contentType: "application/x-www-form-urlencoded;charset=UTF-8",
-			dataType: 'JSON'
-        })
-        .done(function(data){
-            ;   // nothing to do here...
-        });
-        */
+        // setting job_list search filters
+        // category
+        if ( THAT.filters_values.filter_by_category !== undefined )
+            JOM.job_list.search_filters.category = parseInt( THAT.filters_values.filter_by_category, 10);
+        // issue
+        if ( THAT.filters_values.filter_by_issue !== undefined )
+            JOM.job_list.search_filters.issue = parseInt( THAT.filters_values.filter_by_issue, 10);
+        // status
+        if ( THAT.filters_values.filter_by_status !== undefined )
+            JOM.job_list.search_filters.status = parseInt( THAT.filters_values.filter_by_status, 10);
+        // start date
+        if ( THAT.filters_values.filter_by_creation_date !== undefined ) {
+            // creating date start
+            var _dummy_date_now       = new Date();
+            var _dummy_date_displaced = new Date();
+            _dummy_date_displaced.setDate(_dummy_date_now.getDate() - parseInt(THAT.filters_values.filter_by_creation_date) );
+            var date_start = Math.floor(_dummy_date_now.getTime() / 1000);
+            JOM.job_list.search_filters.start_datetime = date_start;
+        }
+
+        // load list
+        JOM.job_list.DATA__load_job_list();
+
     }
 
     /*
@@ -149,29 +157,13 @@ function Search_Filters_GUI() {
     */
     THAT.update_filters_values = function()
     {
-        THAT.filters_values.filter_by_status = undefined;
-        if ( !THAT.filters.filter_by_status.gui_widget.jq_pointer.prop("disabled") ) {
-            THAT.filters_values.filter_by_status = THAT.filters.filter_by_status.gui_widget.jq_pointer.val();
-        }
-
-        THAT.filters_values.filter_by_creation_date = undefined;
-        if ( !THAT.filters.filter_by_creation_date.gui_widget.jq_pointer.prop("disabled") ) {
-            var days_before = parseInt(THAT.filters.filter_by_creation_date.gui_widget.jq_pointer.val(), 10);
-            // creating date start
-            var _dummy_date_now = new Date();
-            var _dummy_date_displaced = new Date();
-            _dummy_date_displaced.setDate(_dummy_date_now.getDate() - days_before); // minus the date
-            THAT.filters_values.filter_by_creation_date = Math.floor(_dummy_date_now.getTime() / 1000);
-        }
-
-        THAT.filters_values.filter_by_category = undefined;
-        if ( !THAT.filters.filter_by_category.gui_widget.jq_pointer.prop("disabled") ) {
-            THAT.filters_values.filter_by_category = THAT.filters.filter_by_category.gui_widget.jq_pointer.val();
-        }
-
-        THAT.filters_values.filter_by_issue = undefined;
-        if ( !THAT.filters.filter_by_issue.gui_widget.jq_pointer.prop("disabled") ) {
-            THAT.filters_values.filter_by_issue = THAT.filters.filter_by_issue.gui_widget.jq_pointer.val();
+        var keys = Object.keys(THAT.filters);
+        for ( var i = 0 ; i < keys.length ; i++ ) {
+            key = keys[i];
+            THAT.filters_values[key] = undefined;
+            if ( !THAT.filters[key].gui_widget.jq_pointer.prop("disabled") ) {
+                THAT.filters_values[key] = THAT.filters[key].gui_widget.jq_pointer.val();
+            }
         }
     }
 

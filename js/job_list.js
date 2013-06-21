@@ -9,13 +9,46 @@ function Job_List_GUI() {
 
     THAT.context            = undefined;
 
+    /*
+       Variable: search_filters
+         JSON object that contains search filters to apply to load function
+
+        See also:
+          <DATA__reset_filters>
+    */
+    THAT.search_filters     = new Object();
+
 //////////////////
 // DATA Methods //
 //////////////////
 {
+    /*
+       Function: DATA__reset_filters
+         set all search_filters fields to undefined
+
+       See also:
+         <DATA__reset_filters>
+    */
+    DATA__reset_filters = function() {
+        THAT.search_filters     = {
+            category:       undefined,      // categories
+            issue:          undefined,
+            start_datetime: undefined,      // dates
+            end_datetime:   undefined,
+            user:           undefined,      // owner/group
+            status:         undefined       // data
+        }
+    }
+
     THAT.DATA__load_job_list = function() {
 
         var data_field = 'd=job&r=lst&n=' + THAT.nonce.nonce + '&t='  + THAT.nonce.timestamp + '&c=' + THAT.context;
+
+        // extended search data
+        if ( THAT.search_filters.category       !== undefined ) data_field += '&a=' + THAT.search_filters.category;
+        if ( THAT.search_filters.issue          !== undefined ) data_field += '&i=' + THAT.search_filters.issue;
+        if ( THAT.search_filters.start_datetime !== undefined ) data_field += '&x=' + THAT.search_filters.start_datetime;
+        if ( THAT.search_filters.status         !== undefined ) data_field += '&s=' + THAT.search_filters.status;
 
         $.ajax({
             url:      'ard.php',
@@ -27,6 +60,9 @@ function Job_List_GUI() {
         .done(function(data){
             ;   // nothing to do here...
         });
+
+        // after every search, filters are reset
+        DATA__reset_filters();
     }
 }
 
@@ -70,8 +106,6 @@ function Job_List_GUI() {
             $new_details = THAT.$job_row_details.clone();
             $new_summary.attr("id", "det_row_" + i);
             THAT.$job_table_list.append($new_details);
-
-
         }
     }
 }

@@ -11,6 +11,7 @@ TODOS:
 - now also the job_creation_date select form field have its object in job_search class
 - implemented update_filters_values method in search_filters class (should improve it)
 - added a filter_values property in search_filters class
+- the DATA__load_job_list method in job_list class now have parameters set by search filters status
 
 19.05.2013
 ----------
