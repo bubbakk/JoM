@@ -138,7 +138,7 @@ function Search_Filters_GUI() {
             var _dummy_date_now       = new Date();
             var _dummy_date_displaced = new Date();
             _dummy_date_displaced.setDate(_dummy_date_now.getDate() - parseInt(THAT.filters_values.filter_by_creation_date) );
-            var date_start = Math.floor(_dummy_date_now.getTime() / 1000);
+            var date_start = Math.floor(_dummy_date_displaced.getTime() / 1000);
             JOM.job_list.search_filters.start_datetime = date_start;
         }
 

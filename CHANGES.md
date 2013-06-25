@@ -4,6 +4,11 @@ Under development.
 
 TODOS:
 - create time format (I18N) (hh:mm.ss) and insert in job list details
+- empty job list causes javascript data.length error: fix it!
+
+25.05.2013
+----------
+- completed job list call using filters
 
 21.05.2013
 ----------

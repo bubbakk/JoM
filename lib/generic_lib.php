@@ -73,7 +73,7 @@ function recursive_utf8_encode($data) {
  *   Try to return GET or POST value of the passed name variable.
  *
  * Returns:
- *   The value of the passed name variable. If not defined, return false
+ *   The string value of the passed variable name. If the variable is not defined, return boolean false
  *
  * Parameters:
  *   $data - data variable to read in GET or POST
