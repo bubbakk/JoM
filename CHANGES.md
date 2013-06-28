@@ -6,6 +6,11 @@ TODOS:
 - create time format (I18N) (hh:mm.ss) and insert in job list details
 - empty job list causes javascript data.length error: fix it!
 
+28.05.2013
+----------
+- added index.php as redirect to login.php page
+- udate this file: moved TODOs points if inserted as issue in the bug tracking / milestones system in GitHub
+
 25.05.2013
 ----------
 - completed job list call using filters
@@ -158,12 +163,8 @@ Version 0.3: Ticket creation
 Completed.
 
 TODOS:
-- better implement datepicker (changing date in the input fields does not replect datepicker widget)
 - check UTF-8 encoding on POST sending data method in Ajax call
 - check new job bad answer "save ko" possible error messages
-- implement a message in the login page (for example to inform about session timeout)
-- implement also redirect in the login page
-- in the new job form, an alert appears when the first date is picked
 
 
 04.05.2013
@@ -336,11 +337,7 @@ Completed.
 
 TODOS:
 - implement a method in bbkk_base_class that checks $pdo variable connection and $tablename variable. Also some general user error messages, like prepare statement, connection missing, ....
-- fix login fields resize
 - add checks and documentation comments to nonce library
-- do not check session expirement only in ajax call, but as one of the first steps of each application file
-- login page is also a redirect destination for common problems such as session expiration: should add a warning message to explain the reason of redirection (parameter passed 'r')
-- using sqlite database, is not possible to have correct authentication
 
 
 24.03.2013
@@ -459,15 +456,6 @@ Version 0.1: Installation procedure / database main tables
 ==========================================================
 Completed.
 
-TODOS:
-- all other table creation (other tables missing: not in the core); sample data too
-- MySQL database creation is not yet implemented
-- not all data passed to PHP scripts are checked
-- BACK button in the (last) installation phase, that can go back to make parameters changes if something goes wrong
-- if installation is successful, make appear a button to go to login page
-- admin user creation
-
-
 05.03.2013
 ----------
 - fixed table creation
@@ -522,8 +510,6 @@ TODOS:
 - created (compiled) first documentation files via naturalDocs
 - chiamata alla set_database.php per database MySQL ora attiva
 - fix minori nella GUI di installazione
-
-
 
 20.02.2013
 ----------
