@@ -154,26 +154,37 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
         $("#jom_showhide_filters").on('click', function(){
             if ( $(this).children().eq(0).hasClass("icon-expand-alt") )
             {
+                // expand
                 $(this).children().eq(0).removeClass("icon-expand-alt").addClass("icon-collapse-alt");
                 $(this).children().eq(1).text("filters collapse");
                 $(".jom_filters_container").slideDown();
+                $(".jom_filters_container .selectpicker").selectpicker('refresh');
             }
             else {
+                // collapse
                 $(this).children().eq(0).removeClass("icon-collapse-alt").addClass("icon-expand-alt");
                 $(this).children().eq(1).text("filters expand");
                 $(".jom_filters_container").slideUp();
             }
         });
+        // set default expand/collapse filtres button status
+        $("#jom_showhide_filters i").removeClass("icon-collapse-alt").addClass("icon-expand-alt");
+        $("#jom_showhide_filters span").text("filters expand");
+        // set default filters status to disabled
+
+
 
         // trigger base events
         dummy = setTimeout(function() {
             JOM.new_job.categories.gui_widget.jq_pointer.trigger('change');
+            $(".jom_filters_container .selectpicker").prop("disabled", true);
         }, 1000);
         dummy = setTimeout(function() {
             JOM.search_filters.filters.filter_by_category.gui_widget.jq_pointer.trigger('change');
+            $(".jom_filters_container .selectpicker").prop("disabled", true);
         }, 1000);
 
-        $("#jom_showhide_filters").trigger('click');
+
 
         $("input.jom_enable_control").on("click", function()
         {
@@ -193,7 +204,6 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
 
 
         });
-        $("input.jom_enable_control").trigger("click");
 
         $("input.jom_enable_control").tooltip();
     });
@@ -230,7 +240,7 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
         </br>
 
 <!-- JOB LIST FILTERS -->
-        <div class="row jom_filters_container">
+        <div class="row jom_filters_container" style="display: none">
                 <div class="span3 offset2">
                     <dl style="margin-top: 0;">
                         <dt><input type="checkbox" class="jom_enable_control" data-placement="bottom" title data-original-title="enable status filter" data-apply-to="jom_filter_by_status"> Filter by status: </dt>

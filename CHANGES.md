@@ -3,8 +3,14 @@ Version 0.4: Ticket listing
 Under development.
 
 TODOS:
-- cA
+- create time format (I18N) (hh:mm.ss) and insert in job list details
 - empty job list causes javascript data.length error: fix it!
+
+
+29.05.2013
+----------
+- fixed issue #24
+- fixed issue #23
 
 28.05.2013
 ----------
