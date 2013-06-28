@@ -79,11 +79,12 @@ class JOM_User extends BBKK_Base_Class {
 
         if ( $this->stmt_login == null ) {
             try {
-                $this->stmt_login = $this->pdo_dbh->prepare('SELECT * '.
-                                                           '  FROM ' . $this->table_name . ' '.
-                                                           ' WHERE (User_username = :user_name OR User_contacts_email = :user_email) '.
-                                                           '   AND User_password_hash = :password '.
-                                                           ' LIMIT 1');
+                $query = 'SELECT * '.
+                         '  FROM ' . $this->table_name . ' '.
+                         ' WHERE (User_username = :user_name OR User_contacts_email = :user_email) '.
+                         '   AND User_password_hash = :password '.
+                         ' LIMIT 1';
+                $this->stmt_login = $this->pdo_dbh->prepare($query);
             }
             catch (PDOException $e)
             {

@@ -3,13 +3,15 @@ Version 0.4: Ticket listing
 Under development.
 
 TODOS:
-- create time format (I18N) (hh:mm.ss) and insert in job list details
+- cA
 - empty job list causes javascript data.length error: fix it!
 
 28.05.2013
 ----------
 - added index.php as redirect to login.php page
-- udate this file: moved TODOs points if inserted as issue in the bug tracking / milestones system in GitHub
+- update this file: moved TODOs points if inserted as issue in the bug tracking / milestones system in GitHub
+- important FIX in login: the specific request_dispatcher() was returning true also on login unsuccessful
+- the query in the user class, authenticate method, is now in a variable. In this way can be printed easily
 
 25.05.2013
 ----------
