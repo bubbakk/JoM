@@ -7,6 +7,10 @@ TODOS:
 - empty job list causes javascript data.length error: fix it!
 
 
+30.05.2013
+----------
+- fixed issue #22
+
 29.05.2013
 ----------
 - fixed issue #24

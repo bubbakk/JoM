@@ -79,6 +79,13 @@ function Job_List_GUI() {
 
         THAT.$job_table_list.children().remove();
 
+        if ( job_list === undefined || job_list.length === 0 ) {
+            THAT.$job_table_footer.find('td').eq(1).html('<p class="text-info"><span class="label label-info">Info</span> no job found</p>');
+            return;
+        }
+
+        $("#jom_job_list_footer").find('td').eq(1).html("");
+
         for ( var i = 0 ; i < job_list.length ; i++ ) {
 
             // setting summary row
@@ -104,7 +111,7 @@ function Job_List_GUI() {
             $details_els.eq(4).text(job_list[i].issue);
 
             $new_details = THAT.$job_row_details.clone();
-            $new_summary.attr("id", "det_row_" + i);
+            $new_summary.attr("id", "jom_job_row_summary_" + i);
             THAT.$job_table_list.append($new_details);
         }
     }
@@ -112,9 +119,10 @@ function Job_List_GUI() {
 
 
     // constructor
-        THAT.$job_table_list  = $("#jom_job_list_table > tbody");
-        THAT.$job_row_summary = $("#jom_job_row_summary").detach();
-        THAT.$job_row_details = $("#jom_job_row_details").detach();
+        THAT.$job_table_list   = $("#jom_job_list_table > tbody");
+        THAT.$job_row_summary  = $("#jom_job_row_summary").detach();
+        THAT.$job_row_details  = $("#jom_job_row_details").detach();
+        THAT.$job_table_footer = $("#jom_job_list_footer");
 
     // end constructor
 

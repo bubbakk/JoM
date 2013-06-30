@@ -363,6 +363,14 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
                             <td colspan="5">descrizione</td>
                         </tr>
                     </tbody>
+                    <tfoot>
+                        <tr id="jom_job_list_footer">
+                            <td></td>
+                            <td colspan="2"></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
