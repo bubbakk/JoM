@@ -9,6 +9,7 @@ TODOS:
 01.06.2013
 ----------
 - fixed issue #18
+- added minimal checks on username and password in login page: avoided 0 length
 
 30.05.2013
 ----------

@@ -126,10 +126,20 @@ $SMAN->start_session('', false);                        // starting session
         // loading cursor...
         $(el).find('i').attr("class", "icon-spinner icon-spin");
 
-        var hashedpass = pidCrypt.SHA512($('#pass').val());
+        var password   = $('#pass').val();
+        var hashedpass = pidCrypt.SHA512(password);
         var username   = $('#user').val();
         var nonce      = $("input[name='_nonce']").val();
         var timestamp  = $("input[name='_timestamp']").val();
+
+        // minimal checks
+        if ( password === "" || username === "" )
+        {
+            // prompt error
+            $('#jom_message_container').hide();
+            set_alert_message("Username and/or password can't be empty", undefined);
+            $('#jom_message_container').fadeIn();
+        }
 
         // ajax call to check login and
         $.ajax({
