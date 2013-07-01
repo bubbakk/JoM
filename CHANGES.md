@@ -4,7 +4,6 @@ Under development.
 
 TODOS:
 - create time format (I18N) (hh:mm.ss) and insert in job list details
-- empty job list causes javascript data.length error: fix it!
 
 01.06.2013
 ----------
@@ -12,6 +11,7 @@ TODOS:
 - added minimal checks on username and password in login page: avoided 0 length
 - refactored set_alert_message_and_show() function in login page: added hide and show code, with parametric delay on show
 - added jsJOMlib__isInteger(n) function in generic_lib.js to check that a variable is an integer number; accepted also strings containing the value
+- application top bar now is a little... better
 
 30.05.2013
 ----------

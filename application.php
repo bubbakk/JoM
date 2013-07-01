@@ -232,7 +232,11 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
             <a class="brand" href="#"><strong>JoM|</strong><small>The Job Manager</small></a>
             <ul class="nav">
               <li class="active"><a href="application.php"><i class="icon-list-ol"></i> Jobs List</a></li>
+            </ul>
+            <ul class="nav pull-right">
               <li class="text-right"><a href="#"><i class="icon-cog"></i> Settings</a></li>
+              <li class="divider-vertical"></li>
+              <li class="pull-right"><a href="#" style="text-shadow: 0px 0px 2px #F36A6A;"><i class="icon-signout"></i> Sign out</a></li>
             </ul>
           </div>
         </div>
