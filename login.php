@@ -70,8 +70,28 @@ $SMAN->start_session('', false);                        // starting session
         });
 
         // info panel is hidden at the beginning
-        $('#jom_message_container').hide();
         $('#jom_infopanel').hide();
+
+        // show message container if there is a reason. If there is not, hide it
+        var reason = jsJOMlib__getParameterByName(document.location.search, 'r');
+        if ( reason !== undefined ) {
+            switch ( reason )
+            {
+                case 'exp':
+                    $('#jom_message_container').hide();
+                    set_alert_message('Session expired. Please log in', undefined);
+                    var dummy = setTimeout(function(){
+                        $('#jom_message_container').fadeIn();
+                    }, 1000);
+                    break;
+                default:
+                    console.warn('reason' + reason + ' unknown');
+                    break;
+            }
+        }
+        else {
+            $('#jom_message_container').hide();
+        }
 
         $("button[data-dismiss='alert']").on("click", function(){
             $('#jom_message_container').fadeOut();
@@ -100,9 +120,6 @@ $SMAN->start_session('', false);                        // starting session
         });
 
     });
-
-
-
 
     function check_login(el) {
 
@@ -138,10 +155,7 @@ $SMAN->start_session('', false);                        // starting session
                 else {
                     // prompt error
                     $('#jom_message_container').hide();
-                    $('#jom_message_container').html('<div class="alert text-center" style="box-shadow: 2px 2px 8px #AAA;">' +
-                                           '    <button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                                           '    <div id="jom_message">' + data.usr_msg + '</div>' +
-                                           '</div>');
+                    set_alert_message(data.usr_msg, undefined);
                     $('#jom_message_container').fadeIn();
 
                     if ( data.new_timestamp != undefined ) {
@@ -158,6 +172,21 @@ $SMAN->start_session('', false);                        // starting session
             }
         });
     }
+
+
+    function set_alert_message(message, html) {
+        if ( html === undefined )
+            $('#jom_message_container').html('<div class="alert text-center" style="box-shadow: 2px 2px 8px #AAA;">' +
+                                               '    <button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                                               '    <div id="jom_message">' + message + '</div>' +
+                                               '</div>');
+        else
+            $('#jom_message_container').html('<div class="alert text-center" style="box-shadow: 2px 2px 8px #AAA;">' +
+                                               '    <button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                                               '    <div id="jom_message">' + html + '</div>' +
+                                               '</div>');
+    }
+
     </script>
 </head>
 <body>
