@@ -20,6 +20,11 @@
  *
  */
 
+
+
+//
+// init
+//
 define('DIR_BASE', './');
 require_once(DIR_BASE.'cfg/user_config.php');
 require_once(DIR_BASE.'cfg/config.php');
@@ -30,11 +35,15 @@ require_once(DIR_OOL.'bbkk_pdo.php');
 require_once(DIR_OOL.'bbkk_session_manager.php');
 
 
+
 //
 // database connection
 //
 $PDO = open_database($config['DB']['type'], $config['DB'][$config['DB']['type']]);  // open DB
 $DBH = $PDO->get_dbh();                                                             // get the handler
+
+
+
 //
 // session manager
 //
@@ -42,19 +51,40 @@ $SMAN = new BBKK_Session_Manager(TBL_SESSIONS, $DBH);   // constructor
 $SMAN->debug_on_screen = false;
 $SMAN->salt = $config['SALT'];                          // explicitly set application salt
 $SMAN->start_session('', false);                        // starting session
+
+
+
+//
+// not yet signed in check
+//
+if ( !isset($_SESSION["user"]["is_logged_in"]) ) {
+    // destroy the session
+    jom_clear_session();
+    // immediate redirect
+    jom_immediate_redirect($config['SERVER']['domain'],
+                           $config['SERVER']['domain_path'],
+                           'login.php',
+                           'r=nsi');
+    // script dies in the function before
+}
+
+
+
+//
+// session expired check
+//
 $session_vars_check = check_session_variables();        // check session variables existance and set default values if not found
-
-
 // check that the session is active
 if ( $session_vars_check === -1 || $session_vars_check === -2 )
 {
     // destroy the session
-    session_destroy();
+    jom_clear_session();
     // immediate redirect
     jom_immediate_redirect($config['SERVER']['domain'],
                            $config['SERVER']['domain_path'],
                            'login.php',
                            'r=exp');
+    // script dies in the function before
 }
 
 ?>
@@ -231,12 +261,12 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
           <div class="navbar-inner">
             <a class="brand" href="#"><strong>JoM|</strong><small>The Job Manager</small></a>
             <ul class="nav">
-              <li class="active"><a href="application.php"><i class="icon-list-ol"></i> Jobs List</a></li>
+              <li class="active"><a href="./application.php"><i class="icon-list-ol"></i> Jobs List</a></li>
             </ul>
             <ul class="nav pull-right">
               <li class="text-right"><a href="#"><i class="icon-cog"></i> Settings</a></li>
               <li class="divider-vertical"></li>
-              <li class="pull-right"><a href="#" style="text-shadow: 0px 0px 2px #F36A6A;"><i class="icon-signout"></i> Sign out</a></li>
+              <li class="pull-right"><a href="./signout.php" style="text-shadow: 0px 0px 2px #FFDDDF;"><i class="icon-signout"></i> Sign out</a></li>
             </ul>
           </div>
         </div>

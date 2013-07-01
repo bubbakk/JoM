@@ -77,8 +77,17 @@ $SMAN->start_session('', false);                        // starting session
         if ( reason !== undefined ) {
             switch ( reason )
             {
+                // session EXPired
                 case 'exp':
                     set_alert_message_and_show('Session expired. Please log in', undefined, 1000);
+                    break;
+                // Not SigneIn
+                case 'nsi':
+                    set_alert_message_and_show('Please sign in', undefined, 500);
+                    break;
+                // Not SigneIn
+                case 'bye':
+                    set_alert_message_and_show('Have a nice day.', undefined, 500);
                     break;
                 default:
                     console.warn('reason' + reason + ' unknown');

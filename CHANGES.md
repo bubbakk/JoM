@@ -12,6 +12,8 @@ TODOS:
 - refactored set_alert_message_and_show() function in login page: added hide and show code, with parametric delay on show
 - added jsJOMlib__isInteger(n) function in generic_lib.js to check that a variable is an integer number; accepted also strings containing the value
 - application top bar now is a little... better
+- implemented sign-out
+- added the not-logged-in check in application
 
 30.05.2013
 ----------
