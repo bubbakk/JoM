@@ -10,6 +10,8 @@ TODOS:
 ----------
 - fixed issue #18
 - added minimal checks on username and password in login page: avoided 0 length
+- refactored set_alert_message_and_show() function in login page: added hide and show code, with parametric delay on show
+- added jsJOMlib__isInteger(n) function in generic_lib.js to check that a variable is an integer number; accepted also strings containing the value
 
 30.05.2013
 ----------

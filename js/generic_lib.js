@@ -131,6 +131,22 @@ function jsJOMlib__isNumber(n) {
 
 
 /*
+   Function: jsJOMlib__isInteger
+   Check whether the given parameter is an integer or not
+
+   Parameters:
+     n - the number, in string format too
+
+   Returns:
+     true if the parameter is a parsable integer, false otherwise
+*/
+function jsJOMlib__isInteger(n) {
+    var num = parseInt(n, 10);
+    if ( num != n ) return false;
+    return typeof num === 'number' && num % 1 == 0;
+}
+
+/*
    Function: jsJOMlib__date_formatted
    Convert a Javascript Date object into a formatted string.
 

@@ -78,11 +78,7 @@ $SMAN->start_session('', false);                        // starting session
             switch ( reason )
             {
                 case 'exp':
-                    $('#jom_message_container').hide();
-                    set_alert_message('Session expired. Please log in', undefined);
-                    var dummy = setTimeout(function(){
-                        $('#jom_message_container').fadeIn();
-                    }, 1000);
+                    set_alert_message_and_show('Session expired. Please log in', undefined, 1000);
                     break;
                 default:
                     console.warn('reason' + reason + ' unknown');
@@ -123,9 +119,6 @@ $SMAN->start_session('', false);                        // starting session
 
     function check_login(el) {
 
-        // loading cursor...
-        $(el).find('i').attr("class", "icon-spinner icon-spin");
-
         var password   = $('#pass').val();
         var hashedpass = pidCrypt.SHA512(password);
         var username   = $('#user').val();
@@ -136,10 +129,12 @@ $SMAN->start_session('', false);                        // starting session
         if ( password === "" || username === "" )
         {
             // prompt error
-            $('#jom_message_container').hide();
-            set_alert_message("Username and/or password can't be empty", undefined);
-            $('#jom_message_container').fadeIn();
+            set_alert_message_and_show("Username and/or password can't be empty");
+            return false;
         }
+
+        // loading cursor...
+        $(el).find('i').attr("class", "icon-spinner icon-spin");
 
         // ajax call to check login and
         $.ajax({
@@ -164,9 +159,7 @@ $SMAN->start_session('', false);                        // starting session
                 // if not
                 else {
                     // prompt error
-                    $('#jom_message_container').hide();
-                    set_alert_message(data.usr_msg, undefined);
-                    $('#jom_message_container').fadeIn();
+                    set_alert_message_and_show(data.usr_msg);
 
                     if ( data.new_timestamp != undefined ) {
                         $("input[name='_timestamp']").val(data.new_timestamp);
@@ -184,7 +177,12 @@ $SMAN->start_session('', false);                        // starting session
     }
 
 
-    function set_alert_message(message, html) {
+    function set_alert_message_and_show(message, html, delay)
+    {
+        // hide previous message if visible
+        $('#jom_message_container').hide();
+
+        // set message
         if ( html === undefined )
             $('#jom_message_container').html('<div class="alert text-center" style="box-shadow: 2px 2px 8px #AAA;">' +
                                                '    <button type="button" class="close" data-dismiss="alert">&times;</button>' +
@@ -195,6 +193,19 @@ $SMAN->start_session('', false);                        // starting session
                                                '    <button type="button" class="close" data-dismiss="alert">&times;</button>' +
                                                '    <div id="jom_message">' + html + '</div>' +
                                                '</div>');
+
+        // show message
+        if ( delay === undefined ) {
+            $('#jom_message_container').fadeIn();
+        }
+        else if ( jsJOMlib__isInteger(delay) ) {
+            var dummy = setTimeout(function(){
+                $('#jom_message_container').fadeIn();
+            }, delay);
+        }
+        else {
+            console.warn("parameter delay is not a number");
+        }
     }
 
     </script>
