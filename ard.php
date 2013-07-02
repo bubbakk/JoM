@@ -26,6 +26,7 @@
 //
 
 
+
 //
 // init
 //
@@ -38,8 +39,11 @@ require_once(DIR_OOL.'bbkk_base_class.php');
 require_once(DIR_OOL.'bbkk_pdo.php');
 require_once(DIR_OOL.'bbkk_session_manager.php');
 
-$retval['success'] = false;
 
+
+//
+// possible calls set
+//
 // DOMAINS
 $domains = array('cat' => 'categories',                         // categories
                  'sta' => 'statuses',                           // statuses
@@ -56,14 +60,16 @@ $requests = array('categories' => array('lod' => 'load'),       // categories
                                         'lst' => 'list'
                                        )
                  );
+// default return falue
+$retval['success'] = false;
 
 
 
 
-
+//
+// variables read
+//
 /*
- * Reading variables
- *
  * Some names are reserved for the application, and can't be used for custom
  * uses. That are:
  *  - n: the nonce
@@ -116,15 +122,14 @@ $command = '/' . $full_domain . '/' . $full_request;
 
 
 
-
-
-
-
 //
 // database connection
 //
 $PDO = open_database($config['DB']['type'], $config['DB'][$config['DB']['type']]);  // open DB
 $DBH = $PDO->get_dbh();                                                             // get the handler
+
+
+
 //
 // session manager
 //
@@ -134,8 +139,6 @@ $SMAN->salt = $config['SALT'];                          // explicitly set applic
 $SMAN->start_session('', false);                        // starting session
 // check session variables existance and set default values if not found
 $session_vars_check = check_session_variables();
-
-
 // if loggin in, do not have to check session
 if ( $full_domain != 'users' && $full_request != 'login' ) {
     // else, check that the session is active
@@ -153,7 +156,9 @@ if ( $full_domain != 'users' && $full_request != 'login' ) {
 
 
 
-// check nonce
+//
+// nonce check
+//
 if ( !JOM_DEBUG ) {
     $nonce_check = check_nonce( $command, 0, session_id(), $timestamp, $config['SALT'], $config['HASH_ALG'], $nonce, NONCE_EXPIRE, $DBH);
     if ( !($nonce_check === true) ) {
@@ -167,7 +172,9 @@ if ( !JOM_DEBUG ) {
 
 
 
-// dispatch_request
+//
+// request dispatch
+//
 if ( array_key_exists($domain, $domains) &&
      array_key_exists($request, $requests[$full_domain])
    ) {

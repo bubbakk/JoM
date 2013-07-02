@@ -101,11 +101,15 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
     <link href="./css/jom_default_style.css"        rel="stylesheet" type="text/css" media="screen">
     <link href="./css/datepicker.css"               rel="stylesheet" type="text/css" media="screen">
     <link href="./css/bootstrap-select.min.css"     rel="stylesheet" type="text/css" media="screen">
-    <link href="./css/prettyCheckable.css"     rel="stylesheet" type="text/css" media="screen">
+    <link href="./css/prettyCheckable.css"          rel="stylesheet" type="text/css" media="screen">
+    <link href="./js/lib/bootstrap-editable/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet" type="text/css" media="screen">
+    <!-- external libraries -->
     <script language="javascript" type="text/javascript" src="./js/lib/jquery-1.9.0.min.js"></script>
     <script language="javascript" type="text/javascript" src="./js/lib/bootstrap-datepicker.js"></script>
     <script language="javascript" type="text/javascript" src="./js/lib/bootstrap-select.min.js"></script>
     <script language="javascript" type="text/javascript" src="./js/lib/prettyCheckable.js"></script>
+    <script language="javascript" type="text/javascript" src="./js/lib/bootstrap-editable/bootstrap-editable/js/bootstrap-editable.min.js"></script>
+    <!-- JoM libraries -->
     <script language="javascript" type="text/javascript" src="./js/application.js"></script>
     <script language="javascript" type="text/javascript" src="./js/search_filters.js"></script>
     <script language="javascript" type="text/javascript" src="./js/generic_lib.js"></script>
@@ -120,7 +124,6 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
 
         // set GUI start status
         $(".container").fadeIn();       // fadeIn GUI
-
 
         JOM = new Object();
 
@@ -343,7 +346,7 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
             </div>
             <div class="span10">
                 <table class="table" id="jom_job_list_table">
-                    <caption>Elenco lavori</caption>
+                    <!-- <caption>Jobs list</caption> -->
                     <thead>
                         <tr>
                             <th></th>

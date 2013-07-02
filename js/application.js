@@ -123,8 +123,6 @@ function jom_init(dateformat) {
         })
         .on('changeDate', function(){
            $("#form_new_job [name='creation_date']").parent().datepicker('hide');
-           $("#jom_create_job_modal .modal-body .alert").show();
-           $("#jom_create_job_modal .modal-body .alert").slideDown();
         });
 
         // hide alert label

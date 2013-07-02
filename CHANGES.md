@@ -5,6 +5,11 @@ Under development.
 TODOS:
 - create time format (I18N) (hh:mm.ss) and insert in job list details
 
+
+02.06.2013
+----------
+- fixed issue #20
+
 01.06.2013
 ----------
 - fixed issue #18
