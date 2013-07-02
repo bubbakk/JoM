@@ -183,7 +183,7 @@ $tables = array(
                           PRIMARY KEY (`Session_id`)
                         ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;",
     'sqlite' => "CREATE TABLE IF NOT EXISTS ".TBL_SESSIONS." (
-                          Session_id               CHAR(128) NOT NULL DEFAULT '',
+                          Session_id               CHAR(128) PRIMARY KEY NOT NULL DEFAULT '',
                           Session_set_time         INT       NOT NULL DEFAULT '0',
                           Session_data             TEXT      NOT NULL DEFAULT '',
                           Session_key              CHAR(128) NOT NULL DEFAULT '');"

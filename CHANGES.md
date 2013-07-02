@@ -9,6 +9,8 @@ TODOS:
 02.06.2013
 ----------
 - fixed issue #20
+- added a file writeability check in save_config.php installatione part (added also top license-and-copyright note on top)
+- fixed issue #19 (in the table Session definition for SQLite there was not primary key defined... and is fundamental because of a REPLACE query)
 
 01.06.2013
 ----------

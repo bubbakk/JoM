@@ -43,7 +43,7 @@ $query_user_data = 'INSERT INTO '.TBL_USERS.' '.
                       '             User_contacts_email, User_is_internal_company, User_company_id, User_chainedgroup_id_catA, '.
                       '             User_chainedgroup_id_catB, User_chainedgroup_id_catC, User_chainedgroup_id_catD, User_freegroup_id_grpA, '.
                       '             User_freegroup_id_grpB, User_freegroup_id_grpC, User_freegroup_id_grpD, User_external_id_join, User_trashed) '.
-                      '     VALUES (NULL,   "Andrea",  "Ferroni",  "bubbakk",  "'.$hashed_password.'", "", "bubba",  "419",  "",  "329 xxxyyyzzzz",  "bubbakk@gmail.com",  1,  1,  1,  1,  0,  0, 0,  0,  0,  0,  0,  0);';
+                      '     VALUES (NULL,   "Andrea",  "Ferroni",  "bubbakk",  "'.$hashed_password.'", "", "bubba",  "419",  "",  "329 xxxyyyzzzz",  "bubbakk@gmail.com",  1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0);';
 $res = $DBH->exec($query_user_data);                                      // insert Company data
 if ( $res===false ) die(__LINE__ . " - ".print_r($DBH->errorInfo(), true));
 

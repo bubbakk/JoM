@@ -53,7 +53,6 @@ $SMAN->salt = $config['SALT'];                          // explicitly set applic
 $SMAN->start_session('', false);                        // starting session
 
 
-
 //
 // not yet signed in check
 //

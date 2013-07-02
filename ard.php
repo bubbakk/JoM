@@ -204,6 +204,7 @@ if ( !isset($_SESSION['user']['is_logged_in']) )    $_SESSION['user']['is_logged
 if ( !isset($_SESSION['user']['last_visit']) )      $_SESSION['user']['last_visit']     = time();
 
 
+
 // UTF-8 encode (if any data exist)
 if ( isset($retval['data']) ) {
     $retval['data'] = recursive_utf8_encode($retval['data']);

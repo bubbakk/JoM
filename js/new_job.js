@@ -341,9 +341,9 @@ function New_Job_GUI() {
         THAT.categories.gui_widget  = new gui_select_standard( $("#form_new_job [name='category']"), true );
 
         // Issues widget
-        THAT.issues           = new Categories();
-        THAT.issues.level     = 2;
-        THAT.issues.gui_widget  = new gui_select_standard( $("#form_new_job [name='issue']"), true );
+        THAT.issues                 = new Categories();
+        THAT.issues.level           = 2;
+        THAT.issues.gui_widget      = new gui_select_standard( $("#form_new_job [name='issue']"), true );
     // end constructor
 
 }
