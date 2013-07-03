@@ -89,9 +89,11 @@ function Job_List_GUI() {
         for ( var i = 0 ; i < job_list.length ; i++ ) {
 
             // setting summary row
-            $summary_els.eq(1).text("#" + job_list[i].id);
-            $summary_els.eq(2).text(job_list[i].subject);
-            $summary_els.eq(3).text(job_list[i].owner);
+            id = job_list[i].id;
+            $summary_els.eq(1).text("#" + id);                  // id
+            $summary_els.eq(2).text(job_list[i].subject);       // subject
+            owner = '<a id="jom_jobowner_' + id + '" class="x_editable" data-type="select" data-pk="' + id + '" data-url="rsave.php" data-title="Assign to...">' + job_list[i].owner + "</a>";
+            $summary_els.eq(3).html(owner);                     // owner
 
             $new_summary = THAT.$job_row_summary.clone();
             $new_summary.attr("id", "sum_row_" + i);
@@ -113,6 +115,9 @@ function Job_List_GUI() {
             $new_details = THAT.$job_row_details.clone();
             $new_summary.attr("id", "jom_job_row_summary_" + i);
             THAT.$job_table_list.append($new_details);
+
+            // x-editable field
+            $('#jom_jobowner_' + id).editable();
         }
     }
 }

@@ -41,9 +41,9 @@ function dispatch_request($request)
 
             // retrieving filters data
             // check and set all passed parameters
-            $filters = array('job_category_level_1'  => post_or_get('a'),    // category
-                             'job_category_level_2'  => post_or_get('i'),    // issue
-                             'job_creation_datetime' => post_or_get('x'),    // creation date
+            $filters = array('job_category_level_1'  => post_or_get('a'),   // category
+                             'job_category_level_2'  => post_or_get('i'),   // issue
+                             'job_creation_datetime' => post_or_get('x'),   // creation date
                              'job_status'            => post_or_get('s')    // status
                              );
 

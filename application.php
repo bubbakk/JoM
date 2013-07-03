@@ -238,6 +238,10 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
         });
 
         $("input.jom_enable_control").tooltip();
+
+        $('.dropdown-toggle').dropdown();
+
+
     });
     </script>
     <style>
@@ -266,9 +270,17 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
               <li class="active"><a href="./application.php"><i class="icon-list-ol"></i> Jobs List</a></li>
             </ul>
             <ul class="nav pull-right">
-              <li class="text-right"><a href="#"><i class="icon-cog"></i> Settings</a></li>
-              <li class="divider-vertical"></li>
-              <li class="pull-right"><a href="./signout.php" style="text-shadow: 0px 0px 2px #FFDDDF;"><i class="icon-signout"></i> Sign out</a></li>
+              <li class="dropdown">
+                  <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i> Settings <b class="caret"></b></a>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><i class="icon-user"></i> user properties</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><i class="icon-tasks"></i> preferences</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><i class="icon-tags"></i> application settings</a></li>
+                    <li role="presentation" class="divider"></li>
+                    <li role="presentation"><a href="./signout.php"><i class="icon-signout"></i> Sign out</a></li>
+                  </ul>
+                <li class="divider-vertical"></li>
+                <li class="pull-right"><a href="./signout.php"><i class="icon-signout"></i> Sign out</a></li>
             </ul>
           </div>
         </div>

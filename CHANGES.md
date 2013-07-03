@@ -5,6 +5,11 @@ Under development.
 TODOS:
 - create time format (I18N) (hh:mm.ss) and insert in job list details
 
+04.06.2013
+----------
+- job not assigned during creation now are shown in the list
+- added x-editable plugin
+- added basic selectable job assignement (only graphic GUI pop-up implemented)
 
 02.06.2013
 ----------
