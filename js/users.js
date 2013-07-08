@@ -1,12 +1,12 @@
-function Statuses() {
+function Users() {
 
     var THAT        = this;
 
     /*
-       Variable: statuses
+       Variable: users
        JSON data object
     */
-    THAT.statuses   = undefined;
+    THAT.users   = undefined;
 
     /*
        Variable: gui_widget
@@ -37,7 +37,7 @@ function Statuses() {
      */
     THAT.load = function() {
 
-        var request = 'd=sta&r=lod';
+        var request = 'd=usr&r=lst';
         var secure  = 'n=' + THAT.nonce.nonce + '&t=' + THAT.nonce.timestamp;
 
         $.ajax({

@@ -5,13 +5,19 @@ Under development.
 TODOS:
 - create time format (I18N) (hh:mm.ss) and insert in job list details
 
-04.06.2013
+09.07.2013
+----------
+- added X-Editable jQuery-Bootstrap component for user assignement on object
+- implemented dynamic load of users list
+- some fixes
+
+04.07.2013
 ----------
 - job not assigned during creation now are shown in the list
 - added x-editable plugin
 - added basic selectable job assignement (only graphic GUI pop-up implemented)
 
-02.06.2013
+02.07.2013
 ----------
 - fixed issue #20
 - added a file writeability check in save_config.php installatione part (added also top license-and-copyright note on top)
@@ -19,7 +25,7 @@ TODOS:
 - fix in tables creation SQL query for SQLite database: wrong NOT NULL removed
 - fix in sample data creation SQL query: now ids for categories 1 & 2 are explicitely created, no more left to AUTO INCREMENT to set
 
-01.06.2013
+01.07.2013
 ----------
 - fixed issue #18
 - added minimal checks on username and password in login page: avoided 0 length

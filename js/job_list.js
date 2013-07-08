@@ -2,12 +2,24 @@ function Job_List_GUI() {
 
     var THAT = this;
 
+    // Objects
+    THAT.users_list         = undefined;
+
     THAT.$job_row_summary   = undefined;
     THAT.$job_row_details   = undefined;
 
+    // Data
     THAT.nonce              = new Object();
-
     THAT.context            = undefined;
+
+    /*
+       Variable: users
+         JSON object that contains users id, name
+
+        See also:
+          <DATA__load_users_list>
+    */
+    var users               = undefined;
 
     /*
        Variable: search_filters
@@ -44,15 +56,18 @@ function Job_List_GUI() {
 
         var data_field = 'd=job&r=lst&n=' + THAT.nonce.nonce + '&t='  + THAT.nonce.timestamp + '&c=' + THAT.context;
 
+        var request = 'd=job&r=lst';
+        var secure  = 'n=' + THAT.nonce.nonce + '&t=' + THAT.nonce.timestamp;
+
         // extended search data
-        if ( THAT.search_filters.category       !== undefined ) data_field += '&a=' + THAT.search_filters.category;
-        if ( THAT.search_filters.issue          !== undefined ) data_field += '&i=' + THAT.search_filters.issue;
-        if ( THAT.search_filters.start_datetime !== undefined ) data_field += '&x=' + THAT.search_filters.start_datetime;
-        if ( THAT.search_filters.status         !== undefined ) data_field += '&s=' + THAT.search_filters.status;
+        if ( THAT.search_filters.category       !== undefined ) request += '&a=' + THAT.search_filters.category;
+        if ( THAT.search_filters.issue          !== undefined ) request += '&i=' + THAT.search_filters.issue;
+        if ( THAT.search_filters.start_datetime !== undefined ) request += '&x=' + THAT.search_filters.start_datetime;
+        if ( THAT.search_filters.status         !== undefined ) request += '&s=' + THAT.search_filters.status;
 
         $.ajax({
             url:      'ard.php',
-            data:     data_field,
+            data:     request + '&' + secure + '&c=' + THAT.context,
             type:     'GET',
             contentType: "application/x-www-form-urlencoded;charset=UTF-8",
 			dataType: 'JSON'
@@ -63,6 +78,27 @@ function Job_List_GUI() {
 
         // after every search, filters are reset
         DATA__reset_filters();
+    }
+
+    THAT.DATA__load_users_list = function() {
+        THAT.users_list.context = THAT.context;
+        THAT.users_list.load();
+    }
+
+    THAT.DATA__get_converted_users_list = function() {
+        retval = new Array();
+        for ( el in THAT.users_list.users ) {
+            new_obj = {
+                value:  THAT.users_list.users[el].id,
+                text:   THAT.users_list.users[el].nickname
+            }
+            retval.push(new_obj);
+        }
+        return retval;
+    }
+
+    THAT.DATA__update_field = function( key, fieldname, value ) {
+        alert(key + " " + fieldname + " " + value);
     }
 }
 
@@ -92,7 +128,7 @@ function Job_List_GUI() {
             id = job_list[i].id;
             $summary_els.eq(1).text("#" + id);                  // id
             $summary_els.eq(2).text(job_list[i].subject);       // subject
-            owner = '<a id="jom_jobowner_' + id + '" class="x_editable" data-type="select" data-pk="' + id + '" data-url="rsave.php" data-title="Assign to...">' + job_list[i].owner + "</a>";
+            owner = '<a id="jom_jobowner_' + id + '" class="x_editable" data-type="select" data-field="Job_assigned_to_User" data-pk="' + id + '" data-title="Assign to...">' + job_list[i].owner + "</a>";
             $summary_els.eq(3).html(owner);                     // owner
 
             $new_summary = THAT.$job_row_summary.clone();
@@ -117,17 +153,25 @@ function Job_List_GUI() {
             THAT.$job_table_list.append($new_details);
 
             // x-editable field
-            $('#jom_jobowner_' + id).editable();
+            $('#jom_jobowner_' + id).editable({
+                source:     JOM.job_list.DATA__get_converted_users_list(),
+                value:      id,
+                success:    function(response, newValue) {
+                    JOM.job_list.DATA__update_field( $(this).attr('data-pk'), $(this).attr('data-field'), newValue);
+                }
+            });
         }
     }
 }
 
 
     // constructor
-        THAT.$job_table_list   = $("#jom_job_list_table > tbody");
-        THAT.$job_row_summary  = $("#jom_job_row_summary").detach();
-        THAT.$job_row_details  = $("#jom_job_row_details").detach();
-        THAT.$job_table_footer = $("#jom_job_list_footer");
+        THAT.$job_table_list    = $("#jom_job_list_table > tbody");
+        THAT.$job_row_summary   = $("#jom_job_row_summary").detach();
+        THAT.$job_row_details   = $("#jom_job_row_details").detach();
+        THAT.$job_table_footer  = $("#jom_job_list_footer");
+
+        THAT.users_list         = new Users();
 
     // end constructor
 

@@ -54,7 +54,8 @@ $domains = array('cat' => 'categories',                         // categories
 $requests = array('categories' => array('lod' => 'load'),       // categories
                   'statuses'   => array('lod' => 'load'),       // statuses
                   'users'      => array('lin' => 'login',       // users
-                                        'lot' => 'logout'
+                                        'lot' => 'logout',
+                                        'lst' => 'list'
                                        ),
                   'job'        => array('new' => 'new',         // job
                                         'lst' => 'list'
@@ -69,6 +70,7 @@ $retval['success'] = false;
 //
 // variables read
 //
+
 /*
  * Some names are reserved for the application, and can't be used for custom
  * uses. That are:
@@ -185,6 +187,10 @@ if ( array_key_exists($domain, $domains) &&
 
     // update user's last visit datetime
     $_SESSION['user']['last_visit'] = time();
+
+    $retval['domain'] = $full_domain;
+    $retval['request'] = $full_request;
+
 
     if ( dispatch_request($full_request) ) {
         $retval['success'] = true;

@@ -2,6 +2,7 @@
 
 // echo __FILE__." loaded\n";
 require_once(DIR_OOL.'user.php');
+require_once(DIR_OOL.'users_list.php');
 
 function dispatch_request($request)
 {
@@ -9,7 +10,7 @@ function dispatch_request($request)
     switch ( $request )
     {
         case 'login':
-
+        {
             global $DBH, $retval, $config;
             global $command;
 
@@ -39,10 +40,27 @@ function dispatch_request($request)
             $retval['usr_msg'] = 'Authenticated';
 
             return true;
-
+        }
             break;
         case 'logout':
+        {
             $_SESSION['user']['is_logged_in'] = false;
+        }
+            break;
+        case 'list':
+        {
+            global $DBH, $retval;
+
+            $users_list_data = users_list_retrieve($DBH, null);
+
+            if ( count($users_list_data ) == 0 ) {
+                $retval['success'] = false;
+            }
+            else {
+                $retval['success'] = true;
+                $retval['data']    = users_list_data_format($users_list_data);
+            }
+        }
             break;
         default:
             echo "CANT'T BE HERE!!!!\n";

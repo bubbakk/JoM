@@ -89,6 +89,11 @@
                     JOM.job_list.GUI__replace_job_list(JSON_response.data);
                     break;
                 }
+            case 'usr/lst':
+                {
+                    JOM.job_list.users_list.users = JSON_response.data;
+                    break;
+                }
             case 'sta/lod':
                 {
                     // update object data and form field too

@@ -6,19 +6,19 @@ function Categories() {
        Variable: level
        Needed to select right table, level or sublevel
     */
-    THAT.level          = undefined;
+    THAT.level      = undefined;
 
     /*
        Variable: parent_id
        Needed if want to get parented subcategories
     */
-    THAT.parent_id      = undefined;
+    THAT.parent_id  = undefined;
 
     /*
        Variable: categories
        JSON data object
     */
-    THAT.categories     = undefined;
+    THAT.categories = undefined;
 
     /*
        Variable: gui_widget
@@ -30,13 +30,13 @@ function Categories() {
        Variable: nonce
        JSON object that contains nonce and timestamp fields
     */
-    THAT.nonce          = new Object();
+    THAT.nonce      = new Object();
 
     /*
      * Variable: context
      * String value representing object component (is sent via Ajax call and returned back without changes)
      */
-    THAT.context        = undefined;
+    THAT.context    = undefined;
 
 
 
