@@ -5,6 +5,10 @@ Under development.
 TODOS:
 - create time format (I18N) (hh:mm.ss) and insert in job list details
 
+11.07.2013
+----------
+- X-editable style owner pop-up selector now contains users dynamic list
+
 09.07.2013
 ----------
 - added X-Editable jQuery-Bootstrap component for user assignement on object
