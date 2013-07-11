@@ -116,6 +116,7 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
     <script language="javascript" type="text/javascript" src="./js/job_list.js"></script>
     <script language="javascript" type="text/javascript" src="./js/categories.js"></script>
     <script language="javascript" type="text/javascript" src="./js/statuses.js"></script>
+    <script language="javascript" type="text/javascript" src="./js/users.js"></script>
     <script language="javascript" type="text/javascript" src="./js/gui_select.js"></script>
     <title>***</title>
     <script>
@@ -148,8 +149,10 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
 
         // init JOB LIST objects
         JOM.job_list = new Job_List_GUI();
-        JOM.job_list.nonce      = <?php echo generate_json_javascript_values( '/job/list',        0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
-        JOM.job_list.context    = 'job_list';
+        JOM.job_list.nonce              = <?php echo generate_json_javascript_values( '/job/list',        0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
+        JOM.job_list.context            = 'job_list';
+        JOM.job_list.users_list.nonce   = <?php echo generate_json_javascript_values( '/users/list',      0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
+        JOM.job_list.DATA__load_users_list();
         JOM.job_list.DATA__load_job_list();
 
         // init SEARCH FILTERS objects
@@ -217,7 +220,6 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
         }, 1000);
 
 
-
         $("input.jom_enable_control").on("click", function()
         {
             var ctrl_id  = $(this).attr("data-apply-to");
@@ -240,7 +242,6 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
         $("input.jom_enable_control").tooltip();
 
         $('.dropdown-toggle').dropdown();
-
 
     });
     </script>

@@ -30,7 +30,7 @@ function jobs_list_retrieve($DBH, $filters)
     $query = 'SELECT '.$TP.'Job_id, Job_subject, '.$TP.'Job_description, '.$TP.'Job_start_datetime, '.$TP.'Job_priority, '.
              '       '.$TP.'Status_name, '.
              '       '.$TP.'Category_1_name, '.$TP.'Category_2_name, '.
-             '       '.$TP.'User_nickname '.
+             '       '.$TP.'User_nickname,   '.$TP.'User_id '.
              '  FROM '.TBL_JOBS.' INNER JOIN '.TBL_CATEGORIES_1.' ON '.TBL_JOBS.'.'.$TP.'Job_category_level_1 = '.TBL_CATEGORIES_1.'.'.$TP.'Category_1_id '.
              '                    INNER JOIN '.TBL_CATEGORIES_2.' ON '.TBL_JOBS.'.'.$TP.'Job_category_level_2 = '.TBL_CATEGORIES_2.'.'.$TP.'Category_2_id '.
              '                    INNER JOIN '.TBL_STATUSES.'     ON '.TBL_JOBS.'.'.$TP.'Job_status           = '.TBL_STATUSES.    '.'.$TP.'Status_id '.
@@ -60,6 +60,7 @@ function jobs_list_data_format($job_list_raw_data)
         $retval[$key]['id']             = $value[$TP.'Job_id'];
         $retval[$key]['subject']        = $value[$TP.'Job_subject'];
         $retval[$key]['owner']          = $value[$TP.'User_nickname'];
+        $retval[$key]['owner_id']       = $value[$TP.'User_id'];
         $retval[$key]['status']         = $value[$TP.'Status_name'];
         $retval[$key]['description']    = $value[$TP.'Job_description'];
         $retval[$key]['started']        = $value[$TP.'Job_start_datetime'];

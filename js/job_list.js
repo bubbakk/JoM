@@ -82,7 +82,7 @@ function Job_List_GUI() {
 
     THAT.DATA__load_users_list = function() {
         THAT.users_list.context = THAT.context;
-        THAT.users_list.load();
+        THAT.users_list.DATA__load();
     }
 
     THAT.DATA__get_converted_users_list = function() {
@@ -155,7 +155,7 @@ function Job_List_GUI() {
             // x-editable field
             $('#jom_jobowner_' + id).editable({
                 source:     JOM.job_list.DATA__get_converted_users_list(),
-                value:      id,
+                value:      job_list[i].owner_id,
                 success:    function(response, newValue) {
                     JOM.job_list.DATA__update_field( $(this).attr('data-pk'), $(this).attr('data-field'), newValue);
                 }

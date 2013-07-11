@@ -35,7 +35,7 @@ function Users() {
      * Function: load
      * Load statuses data
      */
-    THAT.load = function() {
+    THAT.DATA__load = function() {
 
         var request = 'd=usr&r=lst';
         var secure  = 'n=' + THAT.nonce.nonce + '&t=' + THAT.nonce.timestamp;
