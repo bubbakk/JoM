@@ -4,6 +4,13 @@ Under development.
 
 TODOS:
 - create time format (I18N) (hh:mm.ss) and insert in job list details
+- convert JSON requests on application load to PHP generated data
+- implement AJAX call cache
+
+15.07.2013
+----------
+- Added field "Job_is_favourite" to Jobs table
+- Added sort order in Statuses sample values
 
 11.07.2013
 ----------

@@ -122,13 +122,13 @@ $query_statuses_data = 'INSERT INTO '.TBL_STATUSES.' '.
                       '     VALUES ("Just created", 0, 1); '.
                       'INSERT INTO '.TBL_STATUSES.' '.
                       '            (Status_name, Status_is_final, Status_order) '.
-                      '     VALUES ("in progress", 0, 1); '.
+                      '     VALUES ("in progress", 0, 2); '.
                       'INSERT INTO '.TBL_STATUSES.' '.
                       '            (Status_name, Status_is_final, Status_order) '.
-                      '     VALUES ("waiting for something", 0, 1); '.
+                      '     VALUES ("waiting for something", 0, 3); '.
                       'INSERT INTO '.TBL_STATUSES.' '.
                       '            (Status_name, Status_is_final, Status_order) '.
-                      '     VALUES ("Closed", 0, 1); ';
+                      '     VALUES ("Closed", 1, 4); ';
 $res = $DBH->exec($query_statuses_data);                                      // insert statuses data
 if ( $res===false ) die(__LINE__ . " - ".print_r($DBH->errorInfo(), true));
 
