@@ -11,7 +11,6 @@ function dispatch_request($request)
         case 'new':
         {
             global $DBH, $retval, $config;
-            global $command;
 
             $JOB = new JOM_Job(TBL_JOBS, $DBH);  // constructor
             $JOB->reset_job_data_to_defaults();
@@ -59,6 +58,17 @@ function dispatch_request($request)
 
             return true;
 
+            break;
+        }
+        case 'update':
+        {
+            global $DBH, $retval, $config;
+
+            $JOB = new JOM_Job(TBL_JOBS, $DBH);  // constructor
+            $JOB->reset_job_data_to_defaults();
+
+            $JOB->job_data["id"]             = post_or_get('i');
+            $JOB->job_data[post_or_get('f')] = post_or_get('v');
             break;
         }
         default:

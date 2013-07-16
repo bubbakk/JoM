@@ -13,6 +13,8 @@ TODOS:
 - fixed back a wrong patch about table prefix
 - now the user John Doe is correctly created with id 0
 - fixed ids in users table (no more missing id)
+- added ajax call for owner update
+- added update case in request_job.php
 
 15.07.2013
 ----------

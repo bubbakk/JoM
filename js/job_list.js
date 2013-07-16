@@ -21,6 +21,15 @@ function Job_List_GUI() {
     */
     var users               = undefined;
 
+
+    /*
+       Variable: job
+         To hold an instance of JoB class
+
+        See also:
+          <JoB>
+    */
+    var job                = undefined;
     /*
        Variable: search_filters
          JSON object that contains search filters to apply to load function
@@ -98,7 +107,9 @@ function Job_List_GUI() {
     }
 
     THAT.DATA__update_field = function( key, fieldname, value ) {
-        alert(key + " " + fieldname + " " + value);
+        job.context = THAT.context;
+        job.update_field(key, fieldname, value, undefined);
+        //alert(key + " " + fieldname + " " + value);
     }
 }
 
@@ -172,6 +183,8 @@ function Job_List_GUI() {
         THAT.$job_table_footer  = $("#jom_job_list_footer");
 
         THAT.users_list         = new Users();
+
+        job                     = new JoB();
 
     // end constructor
 

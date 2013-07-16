@@ -58,7 +58,8 @@ $requests = array('categories' => array('lod' => 'load'),       // categories
                                         'lst' => 'list'
                                        ),
                   'job'        => array('new' => 'new',         // job
-                                        'lst' => 'list'
+                                        'lst' => 'list',
+                                        'upd' => 'update'
                                        )
                  );
 // default return falue

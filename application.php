@@ -114,6 +114,7 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
     <script language="javascript" type="text/javascript" src="./js/generic_lib.js"></script>
     <script language="javascript" type="text/javascript" src="./js/new_job.js"></script>
     <script language="javascript" type="text/javascript" src="./js/job_list.js"></script>
+    <script language="javascript" type="text/javascript" src="./js/job.js"></script>
     <script language="javascript" type="text/javascript" src="./js/categories.js"></script>
     <script language="javascript" type="text/javascript" src="./js/statuses.js"></script>
     <script language="javascript" type="text/javascript" src="./js/users.js"></script>
