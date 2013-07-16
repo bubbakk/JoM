@@ -7,11 +7,12 @@ TODOS:
 - convert JSON requests on application load to PHP generated data
 - implement AJAX call cache
 
-15.07.2013
+17.07.2013
 ----------
 - created (but not uploaded into repository) script to create registered users
 - fixed back a wrong patch about table prefix
 - now the user John Doe is correctly created with id 0
+- fixed ids in users table (no more missing id)
 
 15.07.2013
 ----------

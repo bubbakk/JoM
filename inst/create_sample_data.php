@@ -36,6 +36,23 @@ if ( $res===false ) die(__LINE__ . " - ".print_r($DBH->errorInfo(), true));
 //
 // USER
 //
+$hashed_password = openssl_digest ( '' , 'sha512' );
+$query_user_data = 'INSERT INTO '.TBL_USERS.' '.
+                      '            (User_id, User_firstname, User_lastname, User_username, User_password_hash, User_salt, User_nickname, '.
+                      '             User_contacts_internal_telephone_number, User_contacts_telephone_number, User_contacts_mobile, '.
+                      '             User_contacts_email, User_is_internal_company, User_company_id, User_chainedgroup_id_catA, '.
+                      '             User_chainedgroup_id_catB, User_chainedgroup_id_catC, User_chainedgroup_id_catD, User_freegroup_id_grpA, '.
+                      '             User_freegroup_id_grpB, User_freegroup_id_grpC, User_freegroup_id_grpD, User_external_id_join, User_trashed) '.
+                      '     VALUES (1,   "John",  "Doe",  "none",  "'.$hashed_password.'", "", "not assigned",  "",  "",  "",  "",  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);';
+$res = $DBH->exec($query_user_data);
+if ( $res===false ) die(__LINE__ . " - ".print_r($DBH->errorInfo(), true));
+
+// set id=0 for John Doe
+$query_udate_John_Doe = 'UPDATE '.TBL_USERS.' SET User_id = 0 WHERE User_nickname = "not assigned"';
+$res = $DBH->exec($query_udate_John_Doe);
+if ( $res===false ) die(__LINE__ . " - ".print_r($DBH->errorInfo(), true));
+
+
 $hashed_password = openssl_digest ( 'pippo' , 'sha512' );
 $query_user_data = 'INSERT INTO '.TBL_USERS.' '.
                       '            (User_id, User_firstname, User_lastname, User_username, User_password_hash, User_salt, User_nickname, '.
@@ -47,21 +64,7 @@ $query_user_data = 'INSERT INTO '.TBL_USERS.' '.
 $res = $DBH->exec($query_user_data);
 if ( $res===false ) die(__LINE__ . " - ".print_r($DBH->errorInfo(), true));
 
-$hashed_password = openssl_digest ( '' , 'sha512' );
-$query_user_data = 'INSERT INTO '.TBL_USERS.' '.
-                      '            (User_id, User_firstname, User_lastname, User_username, User_password_hash, User_salt, User_nickname, '.
-                      '             User_contacts_internal_telephone_number, User_contacts_telephone_number, User_contacts_mobile, '.
-                      '             User_contacts_email, User_is_internal_company, User_company_id, User_chainedgroup_id_catA, '.
-                      '             User_chainedgroup_id_catB, User_chainedgroup_id_catC, User_chainedgroup_id_catD, User_freegroup_id_grpA, '.
-                      '             User_freegroup_id_grpB, User_freegroup_id_grpC, User_freegroup_id_grpD, User_external_id_join, User_trashed) '.
-                      '     VALUES (2,   "John",  "Doe",  "none",  "'.$hashed_password.'", "", "not assigned",  "",  "",  "",  "",  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);';
-$res = $DBH->exec($query_user_data);
-if ( $res===false ) die(__LINE__ . " - ".print_r($DBH->errorInfo(), true));
 
-// set id=0 for John Doe
-$query_udate_John_Doe = 'UPDATE '.TBL_USERS.' SET User_id = 0 WHERE User_nickname = "not assigned"';
-$res = $DBH->exec($query_udate_John_Doe);
-if ( $res===false ) die(__LINE__ . " - ".print_r($DBH->errorInfo(), true));
 
 //
 // CATEGORIES_1
