@@ -2,13 +2,11 @@
 
 function users_list_retrieve($DBH, $filters)
 {
-    $TP = TABLES_PREFIX;
-
-    $query = 'SELECT '.$TP.'User_id, '.$TP.'User_nickname '.
+    $query = 'SELECT User_id, User_nickname '.
              '  FROM '.TBL_USERS.' '.
              ' WHERE 1 '.
-             '   AND '.$TP.'User_trashed <> 1 '.
-             ' ORDER BY '.$TP.'User_nickname ';
+             '   AND User_trashed <> 1 '.
+             ' ORDER BY User_nickname ';
 
 
     $stmt_read = $DBH->prepare($query);
@@ -22,12 +20,10 @@ function users_list_retrieve($DBH, $filters)
 
 function users_list_data_format($users_list_raw_data)
 {
-    $TP = TABLES_PREFIX;
-
     $retval = array();
     foreach( $users_list_raw_data as $key => $value ) {
-        $retval[$key]['id']             = $value[$TP.'User_id'];
-        $retval[$key]['nickname']       = $value[$TP.'User_nickname'];
+        $retval[$key]['id']             = $value['User_id'];
+        $retval[$key]['nickname']       = $value['User_nickname'];
     }
 
     return $retval;

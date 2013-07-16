@@ -5,7 +5,7 @@ JoM - the Job Manager
 
 You can try a working demo [here](http://demo.jom.me.it).
 
-*Note* that you can't register a new user. So, in order to login, please ask me credentials.
+**Note** that you can't register a new user. So, in order to login, please ask me credentials.
 
 ## Author
 

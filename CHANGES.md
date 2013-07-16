@@ -9,8 +9,15 @@ TODOS:
 
 15.07.2013
 ----------
+- created (but not uploaded into repository) script to create registered users
+- fixed back a wrong patch about table prefix
+- now the user John Doe is correctly created with id 0
+
+15.07.2013
+----------
 - Added field "Job_is_favourite" to Jobs table
 - Added sort order in Statuses sample values
+- Little changes to readme markdown
 
 11.07.2013
 ----------
