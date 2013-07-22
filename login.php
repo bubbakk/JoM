@@ -57,7 +57,10 @@ $SMAN->start_session('', false);                        // starting session
     <script language="javascript" type="text/javascript" src="./js/lib/pidCrypt/pidcrypt_util.js"></script>
     <script language="javascript" type="text/javascript" src="./js/lib/pidCrypt/sha512.js"></script>
     <script language="javascript" type="text/javascript" src="./js/generic_lib.js"></script>
-    <title>Entra in JoM - autenticazione</title>
+    <title>JoM - Authentication</title>
+    <style>
+      .alert { background-color: rgba(252, 248, 227, 0.8); }
+    </style>
     <script>
     $(document).ready(function() {
         $('#jom_logo').css('opacity', 0);
@@ -83,11 +86,11 @@ $SMAN->start_session('', false);                        // starting session
                     break;
                 // Not SigneIn
                 case 'nsi':
-                    set_alert_message_and_show('Please sign in', undefined, 500);
+                    set_alert_message_and_show('Please sign in', undefined, 1000);
                     break;
                 // Not SigneIn
                 case 'bye':
-                    set_alert_message_and_show('Have a nice day.', undefined, 500);
+                    set_alert_message_and_show('Have a nice day.', undefined, 1000);
                     break;
                 default:
                     console.warn('reason' + reason + ' unknown');
@@ -228,7 +231,7 @@ $SMAN->start_session('', false);                        // starting session
         </div>
         <br>
         <br>
-        <div class="row" style="position: absolute; top: 120px;">
+        <div class="row" style="position: absolute; top: 128px;">
             <div class="span6 offset3" style="padding: 0 15px 0 15px;" id="jom_message_container">
             </div>
         </div>
