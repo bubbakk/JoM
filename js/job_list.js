@@ -139,7 +139,7 @@ function Job_List_GUI() {
             id = job_list[i].id;
             $summary_els.eq(1).text("#" + id);                  // id
             $summary_els.eq(2).text(job_list[i].subject);       // subject
-            owner = '<a id="jom_jobowner_' + id + '" class="x_editable" data-type="select" data-field="Job_assigned_to_User" data-pk="' + id + '" data-title="Assign to...">' + job_list[i].owner + "</a>";
+            owner = '<a id="jom_jobowner_' + id + '" class="x_editable" data-type="select" data-field="Job_assigned_to_user_id" data-pk="' + id + '" data-title="Assign to...">' + job_list[i].owner + "</a>";
             $summary_els.eq(3).html(owner);                     // owner
 
             $new_summary = THAT.$job_row_summary.clone();

@@ -29,10 +29,10 @@ function jobs_list_retrieve($DBH, $filters)
              '       Status_name, '.
              '       Category_1_name, Category_2_name, '.
              '       User_nickname,   User_id '.
-             '  FROM '.TBL_JOBS.' INNER JOIN '.TBL_CATEGORIES_1.' ON '.TBL_JOBS.'.Job_category_level_1 = '.TBL_CATEGORIES_1.'.Category_1_id '.
-             '                    INNER JOIN '.TBL_CATEGORIES_2.' ON '.TBL_JOBS.'.Job_category_level_2 = '.TBL_CATEGORIES_2.'.Category_2_id '.
-             '                    INNER JOIN '.TBL_STATUSES.'     ON '.TBL_JOBS.'.Job_status           = '.TBL_STATUSES.    '.Status_id '.
-             '                    INNER JOIN '.TBL_USERS.'        ON '.TBL_JOBS.'.Job_assigned_to_User = '.TBL_USERS.       '.User_id '.
+             '  FROM '.TBL_JOBS.' INNER JOIN '.TBL_CATEGORIES_1.' ON '.TBL_JOBS.'.Job_category_level_1    = '.TBL_CATEGORIES_1.'.Category_1_id '.
+             '                    INNER JOIN '.TBL_CATEGORIES_2.' ON '.TBL_JOBS.'.Job_category_level_2    = '.TBL_CATEGORIES_2.'.Category_2_id '.
+             '                    INNER JOIN '.TBL_STATUSES.'     ON '.TBL_JOBS.'.Job_status              = '.TBL_STATUSES.    '.Status_id '.
+             '                    INNER JOIN '.TBL_USERS.'        ON '.TBL_JOBS.'.Job_assigned_to_user_id = '.TBL_USERS.       '.User_id '.
              ' WHERE 1 '.
              $job_category_level_1.
              $job_category_level_2.

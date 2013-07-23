@@ -99,7 +99,7 @@ $tables = array(
                         `Job_deadline_datetime`       INTEGER unsigned      DEFAULT '0',
                         `Job_status`                  INTEGER unsigned      DEFAULT '1',
                         `Job_percent_completed`       tinyint(1) unsigned   DEFAULT '0',
-                        `Job_assigned_to_User`        INTEGER unsigned      DEFAULT '0',
+                        `Job_assigned_to_user_id`     INTEGER unsigned      DEFAULT '0',
                         `Job_assigned_to_chainedgroup_A` INTEGER unsigned DEFAULT '0',
                         `Job_assigned_to_chainedgroup_B` INTEGER unsigned DEFAULT '0',
                         `Job_assigned_to_chainedgroup_C` INTEGER unsigned DEFAULT '0',

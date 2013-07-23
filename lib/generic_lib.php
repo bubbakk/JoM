@@ -165,6 +165,126 @@ function open_database($type, $DB_cfg)
 
 
 /*
+   Function: jom_pdo__create_fields_list
+    Create comma separated table field or parameters (for binding) list.
+
+   Parameters:
+       - table_fields: properly formatted array containig table fields data and metadata
+       - add_pkey: true|false; if set to true, return also the fields set as primary key
+       - only_changes: true|false; if set to true, return only fields that have the field 'is_changed' set to true
+       - for_bindings: true|false; is set to true, prepend every field value
+
+   Returns:
+     false on error, the comma separated list of table fields
+
+   See:
+     <table_fields>
+*/
+function jom_pdo__create_fields_list($table_fields = false, $add_pkey = false, $only_changes = false, $for_binding = false)
+{
+    if ( $table_fields === false ) return false;
+
+    $retval_array = array();
+
+    // if creating a list to bind parameters, have to prepend a ':'
+    $bind_prepend = '';
+    if ( $for_binding === true ) $bind_prepend = ':';
+
+    foreach ($table_fields as $key => $field) {
+
+        if ( $add_pkey === false && isset($field['is_pkey']) && $field['is_pkey'] === true ) {
+            ;   // do not add primary key field
+        }
+        else {
+            if ( $only_changes === true && isset($field['is_changed']) && $field['is_changed'] === false ) {
+                ;   // do not add value if is not changed
+            }
+            else {
+                array_push($retval_array, $bind_prepend.$field['name']);
+            }
+        }
+    }
+
+    return implode(', ', $retval_array);    // return comma separated list
+}
+
+
+/*
+   Function: jom_pdo__reset_table_fields_data_to_defaults
+   Reset all job fields/properties values to defauls; set also the 'is_changed' array field to false
+*/
+function jom_pdo__reset_table_fields_data_to_defaults(&$table_fields)
+{
+    foreach ($table_fields as $key => $field) {
+        $table_fields[$key]['value']      = $table_fields[$key]['default'];
+        $table_fields[$key]['is_changed'] = false;
+    }
+}
+
+
+/*
+   Function: bind_values
+    DESCRIBE ME
+*/
+function jom_pdo__bind_values(&$stmt, $table_fields = false, $add_pkey = false, $only_changes = false)
+{
+    if ( $table_fields === false ) return false;
+
+    foreach ($table_fields as $key => $field)
+    {
+        if ( $add_pkey === false && isset($field['is_pkey']) && $field['is_pkey'] === true ) {
+            ;   // do not bind values id field is primary key
+        }
+        else {
+            if ( $only_changes === true && isset($field['is_changed']) && $field['is_changed'] === false ) {
+                ;   // do not bind values if the value is not changed
+            }
+            else
+            {
+                // bind parameter name
+                $bind_param_name = ':' . $field['name'];
+                // PDO:: value type
+                $bind_type = $field['pdo_parm_type'];
+                if ( $field['value'] === null )
+                    $bind_type = PDO::PARAM_NULL;
+
+                // do statement bind
+                // DEBUG - echo "bind: " . $bind_param_name . ", " . var_export($field['value'], true) . ", " . $bind_type . "\n<br>";
+                if ( !$stmt->bindValue($bind_param_name, $field['value'], $bind_type) ) {
+                    die("no bind!");
+                }
+            }
+        }
+    }
+}
+
+
+function jom_pdo__create_key_value_list($table_fields = false, $add_pkey = false, $only_changes = false)
+{
+    $retval_array = array();
+
+    foreach ($table_fields as $key => $field) {
+        if ( $add_pkey === false && isset($field['is_pkey']) && $field['is_pkey'] === true ) {
+            ;   // do not add primary key field
+        }
+        else {
+            if ( $only_changes === true && isset($field['is_changed']) && $field['is_changed'] === false ) {
+                ;   // do not add value if is not changed
+            }
+            else {
+                echo "element=> field name: " . $field['name'] . " = :" . $field['name'] . "\n<br>";
+                array_push($retval_array, $field['name'] . " = :" . $field['name']);
+            }
+        }
+    }
+
+    return implode(', ', $retval_array);    // return comma separated list
+}
+
+
+
+
+/*
  * Function: generate_random_string
  * Insert description here
  */

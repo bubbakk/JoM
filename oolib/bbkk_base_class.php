@@ -25,12 +25,6 @@ class BBKK_Base_Class {
     protected    $classname   = '';
 
     /*
-       Variable: $method
-       The method name (generally set a while before logging).
-    */
-    protected    $method      = '';
-
-    /*
        Variable: $line
        The code line (generally set a while before logging).
        Default is a null value (0 could be interpreted as the first line)
@@ -160,17 +154,17 @@ class BBKK_Base_Class {
         if ( $name === 'error_type' ) return $this->error_type;
     }
 
-    protected function set_error($msg_user = '', $msg_dbg = '', $line = null)
+    protected function set_error($msg_user = '', $msg_dbg = '', $line = null, $method = null)
     {
       //// Preliminary checks
         // Wrong parameters make the script die and the programmer warned
 
         // no user message, no error
         if ( empty($msg_dbg) )
-            die('Empty message is not admitted - '. __METHOD__ .' ('. __LINE__ .')');
+            die('Empty message is not admitted - '. $method .' ('. $line .')');
         // if error line is passed, it must be an integer value
         if ( !is_null($line) && !is_int($line) )
-            die('Error line must be an integer - '. __METHOD__ .' ('. __LINE__ .')');
+            die('Error line must be an integer - '.$method .' ('. $line .')');
 
       //// Setting error status and data
         //
@@ -178,9 +172,10 @@ class BBKK_Base_Class {
         $this->error_text_usr = $msg_user;
         $this->error_text_dbg = $msg_dbg;
         $this->error_line     = $line;
+        $this->error_method   = $method;
 
-        if ( func_num_args() == 4 ) {
-            $this->error_type_  = func_get_arg(3);
+        if ( func_num_args() == 5 ) {
+            $this->error_type_  = func_get_arg(4);
         }
 
         return true;

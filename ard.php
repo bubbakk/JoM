@@ -33,6 +33,7 @@
 define('DIR_BASE', './');
 require_once(DIR_BASE.'cfg/user_config.php');
 require_once(DIR_BASE.'cfg/config.php');
+require_once(DIR_BASE.'cfg/tables_definition.php');
 require_once(DIR_LIB.'generic_lib.php');
 require_once(DIR_LIB.'nonce_lib.php');
 require_once(DIR_OOL.'bbkk_base_class.php');

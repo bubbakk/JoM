@@ -10,20 +10,19 @@ function dispatch_request($request)
     {
         case 'new':
         {
-            global $DBH, $retval, $config;
+            global $DBH, $retval, $config, $JOM__job_table_fields;
 
-            $JOB = new JOM_Job(TBL_JOBS, $DBH);  // constructor
-            $JOB->reset_job_data_to_defaults();
+            $JOB = new JOM_Job(TBL_JOBS, $DBH, $JOM__job_table_fields);  // constructor
 
             // check and set all passed parameters
-            $JOB->job_data["subject"]           = post_or_get('s');
-            $JOB->job_data["description"]       = post_or_get('ds');
-            $JOB->job_data["category_level_1"]  = post_or_get('c');
-            $JOB->job_data["category_level_2"]  = post_or_get('i');
-            $JOB->job_data["start_datetime"]    = post_or_get('sd');
-            $JOB->job_data["priority"]          = post_or_get('p');
+            $JOB->set_field_value('Job_subject',          post_or_get('s') );
+            $JOB->set_field_value('Job_description',      post_or_get('ds'));
+            $JOB->set_field_value('Job_category_level_1', post_or_get('c') );
+            $JOB->set_field_value('Job_category_level_2', post_or_get('i') );
+            $JOB->set_field_value('Job_start_datetime',   post_or_get('sd'));
+            $JOB->set_field_value('Job_priority',         post_or_get('p') );
 
-            $JOB->job_data["assigned_to_user"]  = ( post_or_get('a') == 1 ? $_SESSION['user']['id'] : 0 );
+            $JOB->set_field_value('Job_assigned_to_user_id', ( post_or_get('a') == 1 ? $_SESSION['user']['id'] : 0 ));
 
             // save new job
             $retval['success'] = $JOB->save();
@@ -62,13 +61,20 @@ function dispatch_request($request)
         }
         case 'update':
         {
-            global $DBH, $retval, $config;
+            global $DBH, $retval, $config, $JOM__job_table_fields;
 
-            $JOB = new JOM_Job(TBL_JOBS, $DBH);  // constructor
-            $JOB->reset_job_data_to_defaults();
+//echo "CIAO";
 
-            $JOB->job_data["id"]             = post_or_get('i');
-            $JOB->job_data[post_or_get('f')] = post_or_get('v');
+            $JOB = new JOM_Job(TBL_JOBS, $DBH, $JOM__job_table_fields);  // constructor
+
+            $JOB->set_field_value('Job_id',         post_or_get('i'));
+            $JOB->set_field_value(post_or_get('f'), post_or_get('v'));  // the field name to update is dinamically passed... secure ?
+
+            // update job data
+            $retval['success'] = $JOB->save();
+
+            return true;
+
             break;
         }
         default:

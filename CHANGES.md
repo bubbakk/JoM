@@ -7,6 +7,21 @@ TODOS:
 - convert JSON requests on application load to PHP generated data
 - implement AJAX call cache
 
+23.07.2013
+----------
+- big refactoring for PHP JOM_Job class: now table fields are contained in an array: it defines field name, PDO: constant type value and
+  other useful attributes.
+- created jom_pdo__ functions in generic_lib.php to generate fields lists and do parameters binding
+- refactored requests_job.php to reflect above updates
+- added table_definition.php in cfg file (could be merged with table_configuration contained in inst folder, used in the installation procedure?)
+- update job_list.js script for the above reasons
+
+22.07.2013
+----------
+- now alert box background is less than 100% opacity
+- translated TITLE text in english
+- fixed messages delays
+
 17.07.2013
 ----------
 - created (but not uploaded into repository) script to create registered users
