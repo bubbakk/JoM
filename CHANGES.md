@@ -5,7 +5,23 @@ Under development.
 TODOS:
 - create time format (I18N) (hh:mm.ss) and insert in job list details
 - convert JSON requests on application load to PHP generated data
+- after job creation, should update jobs list
 - implement AJAX call cache
+
+26.07.2013
+----------
+. completed jsJOMlib__GUI_set_alert_message_and_show(): now the warnig/error message HTML block is inside the page and this function
+  uses the message DIV and the container DIV to perform operations. Added more checks and console warning messages
+. added warning/error HTML block in application.php
+
+25.07.2013
+----------
+- moved set_alert_message_and_show() placed in login.php into js/generic_lib.js and renamed in jsJOMlib__GUI_set_alert_message_and_show().
+  Added a parameter to specify jQuery pointer within which insert alert code
+
+24.07.2013
+----------
+- added Job_is_favourite flag in tables_definition PHP data structure file
 
 23.07.2013
 ----------

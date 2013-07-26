@@ -118,7 +118,7 @@ $tables = array(
                         Job_category_level_1        INTEGER       DEFAULT 0,
                         Job_category_level_2        INTEGER       DEFAULT 0,
                         Job_category_level_3        INTEGER       DEFAULT 0,
-                        Job_is_favourite            INTEGER       DEFAULT 0,
+                        Job_is_favourite            INTEGER       NOT NULL DEFAULT 0,
                         Job_tags                    TEXT          DEFAULT '',
                         Job_priority                INTEGER       DEFAULT 1,
                         Job_creation_datetime       INTEGER       DEFAULT 0,

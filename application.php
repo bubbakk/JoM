@@ -275,7 +275,7 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
               <li class="dropdown">
                   <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i> Settings <b class="caret"></b></a>
                   <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><i class="icon-user"></i> user properties</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="javascript: $('.alert');"><i class="icon-user"></i> user properties</a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><i class="icon-tasks"></i> preferences</a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><i class="icon-tags"></i> application settings</a></li>
                     <li role="presentation" class="divider"></li>
@@ -425,6 +425,15 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
             </div>
         </div>
 
+<!-- ALERT/WARNING MESSAGE -->
+        <div class="row" style="position: absolute; top: 128px;">
+            <div class="span6 offset3" style="padding: 0 15px 0 15px; display: none" id="jom_message_container">
+                <div class="alert text-center" style="box-shadow: 2px 2px 8px #AAA;">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <div id="jom_message"></div>
+                </div>
+            </div>
+        </div>
 
 <!-- CREATE JOB MODAL -->
     <div id="jom_create_job_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

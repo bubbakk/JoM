@@ -434,3 +434,80 @@ function trim(str, charlist) {
 
   return whitespace.indexOf(str.charAt(0)) === -1 ? str : '';
 }
+
+
+/*
+   Function: jsJOMlib__GUI_set_alert_message_and_show
+     Show Bootstrap's alert standard component passing the message and (if want to) also a jQuery pointer. Can also use a delay.
+
+   Parameters:
+     - message: text message to display (Note: is used ONLY IF html parameter is undefined)
+     - html (optional): html to embed in place of plain message (useful to emphatize text, using <strong>...)
+     - delay: make the alert appear after a timeout (in milliseconds)
+     - jQptr_msg: jQuery selector for the message; if is set to undefined, a default element will be selected
+     - jQptr_cnt: jQuery selector for the alert/warning container; if is set to undefined, a default element will be selected
+
+   Return:
+     true if everything is all right, false on error
+
+*/
+function jsJOMlib__GUI_set_alert_message_and_show(message, html, delay, jQptr_msg, jQptr_cnt)
+{
+    var default_warning_container_selector = '#jom_message_container';
+    var default_warning_message_selector   = '#jom_message';
+
+  //// CHECKS
+    if ( (html === undefined && message === undefined) ||
+         (html === ''        && message === '') )
+    {
+        console.warn("Error: no message, no party!");
+        return false;
+    }
+
+    // setting default jQuery MESSAGE pointer if not passed
+    if ( jQptr_msg === undefined ) {
+        jQptr_msg = $(default_warning_message_selector);
+    }
+    // check pointer
+    if ( jQptr_msg.length != 1 ) {
+        console.warn("Error: the jquery warning message selector must return one and one only element.");
+        return false;
+    }
+
+    // setting default jQuery CONTAINER pointer if not passed
+    if ( jQptr_cnt === undefined ) {
+        jQptr_cnt = $(default_warning_container_selector);
+    }
+    // check pointer
+    if ( jQptr_cnt.length != 1 ) {
+        console.warn("Error: the jquery warning container selector must return one and one only element.");
+        return false;
+    }
+
+    // checking delay
+    if ( delay === undefined ) delay = 0;
+    else
+    if ( !jsJOMlib__isInteger(delay) ) {
+        console.warn("Error: delay must be a valid integer");
+        return false;
+    }
+  //// END CHECKS
+
+
+
+    // hide previous message if visible
+    jQptr_cnt.hide();
+
+    // set message body (plain text or html)
+    if ( html === undefined )
+        jQptr_msg.text(message);
+    else
+        jQptr_msg.html(html);
+
+    // show the message
+    var dummy = setTimeout(function(){
+                    $('#jom_message_container').fadeIn();
+                }, delay);
+
+    return true;
+}

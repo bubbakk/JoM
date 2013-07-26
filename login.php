@@ -82,15 +82,15 @@ $SMAN->start_session('', false);                        // starting session
             {
                 // session EXPired
                 case 'exp':
-                    set_alert_message_and_show('Session expired. Please log in', undefined, 1000);
+                    jsJOMlib__GUI_set_alert_message_and_show('Session expired. Please log in', undefined, 1000);
                     break;
                 // Not SigneIn
                 case 'nsi':
-                    set_alert_message_and_show('Please sign in', undefined, 1000);
+                    jsJOMlib__GUI_set_alert_message_and_show('Please sign in', undefined, 1000);
                     break;
                 // Not SigneIn
                 case 'bye':
-                    set_alert_message_and_show('Have a nice day.', undefined, 1000);
+                    jsJOMlib__GUI_set_alert_message_and_show('Have a nice day.', undefined, 1000);
                     break;
                 default:
                     console.warn('reason' + reason + ' unknown');
@@ -141,7 +141,7 @@ $SMAN->start_session('', false);                        // starting session
         if ( password === "" || username === "" )
         {
             // prompt error
-            set_alert_message_and_show("Username and/or password can't be empty");
+            jsJOMlib__GUI_set_alert_message_and_show("Username and/or password can't be empty");
             return false;
         }
 
@@ -171,7 +171,7 @@ $SMAN->start_session('', false);                        // starting session
                 // if not
                 else {
                     // prompt error
-                    set_alert_message_and_show(data.usr_msg);
+                    jsJOMlib__GUI_set_alert_message_and_show(data.usr_msg);
 
                     if ( data.new_timestamp != undefined ) {
                         $("input[name='_timestamp']").val(data.new_timestamp);
@@ -188,38 +188,6 @@ $SMAN->start_session('', false);                        // starting session
         });
     }
 
-
-    function set_alert_message_and_show(message, html, delay)
-    {
-        // hide previous message if visible
-        $('#jom_message_container').hide();
-
-        // set message
-        if ( html === undefined )
-            $('#jom_message_container').html('<div class="alert text-center" style="box-shadow: 2px 2px 8px #AAA;">' +
-                                               '    <button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                                               '    <div id="jom_message">' + message + '</div>' +
-                                               '</div>');
-        else
-            $('#jom_message_container').html('<div class="alert text-center" style="box-shadow: 2px 2px 8px #AAA;">' +
-                                               '    <button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                                               '    <div id="jom_message">' + html + '</div>' +
-                                               '</div>');
-
-        // show message
-        if ( delay === undefined ) {
-            $('#jom_message_container').fadeIn();
-        }
-        else if ( jsJOMlib__isInteger(delay) ) {
-            var dummy = setTimeout(function(){
-                $('#jom_message_container').fadeIn();
-            }, delay);
-        }
-        else {
-            console.warn("parameter delay is not a number");
-        }
-    }
-
     </script>
 </head>
 <body>
@@ -231,8 +199,12 @@ $SMAN->start_session('', false);                        // starting session
         </div>
         <br>
         <br>
-        <div class="row" style="position: absolute; top: 128px;">
-            <div class="span6 offset3" style="padding: 0 15px 0 15px;" id="jom_message_container">
+        <div class="row" style="position: absolute; top: 128px;;">
+            <div class="span6 offset3" style="padding: 0 15px 0 15px; display: none" id="jom_message_container">
+                <div class="alert text-center" style="box-shadow: 2px 2px 8px #AAA;">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <div id="jom_message"></div>
+                </div>
             </div>
         </div>
         <div class="row" id="jom_loginpanel">

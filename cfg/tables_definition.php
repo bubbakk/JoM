@@ -6,6 +6,7 @@
 $JOM__job_table_fields = array();
 {
     // array values order: 1: field name; 2: default value; 3: pdo parmeter type; 4: is_pkey
+    //                 |             name             |default|     type     |is key|
     $basic_table_data
         = array( array('Job_id',                         null, PDO::PARAM_INT, true),
                  array('Job_subject',                    '',   PDO::PARAM_STR),
@@ -13,6 +14,7 @@ $JOM__job_table_fields = array();
                  array('Job_category_level_1',           1,    PDO::PARAM_INT),
                  array('Job_category_level_2',           1,    PDO::PARAM_INT),
                  array('Job_category_level_3',           1,    PDO::PARAM_INT),
+                 array('Job_is_favourite',               0,    PDO::PARAM_INT),
                  array('Job_tags',                       null, PDO::PARAM_STR),
                  array('Job_priority',                   null, PDO::PARAM_INT),
                  array('Job_creation_datetime',          null, PDO::PARAM_INT),
