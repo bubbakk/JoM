@@ -118,7 +118,7 @@ class JOM_Job extends BBKK_Base_Class {
             $field_value_pairs_list = jom_pdo__create_fields_list($this->table_fields, !$this->ADD_PKEY, $this->ONLY_CHANGES, !$this->BIND);
             $query .= '   SET ' . jom_pdo__create_key_value_list($this->table_fields, !$this->ADD_PKEY, $this->ONLY_CHANGES);
             $query .= ' WHERE Job_id = :Job_id';
-echo $query;
+
             $this->stmt_update = $this->pdo_dbh->prepare($query);
 
             // bind values; do not bind primary key; bind also not-changed values

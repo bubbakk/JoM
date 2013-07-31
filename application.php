@@ -187,7 +187,8 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
         $('.selectpicker').selectpicker();
 
         // collapse/expand filters button
-        $("#jom_showhide_filters").on('click', function(){
+        $("#jom_showhide_filters").on('click', function()
+        {
             if ( $(this).children().eq(0).hasClass("icon-expand-alt") )
             {
                 // expand
@@ -236,8 +237,6 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
                     $("#"+ctrl_id).prop("disabled", !$(this).prop("checked"));
                 }
             }
-
-
         });
 
         $("input.jom_enable_control").tooltip();
@@ -253,11 +252,11 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
         #jom_create_job_modal .jom_message_save_ko { display: none; }
         .table caption { font-size: 19px; font-weight: bold; font-variant: small-caps; background-color: rgba(220, 220, 220, 0.3); padding: 5px 0; }
         .table th, .table td { border-top-color: #AAA; }
-        .table .details { display: none; }
-        .table .details dl.dl-horizontal { padding-top: 0; margin-top: 0; padding-bottom: 0; margin-bottom: 10px; }
-        .table .details .dl-horizontal dt { width: 110px; padding-top: 0; margin-top: 0; }
-        .table .details .dl-horizontal dd { margin-left: 125px; }
-        .table .details dl.dl-horizontal hr  { height: 5px; visibility:hidden; margin: 0; padding: 0; }
+        .table .jom_job_details { display: none; }
+        .table .jom_job_details dl.dl-horizontal { padding-top: 0; margin-top: 0; padding-bottom: 0; margin-bottom: 10px; }
+        .table .jom_job_details .dl-horizontal dt { width: 110px; padding-top: 0; margin-top: 0; }
+        .table .jom_job_details .dl-horizontal dd { margin-left: 125px; }
+        .table .jom_job_details dl.dl-horizontal hr  { height: 5px; visibility:hidden; margin: 0; padding: 0; }
         dd { margin-left: 20px; }
     </style>
 </head>
@@ -370,7 +369,7 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
                         </tr>
                     </thead>
                     <tbody>
-                        <tr id="jom_job_row_summary">
+                        <tr id="jom_job_row_summary" class="jom_job_summary">
                             <td><button class="btn btn-mini btn-primary" type="button"><i class="icon-info-sign icon-white"></i></button></td>
                             <td>#1</td>
                             <td>primo job</td>
@@ -380,7 +379,7 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
                                 <button class="btn btn-mini btn-primary" type="button"><i class="icon-trash icon-white"></i></button>
                             </td>
                         </tr>
-                        <tr id="jom_job_row_details" class="details">
+                        <tr id="jom_job_row_details" class="jom_job_details">
                             <td colspan="1" style="background-color: rgba(240, 240, 240, 0.4); text-align: center;">
                                 <img class="jom_favourite" src="./img/star_disabled.png">
                             </td>

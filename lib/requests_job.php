@@ -63,8 +63,6 @@ function dispatch_request($request)
         {
             global $DBH, $retval, $config, $JOM__job_table_fields;
 
-//echo "CIAO";
-
             $JOB = new JOM_Job(TBL_JOBS, $DBH, $JOM__job_table_fields);  // constructor
 
             $JOB->set_field_value('Job_id',         post_or_get('i'));

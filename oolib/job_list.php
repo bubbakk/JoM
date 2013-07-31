@@ -25,7 +25,7 @@ function jobs_list_retrieve($DBH, $filters)
 
 
 
-    $query = 'SELECT Job_id, Job_subject, Job_description, Job_start_datetime, Job_priority, '.
+    $query = 'SELECT Job_id, Job_subject, Job_description, Job_is_favourite, Job_start_datetime, Job_priority, '.
              '       Status_name, '.
              '       Category_1_name, Category_2_name, '.
              '       User_nickname,   User_id '.
@@ -59,6 +59,7 @@ function jobs_list_data_format($job_list_raw_data)
         $retval[$key]['subject']        = $value['Job_subject'];
         $retval[$key]['owner']          = $value['User_nickname'];
         $retval[$key]['owner_id']       = $value['User_id'];
+        $retval[$key]['favourite']      = $value['Job_is_favourite'];
         $retval[$key]['status']         = $value['Status_name'];
         $retval[$key]['description']    = $value['Job_description'];
         $retval[$key]['started']        = $value['Job_start_datetime'];

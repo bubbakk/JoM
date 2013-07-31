@@ -26,11 +26,6 @@ function dispatch_request($request)
                                            'description' => $value[ $tbl_name . '_description'] );
             }
 
-            // generate a new nonce/timestamp for ajax call
-            $json_nonce = generate_json_values($command, 0, session_id(), $config['SALT'], $config['HASH_ALG']);
-            $retval['new_timestamp'] = $json_nonce['timestamp'];
-            $retval['new_nonce']     = $json_nonce['nonce'];
-
             return true;
 
             break;

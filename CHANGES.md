@@ -5,14 +5,28 @@ Under development.
 TODOS:
 - create time format (I18N) (hh:mm.ss) and insert in job list details
 - convert JSON requests on application load to PHP generated data
-- after job creation, should update jobs list
+- after job creation, have to update jobs list
 - implement AJAX call cache
+
+31.07.2013
+----------
+- now favourite star is loaded correctly
+- refactored click event code: moved in job_list.js source
+- refactored job list creation cycle routine: now cloned jquery objects are clearer
+
+30.07.2013
+----------
+- now Job_is_favourite field is correctly saved
+
+28.07.2013
+----------
+- moved nonce code generation in the Ajax Requests Dispatcher (ard.php) file and removed from the single librery file.
 
 26.07.2013
 ----------
-. completed jsJOMlib__GUI_set_alert_message_and_show(): now the warnig/error message HTML block is inside the page and this function
+- completed jsJOMlib__GUI_set_alert_message_and_show(): now the warnig/error message HTML block is inside the page and this function
   uses the message DIV and the container DIV to perform operations. Added more checks and console warning messages
-. added warning/error HTML block in application.php
+- added warning/error HTML block in application.php
 
 25.07.2013
 ----------

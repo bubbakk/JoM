@@ -53,13 +53,14 @@ function dispatch_request($request)
 
             $users_list_data = users_list_retrieve($DBH, null);
 
-            if ( count($users_list_data ) == 0 ) {
+            if ( count($users_list_data) == 0 ) {
                 $retval['success'] = false;
             }
             else {
-                $retval['success'] = true;
                 $retval['data']    = users_list_data_format($users_list_data);
             }
+
+            return true;
         }
             break;
         default:

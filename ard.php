@@ -181,7 +181,9 @@ if ( !JOM_DEBUG ) {
 //
 if ( array_key_exists($domain, $domains) &&
      array_key_exists($request, $requests[$full_domain])
-   ) {
+   )
+{
+    // load library according command requested
     require_once(DIR_LIB . 'requests_' . $full_domain . '.php');
 
     // check if user is logged in
@@ -193,9 +195,15 @@ if ( array_key_exists($domain, $domains) &&
     $retval['domain'] = $full_domain;
     $retval['request'] = $full_request;
 
-
-    if ( dispatch_request($full_request) ) {
+    // Call function dispatch_request of specific library
+    if ( dispatch_request($full_request) )
+    {
         $retval['success'] = true;
+//echo "SI";
+        // generate a new nonce/timestamp (for next ajax call)
+        $json_nonce = generate_json_values($command, 0, session_id(), $config['SALT'], $config['HASH_ALG']);
+        $retval['new_timestamp'] = $json_nonce['timestamp'];
+        $retval['new_nonce']     = $json_nonce['nonce'];
     }
 }
 else {

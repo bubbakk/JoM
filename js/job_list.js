@@ -118,52 +118,95 @@ function Job_List_GUI() {
 // GUI Methods //
 /////////////////
 {
-    THAT.GUI__replace_job_list = function(job_list) {
-
-        var $new_summary = undefined;
-        var $summary_els = THAT.$job_row_summary.find('td');
-        var $details_els = THAT.$job_row_details.find('dd');
-
+    THAT.GUI__replace_job_list = function(job_list)
+    {
         THAT.$job_table_list.children().remove();
 
+        // no jobs
         if ( job_list === undefined || job_list.length === 0 ) {
             THAT.$job_table_footer.find('td').eq(1).html('<p class="text-info"><span class="label label-info">Info</span> no job found</p>');
             return;
         }
 
-        $("#jom_job_list_footer").find('td').eq(1).html("");
+        // favourite icons
+        var fav_icns = {
+            not_favourite: './img/star_disabled.png',
+            favourite:     './img/star.png'
+        }
 
-        for ( var i = 0 ; i < job_list.length ; i++ ) {
+        // if here, there is at least one job
+        $("#jom_job_list_footer").find('td').eq(1).html("");
+        for ( var i = 0 ; i < job_list.length ; i++ )
+        {
+            // cloning template rows
+            var $new_summary = THAT.$job_row_summary.clone();
+            var $new_details = THAT.$job_row_details.clone();
+            // setting short varaibles pointer
+            var $summary_els = $new_summary.find('td');
+            var $details_els = $new_details.find('dd');
+            var $details_els_favourite = $new_details.find('td img.jom_favourite');
 
             // setting summary row
             id = job_list[i].id;
-            $summary_els.eq(1).text("#" + id);                  // id
-            $summary_els.eq(2).text(job_list[i].subject);       // subject
-            owner = '<a id="jom_jobowner_' + id + '" class="x_editable" data-type="select" data-field="Job_assigned_to_user_id" data-pk="' + id + '" data-title="Assign to...">' + job_list[i].owner + "</a>";
-            $summary_els.eq(3).html(owner);                     // owner
-
-            $new_summary = THAT.$job_row_summary.clone();
-            $new_summary.attr("id", "sum_row_" + i);
+            generic_id = $summary_els.eq(0).parents('tr').attr('id');
+                // text
+                $summary_els.eq(1).text("#" + id);                  // id
+                $summary_els.eq(2).text(job_list[i].subject);       // subject
+                owner = '<a id="jom_jobowner_' + id + '" class="x_editable" data-type="select" data-field="Job_assigned_to_user_id" data-pk="' + id + '" data-title="Assign to...">' + job_list[i].owner + "</a>";
+                $summary_els.eq(3).html(owner);                     // owner
+            // id data
+            $new_summary.data('job_id', id);
+            $new_summary.parent().attr(id, generic_id + "_" + i);
             THAT.$job_table_list.append($new_summary);
 
             // setting details
-            $details_els.eq(0).text(job_list[i].status);
-            $details_els.eq(1).text(job_list[i].description);
-            $details_els.eq(2).text(
+            generic_id = $details_els.eq(0).parents('tr').attr('id');
+                // text
+                $details_els.eq(0).text(job_list[i].status);        // status
+                $details_els.eq(1).text(job_list[i].description);   // description
+                $details_els.eq(2).text(                            // date start
                 jsJOMlib__date_formatted(
                     JOM.conf.dateformat_human,
                     JOM.conf.dateseparator_human,
                     new Date( job_list[i].started * 1000 )
                     )
                 );
-            $details_els.eq(3).text(job_list[i].category);
-            $details_els.eq(4).text(job_list[i].issue);
+                $details_els.eq(3).text(job_list[i].category);      // category
+                $details_els.eq(4).text(job_list[i].issue);         // issue
 
-            $new_details = THAT.$job_row_details.clone();
-            $new_summary.attr("id", "jom_job_row_summary_" + i);
+                // favourite
+
+                if ( parseInt(job_list[i].favourite) === 1 ) {
+                    $details_els_favourite.attr('src', fav_icns.favourite);
+                    $details_els_favourite.data('val', 1);
+                }
+                else {
+                    $details_els_favourite.attr('src', fav_icns.not_favourite);
+                    $details_els_favourite.data('val', 0);
+                }
+                $details_els_favourite.on('click', {fav_icns: fav_icns}, function(event)
+                {
+                    var new_favourite_value = undefined;
+
+                    if ( $(this).data('val') == 1 ) {
+                        $(this).attr('src', event.data.fav_icns.not_favourite);
+                        $(this).data('val', 0);
+                    }
+                    else
+                    if ( $(this).data('val') == 0 ) {
+                        $(this).attr('src', event.data.fav_icns.favourite);
+                        $(this).data('val', 1);
+                    }
+                    var id_job = $(this).parent().parents('[class="jom_job_details"]').data('job_id');
+                    JOM.job_list.DATA__update_field(id_job, 'Job_is_favourite',  $(this).data('val'));
+                });
+
+            // id data
+            $new_details.data('job_id', id);
+            $new_details.attr("id", generic_id + "_" + i);
             THAT.$job_table_list.append($new_details);
 
-            // x-editable field
+            // init x-editable field
             $('#jom_jobowner_' + id).editable({
                 source:     JOM.job_list.DATA__get_converted_users_list(),
                 value:      job_list[i].owner_id,
@@ -178,8 +221,8 @@ function Job_List_GUI() {
 
     // constructor
         THAT.$job_table_list    = $("#jom_job_list_table > tbody");
-        THAT.$job_row_summary   = $("#jom_job_row_summary").detach();
-        THAT.$job_row_details   = $("#jom_job_row_details").detach();
+        THAT.$job_row_summary   = $("#jom_job_row_summary").detach();   // job summary data row
+        THAT.$job_row_details   = $("#jom_job_row_details").detach();   // job details data row
         THAT.$job_table_footer  = $("#jom_job_list_footer");
 
         THAT.users_list         = new Users();

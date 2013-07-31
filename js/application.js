@@ -170,10 +170,10 @@ function jom_init(dateformat) {
     // END search filters
 
     // JOBS LIST ELEMENTS
-        // job details open
+        // catch buttons click inside job table row
         $("#jom_job_list_table tbody").on("click", "tr td button", function( )
         {
-            // catch buttons click inside table
+            // job show details open
             if ( $(this).children().eq(0).hasClass("icon-info-sign") )
             {
                 var $tr_infos = $(this).parent().parent().next();
@@ -188,22 +188,14 @@ function jom_init(dateformat) {
                 $(this).parent().parent().next().fadeToggle();
             }
             else
+            // job edit
             if ( $(this).children().eq(0).hasClass("icon-pencil") ) {
                 alert("Edit implementation in Version 0.5");
             }
             else
+            // job delete
             if ( $(this).children().eq(0).hasClass("icon-trash") ) {
                 alert("Remove job still not implemented");
-            }
-        });
-
-        // catch start img (favourite) click inside table
-        $("#jom_job_list_table tbody").on("click", "tr td img", function()
-        {
-            if ( $(this).hasClass("jom_favourite") ) {
-                if ( $(this).attr('src') == './img/star_disabled.png' ) $(this).attr('src', './img/star.png');
-                else
-                if ( $(this).attr('src') == './img/star.png' )          $(this).attr('src', './img/star_disabled.png');
             }
         });
     // END jobs list elements

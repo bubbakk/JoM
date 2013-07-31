@@ -272,7 +272,7 @@ function jom_pdo__create_key_value_list($table_fields = false, $add_pkey = false
                 ;   // do not add value if is not changed
             }
             else {
-                echo "element=> field name: " . $field['name'] . " = :" . $field['name'] . "\n<br>";
+                //echo "element=> field name: " . $field['name'] . " = :" . $field['name'] . "\n<br>";
                 array_push($retval_array, $field['name'] . " = :" . $field['name']);
             }
         }
