@@ -5,8 +5,11 @@ Under development.
 TODOS:
 - create time format (I18N) (hh:mm.ss) and insert in job list details
 - convert JSON requests on application load to PHP generated data
-- after job creation, have to update jobs list
 - implement AJAX call cache
+
+01.08.2013
+----------
+- after saving successfully a new job, the job list is updated
 
 31.07.2013
 ----------

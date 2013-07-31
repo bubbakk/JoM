@@ -75,10 +75,12 @@
                 {
                     if ( JSON_response.success == true ) {
                         JOM.new_job.GUI__set_mode("save_success");
+                        JOM.runtime_data.new_job_saved_successfully = true;
                     }
                     else {
                         $(".jom_message_saving").fadeOut('normal', function(){
                             $(".jom_message_save_ko").fadeIn();
+                            JOM.runtime_data.new_job_saved_successfully = false;
                         });
                     }
 
@@ -132,9 +134,17 @@ function jom_init(dateformat) {
 
         // hide alert label
         $alert = $("#jom_create_job_modal .modal-body .alert").hide();
+        $("#jom_create_job_modal").on('hide', function() {
+            if ( JOM.runtime_data.new_job_saved_successfully ) {
+                JOM.job_list.DATA__load_job_list();
+                JOM.runtime_data.job_saved_successfully = false;
+            }
+        });
 
         // set modal margin style
         $("#form_new_job").css("margin-bottom", "0");
+
+
     }
     // END new job form elements
 

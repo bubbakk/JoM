@@ -128,13 +128,19 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
 
         JOM = new Object();
 
+        // Application configuration
         JOM.conf = {
             lang:                '<?php echo $_SESSION['user']['settings']['i18n']['language']; ?>',
             dateformat:          '<?php echo $_SESSION['user']['settings']['i18n']['dateformat']; ?>',
             dateseparator:       '<?php echo $_SESSION['user']['settings']['i18n']['dateseparator']; ?>',
             dateformat_human:    '<?php echo $_SESSION['user']['settings']['i18n']['dateformat_human']; ?>',
             dateseparator_human: '<?php echo $_SESSION['user']['settings']['i18n']['dateseparator_human']; ?>'
-        }
+        };
+
+        // application runtime values
+        JOM.runtime_data = {
+            new_job_saved_successfully: false
+        };
 
         // init NEW JOB objects
         JOM.new_job = new New_Job_GUI();
