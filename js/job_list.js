@@ -21,7 +21,6 @@ function Job_List_GUI() {
     */
     var users               = undefined;
 
-
     /*
        Variable: job
          To hold an instance of JoB class
@@ -30,6 +29,7 @@ function Job_List_GUI() {
           <JoB>
     */
     var job                = undefined;
+
     /*
        Variable: search_filters
          JSON object that contains search filters to apply to load function
@@ -38,6 +38,12 @@ function Job_List_GUI() {
           <DATA__reset_filters>
     */
     THAT.search_filters     = new Object();
+
+    // favourite icons
+    THAT.favourite_icons = {
+        not_favourite: './img/star_disabled.png',
+        favourite:     './img/star.png'
+    }
 
 //////////////////
 // DATA Methods //
@@ -128,20 +134,15 @@ function Job_List_GUI() {
             return;
         }
 
-        // favourite icons
-        var fav_icns = {
-            not_favourite: './img/star_disabled.png',
-            favourite:     './img/star.png'
-        }
 
         // if here, there is at least one job
         $("#jom_job_list_footer").find('td').eq(1).html("");
         for ( var i = 0 ; i < job_list.length ; i++ )
         {
-            // cloning template rows
+            // clone template rows
             var $new_summary = THAT.$job_row_summary.clone();
             var $new_details = THAT.$job_row_details.clone();
-            // setting short varaibles pointer
+            // set short variables pointer
             var $summary_els = $new_summary.find('td');
             var $details_els = $new_details.find('dd');
             var $details_els_favourite = $new_details.find('td img.jom_favourite');
@@ -154,8 +155,9 @@ function Job_List_GUI() {
                 $summary_els.eq(2).text(job_list[i].subject);       // subject
                 owner = '<a id="jom_jobowner_' + id + '" class="x_editable" data-type="select" data-field="Job_assigned_to_user_id" data-pk="' + id + '" data-title="Assign to...">' + job_list[i].owner + "</a>";
                 $summary_els.eq(3).html(owner);                     // owner
-            // id data
-            $new_summary.data('job_id', id);
+            // row data
+            $new_summary.data('job_id', id);            // id
+            $new_summary.data('job_is_deleted', 0);     // is deleted
             $new_summary.parent().attr(id, generic_id + "_" + i);
             THAT.$job_table_list.append($new_summary);
 
@@ -175,31 +177,15 @@ function Job_List_GUI() {
                 $details_els.eq(4).text(job_list[i].issue);         // issue
 
                 // favourite
-
                 if ( parseInt(job_list[i].favourite) === 1 ) {
-                    $details_els_favourite.attr('src', fav_icns.favourite);
+                    $details_els_favourite.attr('src', THAT.favourite_icons.favourite);
                     $details_els_favourite.data('val', 1);
                 }
                 else {
-                    $details_els_favourite.attr('src', fav_icns.not_favourite);
+                    $details_els_favourite.attr('src', THAT.favourite_icons.not_favourite);
                     $details_els_favourite.data('val', 0);
                 }
-                $details_els_favourite.on('click', {fav_icns: fav_icns}, function(event)
-                {
-                    var new_favourite_value = undefined;
 
-                    if ( $(this).data('val') == 1 ) {
-                        $(this).attr('src', event.data.fav_icns.not_favourite);
-                        $(this).data('val', 0);
-                    }
-                    else
-                    if ( $(this).data('val') == 0 ) {
-                        $(this).attr('src', event.data.fav_icns.favourite);
-                        $(this).data('val', 1);
-                    }
-                    var id_job = $(this).parent().parents('[class="jom_job_details"]').data('job_id');
-                    JOM.job_list.DATA__update_field(id_job, 'Job_is_favourite',  $(this).data('val'));
-                });
 
             // id data
             $new_details.data('job_id', id);

@@ -263,6 +263,7 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
         .table .jom_job_details .dl-horizontal dt { width: 110px; padding-top: 0; margin-top: 0; }
         .table .jom_job_details .dl-horizontal dd { margin-left: 125px; }
         .table .jom_job_details dl.dl-horizontal hr  { height: 5px; visibility:hidden; margin: 0; padding: 0; }
+        .jom_deleted { opacity: 0.3; }
         dd { margin-left: 20px; }
     </style>
 </head>
@@ -376,18 +377,18 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
                     </thead>
                     <tbody>
                         <tr id="jom_job_row_summary" class="jom_job_summary">
-                            <td><button class="btn btn-mini btn-primary" type="button"><i class="icon-info-sign icon-white"></i></button></td>
+                            <td><button class="btn btn-mini btn-primary jom_show_details_btn jom_click_event" type="button"><i class="icon-info-sign icon-white"></i></button></td>
                             <td>#1</td>
                             <td>primo job</td>
                             <td>me</td>
                             <td>
-                                <button class="btn btn-mini btn-primary" type="button"><i class="icon-pencil icon-white"></i></button>
-                                <button class="btn btn-mini btn-primary" type="button"><i class="icon-trash icon-white"></i></button>
+                                <button class="btn btn-mini btn-primary jom_edit_btn jom_click_event" type="button"><i class="icon-pencil icon-white"></i></button>
+                                <button class="btn btn-mini btn-primary jom_delete_btn jom_click_event" type="button"><i class="icon-trash icon-white"></i></button>
                             </td>
                         </tr>
                         <tr id="jom_job_row_details" class="jom_job_details">
                             <td colspan="1" style="background-color: rgba(240, 240, 240, 0.4); text-align: center;">
-                                <img class="jom_favourite" src="./img/star_disabled.png">
+                                <img class="jom_favourite jom_click_event" src="./img/star_disabled.png">
                             </td>
                             <td colspan="4">
                                 <dl class="dl-horizontal">

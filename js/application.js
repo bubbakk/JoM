@@ -180,33 +180,69 @@ function jom_init(dateformat) {
     // END search filters
 
     // JOBS LIST ELEMENTS
-        // catch buttons click inside job table row
-        $("#jom_job_list_table tbody").on("click", "tr td button", function( )
+        // catch click event in the jobs table cells containing elements having 'jom_click_event' class
+        $("#jom_job_list_table tbody").on("click", "tr td .jom_click_event", function(event)
         {
             // job show details open
-            if ( $(this).children().eq(0).hasClass("icon-info-sign") )
+            if ( $(this).hasClass("jom_show_details_btn") )
             {
-                var $tr_infos = $(this).parent().parent().next();
+                var $tr_infos = $(this).parents('tr').next();
 
                 if ( $tr_infos.is(':hidden') ) {
-                    $(this).parent().parent().css("background-color", "rgba(240, 240, 240, 0.9)");
+                    $(this).parents('tr').css("background-color", "rgba(240, 240, 240, 0.9)");
                 }
                 else {
-                    $(this).parent().parent().css("background-color", "");
+                    $(this).parents('tr').css("background-color", "");
                 }
 
-                $(this).parent().parent().next().fadeToggle();
+                $tr_infos.fadeToggle();
             }
             else
             // job edit
-            if ( $(this).children().eq(0).hasClass("icon-pencil") ) {
+            if ( $(this).hasClass("jom_edit_btn") ) {
                 alert("Edit implementation in Version 0.5");
             }
             else
             // job delete
-            if ( $(this).children().eq(0).hasClass("icon-trash") ) {
+            if ( $(this).hasClass("jom_delete_btn") )
+            {
+                var is_deleted = $(this).parents('tr').data('job_is_deleted');
+                if ( !is_deleted ) {
+                    // set style
+                    $(this).parents().eq(1).find('td').addClass('jom_deleted');
+                    $(this).parents().eq(1).find('td:last-child').removeClass('jom_deleted');
+                    $(this).parents().eq(1).find('td:last-child').children('button:not(".jom_delete_btn")').addClass('jom_deleted');
+                    $(this).parents().eq(1).next().addClass('jom_deleted');
+                }
+                else {
+                    $(this).parent().parent().find('*').removeClass('jom_deleted');
+                    $(this).parent().parent().next().removeClass('jom_deleted');
+                }
+                // set deleted data
+                $(this).parents('tr').data('job_is_deleted', 1 - is_deleted);
+                //JOM.job_list.DATA__update_field(id_job, 'Job_trashed',  $(this).data('val'));
+
                 alert("Remove job still not implemented");
             }
+            else
+            // job favourite
+            if ( $(this).hasClass("jom_favourite") )
+            {
+                var new_favourite_value = undefined;
+
+                if ( $(this).data('val') == 1 ) {
+                    $(this).attr('src', JOM.job_list.favourite_icons.not_favourite);
+                    $(this).data('val', 0);
+                }
+                else
+                if ( $(this).data('val') == 0 ) {
+                    $(this).attr('src', JOM.job_list.favourite_icons.favourite);
+                    $(this).data('val', 1);
+                }
+                var id_job = $(this).parent().parents('[class="jom_job_details"]').data('job_id');
+                JOM.job_list.DATA__update_field(id_job, 'Job_is_favourite',  $(this).data('val'));
+            }
         });
+
     // END jobs list elements
 }

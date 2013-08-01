@@ -10,6 +10,9 @@ TODOS:
 01.08.2013
 ----------
 - after saving successfully a new job, the job list is updated
+- pressing the button delete, job is now graphically shown as deleted
+- refactored code and moved from job_list.js to application.js: events on jobs row are now moved from job list creation and consolidated
+  in one single handler
 
 31.07.2013
 ----------
