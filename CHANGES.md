@@ -7,10 +7,20 @@ TODOS:
 - convert JSON requests on application load to PHP generated data
 - implement AJAX call cache
 
+
+
+
+03.08.2013
+----------
+- Tooltips in job list page are coherent in code and due to a JOM.conf.GUI.tooltip JSON object
+- Job deleted and job selected background color now are stored in JOM.conf.GUI.jobs_list
+- Added message area in the top bar
+
 02.08.2013
 ----------
 - job delete effect made better
 - added nice tooltips on job row button
+- changed job deleted color and assigned to a variable
 
 01.08.2013
 ----------

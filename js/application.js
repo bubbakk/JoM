@@ -89,7 +89,7 @@
             case 'job/lst':
                 {
                     JOM.job_list.GUI__replace_job_list(JSON_response.data);
-                     $("#jom_job_list_table").find('[data-toggle="tooltip"]').tooltip({delay: { show: 700, hide: 100 }});
+                     $("#jom_job_list_table").find('[data-toggle="tooltip"]').tooltip({delay: JOM.conf.GUI.tooltip.delay});
                     break;
                 }
             case 'usr/lst':
@@ -193,11 +193,11 @@ function jom_init(dateformat) {
                 var $tr_infos = $(this).parents('tr').next();
 
                 if ( is_deleted ) {
-                    $(this).parents('tr').filter(":first").css('background-color', 'rgba(182, 202, 222, 0.3)');
+                    $(this).parents('tr').filter(":first").css('background-color', JOM.conf.GUI.jobs_list.delete_bgcolor);
                 }
                 else {
                     if ( $tr_infos.is(':hidden') ) {
-                        $(this).parents('tr').css("background-color", "rgba(240, 240, 240, 0.9)");
+                        $(this).parents('tr').css("background-color", JOM.conf.GUI.jobs_list.summary_selected_for_details_bgcolor);
                     }
                     else {
                         $(this).parents('tr').css("background-color", "");
@@ -218,12 +218,13 @@ function jom_init(dateformat) {
                 if ( !is_deleted ) {
                     // set row contained elements styles
                     $(this).parents('tr').filter(":first").find('td').addClass('jom_deleted');
+                    $(this).parents('tr').filter(":first").find('td:first-child').removeClass('jom_deleted');
                     $(this).parents('tr').filter(":first").find('td:last-child').removeClass('jom_deleted');
                     $(this).parents('tr').filter(":first").find('td:last-child').children('button:not(".jom_delete_btn")').addClass('jom_deleted');
                     $(this).parents('tr').filter(":first").next().addClass('jom_deleted');
                     // set row style
                     $(this).parents('tr').filter(":first").find('td').css('padding', '2px 8px 2px 8px');
-                    $(this).parents('tr').css('background-color', 'rgba(182, 202, 222, 0.3)');
+                    $(this).parents('tr').css('background-color', JOM.conf.GUI.jobs_list.delete_bgcolor);
                 }
                 else {
                     // set row contained elements styles

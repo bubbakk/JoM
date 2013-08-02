@@ -134,7 +134,16 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
             dateformat:          '<?php echo $_SESSION['user']['settings']['i18n']['dateformat']; ?>',
             dateseparator:       '<?php echo $_SESSION['user']['settings']['i18n']['dateseparator']; ?>',
             dateformat_human:    '<?php echo $_SESSION['user']['settings']['i18n']['dateformat_human']; ?>',
-            dateseparator_human: '<?php echo $_SESSION['user']['settings']['i18n']['dateseparator_human']; ?>'
+            dateseparator_human: '<?php echo $_SESSION['user']['settings']['i18n']['dateseparator_human']; ?>',
+            GUI: {
+                tooltip: {
+                    delay: { show: 700, hide: 100 }
+                },
+                jobs_list: {
+                    summary_selected_for_details_bgcolor: "rgba(240, 240, 240, 0.9)",
+                    delete_bgcolor: "rgba(252, 106, 106, 0.3)"
+                }
+            }
         };
 
         // application runtime values
@@ -245,7 +254,7 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
             }
         });
 
-        $("input.jom_enable_control").tooltip();
+        $("input.jom_enable_control").tooltip({delay: JOM.conf.GUI.tooltip.delay});
 
         $('.dropdown-toggle').dropdown();
 
@@ -278,6 +287,8 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
               <li class="active"><a href="./application.php"><i class="icon-list-ol"></i> Jobs List</a></li>
             </ul>
             <ul class="nav pull-right">
+              <li class="pull-right" id="jom_messages" style="background-color: rgba(0, 109, 204, 0.01); box-shadow: inset 0 3px 8px rgba(0, 0, 176, 0.1); display: non;"><a href="#"><i class="icon-spinner icon-spin"></i> saving...</a></li>
+              <li class="divider-vertical"></li>
               <li class="dropdown">
                   <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i> Settings <b class="caret"></b></a>
                   <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
@@ -287,8 +298,8 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
                     <li role="presentation" class="divider"></li>
                     <li role="presentation"><a href="./signout.php"><i class="icon-signout"></i> Sign out</a></li>
                   </ul>
-                <li class="divider-vertical"></li>
-                <li class="pull-right"><a href="./signout.php"><i class="icon-signout"></i> Sign out</a></li>
+              <li class="divider-vertical"></li>
+              <li class="pull-right"><a href="./signout.php"><i class="icon-signout"></i> Sign out</a></li>
             </ul>
           </div>
         </div>
@@ -299,7 +310,7 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
         <div class="row jom_filters_container" style="display: none">
                 <div class="span3 offset2">
                     <dl style="margin-top: 0;">
-                        <dt><input type="checkbox" class="jom_enable_control" data-placement="bottom" title data-original-title="enable status filter" data-apply-to="jom_filter_by_status"> Filter by status: </dt>
+                        <dt><input type="checkbox" class="jom_enable_control" data-placement="bottom" title="enable status filter" data-apply-to="jom_filter_by_status"> Filter by status: </dt>
                         <dd>
                             <select id="jom_filter_by_status" class="selectpicker show-menu-arrow jom_filter" data-width="auto">
                                 <option></option>
@@ -309,7 +320,7 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
                 </div>
                 <div class="span2">
                     <dl style="margin-top: 0;">
-                        <dt><input type="checkbox" class="jom_enable_control" data-placement="bottom" title data-original-title="enable date start filter" data-apply-to="jom_filter_by_creation_date"> Filter by job creation: </dt>
+                        <dt><input type="checkbox" class="jom_enable_control" data-placement="bottom" title="enable date start filter" data-apply-to="jom_filter_by_creation_date"> Filter by job creation: </dt>
                         <dd>
                             <select id="jom_filter_by_creation_date" class="selectpicker show-menu-arrow jom_filter" data-width="auto">
                                 <option value="1">yesterday</option>
@@ -324,13 +335,13 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
                 </div>
                 <div class="span3">
                     <dl style="margin-top: 0;">
-                        <dt><input type="checkbox" class="jom_enable_control" data-placement="bottom" title data-original-title="enable filter by category" data-apply-to="jom_filter_by_category"> Filter by category: </dt>
+                        <dt><input type="checkbox" class="jom_enable_control" data-placement="bottom" title="enable filter by category" data-apply-to="jom_filter_by_category"> Filter by category: </dt>
                         <dd>
                             <select id="jom_filter_by_category" class="selectpicker show-menu-arrow">
                                 <option></option>
                             </select>
                         </dd>
-                        <dt><input type="checkbox" class="jom_enable_control" data-placement="bottom" title data-original-title="enable filter by issue" data-apply-to="jom_filter_by_issue"> Filter by issue: </dt>
+                        <dt><input type="checkbox" class="jom_enable_control" data-placement="bottom" title="enable filter by issue" data-apply-to="jom_filter_by_issue"> Filter by issue: </dt>
                         <dd>
                             <select id="jom_filter_by_issue" class="selectpicker show-menu-arrow">
                                 <option></option>
