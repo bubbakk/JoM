@@ -9,6 +9,7 @@ TODOS:
 
 02.08.2013
 ----------
+- job delete effect made better
 
 01.08.2013
 ----------
