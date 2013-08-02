@@ -377,13 +377,13 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
                     </thead>
                     <tbody>
                         <tr id="jom_job_row_summary" class="jom_job_summary">
-                            <td><button class="btn btn-mini btn-primary jom_show_details_btn jom_click_event" type="button"><i class="icon-info-sign icon-white"></i></button></td>
+                            <td><button class="btn btn-mini btn-primary jom_show_details_btn jom_click_event" type="button" data-toggle="tooltip" title="show/hide details"><i class="icon-info-sign icon-white"></i></button></td>
                             <td>#1</td>
                             <td>primo job</td>
                             <td>me</td>
                             <td>
-                                <button class="btn btn-mini btn-primary jom_edit_btn jom_click_event" type="button"><i class="icon-pencil icon-white"></i></button>
-                                <button class="btn btn-mini btn-primary jom_delete_btn jom_click_event" type="button"><i class="icon-trash icon-white"></i></button>
+                                <button class="btn btn-mini btn-primary jom_edit_btn jom_click_event" type="button" data-toggle="tooltip" title="edit job data"><i class="icon-pencil icon-white"></i></button>
+                                <button class="btn btn-mini btn-primary jom_delete_btn jom_click_event" type="button" data-toggle="tooltip" title="delete job"><i class="icon-trash icon-white"></i></button>
                             </td>
                         </tr>
                         <tr id="jom_job_row_details" class="jom_job_details">

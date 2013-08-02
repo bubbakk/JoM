@@ -89,6 +89,7 @@
             case 'job/lst':
                 {
                     JOM.job_list.GUI__replace_job_list(JSON_response.data);
+                     $("#jom_job_list_table").find('[data-toggle="tooltip"]').tooltip({delay: { show: 700, hide: 100 }});
                     break;
                 }
             case 'usr/lst':

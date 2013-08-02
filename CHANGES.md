@@ -10,6 +10,7 @@ TODOS:
 02.08.2013
 ----------
 - job delete effect made better
+- added nice tooltips on job row button
 
 01.08.2013
 ----------
