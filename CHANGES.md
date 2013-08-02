@@ -7,9 +7,11 @@ TODOS:
 - convert JSON requests on application load to PHP generated data
 - implement AJAX call cache
 
+02.08.2013
+----------
+
 01.08.2013
 ----------
-- after saving successfully a new job, the job list is updated
 - pressing the button delete, job is now graphically shown as deleted
 - refactored code and moved from job_list.js to application.js: events on jobs row are now moved from job list creation and consolidated
   in one single handler
@@ -19,6 +21,7 @@ TODOS:
 - now favourite star is loaded correctly
 - refactored click event code: moved in job_list.js source
 - refactored job list creation cycle routine: now cloned jquery objects are clearer
+- after saving successfully a new job, the job list is updated
 
 30.07.2013
 ----------

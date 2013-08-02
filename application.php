@@ -263,7 +263,7 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
         .table .jom_job_details .dl-horizontal dt { width: 110px; padding-top: 0; margin-top: 0; }
         .table .jom_job_details .dl-horizontal dd { margin-left: 125px; }
         .table .jom_job_details dl.dl-horizontal hr  { height: 5px; visibility:hidden; margin: 0; padding: 0; }
-        .jom_deleted { opacity: 0.3; }
+        .jom_deleted { opacity: 0.4; }
         dd { margin-left: 20px; }
     </style>
 </head>

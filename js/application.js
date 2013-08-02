@@ -183,50 +183,62 @@ function jom_init(dateformat) {
         // catch click event in the jobs table cells containing elements having 'jom_click_event' class
         $("#jom_job_list_table tbody").on("click", "tr td .jom_click_event", function(event)
         {
-            // job show details open
+            var is_deleted = $(this).parents('tr').filter(":first").data('job_is_deleted');
+            if ( is_deleted===undefined ) is_deleted = $(this).parents('tr').filter(":first").prev().data('job_is_deleted');
+
+            // SHOW/HIDE DETAILS
             if ( $(this).hasClass("jom_show_details_btn") )
             {
                 var $tr_infos = $(this).parents('tr').next();
 
-                if ( $tr_infos.is(':hidden') ) {
-                    $(this).parents('tr').css("background-color", "rgba(240, 240, 240, 0.9)");
+                if ( is_deleted ) {
+                    $(this).parents('tr').filter(":first").css('background-color', 'rgba(182, 202, 222, 0.3)');
                 }
                 else {
-                    $(this).parents('tr').css("background-color", "");
+                    if ( $tr_infos.is(':hidden') ) {
+                        $(this).parents('tr').css("background-color", "rgba(240, 240, 240, 0.9)");
+                    }
+                    else {
+                        $(this).parents('tr').css("background-color", "");
+                    }
                 }
 
                 $tr_infos.fadeToggle();
             }
             else
-            // job edit
-            if ( $(this).hasClass("jom_edit_btn") ) {
+            // EDIT
+            if ( $(this).hasClass("jom_edit_btn") && !is_deleted ) {
                 alert("Edit implementation in Version 0.5");
             }
             else
-            // job delete
+            // DELETE/UNDELETE
             if ( $(this).hasClass("jom_delete_btn") )
             {
-                var is_deleted = $(this).parents('tr').data('job_is_deleted');
                 if ( !is_deleted ) {
-                    // set style
-                    $(this).parents().eq(1).find('td').addClass('jom_deleted');
-                    $(this).parents().eq(1).find('td:last-child').removeClass('jom_deleted');
-                    $(this).parents().eq(1).find('td:last-child').children('button:not(".jom_delete_btn")').addClass('jom_deleted');
-                    $(this).parents().eq(1).next().addClass('jom_deleted');
+                    // set row contained elements styles
+                    $(this).parents('tr').filter(":first").find('td').addClass('jom_deleted');
+                    $(this).parents('tr').filter(":first").find('td:last-child').removeClass('jom_deleted');
+                    $(this).parents('tr').filter(":first").find('td:last-child').children('button:not(".jom_delete_btn")').addClass('jom_deleted');
+                    $(this).parents('tr').filter(":first").next().addClass('jom_deleted');
+                    // set row style
+                    $(this).parents('tr').filter(":first").find('td').css('padding', '2px 8px 2px 8px');
+                    $(this).parents('tr').css('background-color', 'rgba(182, 202, 222, 0.3)');
                 }
                 else {
-                    $(this).parent().parent().find('*').removeClass('jom_deleted');
-                    $(this).parent().parent().next().removeClass('jom_deleted');
+                    // set row contained elements styles
+                    $(this).parents('tr').filter(":first").find('*').removeClass('jom_deleted');
+                    $(this).parents('tr').filter(":first").next().removeClass('jom_deleted');
+                    // set row style
+                    $(this).parents('tr').filter(":first").find('td').attr('style', '');
+                    $(this).parents('tr').attr('style', '');
                 }
                 // set deleted data
                 $(this).parents('tr').data('job_is_deleted', 1 - is_deleted);
                 //JOM.job_list.DATA__update_field(id_job, 'Job_trashed',  $(this).data('val'));
-
-                alert("Remove job still not implemented");
             }
             else
-            // job favourite
-            if ( $(this).hasClass("jom_favourite") )
+            // FAVOURITE
+            if ( $(this).hasClass("jom_favourite") && !is_deleted )
             {
                 var new_favourite_value = undefined;
 
