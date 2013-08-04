@@ -287,7 +287,7 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
               <li class="active"><a href="./application.php"><i class="icon-list-ol"></i> Jobs List</a></li>
             </ul>
             <ul class="nav pull-right">
-              <li class="pull-right" id="jom_messages" style="background-color: rgba(0, 109, 204, 0.01); box-shadow: inset 0 3px 8px rgba(0, 0, 176, 0.1); display: non;"><a href="#"><i class="icon-spinner icon-spin"></i> saving...</a></li>
+              <li class="pull-right" id="jom_messages" style="background-color: rgba(0, 109, 204, 0.01); box-shadow: inset 0 3px 8px rgba(0, 0, 176, 0.1); display: none;"><a href="#"><i class="icon-spinner icon-spin"></i> saving...</a></li>
               <li class="divider-vertical"></li>
               <li class="dropdown">
                   <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i> Settings <b class="caret"></b></a>

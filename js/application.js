@@ -217,6 +217,9 @@ function jom_init(dateformat) {
             {
                 if ( !is_deleted ) {
                     // set row contained elements styles
+                    $(this).attr("data-original-title", "restore job");
+                    $(this).removeClass("btn-primary").addClass("btn-warning");
+                    $(this).children("i").removeClass("icon-trash").addClass("icon-medkit");
                     $(this).parents('tr').filter(":first").find('td').addClass('jom_deleted');
                     $(this).parents('tr').filter(":first").find('td:first-child').removeClass('jom_deleted');
                     $(this).parents('tr').filter(":first").find('td:last-child').removeClass('jom_deleted');
@@ -228,6 +231,9 @@ function jom_init(dateformat) {
                 }
                 else {
                     // set row contained elements styles
+                    $(this).attr("data-original-title", "delete job");
+                    $(this).removeClass("btn-warning").addClass("btn-primary");
+                    $(this).children("i").removeClass("icon-medkit").addClass("icon-trash");
                     $(this).parents('tr').filter(":first").find('*').removeClass('jom_deleted');
                     $(this).parents('tr').filter(":first").next().removeClass('jom_deleted');
                     // set row style

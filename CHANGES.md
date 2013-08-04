@@ -8,7 +8,9 @@ TODOS:
 - implement AJAX call cache
 
 
-
+04.08.2013
+----------
+- on job delete button press, the icon changes, the tooltip changes text, and the button color changes too
 
 03.08.2013
 ----------
