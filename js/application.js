@@ -217,28 +217,36 @@ function jom_init(dateformat) {
             {
                 if ( !is_deleted ) {
                     // set row contained elements styles
-                    $(this).attr("data-original-title", "restore job");
-                    $(this).removeClass("btn-primary").addClass("btn-warning");
-                    $(this).children("i").removeClass("icon-trash").addClass("icon-medkit");
-                    $(this).parents('tr').filter(":first").find('td').addClass('jom_deleted');
-                    $(this).parents('tr').filter(":first").find('td:first-child').removeClass('jom_deleted');
-                    $(this).parents('tr').filter(":first").find('td:last-child').removeClass('jom_deleted');
-                    $(this).parents('tr').filter(":first").find('td:last-child').children('button:not(".jom_delete_btn")').addClass('jom_deleted');
-                    $(this).parents('tr').filter(":first").next().addClass('jom_deleted');
-                    // set row style
-                    $(this).parents('tr').filter(":first").find('td').css('padding', '2px 8px 2px 8px');
-                    $(this).parents('tr').css('background-color', JOM.conf.GUI.jobs_list.delete_bgcolor);
+                    // delete button
+                        $(this).attr("data-original-title", "restore job");
+                        $(this).removeClass("btn-primary").addClass("btn-warning");
+                        $(this).children("i").removeClass("icon-trash").addClass("icon-medkit");
+                    // row elements style
+                        $(this).parents('tr').filter(":first").find('td').addClass('jom_deleted');
+                        $(this).parents('tr').filter(":first").find('td:first-child').removeClass('jom_deleted');
+                        $(this).parents('tr').filter(":first").find('td:last-child').removeClass('jom_deleted');
+                        $(this).parents('tr').filter(":first").find('td:last-child').children('button:not(".jom_delete_btn")').addClass('jom_deleted');
+                        $(this).parents('tr').filter(":first").next().addClass('jom_deleted');
+                    // set general row style
+                        $(this).parents('tr').filter(":first").find('td').css('padding', '2px 8px 2px 8px');
+                        $(this).parents('tr').css('background-color', JOM.conf.GUI.jobs_list.delete_bgcolor);
+                    // x-editable elements
+                        $(this).parents('tr').find('.x_editable').editable('disable');
                 }
                 else {
                     // set row contained elements styles
-                    $(this).attr("data-original-title", "delete job");
-                    $(this).removeClass("btn-warning").addClass("btn-primary");
-                    $(this).children("i").removeClass("icon-medkit").addClass("icon-trash");
-                    $(this).parents('tr').filter(":first").find('*').removeClass('jom_deleted');
-                    $(this).parents('tr').filter(":first").next().removeClass('jom_deleted');
-                    // set row style
-                    $(this).parents('tr').filter(":first").find('td').attr('style', '');
-                    $(this).parents('tr').attr('style', '');
+                    // delete button
+                        $(this).attr("data-original-title", "delete job");
+                        $(this).removeClass("btn-warning").addClass("btn-primary");
+                        $(this).children("i").removeClass("icon-medkit").addClass("icon-trash");
+                    // row elements style
+                        $(this).parents('tr').filter(":first").find('*').removeClass('jom_deleted');
+                        $(this).parents('tr').filter(":first").next().removeClass('jom_deleted');
+                    // set general row style
+                        $(this).parents('tr').filter(":first").find('td').attr('style', '');
+                        $(this).parents('tr').attr('style', '');
+                    // x-editable elements
+                        $(this).parents('tr').find('.x_editable').editable('enable');
                 }
                 // set deleted data
                 $(this).parents('tr').data('job_is_deleted', 1 - is_deleted);

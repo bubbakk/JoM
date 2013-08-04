@@ -11,6 +11,7 @@ TODOS:
 04.08.2013
 ----------
 - on job delete button press, the icon changes, the tooltip changes text, and the button color changes too
+- now also x-editable elements now are correctly disabled/enable on job delete/restore
 
 03.08.2013
 ----------
