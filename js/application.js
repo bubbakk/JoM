@@ -184,8 +184,13 @@ function jom_init(dateformat) {
         // catch click event in the jobs table cells containing elements having 'jom_click_event' class
         $("#jom_job_list_table tbody").on("click", "tr td .jom_click_event", function(event)
         {
-            var is_deleted = $(this).parents('tr').filter(":first").data('job_is_deleted');
+            // is job deleted ?
+            var is_deleted = $(this).parents('tr').filter(":first").data('job_is_deleted');     // integer value 1 or 0
             if ( is_deleted===undefined ) is_deleted = $(this).parents('tr').filter(":first").prev().data('job_is_deleted');
+
+            // job id
+            var id_job = $(this).parents('[class="jom_job_summary"]').data('job_id');
+            if ( id_job===null ) id_job = $(this).parents('[class="jom_job_details"]').data('job_id');
 
             // SHOW/HIDE DETAILS
             if ( $(this).hasClass("jom_show_details_btn") )
@@ -248,9 +253,11 @@ function jom_init(dateformat) {
                     // x-editable elements
                         $(this).parents('tr').find('.x_editable').editable('enable');
                 }
-                // set deleted data
-                $(this).parents('tr').data('job_is_deleted', 1 - is_deleted);
-                //JOM.job_list.DATA__update_field(id_job, 'Job_trashed',  $(this).data('val'));
+                // set deleted data to HTML DOM element
+                var new_value_is_deleted = 1 - is_deleted;
+                $(this).parents('tr').data('job_is_deleted', new_value_is_deleted);
+                // save database data
+                JOM.job_list.DATA__update_field(id_job, 'Job_trashed',  new_value_is_deleted);
             }
             else
             // FAVOURITE
@@ -267,7 +274,8 @@ function jom_init(dateformat) {
                     $(this).attr('src', JOM.job_list.favourite_icons.favourite);
                     $(this).data('val', 1);
                 }
-                var id_job = $(this).parent().parents('[class="jom_job_details"]').data('job_id');
+
+                // set database data
                 JOM.job_list.DATA__update_field(id_job, 'Job_is_favourite',  $(this).data('val'));
             }
         });

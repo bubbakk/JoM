@@ -8,6 +8,11 @@ TODOS:
 - implement AJAX call cache
 
 
+05.08.2013
+----------
+- now database trashed field for job row id is correctly set
+- few fixes in the job list click handler
+
 04.08.2013
 ----------
 - on job delete button press, the icon changes, the tooltip changes text, and the button color changes too
