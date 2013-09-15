@@ -32,7 +32,7 @@ Main development steps:
     List Jobs
     Enable/disable filters
     Show/hide details
--> Under development
+-> Currently under development
 
 0.5 Ticket editing
 

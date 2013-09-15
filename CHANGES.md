@@ -7,11 +7,25 @@ TODOS:
 - convert JSON requests on application load to PHP generated data
 - implement AJAX call cache
 
+-> stackable system messages
+
+
+sparse day until 15.09.2013
+---------------------------
+- Refactored category/issue loading system. Before: second level data (such as issue) were loaded after
+  first level (category) seclection via ajax. Now all tables data are loaded; when a category is selected,
+  issues are selected using a filter and not a server call.
+- Added Casper unit test code for table_data_structure Javascript object.
+- minor fixes
+
+07.08.2013
+----------
+- forked and cloned "HubSpot Messaging Library" at http://github.hubspot.com/messenger/
 
 05.08.2013
 ----------
 - now database trashed field for job row id is correctly set
-- few fixes in the job list click handler
+- minor fixes in the job list click handler
 
 04.08.2013
 ----------
