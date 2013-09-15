@@ -252,7 +252,7 @@ function jsJOMlib__check_date_string(date, format, separator)
     var format_splitted     = undefined;
 
     // check dependecy
-    if ( !typeof(jsJOMlib__isNumber)==="function" ) {
+    if ( !(typeof(jsJOMlib__isNumber)==="function") ) {
         console.error("[JOM Debug] - This function depends on jsJOMlib__isNumber() function. Please include it." );
         return false;
     }
