@@ -2,7 +2,7 @@
 
 function statuses_data_retrieve($DBH)
 {
-    $query = '   SELECT Status_id, Status_name '.
+    $query = '   SELECT Status_id, Status_name, Status_is_final '.
              '     FROM '.TBL_STATUSES.' '.
              '    WHERE Status_trashed <> 1 '.
              ' ORDER BY Status_order ASC ';
