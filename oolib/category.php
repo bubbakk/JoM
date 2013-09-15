@@ -6,8 +6,8 @@
  */
 class JOM_Cateogry extends BBKK_Base_Class {
 
-    private $pdo_dbh    = null;        // PDO database class
-    private $table_name = null;        // users table name
+    private $pdo_dbh    = null;         // PDO database class
+    private $table_name = null;         // users table name
 
     public $level       = null;         // category level; 1 is the first level, 2 is sublevel and so on...
     public $parent_id   = null;
@@ -55,7 +55,6 @@ class JOM_Cateogry extends BBKK_Base_Class {
         }
         // set PDO database handler pointer
         $this->pdo_dbh = $_pdo_dbh;
-
     }
 
     public function load()
