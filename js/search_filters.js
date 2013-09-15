@@ -74,8 +74,17 @@ function Search_Filters_GUI() {
      */
     THAT.update_issues = function() {
         THAT.$issue_load.fadeIn();
-        THAT.filters.filter_by_issue.parent_id = THAT.filters.filter_by_category.gui_widget.jq_pointer.val();
-        THAT.filters.filter_by_issue.load();
+
+        THAT.filters.filter_by_issue.reset_filters();
+        THAT.filters.filter_by_issue.set_filter("id_category_1", THAT.filters.filter_by_category.gui_widget.jq_pointer.val());
+        THAT.filters.filter_by_issue.GUI__update(undefined, "id", "name");
+
+        // set enabled/disabled status according to its related selector
+        var disable = !$(".jom_enable_control[data-apply-to=\"jom_filter_by_issue\"]").prop("checked");
+        $("#jom_filter_by_issue").prop("disabled", disable);
+        $("#jom_filter_by_issue").selectpicker('refresh');
+
+        THAT.$issue_load.fadeOut();
     }
 
     /*

@@ -1,4 +1,19 @@
 
+NONCES = {
+    cat_lod: {                      // domain/request
+        new_job: {                  // context
+            categories: {           // object name
+                nonce: false,
+                timestamp: false
+            },
+            issues: {               // object name
+                nonce: false,
+                timestamp: false
+            }
+        }
+    }
+};
+
     // Ajax callbacks dispatcher
     $(document).ajaxComplete(function(event, xhr, settings)
     {
@@ -23,54 +38,6 @@
 
         switch ( domain + '/' + request )
         {
-            case 'cat/lod':
-                {
-                    // parse the level
-                    var level = jsJOMlib__getParameterByName(settings.url, 'l');
-
-                    if ( JSON_response.ctx == 'new_job' )
-                    {
-                        if ( parseInt(level, 10) === 1 ) {
-                            JOM['new_job'].categories.categories      = JSON_response.data;
-                            JOM['new_job'].categories.GUI__update(JSON_response.data, "id", "name");
-                            JOM['new_job'].categories.nonce.nonce     = JSON_response.new_nonce;
-                            JOM['new_job'].categories.nonce.timestamp = JSON_response.new_timestamp;
-                        }
-                        else
-                        if ( parseInt(level, 10) === 2 ) {
-                            JOM['new_job'].$issue_load.fadeOut();
-                            JOM['new_job'].issues.categories      = JSON_response.data;
-                            JOM['new_job'].issues.GUI__update(JSON_response.data, "id", "name");
-                            JOM['new_job'].issues.nonce.nonce     = JSON_response.new_nonce;
-                            JOM['new_job'].issues.nonce.timestamp = JSON_response.new_timestamp;
-                        }
-                    }
-                    else
-                    if ( JSON_response.ctx == 'search_filter' )
-                    {
-                        if ( parseInt(level, 10) === 1 ) {
-                            // update object data and form field too
-                            JOM.search_filters.filters.filter_by_category.GUI__update(JSON_response.data);
-                            // update nonce
-                            JOM.search_filters.filters.filter_by_category.nonce.nonce      = JSON_response.new_nonce;
-                            JOM.search_filters.filters.filter_by_category.nonce.timestap   = JSON_response.new_timestamp;
-                        }
-                        else
-                        if ( parseInt(level, 10) === 2 ) {
-                            JOM.search_filters.$issue_load.fadeOut();
-                            // update object data and form field too
-                            JOM.search_filters.filters.filter_by_issue.GUI__update(JSON_response.data);
-                            // set enabled/disabled status according to its related selector
-                            var disable = !$(".jom_enable_control[data-apply-to=\"jom_filter_by_issue\"]").prop("checked");
-                            $("#jom_filter_by_issue").prop("disabled", disable);
-                            $("#jom_filter_by_issue").selectpicker('refresh');
-                            // update nonce
-                            JOM.search_filters.filters.filter_by_issue.nonce.nonce          = JSON_response.new_nonce;
-                            JOM.search_filters.filters.filter_by_issue.nonce.timestap       = JSON_response.new_timestamp;
-                        }
-                    }
-                    break;
-                }
             case 'job/new':
                 {
                     if ( JSON_response.success == true ) {
@@ -97,15 +64,9 @@
                     JOM.job_list.users_list.users = JSON_response.data;
                     break;
                 }
-            case 'sta/lod':
-                {
-                    // update object data and form field too
-                    JOM.search_filters.filters.filter_by_status.GUI__update(JSON_response.data);
-                    // update nonce
-                    JOM.search_filters.filters.filter_by_status.nonce.nonce      = JSON_response.new_nonce;
-                    JOM.search_filters.filters.filter_by_status.nonce.timestap   = JSON_response.new_timestamp;
-                    break;
-                }
+            default:
+                alert(domain + '/' + request + " not defined");
+                break;
 
         }
 
@@ -114,16 +75,15 @@
 
 function jom_init(dateformat) {
 
-    var date_spearator = '/';
 
     // NEW JOB FORM ELEMENTS
     {
         // date and datepicker component in job creation form
-        var now_text = jsJOMlib__date_formatted(dateformat, date_spearator);
+        var now_text = jsJOMlib__date_formatted(JOM.conf.dateformat, JOM.conf.date_separator);
         var $input_date = $("#form_new_job [name='creation_date']");
         $input_date.val(now_text);
         $input_date.parent().attr("data-date", now_text);
-        $input_date.parent().attr("data-date-format", dateformat);
+        $input_date.parent().attr("data-date-format", JOM.conf.dateformat);
 
         // call datepicker object creation
         $input_date.parent().datepicker({
@@ -144,8 +104,6 @@ function jom_init(dateformat) {
 
         // set modal margin style
         $("#form_new_job").css("margin-bottom", "0");
-
-
     }
     // END new job form elements
 

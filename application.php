@@ -34,6 +34,8 @@ require_once(DIR_OOL.'bbkk_base_class.php');
 require_once(DIR_OOL.'bbkk_pdo.php');
 require_once(DIR_OOL.'bbkk_session_manager.php');
 
+require_once(DIR_LIB.'load_all__functions.php');
+
 
 
 //
@@ -53,8 +55,9 @@ $SMAN->salt = $config['SALT'];                          // explicitly set applic
 $SMAN->start_session('', false);                        // starting session
 
 
+
 //
-// not yet signed in check
+// check if signed in
 //
 if ( !isset($_SESSION["user"]["is_logged_in"]) ) {
     // destroy the session
@@ -64,7 +67,7 @@ if ( !isset($_SESSION["user"]["is_logged_in"]) ) {
                            $config['SERVER']['domain_path'],
                            'login.php',
                            'r=nsi');
-    // script dies in the function before
+    // script dies in the function above
 }
 
 
@@ -84,6 +87,43 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
                            'login.php',
                            'r=exp');
     // script dies in the function before
+}
+
+
+
+
+//
+// load all categories for level 1
+//
+$categories_level_1 = load_all_categories(1);
+$tbl_name = 'Category_1';
+foreach ( $categories_level_1 as $key => $value ) {
+    $CAT_1_json_data[] = array( 'id'            => $value[ $tbl_name . '_id'],
+                                'name'          => $value[ $tbl_name . '_name'],
+                                'description'   => $value[ $tbl_name . '_description'] );
+}
+
+//
+// Load all Categories for level 2
+//
+$categories_level_2 = load_all_categories(2);
+$tbl_name = 'Category_2';
+foreach ( $categories_level_2 as $key => $value ) {
+    $CAT_2_json_data[] = array( 'id'            => $value[ $tbl_name . '_id'],
+                                'id_category_1' => $value[ $tbl_name . '_id_Category_1'],
+                                'name'          => $value[ $tbl_name . '_name'],
+                                'description'   => $value[ $tbl_name . '_description'] );
+}
+
+//
+// Load all Statuses
+//
+$statuses = load_all_statuses();
+$tbl_name = 'Status';
+foreach ( $statuses as $key => $value ) {
+    $Statuses_json_data[] = array( 'id'       => $value[ $tbl_name . '_id'],
+                                   'name'     => $value[ $tbl_name . '_name'],
+                                   'is_final' => $value[ $tbl_name . '_is_final'] );
 }
 
 ?>
@@ -115,6 +155,7 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
     <script language="javascript" type="text/javascript" src="./js/new_job.js"></script>
     <script language="javascript" type="text/javascript" src="./js/job_list.js"></script>
     <script language="javascript" type="text/javascript" src="./js/job.js"></script>
+    <script language="javascript" type="text/javascript" src="./js/table_data_structure.js"></script>
     <script language="javascript" type="text/javascript" src="./js/categories.js"></script>
     <script language="javascript" type="text/javascript" src="./js/statuses.js"></script>
     <script language="javascript" type="text/javascript" src="./js/users.js"></script>
@@ -152,50 +193,50 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
         };
 
         // init NEW JOB objects
-        JOM.new_job = new New_Job_GUI();
-        JOM.new_job.init_events();
-        JOM.new_job.set_issues_status('disabled');
+            JOM.new_job = new New_Job_GUI();
+            // Categories
+            JOM.new_job.categories.gui_widget = new gui_select_standard( $("#form_new_job [name='category']"), true );
+            JOM.new_job.categories.GUI__update(<?php echo stripcslashes(json_encode($CAT_1_json_data)); ?>, "id", "name");
+            // Issues
+            JOM.new_job.issues.gui_widget = new gui_select_standard( $("#form_new_job [name='issue']"), true );
+            JOM.new_job.issues.assign_data(<?php echo stripcslashes(json_encode($CAT_2_json_data)); ?>);
+            JOM.new_job.issues.set_filter("id_category_1", 1);
+            JOM.new_job.issues.GUI__update(undefined, "id", "name");
+            // set events and status
+            JOM.new_job.init_events();
+            JOM.new_job.set_issues_status('disabled');
 
-        JOM.new_job.categories.nonce    = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
-        JOM.new_job.categories.context  = 'new_job';
-        JOM.new_job.issues.nonce        = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
-        JOM.new_job.issues.context      = 'new_job';
-        JOM.new_job.nonce               = <?php echo generate_json_javascript_values( '/job/new',         0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
-        JOM.new_job.get_categories();
 
         // init JOB LIST objects
-        JOM.job_list = new Job_List_GUI();
-        JOM.job_list.nonce              = <?php echo generate_json_javascript_values( '/job/list',        0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
-        JOM.job_list.context            = 'job_list';
-        JOM.job_list.users_list.nonce   = <?php echo generate_json_javascript_values( '/users/list',      0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
-        JOM.job_list.DATA__load_users_list();
-        JOM.job_list.DATA__load_job_list();
+            JOM.job_list = new Job_List_GUI();
+            JOM.job_list.nonce              = <?php echo generate_json_javascript_values( '/job/list',        0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
+            JOM.job_list.context            = 'job_list';
+            JOM.job_list.users_list.nonce   = <?php echo generate_json_javascript_values( '/users/list',      0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
+            JOM.job_list.DATA__load_users_list();
+            JOM.job_list.DATA__load_job_list();
 
-        // init SEARCH FILTERS objects
-        JOM.search_filters = new Search_Filters_GUI();
-        JOM.search_filters.create_filters(new Array('filter_by_status', 'filter_by_creation_date', 'filter_by_category', 'filter_by_issue'));
-        // STATUS filter
-        JOM.search_filters.filters.filter_by_status.nonce       = <?php echo generate_json_javascript_values( '/statuses/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
-        JOM.search_filters.filters.filter_by_status.context     = 'search_filter';
-        JOM.search_filters.filters.filter_by_status.gui_widget  = new gui_select_standard( $('#jom_filter_by_status'), true );
-        JOM.search_filters.filters.filter_by_status.load();
-        // DATE START filter
-        JOM.search_filters.filters.filter_by_creation_date.context      = 'search_filter';
-        JOM.search_filters.filters.filter_by_creation_date.gui_widget   = new gui_select_standard( $('#jom_filter_by_creation_date'), false );
-        // CATEGORY filter
-        JOM.search_filters.filters.filter_by_category.nonce     = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
-        JOM.search_filters.filters.filter_by_category.context   = 'search_filter';
-        JOM.search_filters.filters.filter_by_category.gui_widget  = new gui_select_standard( $('#jom_filter_by_category'), true );
-        JOM.search_filters.filters.filter_by_category.load();
-        // ISSUE filter
-        JOM.search_filters.filters.filter_by_issue.nonce        = <?php echo generate_json_javascript_values( '/categories/load', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>;
-        JOM.search_filters.filters.filter_by_issue.context      = 'search_filter';
-        JOM.search_filters.filters.filter_by_issue.gui_widget   = new gui_select_standard( $('#jom_filter_by_issue'), true );
+            // init SEARCH FILTERS objects
+                JOM.search_filters = new Search_Filters_GUI();
+                JOM.search_filters.create_filters(new Array('filter_by_status', 'filter_by_creation_date', 'filter_by_category', 'filter_by_issue'));
+                // STATUS filter
+                JOM.search_filters.filters.filter_by_status.gui_widget  = new gui_select_standard( $('#jom_filter_by_status'), true );
+                JOM.search_filters.filters.filter_by_status.GUI__update(<?php echo stripcslashes(json_encode($Statuses_json_data)); ?>);
+                // DATE START filter
+                JOM.search_filters.filters.filter_by_creation_date.context      = 'search_filter';
+                JOM.search_filters.filters.filter_by_creation_date.gui_widget   = new gui_select_standard( $('#jom_filter_by_creation_date'), false );
+                // CATEGORY filter
+                JOM.search_filters.filters.filter_by_category.gui_widget  = new gui_select_standard( $('#jom_filter_by_category'), true );
+                JOM.search_filters.filters.filter_by_category.GUI__update(<?php echo stripcslashes(json_encode($CAT_1_json_data)); ?>, "id", "name");
+                // ISSUE filter
+                JOM.search_filters.filters.filter_by_issue.gui_widget   = new gui_select_standard( $('#jom_filter_by_issue'), true );
+                JOM.search_filters.filters.filter_by_issue.assign_data(<?php echo stripcslashes(json_encode($CAT_2_json_data)); ?>);
+                JOM.search_filters.filters.filter_by_issue.set_filter("id_category_1", 1);
+                JOM.search_filters.filters.filter_by_issue.GUI__update(undefined, "id", "name");
 
-        // search button
-        JOM.search_filters.init_search($("#jom_search_button"));
+                // search button
+                JOM.search_filters.init_search($("#jom_search_button"));
 
-        JOM.search_filters.init_category_events();
+                JOM.search_filters.init_category_events();
 
         jom_init('dd/mm/yyyy');
 
@@ -222,19 +263,10 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
         // set default expand/collapse filtres button status
         $("#jom_showhide_filters i").removeClass("icon-collapse-alt").addClass("icon-expand-alt");
         $("#jom_showhide_filters span").text("filters expand");
-        // set default filters status to disabled
 
+        // set default filters (combos) status to disabled
+        $(".jom_filters_container .selectpicker").prop("disabled", true);
 
-
-        // trigger base events
-        dummy = setTimeout(function() {
-            JOM.new_job.categories.gui_widget.jq_pointer.trigger('change');
-            $(".jom_filters_container .selectpicker").prop("disabled", true);
-        }, 1000);
-        dummy = setTimeout(function() {
-            JOM.search_filters.filters.filter_by_category.gui_widget.jq_pointer.trigger('change');
-            $(".jom_filters_container .selectpicker").prop("disabled", true);
-        }, 1000);
 
 
         $("input.jom_enable_control").on("click", function()
@@ -292,9 +324,9 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
               <li class="dropdown">
                   <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i> Settings <b class="caret"></b></a>
                   <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="javascript: $('.alert');"><i class="icon-user"></i> user properties</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><i class="icon-tasks"></i> preferences</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><i class="icon-tags"></i> application settings</a></li>
+                    <li role="presentation" class="disabled"><a role="menuitem" tabindex="-1" href="#"><i class="icon-user"></i> user settings</a></li>
+                    <li role="presentation" class="disabled"><a role="menuitem" tabindex="-1" href="#"><i class="icon-tasks"></i> preferences</a></li>
+                    <li role="presentation" class="disabled"><a role="menuitem" tabindex="-1" href="#"><i class="icon-tags"></i> application settings</a></li>
                     <li role="presentation" class="divider"></li>
                     <li role="presentation"><a href="./signout.php"><i class="icon-signout"></i> Sign out</a></li>
                   </ul>
@@ -393,7 +425,7 @@ if ( $session_vars_check === -1 || $session_vars_check === -2 )
                             <td>primo job</td>
                             <td>me</td>
                             <td>
-                                <button class="btn btn-mini btn-primary jom_edit_btn jom_click_event" type="button" data-toggle="tooltip" title="edit job data"><i class="icon-pencil icon-white"></i></button>
+                                <button class="btn btn-mini btn-primary jom_edit_btn jom_click_event" type="button" data-toggle="tooltip" title="edit job details"><i class="icon-pencil icon-white"></i></button>
                                 <button class="btn btn-mini btn-primary jom_delete_btn jom_click_event" type="button" data-toggle="tooltip" title="delete job"><i class="icon-trash icon-white"></i></button>
                             </td>
                         </tr>

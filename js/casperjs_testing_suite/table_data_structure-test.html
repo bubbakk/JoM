@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <script language="javascript" type="text/javascript" src="../table_data_structure.js"></script>
+    <script language="javascript" type="text/javascript" src="../generic_lib.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/jquery-1.9.0.min.js"></script>
+    <script>
+        var data_table_1 = [{"id":"1","name":"-- nessuna --","description":""},
+                            {"id":"2","name":"Assistenza informatica","description":"Problematiche con PC, rete, sistema operativo, stampanti, configurazioni, telefonia, server, ecc..."},
+                            {"id":"3","name":"Sviluppo software","description":"Lavori di architettura e creazione codice"}];
+
+        var test_int    = 4;
+        var test_string = "pippo";
+        var test_array = new Array();
+        test_array.push({"id": 4});
+        test_array.push(1);
+        test_array.push(2);
+
+        var OBJ = new JOM__Table_Data_Structure();
+        <!-- test.assertType(OBJ, "object", "JOM__Table_Data_Structure instanced correctly"); -->
+        <!-- test.assertFalsy(OBJ.dependencies_error, "Dependencies check passed"); -->
+        <!-- test.assertFalsy(OBJ.get_filtered_data(), "Getting filtered data if data is not set returs correctly a false"); -->
+
+        OBJ.assign_json_data(test_int);
+        OBJ.assign_json_data(test_string);
+        OBJ.assign_json_data(test_array);
+
+        test_array.pop();
+        test_array.pop();
+        OBJ.assign_json_data(test_array);
+
+        test_array.push(function(){alert("4");});
+        OBJ.assign_json_data(test_array);
+
+        test_array.push(function(){alert("4");});
+        OBJ.assign_json_data(test_array);
+
+        OBJ.get_filtered_data();
+
+        OBJ.assign_json_data(data_table_1);
+        OBJ.reset_filters();
+        OBJ.add_filter("id", 2);
+        var filtered_data = OBJ.get_filtered_data();
+
+    </script>
+</head>
+<body>
+</body>
+</html>

@@ -12,8 +12,6 @@ function dispatch_request($request)
 
             global $DBH, $retval, $config;
 
-            require_once(DIR_OOL.'job_list.php');
-
             $statuses_data = statuses_data_retrieve($DBH);
 
             if ( count($statuses_data) == 0 ) {

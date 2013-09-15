@@ -256,9 +256,11 @@ function New_Job_GUI() {
 // ISSUES
 
     THAT.update_issues = function() {
-        THAT.set_issues_status("load");
-        THAT.issues.parent_id = THAT.categories.gui_widget.jq_pointer.val();
-        THAT.issues.load();
+        THAT.set_issues_status("load");     // spinning load icon fadein
+        THAT.issues.reset_filters();
+        THAT.issues.set_filter("id_category_1", THAT.categories.gui_widget.jq_pointer.val());
+        THAT.issues.GUI__update(undefined, "id", "name");
+        THAT.set_issues_status("enabled");  // spinning load icon fadeout
     }
 
     THAT.set_issues_status = function(status) {
@@ -338,12 +340,10 @@ function New_Job_GUI() {
         // Categories widget
         THAT.categories             = new Categories();
         THAT.categories.level       = 1;
-        THAT.categories.gui_widget  = new gui_select_standard( $("#form_new_job [name='category']"), true );
 
         // Issues widget
         THAT.issues                 = new Categories();
         THAT.issues.level           = 2;
-        THAT.issues.gui_widget      = new gui_select_standard( $("#form_new_job [name='issue']"), true );
     // end constructor
 
 }

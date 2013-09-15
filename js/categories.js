@@ -1,10 +1,86 @@
-function Categories() {
+function Categories(level) {
+
+    var THAT = this;
+
+    /*
+     * Variable: data_table
+     * Class instance of table data structure management
+     */
+    THAT.data_table_obj = new JOM__Table_Data_Structure();
+
+    /*
+       Variable: gui_widget
+       The form field associated
+    */
+    THAT.gui_widget = undefined;
+
+
+
+
+/****************
+ * DATA METHODS *
+ ***************/
+{
+    /*
+       Function: assign_data
+       Assign table data
+    */
+    THAT.assign_data = function(data) {
+        THAT.data_table_obj.assign_json_data(data);
+    }
+
+    THAT.reset_filters = function() {
+        THAT.data_table_obj.reset_filters();
+    }
+
+    THAT.set_filter = function(fieldname, fieldvalue) {
+        return THAT.data_table_obj.add_filter(fieldname, fieldvalue);
+    }
+
+    THAT.get_data = function() {
+        return THAT.data_table_obj.get_filtered_data();
+    }
+}
+
+
+
+
+/***************
+ * GUI METHODS *
+ **************/
+{
+    /*
+     * Function: GUI__update
+     * If exists, set the associated widget (generally form field) data
+     *
+     * Parameters:
+     *  categories - Contain JSON data array. Passing this parameter is a shortcut to set property and call this method. If
+     *             not passed, the property <THAT.categories> is used.
+     */
+    THAT.GUI__update = function(categories, value_field, text_field)
+    {
+        if ( categories !== undefined )THAT.assign_data(categories);
+
+        if ( THAT.gui_widget !== undefined ) {
+            THAT.gui_widget.update_data(THAT.get_data(), value_field, text_field);
+        }
+    }
+}
+
+
+
+}
+
+
+
+
+function Categories_old() {
 
     var THAT = this;
 
     /*
        Variable: level
-       Needed to select right table, level or sublevel
+       Level of data parenting. Level 0 is the first
     */
     THAT.level      = undefined;
 
@@ -12,7 +88,7 @@ function Categories() {
        Variable: parent_id
        Needed if want to get parented subcategories
     */
-    THAT.parent_id  = undefined;
+    THAT.parent_id  = new Array();
 
     /*
        Variable: categories
@@ -60,6 +136,11 @@ function Categories() {
         if ( THAT.parent_id === undefined ) parent_qs = ''
         else                                parent_qs = '&p=' + THAT.parent_id;
 
+        // set nonce property
+        if ( level == 1 ) THAT.nonce = NONCES.cat_lod[THAT.context].categories;
+        else
+        if ( level == 2 ) THAT.nonce = NONCES.cat_lod[THAT.context].issues;
+
         $.ajax({
             url:      'ard.php',
             data:     'd=cat&r=lod&n=' + THAT.nonce.nonce + '&t=' + THAT.nonce.timestamp + '&c=' + THAT.context +
@@ -80,6 +161,8 @@ function Categories() {
 
     THAT.apply_changes_to_server = function(level, id) {
     }
+
+    THAT.filter_by_level = function(level){}
 }
 ///////////////// END DATA METHODS
 
