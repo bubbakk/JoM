@@ -9,6 +9,11 @@ TODOS:
 
 -> stackable system messages
 
+19.09.2013
+----------
+- fixed the HTML in the login page: now the panel is positioned in the center without using Bootstrap's row/span/offset
+  system: browser's page resize do not cause visual issues any more
+- moved some login page style in job_default_style.css file (even if there are too many inline style attributes)
 
 sparse day until 15.09.2013
 ---------------------------

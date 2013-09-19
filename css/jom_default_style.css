@@ -1,5 +1,3 @@
-
-
 body { background:url('../img/sitebg.jpg') }
 
 /* RIBBON */
@@ -48,3 +46,24 @@ body { background:url('../img/sitebg.jpg') }
   opacity: 0;
 }
 
+/*
+ * LOGIN PAGE
+ */
+.login-form {
+    width: 350px;
+    margin: 0 auto;
+    border: 1px solid #AFAFAF;
+    border-radius: 10px;
+    box-shadow: 1px 1px 6px #888;
+    background-color: white;
+    padding: 15px;
+}
+.login-form .form-control {
+    font-weight: bold;
+    position: relative;
+    height: auto;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+.alert { background-color: rgba(252, 248, 227, 0.8); }

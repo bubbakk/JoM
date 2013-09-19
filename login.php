@@ -58,9 +58,6 @@ $SMAN->start_session('', false);                        // starting session
     <script language="javascript" type="text/javascript" src="./js/lib/pidCrypt/sha512.js"></script>
     <script language="javascript" type="text/javascript" src="./js/generic_lib.js"></script>
     <title>JoM - Authentication</title>
-    <style>
-      .alert { background-color: rgba(252, 248, 227, 0.8); }
-    </style>
     <script>
     $(document).ready(function() {
         $('#jom_logo').css('opacity', 0);
@@ -151,7 +148,7 @@ $SMAN->start_session('', false);                        // starting session
         // ajax call to check login and
         $.ajax({
             url : "./ard.php",
-            type : "GET",
+            type : "POST",
             dataType : 'json',
             data : 'd=usr&r=lin&u=' + username + '&p=' + hashedpass + '&n=' + nonce + '&t=' + timestamp + '&c=login',
             success : function(data) {
@@ -199,65 +196,48 @@ $SMAN->start_session('', false);                        // starting session
         </div>
         <br>
         <br>
-        <div class="row" style="position: absolute; top: 128px;;">
-            <div class="span6 offset3" style="padding: 0 15px 0 15px; display: none" id="jom_message_container">
+        <div style="margin: 0 auto; width: 450px;">
+            <div style="position: absolute; top: 122px; width: 420px; padding: 0 15px 0 15px; display: none" id="jom_message_container">
                 <div class="alert text-center" style="box-shadow: 2px 2px 8px #AAA;">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <div id="jom_message"></div>
                 </div>
             </div>
         </div>
-        <div class="row" id="jom_loginpanel">
-            <div class="span4 offset4" style="border: 1px solid #AFAFAF; border-radius: 10px; box-shadow: 1px 1px 2px #888; background-color: white; padding: 15px;">
-                <div class="row">
-                    <div class="span1">
-                        <img src="./img/user_info.png" alt="Authentication icon" title="Authentication">
-                    </div>
-                    <div class="span3 text-center">
-                        <h2>Authentication</h2>
-                    </div>
+
+        <div class="login-form" id="jom_loginpanel">
+            <div style="border-bottom: 1px solid lightgray;">
+                <h2><img src="./img/user_info.png" alt="Authentication icon" title="Authentication" style="vertical-align: text-bottom;"> Authentication</h2>
+            </div>
+            <br>
+            <div class="text-center">
+                <div class="input-prepend">
+                    <span class="add-on"><i class="icon-user"></i></span>
+                    <input id="user" type="text" class="form-control" placeholder="Username or email">
                 </div>
-                <div class="row">
-                    <div class="span4">
-                        <legend style="margin-bottom: 5px"></legend>
-                        <div style="padding: 0px 15px 0 55px;">
-                            <label style="padding-top: 15px;">User name or email</label>
-                            <div class="input-prepend">
-                                <span class="add-on"><i class="icon-user"></i></span>
-                                <input id="user" type="text" style="font-size: 18px; font-weight: bold;">
-                            </div>
-                            <label>Password</label>
-                            <div class="input-prepend">
-                                <span class="add-on"><i class="icon-key"></i></span>
-                                <input id="pass" type="password" style="font-size: 18px; font-weight: bold;">
-                            </div>
-                            <?php echo generate_html_input_form_nonces( '/users/login', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>
-                        </div>
-                    </div>
+                <div class="input-prepend">
+                    <span class="add-on"><i class="icon-key"></i></span>
+                    <input id="pass" type="password" class="form-control" placeholder="password">
                 </div>
-                <div class="row" style="margin-top: 5px;">
-                    <div class="span2 offset1 text-center">
-                        <button id="submit" type="submit" class="btn" onclick='javascript: check_login(this);'><i class="icon-signin"></i> Enter</button>
-                    </div>
+                <?php echo generate_html_input_form_nonces( '/users/login', 0, session_id(), $config['SALT'], $config['HASH_ALG'] ); ?>
+                <div>
+                    <button id="submit" type="submit" class="btn" onclick='javascript: check_login(this);'><i class="icon-signin"></i> Enter</button>
                 </div>
-                <br>
-                <div class="row">
-                    <div class="span4" id="jom_infopanelctrl" style="cursor: pointer;">
-                        <i class="icon-info-sign"></i> show details...</div>
+                <div class="text-left" id="jom_infopanelctrl" style="cursor: pointer;">
+                    <i class="icon-info-sign"></i> show details...
                 </div>
-                <div class="row" id="jom_infopanel">
-                    <div class="span4">
-                        <p style="border-top: 1px solid #E5E5E5; padding-top: 5px;" class="text-right">
-                            <em style="font-size: 8px;">(c) Andrea Ferroni<br>
-                           This software is distributed under the terms of the<br>
-                           <a href='./COPYING' target='_blanc'>GNU Affero General Public License</a>.
-                           </em>
-                        </p>
-                        <p class="text-right">
-                            <a href="https://github.com/bubbakk/JoM" target="_blanc"><i class="icon-github"></i> Join the project</a><br>
-                            <a href="https://twitter.com/bubbakk" target="_blanc"><i class="icon-twitter"></i> Tweet me @bubbakk</a>
-                        </p>
-                    </div>
+                <div id="jom_infopanel">
+                    <p style="border-top: 1px solid #E5E5E5; padding-top: 5px;" class="text-right">
+                        <em style="font-size: 8px;">(c) 2013, 2013 Andrea Ferroni<br>
+                       This software is distributed under the terms of the<br>
+                       <a href='./COPYING' target='_blanc'>GNU Affero General Public License</a>.
+                       </em>
+                    </p>
+                    <p class="text-right">
+                        <a href="https://github.com/bubbakk/JoM" target="_blanc"><i class="icon-github"></i> Join the project</a><br>
+                        <a href="https://twitter.com/bubbakk" target="_blanc"><i class="icon-twitter"></i> Follow me on Twitter</a>
+                    </p>
+
                 </div>
             </div>
         </div>
