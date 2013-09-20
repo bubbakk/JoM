@@ -24,8 +24,18 @@ function gui_select_standard(jQ_ptr, clear_data_during_init)
 
     THAT.auto_enable_switch = true;
 
+
     /*
-     * Variable: NAME_block
+     * Variable: default_value
+     * When THAT.default_status() public method is called, this one is the value the SELECT auto-sets
+     *
+     * See:
+     *   <THAT.default_status>
+     */
+    THAT.default_value = 1;
+
+    /*
+     * Variable: option_block
      * Block used to populate field
      */
     var option_block = undefined
@@ -97,7 +107,7 @@ function gui_select_standard(jQ_ptr, clear_data_during_init)
      */
     THAT.default_status = function(trigger_change) {
         // set the value
-        THAT.jq_pointer.val(0);
+        THAT.jq_pointer.val(THAT.default_value);
         // trigger change event
         if ( trigger_change!== undefined && trigger_change === true ) {
             THAT.jq_pointer.trigger('change');

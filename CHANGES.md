@@ -19,6 +19,9 @@ TODOS:
 - in new job window, fixed errors checking and visual warnings; fixed also behaviours on error dismiss
 - in the datepicker Js object, the trigger 'change' is fired on input date filed when day is selected
 - fixed issue #27
+- added THAT.default_value public property: now default_status() public method uses this value to automatically
+  set to default
+- fixed issue #26: now job creation date saves correctly
 
 19.09.2013
 ----------

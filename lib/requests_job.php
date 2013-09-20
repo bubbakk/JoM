@@ -15,12 +15,12 @@ function dispatch_request($request)
             $JOB = new JOM_Job(TBL_JOBS, $DBH, $JOM__job_table_fields);  // constructor
 
             // check and set all passed parameters
-            $JOB->set_field_value('Job_subject',          post_or_get('s') );
-            $JOB->set_field_value('Job_description',      post_or_get('ds'));
-            $JOB->set_field_value('Job_category_level_1', post_or_get('c') );
-            $JOB->set_field_value('Job_category_level_2', post_or_get('i') );
-            $JOB->set_field_value('Job_start_datetime',   post_or_get('sd'));
-            $JOB->set_field_value('Job_priority',         post_or_get('p') );
+            $JOB->set_field_value('Job_subject',           post_or_get('s') );
+            $JOB->set_field_value('Job_description',       post_or_get('ds'));
+            $JOB->set_field_value('Job_category_level_1',  post_or_get('c') );
+            $JOB->set_field_value('Job_category_level_2',  post_or_get('i') );
+            $JOB->set_field_value('Job_creation_datetime', post_or_get('sd'));
+            $JOB->set_field_value('Job_priority',          post_or_get('p') );
 
             $JOB->set_field_value('Job_assigned_to_user_id', ( post_or_get('a') == 1 ? $_SESSION['user']['id'] : 0 ));
 
