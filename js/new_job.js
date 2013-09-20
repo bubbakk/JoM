@@ -77,19 +77,29 @@ function New_Job_GUI() {
     {
         $el.addClass("error");
 
+        // if CALENDAR
+        if ( $el.find('i[class*="calendar"]').length > 0 ) {
+            $el.find('input').unbind('change').on('change', function(){
+                $(this).parents().eq(2).removeClass("error");
+                $(this).unbind('change');
+            });
+        }
+        else
         // if INPUT...
         if ( $el.find('input').length > 0 ) {
             // ...remove error status on keypress
-            $el.unbind('keypress').on('keypress', function(){
-                $(this).removeClass("error");
+            $el.find('input').unbind('keypress').on('keypress', function(){
+                $(this).parents().eq(1).removeClass("error");
+                $(this).unbind('keypress');
             });
         }
         else
         // if GROUP BUTTON...
         if ( $el.find('a[class="btn"]').length > 0 ) {
             // ...remove error status on keypress
-            $el.unbind('click').on('click', function(){
-                $(this).removeClass("error");
+            $el.find('a[class="btn"]').unbind('click').on('click', function(){
+                $(this).parents().eq(2).removeClass("error");
+                $(this).unbind('click');
             });
         }
     }
@@ -185,7 +195,7 @@ function New_Job_GUI() {
         // check date correctness also against format
         THAT.form_data.start_date   = THAT.$start_date.val();
         if ( !jsJOMlib__check_date_string(THAT.form_data.start_date, JOM.conf.dateformat, JOM.conf.dateseparator) ) {
-            THAT.GUI__set_field_alert(THAT.$start_date.parent().parent());
+            THAT.GUI__set_field_alert(THAT.$start_date.parents().eq(2));
             is_all_right = false;
         }
 

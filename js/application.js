@@ -91,6 +91,7 @@ function jom_init(dateformat) {
         })
         .on('changeDate', function(){
            $("#form_new_job [name='creation_date']").parent().datepicker('hide');
+           $("#form_new_job [name='creation_date']").trigger('change');
         });
 
         // hide alert label

@@ -3,16 +3,26 @@ Version 0.4: Ticket listing
 Under development.
 
 TODOS:
+- implement a method in bbkk_base_class that checks $pdo variable connection and $tablename variable. Also some general user error messages, like prepare statement, connection missing, ....
+- add checks and documentation comments to nonce library
+- check UTF-8 encoding on POST sending data method in Ajax call
+- check new job bad answer "save ko" possible error messages on after new job creation
 - create time format (I18N) (hh:mm.ss) and insert in job list details
 - convert JSON requests on application load to PHP generated data
 - implement AJAX call cache
 
--> stackable system messages
+*evaluate* -> stackable system messages
+
+20.09.2013
+----------
+- in new job window, if a date is not selected and save button is pressed, the field is correctly shown as missing
+- in new job window, fixed errors checking and visual warnings; fixed also behaviours on error dismiss
+- in the datepicker Js object, the trigger 'change' is fired on input date filed when day is selected
 
 19.09.2013
 ----------
 - fixed the HTML in the login page: now the panel is positioned in the center without using Bootstrap's row/span/offset
-  system: browser's page resize do not cause visual issues any more
+  system: browser's page resize do not cause visual issues, like user and password input fields border overlap
 - moved some login page style in job_default_style.css file (even if there are too many inline style attributes)
 
 sparse day until 15.09.2013
@@ -316,10 +326,6 @@ Version 0.3: Ticket creation
 ============================
 Completed.
 
-TODOS:
-- check UTF-8 encoding on POST sending data method in Ajax call
-- check new job bad answer "save ko" possible error messages
-
 
 04.05.2013
 ----------
@@ -488,10 +494,6 @@ TODOS:
 Version 0.2: Login and security
 ===============================
 Completed.
-
-TODOS:
-- implement a method in bbkk_base_class that checks $pdo variable connection and $tablename variable. Also some general user error messages, like prepare statement, connection missing, ....
-- add checks and documentation comments to nonce library
 
 
 24.03.2013
