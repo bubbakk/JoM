@@ -18,6 +18,7 @@ TODOS:
 - in new job window, if a date is not selected and save button is pressed, the field is correctly shown as missing
 - in new job window, fixed errors checking and visual warnings; fixed also behaviours on error dismiss
 - in the datepicker Js object, the trigger 'change' is fired on input date filed when day is selected
+- fixed issue #27
 
 19.09.2013
 ----------
