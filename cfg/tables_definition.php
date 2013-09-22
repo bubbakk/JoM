@@ -18,6 +18,7 @@ $JOM__job_table_fields = array();
                  array('Job_tags',                       null, PDO::PARAM_STR),
                  array('Job_priority',                   null, PDO::PARAM_INT),
                  array('Job_creation_datetime',          null, PDO::PARAM_INT),
+                 array('Job_start_datetime',             null, PDO::PARAM_INT),
                  array('Job_deadline_datetime',          null, PDO::PARAM_INT),
                  array('Job_percent_completed',          null, PDO::PARAM_INT),
                  array('Job_assigned_to_user_id',        null, PDO::PARAM_INT),

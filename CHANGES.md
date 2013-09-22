@@ -13,6 +13,10 @@ TODOS:
 
 *evaluate* -> stackable system messages
 
+21-22.09.2013
+----------
+- fixed duality/errors/lacks between Job_creation_datetime and Jom_start_datetime: now save and load job work correctly
+
 20.09.2013
 ----------
 - in new job window, if a date is not selected and save button is pressed, the field is correctly shown as missing
@@ -20,7 +24,7 @@ TODOS:
 - in the datepicker Js object, the trigger 'change' is fired on input date filed when day is selected
 - fixed issue #27
 - added THAT.default_value public property: now default_status() public method uses this value to automatically
-  set to default
+  set the default deleted element
 - fixed issue #26: now job creation date saves correctly
 
 19.09.2013
