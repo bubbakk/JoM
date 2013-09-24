@@ -17,6 +17,11 @@ TODOS:
 ----------
 - fixed duality/errors/lacks between Job_creation_datetime and Jom_start_datetime: now save and load job work correctly
 
+24.09.2013
+----------
+- now close-modal-window callback is called exactyl only once, because associated the event 'hidden' and not 'hide'; this
+  prevents strange behaviours on details buttons
+
 20.09.2013
 ----------
 - in new job window, if a date is not selected and save button is pressed, the field is correctly shown as missing

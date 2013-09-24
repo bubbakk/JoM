@@ -158,7 +158,7 @@ function Job_List_GUI() {
             // row data
             $new_summary.data('job_id', id);            // id
             $new_summary.data('job_is_deleted', 0);     // is deleted
-            $new_summary.parent().attr(id, generic_id + "_" + i);
+            $new_summary.attr("id", generic_id + "_" + i);
             THAT.$job_table_list.append($new_summary);
 
             // setting details

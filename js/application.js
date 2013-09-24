@@ -65,7 +65,7 @@ NONCES = {
                     break;
                 }
             default:
-                alert(domain + '/' + request + " not defined");
+                console.warn(domain + '/' + request + " not defined");
                 break;
 
         }
@@ -96,7 +96,7 @@ function jom_init(dateformat) {
 
         // hide alert label
         $alert = $("#jom_create_job_modal .modal-body .alert").hide();
-        $("#jom_create_job_modal").on('hide', function() {
+        $("#jom_create_job_modal").on('hidden', function() {
             if ( JOM.runtime_data.new_job_saved_successfully ) {
                 JOM.job_list.DATA__load_job_list();
                 JOM.runtime_data.job_saved_successfully = false;
