@@ -14,6 +14,7 @@ NONCES = {
     }
 };
 
+
     // Ajax callbacks dispatcher
     $(document).ajaxComplete(function(event, xhr, settings)
     {
@@ -62,6 +63,11 @@ NONCES = {
             case 'usr/lst':
                 {
                     JOM.job_list.users_list.users = JSON_response.data;
+                    break;
+                }
+            case 'job/upd':
+                {
+                    // nothing to do at this moment...
                     break;
                 }
             default:

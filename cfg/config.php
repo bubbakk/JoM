@@ -3,7 +3,7 @@
 define('JOM_DEBUG',         true);
 define('JOM_LOG',           true);
 define('JOM_MILESTONE',     '0.4');                                         // TICKET LISTING version (refer to MILESTONES.md for versioning progression)
-define('JOM_RELEASE',       '75');
+define('JOM_RELEASE',       '76');
 define('JOM_VERSION',       JOM_MILESTONE.'.'.JOM_RELEASE);                 // milestone.release
 define('JOM_DESC_VER',      'v. '.JOM_MILESTONE.'.x: ticket listing');      // milestone version description
 

@@ -439,7 +439,7 @@ foreach ( $statuses as $key => $value ) {
                                     <hr/>
                                     <dt>description: </dt> <dd>bla bla bla ...<br>e ancora bla bla bla</dd>
                                     <hr/>
-                                    <dt>created: </dt> <dd>20/04/2013</dd>
+                                    <dt>started: </dt> <dd>20/04/2013</dd>
                                     <dt>category: </dt> <dd>sample category</dd>
                                     <dt>issue: </dt> <dd>sample issue</dd>
                                 </dl>

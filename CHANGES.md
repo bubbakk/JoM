@@ -13,14 +13,20 @@ TODOS:
 
 *evaluate* -> stackable system messages
 
-21-22.09.2013
+
+26.09.2013
 ----------
-- fixed duality/errors/lacks between Job_creation_datetime and Jom_start_datetime: now save and load job work correctly
+- fixed javascript warning on job/upd ajax callback
+- changed label from "created" to "started"
 
 24.09.2013
 ----------
 - now close-modal-window callback is called exactyl only once, because associated the event 'hidden' and not 'hide'; this
   prevents strange behaviours on details buttons
+
+21-22.09.2013
+----------
+- fixed duality/errors/lacks between Job_creation_datetime and Jom_start_datetime: now save and load job work correctly
 
 20.09.2013
 ----------
