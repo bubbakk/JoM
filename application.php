@@ -20,74 +20,8 @@
  *
  */
 
-
-
-//
-// init
-//
-define('DIR_BASE', './');
-require_once(DIR_BASE.'cfg/user_config.php');
-require_once(DIR_BASE.'cfg/config.php');
-require_once(DIR_LIB.'generic_lib.php');
-require_once(DIR_LIB.'nonce_lib.php');
-require_once(DIR_OOL.'bbkk_base_class.php');
-require_once(DIR_OOL.'bbkk_pdo.php');
-require_once(DIR_OOL.'bbkk_session_manager.php');
-
-require_once(DIR_LIB.'load_all__functions.php');
-
-
-
-//
-// database connection
-//
-$PDO = open_database($config['DB']['type'], $config['DB'][$config['DB']['type']]);  // open DB
-$DBH = $PDO->get_dbh();                                                             // get the handler
-
-
-
-//
-// session manager
-//
-$SMAN = new BBKK_Session_Manager(TBL_SESSIONS, $DBH);   // constructor
-$SMAN->debug_on_screen = false;
-$SMAN->salt = $config['SALT'];                          // explicitly set application salt
-$SMAN->start_session('', false);                        // starting session
-
-
-
-//
-// check if signed in
-//
-if ( !isset($_SESSION["user"]["is_logged_in"]) ) {
-    // destroy the session
-    jom_clear_session();
-    // immediate redirect
-    jom_immediate_redirect($config['SERVER']['domain'],
-                           $config['SERVER']['domain_path'],
-                           'login.php',
-                           'r=nsi');
-    // script dies in the function above
-}
-
-
-
-//
-// session expired check
-//
-$session_vars_check = check_session_variables();        // check session variables existance and set default values if not found
-// check that the session is active
-if ( $session_vars_check === -1 || $session_vars_check === -2 )
-{
-    // destroy the session
-    jom_clear_session();
-    // immediate redirect
-    jom_immediate_redirect($config['SERVER']['domain'],
-                           $config['SERVER']['domain_path'],
-                           'login.php',
-                           'r=exp');
-    // script dies in the function before
-}
+// include general libraries files, open datatabase, check session
+require_once('./lib/general_application_init.php');
 
 
 
@@ -132,11 +66,9 @@ foreach ( $statuses as $key => $value ) {
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link href="./humans.txt"                       rel="author"     type="text/plain">
+    <!-- style sheets -->
     <link href="./css/bootstrap.min.css"            rel="stylesheet" type="text/css" media="screen">
-
-    <!-- <link href="./css/bootstrap-combined.no-icons.min.css" rel="stylesheet" type="text/css" media="screen"> -->
     <link href="./css/font-awesome.min.css" rel="stylesheet" type="text/css" media="screen">
-
     <link href="./css/jom_default_style.css"        rel="stylesheet" type="text/css" media="screen">
     <link href="./css/datepicker.css"               rel="stylesheet" type="text/css" media="screen">
     <link href="./css/bootstrap-select.min.css"     rel="stylesheet" type="text/css" media="screen">
@@ -335,62 +267,62 @@ foreach ( $statuses as $key => $value ) {
             </ul>
           </div>
         </div>
-
+        </div>
         </br>
 
 <!-- JOB LIST FILTERS -->
         <div class="row jom_filters_container" style="display: none">
-                <div class="span3 offset2">
-                    <dl style="margin-top: 0;">
-                        <dt><input type="checkbox" class="jom_enable_control" data-placement="bottom" title="enable status filter" data-apply-to="jom_filter_by_status"> Filter by status: </dt>
-                        <dd>
-                            <select id="jom_filter_by_status" class="selectpicker show-menu-arrow jom_filter" data-width="auto">
-                                <option></option>
-                            </select>
-                        </dd>
-                    </dl>
-                </div>
-                <div class="span2">
-                    <dl style="margin-top: 0;">
-                        <dt><input type="checkbox" class="jom_enable_control" data-placement="bottom" title="enable date start filter" data-apply-to="jom_filter_by_creation_date"> Filter by job creation: </dt>
-                        <dd>
-                            <select id="jom_filter_by_creation_date" class="selectpicker show-menu-arrow jom_filter" data-width="auto">
-                                <option value="1">yesterday</option>
-                                <option value="7">last week</option>
-                                <option value="14">last two weeks</option>
-                                <option value="30">last month</option>
-                                <option value="90">last three months</option>
-                                <option value="365">last year</option>
-                            </select>
-                        </dd>
-                    </dl>
-                </div>
-                <div class="span3">
-                    <dl style="margin-top: 0;">
-                        <dt><input type="checkbox" class="jom_enable_control" data-placement="bottom" title="enable filter by category" data-apply-to="jom_filter_by_category"> Filter by category: </dt>
-                        <dd>
-                            <select id="jom_filter_by_category" class="selectpicker show-menu-arrow">
-                                <option></option>
-                            </select>
-                        </dd>
-                        <dt><input type="checkbox" class="jom_enable_control" data-placement="bottom" title="enable filter by issue" data-apply-to="jom_filter_by_issue"> Filter by issue: </dt>
-                        <dd>
-                            <select id="jom_filter_by_issue" class="selectpicker show-menu-arrow">
-                                <option></option>
-                            </select>
-                            <i class="icon-spinner icon-spin"></i>
-                        </dd>
-                    </dl>
-                </div>
-                <div class="span2" style="padding-top: 80px">
-                    <a href="#" class="btn btn-info" id="jom_search_button"><i class="icon-search icon-white"></i> search</a>
-                </div>
+            <div class="span3 offset3">
+                <dl style="margin-top: 0;">
+                    <dt><input type="checkbox" class="jom_enable_control" data-placement="bottom" title="enable status filter" data-apply-to="jom_filter_by_status"> Filter by status: </dt>
+                    <dd>
+                        <select id="jom_filter_by_status" class="selectpicker show-menu-arrow jom_filter" data-width="auto">
+                            <option></option>
+                        </select>
+                    </dd>
+                </dl>
+            </div>
+            <div class="span2">
+                <dl style="margin-top: 0;">
+                    <dt><input type="checkbox" class="jom_enable_control" data-placement="bottom" title="enable date start filter" data-apply-to="jom_filter_by_creation_date"> Filter by job creation: </dt>
+                    <dd>
+                        <select id="jom_filter_by_creation_date" class="selectpicker show-menu-arrow jom_filter" data-width="auto">
+                            <option value="1">yesterday</option>
+                            <option value="7">last week</option>
+                            <option value="14">last two weeks</option>
+                            <option value="30">last month</option>
+                            <option value="90">last three months</option>
+                            <option value="365">last year</option>
+                        </select>
+                    </dd>
+                </dl>
+            </div>
+            <div class="span3">
+                <dl style="margin-top: 0;">
+                    <dt><input type="checkbox" class="jom_enable_control" data-placement="bottom" title="enable filter by category" data-apply-to="jom_filter_by_category"> Filter by category: </dt>
+                    <dd>
+                        <select id="jom_filter_by_category" class="selectpicker show-menu-arrow">
+                            <option></option>
+                        </select>
+                    </dd>
+                    <dt><input type="checkbox" class="jom_enable_control" data-placement="bottom" title="enable filter by issue" data-apply-to="jom_filter_by_issue"> Filter by issue: </dt>
+                    <dd>
+                        <select id="jom_filter_by_issue" class="selectpicker show-menu-arrow">
+                            <option></option>
+                        </select>
+                        <i class="icon-spinner icon-spin"></i>
+                    </dd>
+                </dl>
+            </div>
+            <div class="span2" style="padding-top: 80px">
+                <a href="#" class="btn btn-info" id="jom_search_button"><i class="icon-search icon-white"></i> search</a>
+            </div>
         </div>
 
 <!-- button NEW JOB and filters -->
         <div class="row" style="margin-bottom: 10px; margin-top: 20px;">
 <!-- COLUMN SX -->
-            <div class="span2 text-center">
+            <div class="span2 offset1 text-center">
                 <a href="#jom_create_job_modal" role="button" class="btn btn-large btn-primary" data-toggle="modal" data-target="#jom_create_job_modal" onclick="javascript: JOM.new_job.GUI__set_mode('input');"><i class="icon-plus-sign icon-white"></i> New Job</a>
             </div>
 <!-- COLUMN DX -->
@@ -403,7 +335,7 @@ foreach ( $statuses as $key => $value ) {
 
 <!-- JOB LIST VALUES -->
         <div class="row">
-            <div class="span2">
+            <div class="span2 offset1">
 
             </div>
             <div class="span10">
@@ -412,7 +344,7 @@ foreach ( $statuses as $key => $value ) {
                     <thead>
                         <tr>
                             <th></th>
-                            <th>id</th>
+                            <th>code</th>
                             <th style="width: 70%;">subject</th>
                             <th>owner</th>
                             <th>actions</th>

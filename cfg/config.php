@@ -2,16 +2,16 @@
 
 define('JOM_DEBUG',         true);
 define('JOM_LOG',           true);
-define('JOM_MILESTONE',     '0.4');                                         // TICKET LISTING version (refer to MILESTONES.md for versioning progression)
-define('JOM_RELEASE',       '76');
+define('JOM_MILESTONE',     '0.5');                                         // TICKET LISTING version (refer to MILESTONES.md for versioning progression)
+define('JOM_RELEASE',       '1');
 define('JOM_VERSION',       JOM_MILESTONE.'.'.JOM_RELEASE);                 // milestone.release
-define('JOM_DESC_VER',      'v. '.JOM_MILESTONE.'.x: ticket listing');      // milestone version description
+define('JOM_DESC_VER',      'v. '.JOM_MILESTONE.'.x: ticket editing');      // milestone version description
 
-define('SESSION_EXPIRE',    6 * 60 * 60 );                                 // session expires in 6 hours
-define('NONCE_EXPIRE',      1 * 60 * 60 );                                 // nonce expires in 1 hour
+define('SESSION_EXPIRE',    6 * 60 * 60 );                                  // session expires in 6 hours
+define('NONCE_EXPIRE',      1 * 60 * 60 );                                  // nonce expires in 1 hour
 
 // Default application localization
-define('I18N_LANGUAGE',           'it');
+define('I18N_LANGUAGE',           'en');
 define('I18N_DATEFORMAT',         'dd/mm/yyyy');
 define('I18N_DATEFORMAT_HUMAN',   'dd MM yyyy');
 define('I18N_DATESEPARATOR',      '/');

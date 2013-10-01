@@ -30,19 +30,23 @@ Main development steps:
 
 0.4 Ticket listing
     List Jobs
-    Enable/disable filters
+    Enable/disable/apply filters
     Show/hide details
--> Currently under development
+    Basic editing operations
+-- completed Sep 26, 2013
 
 0.5 Ticket editing
+    GUI design
+    data population
+    data editing
 
----------> first release can be done here
+---------> first release can be published here
 
-0.6 Chat block
+0.6 Admin config
 
-0.7 Admin config
+0.7 Admin tables editing
 
-0.8 Admin tables editing
+0.8 Chat block
 
 0.9 ACL implementation
 

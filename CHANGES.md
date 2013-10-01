@@ -14,6 +14,16 @@ TODOS:
 *evaluate* -> stackable system messages
 
 
+01.10.2013
+----------
+- creating job management GUI
+
+27.09.2013
+----------
+- created "general_application_init.php": it contains session check and other "things" to check in every JoM application
+  script (such as application.php, manage_job.php and other new ones)
+- created manage_job.php file: it will be the GUI/view of job data editing
+
 26.09.2013
 ----------
 - fixed javascript warning on job/upd ajax callback
