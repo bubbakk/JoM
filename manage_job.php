@@ -67,15 +67,19 @@ foreach ( $statuses as $key => $value ) {
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link href="./humans.txt"                       rel="author"     type="text/plain">
     <!-- style sheets -->
-    <link href="./css/bootstrap.min.css"            rel="stylesheet" type="text/css" media="screen">
-    <link href="./css/font-awesome.min.css" rel="stylesheet" type="text/css" media="screen">
-    <link href="./css/jom_default_style.css"        rel="stylesheet" type="text/css" media="screen">
-    <link href="./css/datepicker.css"               rel="stylesheet" type="text/css" media="screen">
-    <link href="./css/bootstrap-select.min.css"     rel="stylesheet" type="text/css" media="screen">
-    <link href="./css/prettyCheckable.css"          rel="stylesheet" type="text/css" media="screen">
+    <link href="./css/bootstrap.min.css"                    rel="stylesheet" type="text/css" media="screen">
+    <link href="./css/jasny-bootstrap-responsive.min.css"   rel="stylesheet" type="text/css" media="screen">
+    <link href="./css/jasny-bootstrap.min.css"              rel="stylesheet" type="text/css" media="screen">
+    <link href="./css/font-awesome.min.css"                 rel="stylesheet" type="text/css" media="screen">
+    <link href="./css/jom_default_style.css"                rel="stylesheet" type="text/css" media="screen">
+    <link href="./css/datepicker.css"                       rel="stylesheet" type="text/css" media="screen">
+    <link href="./css/bootstrap-select.min.css"             rel="stylesheet" type="text/css" media="screen">
+    <link href="./css/prettyCheckable.css"                  rel="stylesheet" type="text/css" media="screen">
     <link href="./js/lib/bootstrap-editable/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet" type="text/css" media="screen">
     <!-- external libraries -->
+    <!-- jQuery -->
     <script language="javascript" type="text/javascript" src="./js/lib/jquery-1.9.0.min.js"></script>
+    <!-- Boostrap extensions -->
     <script language="javascript" type="text/javascript" src="./js/lib/bootstrap-datepicker.js"></script>
     <script language="javascript" type="text/javascript" src="./js/lib/bootstrap-select.min.js"></script>
     <script language="javascript" type="text/javascript" src="./js/lib/prettyCheckable.js"></script>
@@ -160,6 +164,8 @@ foreach ( $statuses as $key => $value ) {
                   <br>
                   <dt>status</dt>
                   <dd><i class="icon-pencil icon-white"></i> just created</dd>
+                  <dt>priority</dt>
+                  <dd><i class="icon-pencil icon-white"></i> high</dd>
                   <dt>assigned to</dt>
                   <dd><i class="icon-pencil icon-white"></i> me</dd>
                   <br>
@@ -175,21 +181,27 @@ foreach ( $statuses as $key => $value ) {
         <div class="row">
             <div class="span8 offset4" style="border-top: 1px solid #AFAFAF;">
                 <h4 style="padding-left: 0.9em;">Add notes and files</h4>
-                <form class="form-inline" style="margin-left: 1.2em;">
+                <form class="form-inline" style="margin-left: 1.8em;">
                     <input type="text" placeholder="add a note">
                     <button type="button" class="btn">save</button>
+                </form>
+                <form class="form-inline" style="margin-left: 1.8em;">
+                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                        <div class="input-append">
+                            <div class="uneditable-input span3"><i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span></div><span class="btn btn-file"><span class="fileupload-new">Select file</span><span class="fileupload-exists">Change</span><input type="file" /></span><a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+                        </div>
+                        <button type="button" class="btn">upload</button>
+                    </div>
                 </form>
             </div>
         </div>
         <div class="row">
             <div class="span8 offset4" style="border-top: 1px solid #AFAFAF;">
                 <h4 style="padding-left: 0.9em;">History</h4>
-                <span class="label label-info" style="margin-left: 1.2em;">notes</span> <span class="label label-info">changes</span>
+                <span class="label label-info" style="margin-left: 1.8em;">notes</span> <span class="label label-info">changes</span>
                     <dl class="dl-horizontal">
-                        <dt>27/10/2013 - 09:34</dt>
-                        <dd>creata attività</dd>
-                        <dt>28/10/2013 - 15:49</dt>
-                        <dd>creata attività</dd>
+                        <dt><i class="icon-remove"></i> 27/10/2013 - 09:34</dt> <dd>creata attività</dd>
+                        <dt><i class="icon-remove"></i> 28/10/2013 - 15:49</dt> <dd>creata attività</dd>
                     </dl>
             </div>
         </div>
@@ -201,6 +213,8 @@ foreach ( $statuses as $key => $value ) {
         <div class="jom_useful_sentence" style="z-index: 999; margin-top: 44px;"></div>
     </div>
 
+    <!-- Bootstrap core -->
     <script src="./js/lib/bootstrap.min.js"></script>
+    <script src="./js/lib/jasny-bootstrap.min.js"></script>
 </body>
 </html>
