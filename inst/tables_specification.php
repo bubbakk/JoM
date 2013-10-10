@@ -86,6 +86,7 @@ $tables = array(
   'Jobs' => array(
     'mysql'  => "CREATE TABLE IF NOT EXISTS `".TBL_JOBS."` (
                         `Job_id`                      INTEGER unsigned      NOT NULL AUTO_INCREMENT,
+                        `Job_code`                    VARCHAR(255)          NOT NULL DEFAULT '',
                         `Job_subject`                 varchar(255)          NOT NULL DEFAULT '',
                         `Job_description`             text,
                         `Job_category_level_1`        INTEGER unsigned      DEFAULT '0',
@@ -113,6 +114,7 @@ $tables = array(
                  ) ENGINE=MyISAM DEFAULT CHARSET=utf8;",
     'sqlite' => "CREATE TABLE IF NOT EXISTS ".TBL_JOBS." (
                         Job_id                      INTEGER       PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE,
+                        Job_code                    VARCHAR       NOT NULL DEFAULT '',
                         Job_subject                 VARCHAR       NOT NULL DEFAULT '',
                         Job_description             TEXT,
                         Job_category_level_1        INTEGER       DEFAULT 0,
