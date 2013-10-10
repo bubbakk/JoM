@@ -31,6 +31,11 @@ License type: Apache License Version 2.0
 License URL:  https://raw.github.com/twitter/bootstrap/master/LICENSE
 Homepage:     http://twitter.github.com/bootstrap/
 
+Library:      Bootstrap - edited by Jasney
+License type: Apache License Versione 2.0
+License URL:  http://www.apache.org/licenses/LICENSE-2.0
+Homepage:     http://jasny.github.io/bootstrap/
+
 Library:      Bootstrap Editable
 License type:
 License URL:
@@ -40,6 +45,10 @@ Library:
 License type:
 License URL:
 Homepage:     http://silviomoreto.github.io/bootstrap-select/
+
+Library:      Messenger
+License:      https://github.com/HubSpot/messenger/blob/master/LICENSE
+Homepage:     https://github.com/HubSpot/messenger
 
 Library: Normalize
 License:

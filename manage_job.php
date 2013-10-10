@@ -60,6 +60,12 @@ foreach ( $statuses as $key => $value ) {
                                    'is_final' => $value[ $tbl_name . '_is_final'] );
 }
 
+
+
+
+$job_id = post_or_get('j');
+
+
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -84,7 +90,7 @@ foreach ( $statuses as $key => $value ) {
     <script language="javascript" type="text/javascript" src="./js/lib/bootstrap-select.min.js"></script>
     <script language="javascript" type="text/javascript" src="./js/lib/prettyCheckable.js"></script>
     <script language="javascript" type="text/javascript" src="./js/lib/bootstrap-editable/bootstrap-editable/js/bootstrap-editable.min.js"></script>
-
+    <!-- JoM libraries -->
     <script language="javascript" type="text/javascript" src="./js/generic_lib.js"></script>
     <title>***</title>
     <script>
@@ -108,6 +114,24 @@ foreach ( $statuses as $key => $value ) {
                 }
             }
         };
+
+        // edit pencil icon show/hide
+            $(".jom__edit_field").css("opacity", "0");
+            $(".jom__job_editable").on("mouseenter", function(){
+                //$(this).find(".jom__edit_field").css("visibility", "visible");
+                //$(this).find(".jom__edit_field").hide();
+                //$(this).find(".jom__edit_field").fadeIn('fast');
+                $(".jom__edit_field").css("opacity", "0");
+                $(this).parent().find(".jom__edit_field").animate({opacity: 1}, {duration: 300});
+            });
+            $(".jom__job_editable").parent().on("mouseleave", function(){
+                //$(this).find(".jom__edit_field").css("visibility", "hidden");
+                $(this).find(".jom__edit_field").animate({opacity: 0}, {duration: 200});
+            });
+
+        // x-editable code
+            $.fn.editable.defaults.mode = 'popup';
+            $(".jom__job_editable").editable();
     });
     </script>
     <style>
@@ -147,38 +171,43 @@ foreach ( $statuses as $key => $value ) {
 
 
 <!-- JOB DATA -->
+        <!-- SUBJECT AND CODE -->
         <div class="row">
             <div class="span1 offset3 text-right">
-                <i class="icon-pencil icon-white"></i> <span class="label label-info">#12</span>
+                <i class="icon-pencil icon-white jom__edit_field"></i> <a href="#" class="label label-info jom__job_editable">#12</a>
             </div>
             <div class="span9" style="padding-bottom: 5px;">
-                <i class="icon-pencil icon-white"></i> <span style="font-size: 1.6em;">nome/titolo job</span>
+                <i class="icon-pencil icon-white jom__edit_field"></i> <a href="#" class="jom__job_editable" style="font-size: 1.6em;">nome/titolo job</a>
             </div>
         </div>
-        <div class="row">
+
+        <!-- BASIC DATA -->
+        <div class="row jom__job_basic_data">
             <div class="span8 offset4" style="border-top: 1px solid #AFAFAF;">
                 <h4 style="padding-left: 0.9em;">Basic data</h4>
                 <dl class="dl-horizontal">
                   <dt>description</dt>
-                  <dd><i class="icon-pencil icon-white"></i> descrizione</dd>
+                  <dd><i class="icon-pencil icon-white jom__edit_field"></i> <a href="#" class="jom__job_editable" data-type="textarea" data-placement="bottom"> descrizione</a></dd>
                   <br>
                   <dt>status</dt>
-                  <dd><i class="icon-pencil icon-white"></i> just created</dd>
+                  <dd><i class="icon-pencil icon-white jom__edit_field"></i> <a href="#" class="jom__job_editable">just created</a></dd>
                   <dt>priority</dt>
-                  <dd><i class="icon-pencil icon-white"></i> high</dd>
+                  <dd><i class="icon-pencil icon-white jom__edit_field"></i> <a href="#" class="jom__job_editable">high</a></dd>
                   <dt>assigned to</dt>
-                  <dd><i class="icon-pencil icon-white"></i> me</dd>
+                  <dd><i class="icon-pencil icon-white jom__edit_field"></i> me</dd>
                   <br>
                   <dt>started</dt>
-                  <dd><i class="icon-pencil icon-white"></i> 23 Settembre 2013</dd>
+                  <dd><i class="icon-pencil icon-white jom__edit_field"></i> 23 Settembre 2013</dd>
                   <dt>category</dt>
-                  <dd><i class="icon-pencil icon-white"></i> IT issue</dd>
+                  <dd><i class="icon-pencil icon-white jom__edit_field"></i> IT issue</dd>
                   <dt>issue</dt>
-                  <dd><i class="icon-pencil icon-white"></i> printer unavailable</dd>
+                  <dd><i class="icon-pencil icon-white jom__edit_field"></i> printer unavailable</dd>
                 </dl>
             </div>
         </div>
-        <div class="row">
+
+        <!-- ADD NOTES AND FILES -->
+        <div class="row jom__job_notes_and_files">
             <div class="span8 offset4" style="border-top: 1px solid #AFAFAF;">
                 <h4 style="padding-left: 0.9em;">Add notes and files</h4>
                 <form class="form-inline" style="margin-left: 1.8em;">
@@ -195,14 +224,27 @@ foreach ( $statuses as $key => $value ) {
                 </form>
             </div>
         </div>
-        <div class="row">
+
+        <!-- HISTORY -->
+        <div class="row jom__job_history">
             <div class="span8 offset4" style="border-top: 1px solid #AFAFAF;">
                 <h4 style="padding-left: 0.9em;">History</h4>
-                <span class="label label-info" style="margin-left: 1.8em;">notes</span> <span class="label label-info">changes</span>
-                    <dl class="dl-horizontal">
-                        <dt><i class="icon-remove"></i> 27/10/2013 - 09:34</dt> <dd>creata attività</dd>
-                        <dt><i class="icon-remove"></i> 28/10/2013 - 15:49</dt> <dd>creata attività</dd>
-                    </dl>
+                <span class="label label-info" style="margin-left: 1.8em;">notes</span>
+                <span class="label label-info" style="box-shadow: 1px 1px 3px #000000;">changes</span>
+                <dl class="dl-horizontal">
+                    <dt><i class="icon-remove"></i> 27/10/2013 - 09:34</dt> <dd>creata attività</dd>
+                    <dt><i class="icon-remove"></i> 28/10/2013 - 15:49</dt> <dd>creata attività</dd>
+                </dl>
+            </div>
+        </div>
+
+        <!-- FILES -->
+        <div class="row jom__job_files">
+            <div class="span8 offset4" style="border-top: 1px solid #AFAFAF;">
+                <h4 style="padding-left: 0.9em;">Files and documents</h4>
+                <dl class="dl-horizontal">
+                    <dt><i class="icon-remove"></i> uploaded 27/10/2013 - 09:34</dt> <dd><a href="">creata attività</a></dd>
+                </dl>
             </div>
         </div>
 

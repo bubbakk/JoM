@@ -1,18 +1,18 @@
-Version 0.4: Ticket listing
+Version 0.5: Ticked editing
 ===========================
 Under development.
 
 TODOS:
-- implement a method in bbkk_base_class that checks $pdo variable connection and $tablename variable. Also some general user error messages, like prepare statement, connection missing, ....
-- add checks and documentation comments to nonce library
-- check UTF-8 encoding on POST sending data method in Ajax call
-- check new job bad answer "save ko" possible error messages on after new job creation
-- create time format (I18N) (hh:mm.ss) and insert in job list details
-- convert JSON requests on application load to PHP generated data
-- implement AJAX call cache
+- still nothing
 
-*evaluate* -> stackable system messages
 
+10.10.2013
+----------
+
+
+02.10.2013
+----------
+- moved some css/font libraries. Added jasny bootstrap extras
 
 01.10.2013
 ----------
@@ -23,6 +23,26 @@ TODOS:
 - created "general_application_init.php": it contains session check and other "things" to check in every JoM application
   script (such as application.php, manage_job.php and other new ones)
 - created manage_job.php file: it will be the GUI/view of job data editing
+
+
+
+
+
+
+
+Version 0.4: Ticket listing
+===========================
+Completed.
+
+TODOS:
+- implement a method in bbkk_base_class that checks $pdo variable connection and $tablename variable. Also some general user error messages, like prepare statement, connection missing, ....
+- add checks and documentation comments to nonce library
+- check UTF-8 encoding on POST sending data method in Ajax call
+- check new-job bad answer "save ko" possible error messages on after new job creation
+- create time format (I18N) (hh:mm.ss) and insert in job list details
+
+*evaluate* -> stackable system messages
+
 
 26.09.2013
 ----------

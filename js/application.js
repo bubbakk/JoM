@@ -179,7 +179,8 @@ function jom_init(dateformat) {
             else
             // EDIT
             if ( $(this).hasClass("jom_edit_btn") && !is_deleted ) {
-                alert("Edit implementation in Version 0.5");
+                window.location.href = "./manage_job.php?j=" + id_job;
+                return;     // code flow will not reach this
             }
             else
             // DELETE/UNDELETE
