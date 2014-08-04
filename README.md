@@ -26,5 +26,5 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU Affero General Public License for more details.
 
 You should have received a copy of the GNU Affero General Public License
-along with Nome-Programma.  If not, see <http://www.gnu.org/licenses/>.
+along with "JoM|The Job Manager".  If not, see <http://www.gnu.org/licenses/>.
 
